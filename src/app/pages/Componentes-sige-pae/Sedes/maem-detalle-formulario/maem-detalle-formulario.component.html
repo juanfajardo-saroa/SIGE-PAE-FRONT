@@ -1,0 +1,627 @@
+<!-------------MAEM--------------->
+<div *ngIf="MAEMSI">
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+  
+      <div style="justify-content: right;">
+  
+        <div fxFlex.gt-md="60" fxFlex.gt-lg="60" fxFlex="100" class="text-center textointerno">
+          <table class="tablaform3" style="width: 80%;float: right; font-size: 14px;">
+            <ng-container>
+              <td style="width: 18%;">
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;     font-size: 14px;">
+                  <a> Priorizada PAE</a>
+                </div>
+                <div style="width: 80%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion"
+                  style="margin-left: 10px; margin-bottom: 10px;">
+                  <mat-button-toggle
+                    style="width: 50%; color: #FFF!important; font-style: 20px; background-color: #ed0057!important;"
+                    value="si" active>
+                    <a style="color:#FFF!important;">Si</a>
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="no">
+                    No
+                  </mat-button-toggle>
+                </mat-button-toggle-group> 
+                </div>
+            
+              
+  
+              </td>
+              <td>
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;    font-size: 14px;">
+                  <a> Modelo(s) de operación PAE</a>
+                </div>
+                <div style="width: 100%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion" class="buttontog "
+                  style="margin-left: 10px; margin-bottom: 10px; width: 100%;">
+                  <mat-button-toggle
+                    style="width: 50%; display: flex; font-style: 20px; background-color: #ed0057!important;" value="320">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-199.png "> <a
+                      style="color:#FFF!important;">MAEM</a>
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> MAER
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-201.png "> PAEPI
+                  </mat-button-toggle>
+                 <!--  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-202.png "> PAEC
+                  </mat-button-toggle> -->
+                </mat-button-toggle-group>
+                </div>
+               
+  
+              </td>
+  
+              <td style="width: 80%;">
+                <div class="text-left" style="font-size: 10px !important; margin: 20px;">
+                  <p>*Para cambiar el modelo de operación de la sede, o retirar/meter la sede del listado
+                    de priorizadas, ingrese al sistema MiPAE, sección "Sedes beneficiarias".
+                  </p>
+  
+                </div>
+  
+  
+  
+              </td>
+            </ng-container>
+          </table>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+</div>
+
+<div *ngIf="MAEMNO">
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+  
+      <div style="justify-content: right;">
+  
+        <div fxFlex.gt-md="60" fxFlex.gt-lg="60" fxFlex="100" class="text-center textointerno">
+          <table class="tablaform3" style="width: 80%;float: right; font-size: 14px;">
+            <ng-container>
+              <td style="width: 18%;">
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;     font-size: 14px;">
+                  <a> Priorizada PAE</a>
+                </div>
+                <div style="width: 80%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion"
+                  style="margin-left: 10px; margin-bottom: 10px;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE"
+                    value="si" >
+                   Si
+                  </mat-button-toggle>
+                  <mat-button-toggle style="width: 50%; color: #FFF!important; font-style: 20px; background-color: #ed0057!important;"
+                   value="no" active>
+                   <a style="color:#FFF!important;">No</a> 
+                  </mat-button-toggle>
+                </mat-button-toggle-group> 
+                </div>
+            
+              
+  
+              </td>
+              <td>
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;    font-size: 14px;">
+                  <a> Modelo(s) de operación PAE</a>
+                </div>
+                <div style="width: 100%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion" class="buttontog "
+                  style="margin-left: 10px; margin-bottom: 10px; width: 100%;">
+                  <mat-button-toggle
+                    style="width: 50%; display: flex; font-style: 20px; background-color: #ed0057!important;" value="320">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-199.png "> <a
+                      style="color:#FFF!important;">MAEM</a>
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> MAER
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-201.png "> PAEPI
+                  </mat-button-toggle>
+                 <!--  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-202.png "> PAEC
+                  </mat-button-toggle> -->
+                </mat-button-toggle-group>
+                </div>
+               
+  
+              </td>
+  
+              <td style="width: 80%;">
+                <div class="text-left" style="font-size: 10px !important; margin: 20px;">
+                  <p>*Para cambiar el modelo de operación de la sede, o retirar/meter la sede del listado
+                    de priorizadas, ingrese al sistema MiPAE, sección "Sedes beneficiarias".
+                  </p>
+  
+                </div>
+  
+  
+  
+              </td>
+            </ng-container>
+          </table>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+</div>
+
+
+<!-------------MAER--------------->
+<div *ngIf="MAERSI">
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+  
+      <div style="justify-content: right;">
+  
+        <div fxFlex.gt-md="60" fxFlex.gt-lg="60" fxFlex="100" class="text-center textointerno">
+          <table class="tablaform3" style="width: 80%;float: right; font-size: 14px;">
+            <ng-container>
+              <td style="width: 18%;">
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;     font-size: 14px;">
+                  <a> Priorizada PAE</a>
+                </div>
+                <div style="width: 80%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion"
+                  style="margin-left: 10px; margin-bottom: 10px;">
+                  <mat-button-toggle
+                    style="width: 50%; color: #FFF!important; font-style: 20px; background-color: #ed0057!important;"
+                    value="si" active>
+                    <a style="color:#FFF!important;">Si</a>
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="no">
+                    No
+                  </mat-button-toggle>
+                </mat-button-toggle-group> 
+                </div>
+            
+              
+  
+              </td>
+              <td>
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;    font-size: 14px;">
+                  <a> Modelo(s) de operación PAE</a>
+                </div>
+                <div style="width: 100%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion" class="buttontog "
+                  style="margin-left: 10px; margin-bottom: 10px; width: 100%;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-199.png "> MAEM
+                  </mat-button-toggle>
+                  <mat-button-toggle  style="width: 50%; display: flex; font-style: 20px; background-color: #ed0057!important;" value="320" >
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> 
+                    <a style="color:#FFF!important;">MAER</a>
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-201.png "> PAEPI
+                  </mat-button-toggle>
+                 <!--  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-202.png "> PAEC
+                  </mat-button-toggle> -->
+                </mat-button-toggle-group>
+                </div>
+               
+  
+              </td>
+  
+              <td style="width: 80%;">
+                <div class="text-left" style="font-size: 10px !important; margin: 20px;">
+                  <p>*Para cambiar el modelo de operación de la sede, o retirar/meter la sede del listado
+                    de priorizadas, ingrese al sistema MiPAE, sección "Sedes beneficiarias".
+                  </p>
+  
+                </div>
+  
+  
+  
+              </td>
+            </ng-container>
+          </table>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+</div>
+
+<div *ngIf="MAERNO">
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+  
+      <div style="justify-content: right;">
+  
+        <div fxFlex.gt-md="60" fxFlex.gt-lg="60" fxFlex="100" class="text-center textointerno">
+          <table class="tablaform3" style="width: 80%;float: right; font-size: 14px;">
+            <ng-container>
+              <td style="width: 18%;">
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;     font-size: 14px;">
+                  <a> Priorizada PAE</a>
+                </div>
+                <div style="width: 80%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion"
+                  style="margin-left: 10px; margin-bottom: 10px;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE"
+                    value="si" >
+                   Si
+                  </mat-button-toggle>
+                  <mat-button-toggle style="width: 50%; color: #FFF!important; font-style: 20px; background-color: #ed0057!important;"
+                   value="no" active>
+                   <a style="color:#FFF!important;">No</a> 
+                  </mat-button-toggle>
+                </mat-button-toggle-group> 
+                </div>
+            
+              
+  
+              </td>
+              <td>
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;    font-size: 14px;">
+                  <a> Modelo(s) de operación PAE</a>
+                </div>
+                <div style="width: 100%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion" class="buttontog "
+                  style="margin-left: 10px; margin-bottom: 10px; width: 100%;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-199.png "> MAEM
+                  </mat-button-toggle>
+                  <mat-button-toggle  style="width: 50%; display: flex; font-style: 20px; background-color: #ed0057!important;" value="320" >
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> 
+                    <a style="color:#FFF!important;">MAER</a>
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-201.png "> PAEPI
+                  </mat-button-toggle>
+                 <!--  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-202.png "> PAEC
+                  </mat-button-toggle> -->
+                </mat-button-toggle-group>
+                </div>
+               
+  
+              </td>
+  
+              <td style="width: 80%;">
+                <div class="text-left" style="font-size: 10px !important; margin: 20px;">
+                  <p>*Para cambiar el modelo de operación de la sede, o retirar/meter la sede del listado
+                    de priorizadas, ingrese al sistema MiPAE, sección "Sedes beneficiarias".
+                  </p>
+  
+                </div>
+  
+  
+  
+              </td>
+            </ng-container>
+          </table>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+</div>
+
+<!-------------PAEPI--------------->
+<div *ngIf="PAEPISI">
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+  
+      <div style="justify-content: right;">
+  
+        <div fxFlex.gt-md="60" fxFlex.gt-lg="60" fxFlex="100" class="text-center textointerno">
+          <table class="tablaform3" style="width: 80%;float: right; font-size: 14px;">
+            <ng-container>
+              <td style="width: 18%;">
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;     font-size: 14px;">
+                  <a> Priorizada PAE</a>
+                </div>
+                <div style="width: 80%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion"
+                  style="margin-left: 10px; margin-bottom: 10px;">
+                  <mat-button-toggle
+                    style="width: 50%; color: #FFF!important; font-style: 20px; background-color: #ed0057!important;"
+                    value="si" active>
+                    <a style="color:#FFF!important;">Si</a>
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="no">
+                    No
+                  </mat-button-toggle>
+                </mat-button-toggle-group> 
+                </div>
+            
+              
+  
+              </td>
+              <td>
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;    font-size: 14px;">
+                  <a> Modelo(s) de operación PAE</a>
+                </div>
+                <div style="width: 100%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion" class="buttontog "
+                  style="margin-left: 10px; margin-bottom: 10px; width: 100%;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-199.png "> MAEM
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> 
+                    MAER
+                  </mat-button-toggle>
+                  <mat-button-toggle  style="width: 50%; display: flex; font-style: 20px; background-color: #ed0057!important;" value="320" >
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-201.png "> 
+                    <a style="color:#FFF!important;">PAEPI</a>
+                  </mat-button-toggle>
+                 <!--  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-202.png "> PAEC
+                  </mat-button-toggle> -->
+                </mat-button-toggle-group>
+                </div>
+               
+  
+              </td>
+  
+              <td style="width: 80%;">
+                <div class="text-left" style="font-size: 10px !important; margin: 20px;">
+                  <p>*Para cambiar el modelo de operación de la sede, o retirar/meter la sede del listado
+                    de priorizadas, ingrese al sistema MiPAE, sección "Sedes beneficiarias".
+                  </p>
+  
+                </div>
+  
+  
+  
+              </td>
+            </ng-container>
+          </table>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+</div>
+
+<div *ngIf="PAEPINO">
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+  
+      <div style="justify-content: right;">
+  
+        <div fxFlex.gt-md="60" fxFlex.gt-lg="60" fxFlex="100" class="text-center textointerno">
+          <table class="tablaform3" style="width: 80%;float: right; font-size: 14px;">
+            <ng-container>
+              <td style="width: 18%;">
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;     font-size: 14px;">
+                  <a> Priorizada PAE</a>
+                </div>
+                <div style="width: 80%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion"
+                  style="margin-left: 10px; margin-bottom: 10px;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE"
+                    value="si" >
+                   Si
+                  </mat-button-toggle>
+                  <mat-button-toggle style="width: 50%; color: #FFF!important; font-style: 20px; background-color: #ed0057!important;"
+                   value="no" active>
+                   <a style="color:#FFF!important;">No</a> 
+                  </mat-button-toggle>
+                </mat-button-toggle-group> 
+                </div>
+            
+              
+  
+              </td>
+              <td>
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;    font-size: 14px;">
+                  <a> Modelo(s) de operación PAE</a>
+                </div>
+                <div style="width: 100%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion" class="buttontog "
+                  style="margin-left: 10px; margin-bottom: 10px; width: 100%;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-199.png "> MAEM
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> 
+                    MAER
+                  </mat-button-toggle>
+                  <mat-button-toggle  style="width: 50%; display: flex; font-style: 20px; background-color: #ed0057!important;" value="320" >
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-201.png "> 
+                    <a style="color:#FFF!important;">PAEPI</a>
+                  </mat-button-toggle>
+                 <!--  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-202.png "> PAEC
+                  </mat-button-toggle> -->
+                </mat-button-toggle-group>
+                </div>
+               
+  
+              </td>
+  
+              <td style="width: 80%;">
+                <div class="text-left" style="font-size: 10px !important; margin: 20px;">
+                  <p>*Para cambiar el modelo de operación de la sede, o retirar/meter la sede del listado
+                    de priorizadas, ingrese al sistema MiPAE, sección "Sedes beneficiarias".
+                  </p>
+  
+                </div>
+  
+  
+  
+              </td>
+            </ng-container>
+          </table>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+</div>
+
+
+<!-------------No tiene modelo -------------->
+<div *ngIf="NOTIENEMOSI">
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+  
+      <div style="justify-content: right;">
+  
+        <div fxFlex.gt-md="60" fxFlex.gt-lg="60" fxFlex="100" class="text-center textointerno">
+          <table class="tablaform3" style="width: 80%;float: right; font-size: 14px;">
+            <ng-container>
+              <td style="width: 18%;">
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;     font-size: 14px;">
+                  <a> Priorizada PAE</a>
+                </div>
+                <div style="width: 80%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion"
+                  style="margin-left: 10px; margin-bottom: 10px;">
+                  <mat-button-toggle
+                    style="width: 50%; color: #FFF!important; font-style: 20px; background-color: #ed0057!important;"
+                    value="si" active>
+                    <a style="color:#FFF!important;">Si</a>
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="no">
+                    No
+                  </mat-button-toggle>
+                </mat-button-toggle-group> 
+                </div>
+            
+              
+  
+              </td>
+              <td>
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;    font-size: 14px;">
+                  <a> Modelo(s) de operación PAE</a>
+                </div>
+                <div style="width: 100%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion" class="buttontog "
+                  style="margin-left: 10px; margin-bottom: 10px; width: 100%;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-199.png "> MAEM
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> 
+                    MAER
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> 
+                   PAEPI
+                  </mat-button-toggle>
+                 <!--  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-202.png "> PAEC
+                  </mat-button-toggle> -->
+                </mat-button-toggle-group>
+                </div>
+               
+  
+              </td>
+  
+              <td style="width: 80%;">
+                <div class="text-left" style="font-size: 10px !important; margin: 20px;">
+                  <p>*Para cambiar el modelo de operación de la sede, o retirar/meter la sede del listado
+                    de priorizadas, ingrese al sistema MiPAE, sección "Sedes beneficiarias".
+                  </p>
+  
+                </div>
+  
+  
+  
+              </td>
+            </ng-container>
+          </table>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+</div>
+
+<div *ngIf="NOTIENEMONO">
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+  
+      <div style="justify-content: right;">
+  
+        <div fxFlex.gt-md="60" fxFlex.gt-lg="60" fxFlex="100" class="text-center textointerno">
+          <table class="tablaform3" style="width: 80%;float: right; font-size: 14px;">
+            <ng-container>
+              <td style="width: 18%;">
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;     font-size: 14px;">
+                  <a> Priorizada PAE</a>
+                </div>
+                <div style="width: 80%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion"
+                  style="margin-left: 10px; margin-bottom: 10px;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE"
+                    value="si" >
+                   Si
+                  </mat-button-toggle>
+                  <mat-button-toggle style="width: 50%; color: #FFF!important; font-style: 20px; background-color: #ed0057!important;"
+                   value="no" active>
+                   <a style="color:#FFF!important;">No</a> 
+                  </mat-button-toggle>
+                </mat-button-toggle-group> 
+                </div>
+            
+              
+  
+              </td>
+              <td>
+                <div class="text-left" style="margin-top: 5px; margin-left: 10px;    font-size: 14px;">
+                  <a> Modelo(s) de operación PAE</a>
+                </div>
+                <div style="width: 100%;">
+                  <mat-button-toggle-group name="seleccion" aria-label="seleccion" class="buttontog "
+                  style="margin-left: 10px; margin-bottom: 10px; width: 100%;">
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-199.png "> MAEM
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> 
+                    MAER
+                  </mat-button-toggle>
+                  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-200.png "> 
+                   PAEPI
+                  </mat-button-toggle>
+                 <!--  <mat-button-toggle disabled style="width: 50%; color: #E2E6FE" value="321">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-202.png "> PAEC
+                  </mat-button-toggle> -->
+                </mat-button-toggle-group>
+                </div>
+               
+  
+              </td>
+  
+              <td style="width: 80%;">
+                <div class="text-left" style="font-size: 10px !important; margin: 20px;">
+                  <p>*Para cambiar el modelo de operación de la sede, o retirar/meter la sede del listado
+                    de priorizadas, ingrese al sistema MiPAE, sección "Sedes beneficiarias".
+                  </p>
+  
+                </div>
+  
+  
+  
+              </td>
+            </ng-container>
+          </table>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+</div>

@@ -1,0 +1,624 @@
+
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>{{ action }} Menú</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                <br />
+                <div *ngIf="action !='Adicionar'">
+                  <div class="example-full-width">
+                    <br />
+                    <input matInput id="id" formControlName="id" readonly="true" class=" form-control"
+                      style="display: none;" />
+                  </div>
+                </div>
+                <table>
+
+
+
+                  <ng-container *ngIf="action =='Actualizar'">
+                    <tr>
+                      <td  class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Nombre</div>
+                      </td>
+                      <td  class="BordeSeparador">
+                       
+                        <input matInput id="nombre" formControlName="nombre" required class="form-control"  />
+                          <div
+                            *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+
+
+                  <ng-container *ngIf="action =='Actualizar'">
+                    <tr>
+                      <td  class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Grupo Esquema</div>
+                      </td>
+                      <td  class="BordeSeparador">
+                  
+                        <input matInput id="grupoEsquema" formControlName="grupoEsquema" required class="form-control"  />
+                          <div
+                            *ngIf="form.get('grupoEsquema').invalid && (form.get('grupoEsquema').dirty || form.get('grupoEsquema').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+
+
+                  <ng-container *ngIf="action =='Actualizar'">
+                    <tr>
+                      <td  class="BordeSeparador">
+                        <div class="TextosBlueLeft">3. Orden</div>
+                      </td>
+                      <td  class="BordeSeparador">
+                       
+                        <input matInput id="orden" formControlName="orden" required 
+                            placeholder="Orden" class="form-control" />
+                          <div
+                            *ngIf="form.get('orden')?.invalid && (form.get('orden')?.dirty || form.get('orden')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action =='Actualizar'">
+                    <tr>
+                      <td  class="BordeSeparador">
+                        <div class="TextosBlueLeft">4. Orden Padre</div>
+                      </td>
+                      <td  class="BordeSeparador">
+                       
+                        <input matInput id="ordenPadre" formControlName="ordenPadre" required
+                        placeholder="Orden Padre" class="form-control" />
+                      <div
+                        *ngIf="form.get('ordenPadre')?.invalid && (form.get('ordenPadre')?.dirty || form.get('ordenPadre')?.touched)"
+                        class="invalid-feedback">
+                      </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action =='Actualizar'">
+                    <tr>
+                      <td  class="BordeSeparador">
+                        <div class="TextosBlueLeft">5. Padre</div>
+                      </td>
+                      <td  class="BordeSeparador">
+                      
+                        <input matInput id="padre" formControlName="padre" required 
+                            placeholder="Padre" class="form-control" />
+                          <div
+                            *ngIf="form.get('padre')?.invalid && (form.get('padre')?.dirty || form.get('padre')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action =='Actualizar'">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">6. Url Path</div>
+                      </td>
+                      <td class="BordeSeparador">
+                    
+                        <input matInput id="link" formControlName="link" required 
+                            placeholder="path" class="form-control" />
+                          <div
+                            *ngIf="form.get('link')?.invalid && (form.get('link')?.dirty || form.get('link')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="data.icono !==''&& action =='Actualizar'">
+                    <tr>
+                      <td  class="BordeSeparador">
+                        <div class="TextosBlueLeft">7. Icono</div>
+                      </td>
+                      <td  class="BordeSeparador">
+                       
+                        <input matInput id="icono" formControlName="icono" placeholder="Icono" class="form-control" readonly="true" />
+                        <div
+                          *ngIf="form.get('icono')?.invalid && (form.get('icono')?.dirty || form.get('icono')?.touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="data.icono !==''&& action =='Actualizar'">
+                    <tr>
+                      <td >
+                        <div class="TextosBlueLeft"> 8. Archivo Adjunto Icono</div>
+                      </td>
+                      <td>
+                        <div class="container">
+                          <div class="button-wrap">
+
+                            <div>
+                              <button class="text-center buttonAr3 btn-file CenterAll">Adjuntar archivo
+                                <img style="transform: rotate(180deg)"
+                                  src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4.png " height="20px"
+                                  width="auto">
+                                <input name="photo" type="file" data-max-size="3064"
+                                  (change)="onFileSelected($any($event).currentTarget.files)" accept="'image/png'" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="action =='Adicionar'">
+                    <tr>
+                      <td >
+                        <div class="TextosBlueLeft">Menú Principal</div>
+                      </td>
+                      <td>
+                        <div>
+                          <button (click)="MenuPrincipalDialog()">Crear Menú principal
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action =='Adicionar'">
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft"> Menú Lateral</div>
+                      </td>
+                      <td>
+                        <div>
+                          <button (click)="MenuSegundarioDialog()">Crear Menú Lateral
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action =='Adicionar'">
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Sub Menú</div>
+                      </td>
+                      <td>
+                        <div>
+                          <button (click)="SubMenuDialog()">Crear Sub Menú
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <br>
+                  <!--------------------inicio de Menú Principal------------------------->
+                  <ng-container *ngIf="principal">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Menú Principal</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input (change)="onMenuPrincipal2($any($event).target.value)" matInput id="nombre" formControlName="nombre" required class="form-control"
+                        placeholder="Menú Principal"  />
+                          <div
+                            *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="principal">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Grupo Esquema</div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+                        <input matInput id="grupoEsquema" formControlName="grupoEsquema" required class="form-control" readonly="true"
+                        placeholder="Grupo Esquema" />
+                          <div
+                            *ngIf="form.get('grupoEsquema').invalid && (form.get('grupoEsquema').dirty || form.get('grupoEsquema').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="principal">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">3. Orden</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="orden" formControlName="orden" required readonly="true"
+                            placeholder="Orden" class="form-control" />
+                          <div
+                            *ngIf="form.get('orden')?.invalid && (form.get('orden')?.dirty || form.get('orden')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="principal">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">4. Orden Padre</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="ordenPadre" formControlName="ordenPadre" readonly="true" required
+                            placeholder="Orden Padre" class="form-control" />
+                          <div
+                            *ngIf="form.get('ordenPadre')?.invalid && (form.get('ordenPadre')?.dirty || form.get('ordenPadre')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="principal">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">5. Padre</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="padre" formControlName="padre" required readonly="true"
+                            placeholder="Padre" class="form-control" />
+                          <div
+                            *ngIf="form.get('padre')?.invalid && (form.get('padre')?.dirty || form.get('padre')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="principal">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">6. Sistema</div>
+                      </td>
+                      <td class="BordeSeparador">
+                      
+                          <mat-select id="accion" formControlName="accion" required class="tablaform"placeholder="sistema"
+                          (selectionChange)="sistema($event.value)">
+                            <mat-option *ngFor="let item of SistemaList" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <!-------------inicio de Menú Segundario------------------------->
+                  <ng-container *ngIf="segundario">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Menú Principal</div>
+                      </td>
+                      <td class="BordeSeparador">
+                      
+                        <mat-select id="principal" formControlName="principal"class="tablaform" placeholder="Menú Principal" 
+                            (selectionChange)="onMenuPrincipal3($event.value)">
+                            <mat-option *ngFor="let item of MenuPrincipal" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="segundario">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Menú Lateral</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="nombre" formControlName="nombre" required class="form-control" 
+                        placeholder="Menú Lateral" />
+                          <div
+                            *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                 
+
+                  <ng-container *ngIf="segundario">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">3. Grupo Esquema</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="grupoEsquema" formControlName="grupoEsquema" required class="form-control" readonly="true" 
+                        placeholder="Grupo Esquema"/>
+                        <div
+                          *ngIf="form.get('grupoEsquema').invalid && (form.get('grupoEsquema').dirty || form.get('grupoEsquema').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="segundario">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">4. Orden</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="orden" formControlName="orden" required readonly="true"
+                            placeholder="Orden" class="form-control" />
+                          <div
+                            *ngIf="form.get('orden')?.invalid && (form.get('orden')?.dirty || form.get('orden')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="segundario">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">5. Orden Padre</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="ordenPadre" formControlName="ordenPadre" readonly="true" required
+                            placeholder="Orden Padre" class="form-control" />
+                          <div
+                            *ngIf="form.get('ordenPadre')?.invalid && (form.get('ordenPadre')?.dirty || form.get('ordenPadre')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="segundario">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">6. Padre</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="padre" formControlName="padre" required readonly="true"
+                            placeholder="Padre" class="form-control" />
+                          <div
+                            *ngIf="form.get('padre')?.invalid && (form.get('padre')?.dirty || form.get('padre')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="segundario">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">7. Icono</div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+                        <input matInput id="icono" formControlName="icono" required readonly="true"
+                            placeholder="icono" class="form-control" />
+                          <div
+                            *ngIf="form.get('icono')?.invalid && (form.get('icono')?.dirty || form.get('icono')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="segundario">
+                    <tr>
+                      <td class="">
+                        <div class="TextosBlueLeft">8. Archivo Adjunto Icono</div>
+                      </td>
+                      <td>
+                        <div class="container">
+                          <div class="button-wrap">
+
+                            <div>
+                              <button class="text-center buttonAr3 btn-file CenterAll">Adjuntar archivo
+                                <img style="transform: rotate(180deg)"
+                                  src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4.png " height="20px"
+                                  width="auto">
+                                <input name="photo" type="file" data-max-size="3064"
+                                  (change)="onFileSelected($any($event).currentTarget.files)" accept="'image/png'" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <!--------------------inicio de sub Menú------------------------->
+
+                  <ng-container *ngIf="sub">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Menú Principal</div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+                        <mat-select id="principal" formControlName="principal"class="tablaform" placeholder="Menú Principal"
+                            (selectionChange)="onMenuPrincipal($event.value)">
+                            <mat-option *ngFor="let item of MenuPrincipal" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="sub">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Menú Lateral</div>
+                      </td>
+                      <td class="BordeSeparador">
+                   
+                        <mat-select id="secundario" formControlName="secundario" class="tablaform"placeholder="Menú Lateral"
+                            (selectionChange)="onMenuSecundario($event.value)">
+                            <mat-option *ngFor="let item of MenuSegundario" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="sub">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">3.Sub Menú</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <input matInput id="nombre" formControlName="nombre" required class="form-control" placeholder="Menú Sub Menú"/>
+                          <div
+                            *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="sub">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">4. Grupo Esquema</div>
+                      </td>
+                      <td class="BordeSeparador">
+                        
+                        <mat-select id="grupoEsquema" formControlName="grupoEsquema" required class="tablaform"placeholder="Grupo Esquema">
+                          <mat-option *ngFor="let item of GrupoEsquema" [value]="item.nombre">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="sub">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">5. Orden</div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+
+                        <input matInput id="orden" formControlName="orden" required readonly="true"
+                            placeholder="Orden" class="form-control" />
+                          <div
+                            *ngIf="form.get('orden')?.invalid && (form.get('orden')?.dirty || form.get('orden')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="sub">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">6. Orden Padre</div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+                        <input matInput id="ordenPadre" formControlName="ordenPadre" readonly="true" required
+                            placeholder="Orden Padre" class="form-control" />
+                          <div
+                            *ngIf="form.get('ordenPadre')?.invalid && (form.get('ordenPadre')?.dirty || form.get('ordenPadre')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="sub">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">7. Padre</div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+                        <input matInput id="padre" formControlName="padre" required readonly="true"
+                            placeholder="Padre" class="form-control" />
+                          <div
+                            *ngIf="form.get('padre')?.invalid && (form.get('padre')?.dirty || form.get('padre')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container *ngIf="sub">
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">8. Url Path</div>
+                      </td>
+                      <td>
+                       
+                        <input matInput id="link" formControlName="link" required 
+                            placeholder="path" class="form-control" />
+                          <div
+                            *ngIf="form.get('link')?.invalid && (form.get('link')?.dirty || form.get('link')?.touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+
+
+
+                </table>
+
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <br>
+                <div style="text-align: center;">
+                  ¿Está seguro de eliminar el registro?
+                </div>
+                <br>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                        <button [disabled]="!form.valid && action !='Eliminar'" (click)="doAction()">{{action}}
+                        </button>
+                      </div>
+
+                      <div>
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

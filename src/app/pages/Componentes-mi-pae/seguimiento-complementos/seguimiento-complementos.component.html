@@ -1,0 +1,249 @@
+<div>
+    <div class="row">
+        <div class="tab-control-secondary">
+            <div class="tab-item active w-down-fit-content" style="width: 30%;">
+                <div style="color: #00A9AB ;">Seguimiento a complementos</div>
+            </div>
+            <div class="tab-item nothing w-down-fit-content" style="width: 70%;">
+                <div>-</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-50 w-down-100 d-flex flex-column flex-md-row mt-5 borderFilter" [formGroup]="filterForm">
+
+      <div class="col">
+        <mat-card class="pl-down-0 mb-lg-down-0" style="padding-left: 10px;">
+            <mat-card-title>Contrato</mat-card-title>
+            <mat-select class="tablaform control-md" id="contrato" formControlName="contrato" required
+                placeholder="Seleccione">
+                <mat-option *ngFor="let item of ContratosList" [value]="item.id">{{item.numeroContrato}}
+                </mat-option>
+            </mat-select>
+        </mat-card>
+      </div>
+
+      <div class="col">
+        <mat-card class="mb-lg-down-0">
+            <mat-card-title>Año</mat-card-title>
+            <mat-select class="tablaform control-md" id="ano" formControlName="ano" required
+                placeholder="Seleccione">
+                <mat-option *ngFor="let item of anoList" [value]="item">{{item}}
+                </mat-option>
+            </mat-select>
+        </mat-card>
+    </div>
+
+    <div class="col border-down-none" style="border-right: 1px solid #005ACA;">
+      <mat-card class="mb-lg-down-0" style="padding-right: 5px !important;">
+          <mat-card-title>Mes</mat-card-title>
+          <mat-select class="tablaform control-md" id="mes" formControlName="mes" required
+              placeholder="Seleccione">
+              <mat-option *ngFor="let item of mesList" [value]="item.id">{{item.name}}
+              </mat-option>
+          </mat-select>
+      </mat-card>
+    </div>
+
+    <div>
+      <mat-card style="padding-right: 10px !important;">
+          <div class="tablaform2 d-flex justify-content-center">
+              <a class="btn-agregar" (click)="onFilterClick()">
+                  <img class="imgFilter" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png">
+                  <div>Filtrar</div>
+              </a>
+          </div>
+      </mat-card>
+    </div>
+
+    </div>
+
+</div>
+<div *ngIf="filtered">
+    <div class="resultLine">
+        <div class="imgResult">
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-35.png" alt="" height="20px" width="auto">
+            {{cantidadResultados}} Resultados disponibles
+        </div>
+    </div>
+    <hr class="linea">
+    <div class="alignCenter" fxLayout="row wrap">
+        <div class="row ubicacionTablaEstado alignCenter">
+            <div class="col alignCenter flex-wrap">
+                <b class="paddingLeftStates">Estado del diligenciamiento:</b>
+                <div>
+                  <mat-icon class="sizeIcon" style="color: #E2ECFD;">
+                    circle
+                </mat-icon>
+                <b class="paddingLeftStates">Pendiente</b>
+                </div>
+                <div>
+                  <mat-icon class="sizeIcon" style="color: #ffd400;">
+                    circle
+                </mat-icon>
+                <b class="paddingLeftStates">Por aprobar</b>
+                </div>
+                <div>
+                  <mat-icon class="sizeIcon" style="color: #ff9100;">
+                    circle
+                </mat-icon>
+                <b class="paddingLeftStates">Incompleto</b>
+                </div>
+                <div>
+                  <mat-icon class="sizeIcon" style="color: #009922;">
+                    circle
+                </mat-icon>
+                <b class="paddingLeftStates">Aprobado</b>
+                </div>
+                <div>
+                  <mat-icon class="sizeIcon" style="color: #ff0000;">
+                    circle
+                </mat-icon>
+                <b class="paddingLeftStates">Rechazado</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-left: -10px;" fxLayout="row wrap">
+        <div style="margin-left: -10px;" fxFlex="100">
+            <mat-card class="mr-lg-down-0">
+                <mat-card-content>
+                    <div class="tab-responsive overflow-auto">
+
+                        <table mat-table [dataSource]="dataSource" matSort>
+                            <ng-container matColumnDef="municipio">
+                                <th style="position: relative" mat-header-cell *matHeaderCellDef>
+                                    <input (keyup)="applyFilter($any($event).target.value)" type="text"
+                                        (focus)="setupFilter('municipio')" class="inputFilter control-md">
+                                    <mat-icon class="sizeIconSearch">
+                                        search icon
+                                    </mat-icon>
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.municipio }} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="institucion">
+                                <th style="position: relative" mat-header-cell *matHeaderCellDef>
+                                    <input (keyup)="applyFilter($any($event).target.value)" type="text"
+                                        (focus)="setupFilter('institEducativa')"
+                                        class="inputFilter control-md">
+                                    <mat-icon class="sizeIconSearch">
+                                        search icon
+                                    </mat-icon>
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.institEducativa }} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="sede">
+                                <th style="position: relative" mat-header-cell *matHeaderCellDef>
+                                    <input (keyup)="applyFilter($any($event).target.value)" type="text"
+                                        (focus)="setupFilter('sede')" class="inputFilter control-md">
+                                    <mat-icon class="sizeIconSearch">
+                                        search icon
+                                    </mat-icon>
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.sede }} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="jornada">
+                                <th style="position: relative" mat-header-cell *matHeaderCellDef>
+                                    <input (keyup)="applyFilter($any($event).target.value)" type="text"
+                                        (focus)="setupFilter('jornada')" class="inputFilter control-md">
+                                    <mat-icon class="sizeIconSearch">
+                                        search icon
+                                    </mat-icon>
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.jornada }} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="s1">
+                                <th mat-header-cell *matHeaderCellDef class="shortCell"><b>S1</b></th>
+                                <td mat-cell *matCellDef="let element" class="borderLeft">
+                                    <mat-icon [ngStyle]="applyStyles(element.semana_1)">
+                                        circle
+                                    </mat-icon>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="s2">
+                                <th mat-header-cell *matHeaderCellDef class="shortCell"><b>S2</b></th>
+                                <td mat-cell *matCellDef="let element" class="borderLeft2">
+                                    <mat-icon [ngStyle]="applyStyles(element.semana_2)">
+                                        circle
+                                    </mat-icon>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="s3">
+                                <th mat-header-cell *matHeaderCellDef class="shortCell"><b>S3</b></th>
+                                <td mat-cell *matCellDef="let element" class="borderLeft2">
+                                    <mat-icon [ngStyle]="applyStyles(element.semana_3)">
+                                        circle
+                                    </mat-icon>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="s4">
+                                <th mat-header-cell *matHeaderCellDef class="shortCell"><b>S4</b></th>
+                                <td mat-cell *matCellDef="let element" class="borderLeft2">
+                                    <mat-icon [ngStyle]="applyStyles(element.semana_4)">
+                                        circle
+                                    </mat-icon>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="s5">
+                                <th mat-header-cell *matHeaderCellDef class="shortCell"><b>S5</b></th>
+                                <td mat-cell *matCellDef="let element" class="borderLeft2">
+                                    <mat-icon *ngIf="element.numeroSemanas>=5"
+                                        [ngStyle]="applyStyles(element.semana_5)">
+                                        circle
+                                    </mat-icon>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="s6">
+                                <th mat-header-cell *matHeaderCellDef class="shortCell"><b>S6</b></th>
+                                <td mat-cell *matCellDef="let element" class="borderLeft2">
+                                    <mat-icon *ngIf="element.numeroSemanas>=6"
+                                        [ngStyle]="applyStyles(element.semana_6)">
+                                        circle
+                                    </mat-icon>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="top_municipio">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="1"
+                                    class="borderCols LeftUpCorner sizeCol">
+                                    <b>Municipio</b>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="top_institucion">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="1" class="borderCols sizeColIE">
+                                    <b>Institución <br> educativa</b>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="top_sede">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="1" class="borderCols sizeColS"><b>Sede</b>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="top_jornada">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="1" class="borderCols sizeCol">
+                                    <b>Jornada</b>
+                                </th>
+                            </ng-container>
+                            <ng-container matColumnDef="top_mes">
+                                <th class="RightUpCorner" mat-header-cell *matHeaderCellDef [attr.colspan]="6"
+                                    style="border-left: 0px!important; border-right: 1px solid !important; border-bottom: 0px !important;">
+                                    <b>{{selectMesName}}
+                                        (semanas)</b>
+                                </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedTopHeaders"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                (click)="goToDetail(row.id_sede, row.id_Jornada,row)"></tr>
+                        </table>
+                        <mat-paginator style="color:#005ACA ;" #paginator [pageSize]="10"
+                            [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

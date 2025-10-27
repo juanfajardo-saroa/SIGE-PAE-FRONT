@@ -1,0 +1,184 @@
+<div>
+   <table class="table-default table-border-dashed-vertical">
+      <thead>
+         <tr class="text-center">
+            <th class="empty"></th>
+            <th *ngFor="let column of dataRowspanMacro; index as i" rowspan="2"
+               [class]="i === 0 ? 'border-top-left-radius-md' : ''">
+               {{column}}
+            </th>
+            <th class="p-xxs noborder-bottom" [class]="dataRowspanMacro.length == 0 ? 'border-top-left-radius-md' : ''"
+               colspan="100">Macronutrientes</th>
+         </tr>
+         <tr class="text-center">
+            <th class="empty border-bottom"></th>
+            <th *ngFor="let column of dataColumnsMacro; index as i" class="noBorder-radius"
+               [class]="i === 0 ? 'border-left' : ''">
+               {{column}}
+            </th>
+            <!-- <th class="noBorder-radius"
+                  rowspan="{{item.nomNutriente == 'Calorías (Kcal)' ? 2 : 1}}"
+                  [class]="i === 0 ? 'border-left' : ''"
+                  *ngFor="let item of dataMacroNutrientes; index as i">
+                {{item.nomNutriente}}
+              </th> -->
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td width="150px">
+               Aporte estimado
+            </td>
+            <td width="150px" class="text-center" *ngFor="let item of dataMacroNutrientes">
+               <label *ngIf="itemsDisabled">
+                  {{item.aporteMinimo}}
+               </label>
+               <input type="text" style="width: 100px; display: inline-block;" *ngIf="!itemsDisabled"
+                  class="control-md text-center" [(ngModel)]="item.aporteMinimo" [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('aporteMinimo', $event, item)">
+            </td>
+         </tr>
+         <tr>
+            <td>
+               Recomendaci&oacute;n diaria
+            </td>
+            <td class="text-center text-nowrap" *ngFor="let item of dataMacroNutrientes">
+               <label *ngIf="itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL" style="width: 50px">
+                  {{item.aporteRecomendadoMin}}
+               </label>
+               <input type="text" style="width: 50px; display: inline-block;"
+                  *ngIf="!itemsDisabled && tipoMinuta == tipoMinutaMAER.PATRON" class="control-md text-center"
+                  [(ngModel)]="item.aporteRecomendadoMin" [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('aporteRecomendadoMin', $event, item)">
+               <span>-</span>
+               <label *ngIf="itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL" style="width: 50px">
+                  {{item.aporteRecomendadoMax}}
+               </label>
+               <input type="text" style="width: 50px; display: inline-block;"
+                  *ngIf="!itemsDisabled && tipoMinuta == tipoMinutaMAER.PATRON" class="control-md text-center"
+                  [(ngModel)]="item.aporteRecomendadoMax" [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('aporteRecomendadoMax', $event, item)">
+            </td>
+         </tr>
+         <tr>
+            <td>
+               Regla de adecuaci&oacute;n
+            </td>
+            <td class="text-center" *ngFor="let item of dataMacroNutrientes">
+
+               <label *ngIf="itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL" style="width: 49px">
+                  {{item.porcentajeAdecuacionMax | percent}}
+               </label>
+               <span *ngIf="itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL">-</span>
+               <input type="text" style="width: 50px; display: inline-block;"
+                  *ngIf="!itemsDisabled && tipoMinuta == tipoMinutaMAER.PATRON" class="control-md text-center"
+                  [(ngModel)]="item.porcentajeAdecuacionMax" [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('porcentajeAdecuacionMax', $event, item)">
+               <label *ngIf="itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL" style="width: 49px">
+                  {{item.porcentajeAdecuacionMin | percent}}
+               </label>
+               <input type="text" style="width: 50px; display: inline-block;"
+                  *ngIf="!itemsDisabled && tipoMinuta == tipoMinutaMAER.PATRON" class="control-md text-center"
+                  [(ngModel)]="item.porcentajeAdecuacionMin" [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('porcentajeAdecuacionMin', $event, item)">
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+
+<div class="mt-xxl">
+   <table class="table-default table-border-dashed-vertical">
+      <thead>
+         <tr class="text-center">
+            <th class="empty"></th>
+            <th class="border-top-left-radius-md p-xxs noborder-bottom" colspan="100">Micronutrientes</th>
+         </tr>
+         <tr class="text-center">
+            <th class="empty border-bottom"></th>
+            <th class="noBorder-radius" [class]="i === 0 ? 'border-left' : ''"
+               *ngFor="let column of dataColumnsMicro; index as i">
+               {{column}}
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td width="150px">
+               Aporte estimado
+            </td>
+            <td width="150px" class="text-center" *ngFor="let item of dataMicroNutrientes">
+               <label *ngIf="itemsDisabled && item.idNutriente != ID_NUTRIENTE_SODIO">
+                  {{item.aporteMinimo}}
+               </label>
+               <input type="text" style="width: 100px; display: inline-block;"
+                  *ngIf="!itemsDisabled && item.idNutriente != ID_NUTRIENTE_SODIO" class="control-md text-center"
+                  [(ngModel)]="item.aporteMinimo" [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('aporteMinimo', $event, item); validateAlert(item);">
+            </td>
+         </tr>
+         <tr>
+            <td>
+               Recomendaci&oacute;n diaria
+            </td>
+            <td class="text-center text-nowrap" *ngFor="let item of dataMicroNutrientes">
+               <ng-container *ngIf="itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL">
+                  <label *ngIf="item.idNutriente != ID_NUTRIENTE_SODIO" style="width: 50px">
+                     {{item.aporteRecomendadoMin}}
+                  </label>
+                  <span *ngIf="item.idNutriente != ID_NUTRIENTE_SODIO">-</span>
+                  <label *ngIf="item.idNutriente == ID_NUTRIENTE_SODIO" class="text-nowrap">
+                     Máximo {{item.aporteRecomendadoMin + 'mg/Kcal'}}
+                  </label>
+               </ng-container>
+               <input type="text" style="width: 50px; display: inline-block;"
+                  *ngIf="!itemsDisabled && tipoMinuta == tipoMinutaMAER.PATRON" class="control-md text-center"
+                  [(ngModel)]="item.aporteRecomendadoMin" [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('aporteRecomendadoMin', $event, item)">
+               <label
+                  *ngIf="(itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL) && item.idNutriente != ID_NUTRIENTE_SODIO"
+                  style="width: 50px">
+                  {{item.aporteRecomendadoMax}}
+               </label>
+               <input type="text" style="width: 50px; display: inline-block;"
+                  *ngIf="!itemsDisabled && tipoMinuta == tipoMinutaMAER.PATRON && item.idNutriente != ID_NUTRIENTE_SODIO"
+                  class="control-md text-center" [(ngModel)]="item.aporteRecomendadoMax"
+                  [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('aporteRecomendadoMax', $event, item)">
+            </td>
+         </tr>
+         <tr>
+            <td>
+               Regla de adecuaci&oacute;n
+            </td>
+            <td class="text-center text-nowrap" *ngFor="let item of dataMicroNutrientes">
+               <ng-container
+                  *ngIf="(itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL) && item.idNutriente != ID_NUTRIENTE_SODIO">
+                  <label style="width: 49px">
+                     {{item.porcentajeAdecuacionMax | percent}}
+                  </label>
+                  <span>-</span>
+               </ng-container>
+               <input type="text" style="width: 50px; display: inline-block;"
+                  *ngIf="!itemsDisabled && tipoMinuta == tipoMinutaMAER.PATRON && item.idNutriente != ID_NUTRIENTE_SODIO"
+                  class="control-md text-center" [(ngModel)]="item.porcentajeAdecuacionMax"
+                  [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('porcentajeAdecuacionMax', $event, item)">
+
+               <label
+                  *ngIf="(itemsDisabled || tipoMinuta == tipoMinutaMAER.DIFERENCIAL) && item.idNutriente != ID_NUTRIENTE_SODIO"
+                  style="width: 49px">
+                  {{item.porcentajeAdecuacionMin | percent}}
+               </label>
+               <input type="text" style="width: 50px; display: inline-block;"
+                  *ngIf="!itemsDisabled && tipoMinuta == tipoMinutaMAER.PATRON && item.idNutriente != ID_NUTRIENTE_SODIO"
+                  class="control-md text-center" [(ngModel)]="item.porcentajeAdecuacionMin"
+                  [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="changeModelMinutaNutriente('porcentajeAdecuacionMin', $event, item)">
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>

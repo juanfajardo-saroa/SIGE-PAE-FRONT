@@ -1,0 +1,803 @@
+<div class="row form-group">
+  <div class="col-12">
+
+    <div id="PreciosPorRacion" [ngStyle]="{'display': PreciosPorRacion ? '' : 'none'}">
+      <div class="col-12 title-separador">
+        <label> Precios por complemento </label>
+      </div>
+
+      <div class="row">
+        <div class="col-7 text-basecolor">
+          Para calcular los costos y cobertura financiera, <strong>ingrese los precios por complemento que tienes como
+            referencia para tu ETC</strong>.
+        </div>
+
+        <div class="col-4">
+          <button class="msg-consulta">
+            <div class="flex align-items-center">
+              <div class="flex mr-xs">
+                <img style="width: 30px; height: 30px;" src="../assets/images/Iconos/cubiertos-transparent.png">
+              </div>
+              <div class="flex">
+                Revise los precios sugeridos <br /> para un menú en mi ETC
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-12 mt-xl">
+          <div class="row">
+            <div class="col-12" [class]="colPAE">
+              <app-precios-racion *ngIf="dataSourcePxP" [dataSourcePxP]="dataSourcePxP"
+                [idTipoModeloOperacion]="idTipoModeloOperacion" [editarPrecios]="editarPrecios">
+              </app-precios-racion>
+            </div>
+            <div class="col-12 col-sm-3 no-padding">
+              <ng-container *ngIf="editarPrecios">
+                <button class="msg-alerta" (click)="guardarValores()">
+                  <div style="float: left; margin-right: 5px;">
+                    <img src="../assets/images/Iconos/agregar.png">
+                  </div>
+                  <div>
+                    Guardar precios <br /> de los complementos
+                  </div>
+                </button><br /><br />
+                <button class="msg-alerta" (click)="cancelarValores()">
+                  <div style="float: left; margin-right: 5px;">
+                    <img src="../assets/images/Iconos/agregar.png">
+                  </div>
+                  <div>
+                    Cancelar
+                  </div>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="!editarPrecios && permisos.editar">
+                <button class="msg-alerta" (click)="editarPreciosRaciones()">
+                  <div style="float: left; margin-right: 5px;">
+                    <img src="../assets/images/Iconos/lapiz.png">
+                  </div>
+                  <div>
+                    Editar precios <br /> de los complementos
+                  </div>
+                </button>
+              </ng-container>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="CostosSuministros" [ngStyle]="{'display': CostosSuministros ? '' : 'none'}">
+      <div class="col-12 title-separador">
+        <label> Costos de suministro: Precio por complemento X Cantidad de complementos X Días PAE </label>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <app-costos-pae *ngIf="dataSourceCS" [dataSourceCS]="dataSourceCS"
+            [idTipoModeloOperacion]="idTipoModeloOperacion" [costoTotalCS]="costoTotalCS">
+          </app-costos-pae>
+        </div>
+      </div>
+    </div>
+
+    <div id="CoberturaFinanciera" [ngStyle]="{'display': CoberturaFinanciera ? '' : 'none'}">
+      <div class="col-12 title-separador">
+        <label> Cobertura financiera del suministro </label>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-sm-8">
+          <table style=" border-spacing: 0;
+                border-top: 1px solid #005ACA;
+                border-right: 1px solid #005ACA;
+                border-left: 1px solid #005ACA;
+                border-bottom: 1px solid #005ACA;
+                border-radius: 19px 19px 19px 19px;">
+            <tbody>
+              <tr>
+                <th style="
+                      padding: 5px 15px;
+                      text-align: center;
+                      border-radius: 19px 0 0 19px;
+                      border-right: 1px solid #005ACA;
+                      background-color: aliceblue !important;
+                      font-weight: bold !important;
+                      color: #005ACA !important;
+                      border-right: 1px solid #005ACA;" rowspan="2">
+                  Cobertura financiera <br /> del suministro {{itemTipoModeloOperacion.descripcionTipo}}
+                </th>
+                <td class="row1-cobertura-financiera">
+                  Con ingresos Recaudados
+                </td>
+                <td [class]="porcRecaudados.bgColor" style="
+                      padding: 5px 15px;
+                      text-align: center;
+                      color: aliceblue !important;
+                      border-radius: 0 17px 0 0;
+                      border: none;
+                      border-bottom: 0px none;
+                      border-right: none;">
+                  {{porcRecaudados.valor / 100 | percent}}
+                </td>
+              </tr>
+              <tr>
+                <td nowrap style="
+                      padding: 5px 15px;
+                      text-align: left;
+                      border-right: 1px solid #005ACA;
+                      border-bottom: 1px dashed #005ACA;
+                      border-radius: 0 0 0 0;
+                      color: #005ACA;
+                      font-size: 14px;
+                      border-left-style: none !important;
+                      border-bottom-style: none !important;">
+                  Con ingresos Recaudos y Reconocidos
+                </td>
+                <td [class]="porcReconocidos.bgColor" style="
+                      width: 100px;
+                      padding: 5px 15px;
+                      text-align: center;
+                      border-radius: 0 0 17px 0;
+                      border: none;
+                      color: aliceblue !important;
+                      border-top: 1px solid #005ACA;
+                      border-right: none;">
+                  {{porcReconocidos.valor / 100 | percent}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="porcRecaudados.valor < 100 || porcReconocidos.valor < 100" class="col-12 col-sm-1 float-left">
+          <button class="msg-alerta">
+            <div class="float-left mr-xs">
+              <img src="../assets/images/Iconos/admiracion.png">
+            </div>
+            <div style="font-weight: bold !important;">
+              Su cobertura financiera <br /> es inferior al 100%
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="OtrosCostosGastos" [ngStyle]="{'display': OtrosCostosGastos ? '' : 'none'}">
+      <div class="col-12 title-separador">
+        <label> Otros costos/gastos </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12" style="margin-top: 20px;">
+        <div>
+          <div class="row">
+
+            <div class="col-12 col-xl-6" *ngIf="editarOtrosCostosTodo == true" style="float: left;">
+              <table style=" border-spacing: 0;
+                border-top: 1px solid #005ACA;
+                border-right: 1px solid #005ACA;
+                border-left: none;
+                border-bottom: none;
+                border-radius: 19px 19px 0 0;">
+                <thead>
+                  <tr>
+                    <th style="
+                      padding: 5px 15px;
+                      text-align: center;
+                      background-color: aliceblue !important;
+                      font-weight: bold !important;
+                      color: #005ACA !important;
+                      border-top: none;
+                      border-left: 1px solid #005ACA;
+                      border-bottom: 1px solid #005ACA;
+                      border-right: 1px solid #005ACA;
+                      border-radius: 19px 0 0 0;">Concepto</th>
+
+                    <th style="
+                      padding: 5px 15px;
+                      text-align: center;
+                      background-color: aliceblue !important;
+                      font-weight: bold !important;
+                      color: #005ACA !important;
+                      border-top: none;
+                      border-left: none;
+                      border-right: 1px solid #005ACA;
+                      border-bottom: 1px solid #005ACA;
+                      border-right: 1px none #005ACA;
+                      border-radius: 0 19px 0 0;">Valor anual</th>
+
+                  </tr>
+                </thead>
+                <tbody style="
+                  border-top: none;
+                  border-left: none;
+                  border-right: none;
+                  border-bottom: none;
+                  border-radius: 0 0 0 0;">
+                  <tr *ngFor="let item of otrosCostos">
+                    <td class="row1-otros-gastos" style="font-weight: bold !important;">
+                      <input type="text" value="{{ item.concepto }}" [(ngModel)]="item.concepto" class="form-control"
+                        maxlength="30" style="min-width:230px;">
+                    </td>
+                    <td style="padding: 5px 15px;
+                    text-align: left;
+                    border-radius: 0 0 0 0;
+                    color: #005ACA;
+                    border-right: none;
+                    font-size: 14px;
+                    font-weight: bold !important;">
+                      <input type="text" value="{{ item.valorAnual }}" [(ngModel)]="item.valorAnual" min="0"
+                        class="form-control" maxlength="20" style="min-width:150px;">
+                    </td>
+
+                  </tr>
+                </tbody>
+              </table>
+              <strong style="padding-left: 10px; color: red;"> {{ mensajeOtrosCostos }}</strong>
+            </div>
+
+
+            <div class="col-12 col-xl-6" *ngIf="editarOtrosCostosTodo == false" style="float: left;">
+
+
+              <table style=" border-spacing: 0;
+                border-top: 1px solid #005ACA;
+                border-right: 1px solid #005ACA;
+                border-left: none;
+                border-bottom: none;
+                border-radius: 19px 19px 0 0;">
+                <thead>
+                  <tr>
+                    <th style="
+                      padding: 5px 15px;
+                      text-align: center;
+                      background-color: aliceblue !important;
+                      font-weight: bold !important;
+                      color: #005ACA !important;
+                      border-top: none;
+                      border-left: 1px solid #005ACA;
+                      border-bottom: 1px solid #005ACA;
+                      border-right: 1px solid #005ACA;
+                      border-radius: 19px 0 0 0;">Concepto</th>
+                    <th style="
+                      padding: 5px 15px;
+                      text-align: center;
+                      background-color: aliceblue !important;
+                      font-weight: bold !important;
+                      color: #005ACA !important;
+                      border-top: none;
+                      border-left: none;
+                      border-right: 1px solid #005ACA;
+                      border-bottom: 1px solid #005ACA;
+                      border-right: 1px none #005ACA;
+                      border-radius: 0 19px 0 0;">Valor anual</th>
+                    <th style="
+                      padding: 5px 15px;
+                      text-align: center;
+                      background-color: aliceblue !important;
+                      font-weight: bold !important;
+                      color: #005ACA !important;
+                      border-top: none;
+                      border-left:  1px solid #005ACA;
+                      border-right: 1px solid #005ACA;
+                      border-bottom: 1px solid #005ACA;
+                      border-right: 1px none #005ACA;
+                      border-radius: 0 19px 0 0;"></th>
+                  </tr>
+                </thead>
+                <tbody style="
+                  border-top: none;
+                  border-left: none;
+                  border-right: none;
+                  border-bottom: none;
+                  border-radius: 0 0 0 0;">
+                  <tr *ngFor="let item of otrosCostos">
+                    <td *ngIf="item.id == '0' " class="row1-otros-gastos" style="font-weight: bold !important;">
+                      <input type="text" value="{{ item.concepto }}" [(ngModel)]="item.concepto" class="form-control"
+                        style="min-width:230px;">
+                    </td>
+                    <td *ngIf="item.id != '0' " class="row1-otros-gastos" style="font-weight: bold !important;">
+                      {{ item.concepto }}
+                    </td>
+                    <td *ngIf="item.id == '0' " style="padding: 5px 15px;
+                    text-align: left;
+                    border-radius: 0 0 0 0;
+                    color: #005ACA;
+                    border-right: none;
+                    font-size: 14px;
+                    font-weight: bold !important;">
+                      <input type="text" value="{{ item.valorAnual }}" [(ngModel)]="item.valorAnual" min="0"
+                        maxlength="20" class="form-control" style="min-width:150px;">
+                    </td>
+                    <td *ngIf="item.id != '0' " style="padding: 5px 15px;
+                    text-align: left;
+                    border-radius: 0 0 0 0;
+                    color: #005ACA;
+                    border-right: none;
+                    border-left: none;
+                    font-size: 14px;
+                    font-weight: bold !important;">
+                      {{ item.valorAnual | currency: '$' : 'symbol' : '1.0-2' }}
+                    </td>
+
+                    <td style="padding: 5px 15px;
+                    text-align: center;
+                    border-radius: 0 0 0 0;
+                    color: #005ACA;
+                    border-right: none;
+                    border-left: 1px solid #005ACA;
+                    font-size: 14px;
+                    font-weight: bold !important;">
+                      <button class="btn btn-blue" *ngIf="item.id != '0' && permisos.eliminar"
+                        (click)="eliminarOtrosCostos(item.id)">Eliminar</button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="otrosCostos.length === 0 or otrosCostos === 'undefined'" class="">
+                    <td>Sin datos</td>
+                    <td>Sin datos</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <strong style="padding-left: 10px; color: red;"> {{ mensajeOtrosCostos }}</strong>
+            </div>
+
+            <div class="col-12 col-xl-3" style="float: left;">
+              <table style=" border-spacing: 0;
+                border-top: 1px solid #005ACA;
+                border-right: none;
+                border-left: none;
+                border-bottom: none;
+                border-radius: 19px 19px 0 0;">
+                <thead>
+                  <tr>
+                    <th style="
+                      padding: 5px 15px;
+                      text-align: center;
+                      background-color: aliceblue !important;
+                      font-weight: bold !important;
+                      color: #005ACA !important;
+                      border-top: none;
+                      border-left: 1px solid #005ACA;
+                      border-bottom: 1px solid #005ACA;
+                      border-right: 1px solid #005ACA;
+                      border-radius: 19px 19px 0 0;">Total de otros costos</th>
+                </thead>
+                <tbody style="
+                  border-top: none;
+                  border-left: none;
+                  border-right: none;
+                  border-bottom: none;
+                  border-radius: 0 0 0 0;">
+                  <tr style="
+                    border-top: none;
+                    border-left: 1px solid rgb(17, 177, 57);
+                    border-right: none;
+                    border-bottom: none;
+                    border-radius: 0 0 0 0;">
+                    <td style="
+                      padding: 5px 15px;
+                      text-align: left;
+                      border-left: 1px solid #005ACA;
+                      border-right: 1px solid #005ACA;
+                      border-bottom: 1px solid #005ACA;
+                      color: #005ACA;
+                      font-size: 12px;
+                      text-align: center;">
+                      Sumatoria de todos los gastos anuales, que no corresponden a costos de suministro.
+                    </td>
+                  </tr>
+                  <tr style="
+                    border : none;
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom: none;
+                    border-radius: 0 0 0 0;">
+                    <td style="
+                      padding: 5px 15px;
+                      text-align: left;
+                      border-top: 1px solid #005ACA;
+                      border-left: 1px solid #005ACA;
+                      border-right: 1px solid #005ACA;
+                      border-bottom: 1px solid #005ACA;
+                      background-color: #005ACA;
+                      color: #fff;
+                      font-size: 12px;
+                      text-align: center;
+                      font-weight: bold !important;">
+                      {{ totalCostos | currency: '$' : 'symbol' : '1.0-2'}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div><br />
+
+          <div class="row" *ngIf="editarOtrosCostos == false">
+            <div class="col-4">
+              <div *ngIf="editarPrecios == false && permisos.editar" class="col-1" style="float: left;">
+                <button class="msg-alerta" (click)="editarCostosGastos()">
+                  <div style="float: left; margin-right: 5px;">
+                    <img src="../assets/images/Iconos/lapiz.png">
+                  </div>
+                  <div>
+                    Editar <br /> costo/gasto
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="col-2">
+              <div *ngIf="permisos.agregar" class="col-1" style="float: left;">
+                <button class="msg-alerta" (click)="agregarOtrosCostos()">
+                  <div style="float: left; margin-right: 5px;">
+                    <img src="../assets/images/Iconos/agregar.png">
+                  </div>
+                  <div>
+                    Agregar <br /> costo/gasto
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="editarOtrosCostos == true">
+            <div>
+              <div class="col-3 text-center" style="float: left;">
+                <button class="btn btn-blue" (click)="guardarOtrosCostos()">Guardar</button>
+              </div>
+              <div class="col-3 text-center" style="float: right;">
+                <button class="btn btn-blue" (click)="cancelarOtrosCostos()">Cancelar</button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </div>
+    </div>
+
+    <div id="CostoTotal" [ngStyle]="{'display': CostoTotal ? '' : 'none'}">
+      <div class="col-12 title-separador">
+        <label> Costo total (anual) del PAE- {{itemTipoModeloOperacion.descripcionTipo}} </label>
+      </div>
+    </div>
+
+
+    <div class="row" [ngStyle]="{'display': idTipoModeloOperacion == 1 ? '' : 'none'}">
+
+      <div class="col-12" style="margin-top: 20px;">
+        <div class="row">
+          <div class="col-10" style="float: left;">
+            <table style="
+              border-spacing: 0;
+              border-top: 1px solid #005ACA;
+              border-right: 1px solid #005ACA;
+              border-left: 1px solid #005ACA;
+              border-bottom: 1px solid #005ACA;
+              border-radius: 19px 19px 19px 19px;">
+              <thead>
+                <tr style="
+                  border-spacing: 0;
+                  border-top: none;
+                  border-right: none;
+                  border-left: none;
+                  border-bottom: none;
+                  border-radius: 0 0 0 0">
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    background-color: aliceblue !important;
+                    font-weight: bold !important;
+                    color: #005ACA !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-right: 1px solid #005ACA;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 19px 0 0 19px">
+                    Concepto total (anual) del {{itemTipoModeloOperacion.descripcionTipo}}
+                  </th>
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    background-color: aliceblue !important;
+                    font-weight: bold !important;
+                    color: #005ACA !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 0 0 0 0;
+                    font-size: 10px;">
+                    <div class="row" style="position: relative; color: #005ACA !important;">
+                      <div class="col-5" style="float: left;">
+                        <p style="padding-top: 15px; color: #005ACA !important;">Costos de suministro</p>
+                      </div>
+                      <div class="col-1" style="float: left;">
+                        <p style="color: #005ACA !important; margin: 0;
+                              position: absolute;
+                              top: 50%;
+                              -ms-transform: translateY(-50%);
+                              transform: translateY(-50%);">
+                          +
+                        </p>
+                      </div>
+                      <div class="col-4" style="float: left;">
+                        <p style="padding-top: 15px; color: #005ACA !important;">Otros costos</p>
+                      </div>
+                    </div>
+                  </th>
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    font-weight: bold !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-right: none;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 0 19px 19px 0;
+                    min-width: 100px;
+                    background-color: #f54a62 !important;
+                    color: #fff !important;"> {{ costoTotalMAEM | currency: '$' : 'symbol' : '1.0-2' }}
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" [ngStyle]="{'display': idTipoModeloOperacion == 2 ? '' : 'none'}">
+
+
+      <div class="col-12" style="margin-top: 20px;">
+        <div class="row">
+
+          <div class="col-10" style="float: left;">
+            <table style="
+              border-spacing: 0;
+              border-top: 1px solid #005ACA;
+              border-right: 1px solid #005ACA;
+              border-left: 1px solid #005ACA;
+              border-bottom: 1px solid #005ACA;
+              border-radius: 19px 19px 19px 19px;">
+              <thead>
+                <tr style="
+                  border-spacing: 0;
+                  border-top: none;
+                  border-right: none;
+                  border-left: none;
+                  border-bottom: none;
+                  border-radius: 0 0 0 0">
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    background-color: aliceblue !important;
+                    font-weight: bold !important;
+                    color: #005ACA !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-right: 1px solid #005ACA;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 19px 0 0 19px">
+                    Concepto total (anual) del {{itemTipoModeloOperacion.descripcionTipo}}
+                  </th>
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    background-color: aliceblue !important;
+                    font-weight: bold !important;
+                    color: #005ACA !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 0 0 0 0;
+                    font-size: 10px;">
+                    <div class="row" style="position: relative; color: #005ACA !important;">
+                      <div class="col-5" style="float: left;">
+                        <p style="padding-top: 15px; color: #005ACA !important;">Costos de suministro</p>
+                      </div>
+                      <div class="col-1" style="float: left;">
+                        <p style="color: #005ACA !important; margin: 0;
+                            position: absolute;
+                            top: 50%;
+                            -ms-transform: translateY(-50%);
+                            transform: translateY(-50%);">
+                          +
+                        </p>
+                      </div>
+                      <div class="col-4" style="float: left;">
+                        <p style="padding-top: 15px; color: #005ACA !important;">Otros costos</p>
+                      </div>
+                    </div>
+                  </th>
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    font-weight: bold !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-right: none;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 0 19px 19px 0;
+
+                    background-color: #f54a62 !important;
+                    color: #fff !important;">{{ costoTotalMAER | currency: '$' : 'symbol' : '1.0-2' }}
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row" [ngStyle]="{'display': idTipoModeloOperacion == 3 ? '' : 'none'}">
+
+
+      <div class="col-12" style="margin-top: 20px;">
+        <div class="row">
+          <div class="col-8" style="float: left;">
+            <table style="
+              border-spacing: 0;
+              border-top: 1px solid #005ACA;
+              border-right: 1px solid #005ACA;
+              border-left: 1px solid #005ACA;
+              border-bottom: 1px solid #005ACA;
+              border-radius: 19px 19px 19px 19px;">
+              <thead>
+                <tr style="
+                  border-spacing: 0;
+                  border-top: none;
+                  border-right: none;
+                  border-left: none;
+                  border-bottom: none;
+                  border-radius: 0 0 0 0">
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    background-color: aliceblue !important;
+                    font-weight: bold !important;
+                    color: #005ACA !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-right: 1px solid #005ACA;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 19px 0 0 19px">
+                      Concepto total (anual) del {{itemTipoModeloOperacion.descripcionTipo}}
+                  </th>
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    background-color: aliceblue !important;
+                    font-weight: bold !important;
+                    color: #005ACA !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 0 0 0 0;
+                    font-size: 10px;">
+                    <div class="row" style="position: relative; color: #005ACA !important;">
+                      <div class="col-5" style="float: left;">
+                        <p style="padding-top: 15px; color: #005ACA !important;">Costos de suministro</p>
+                      </div>
+                      <div class="col-1" style="float: left;">
+                        <p style="color: #005ACA !important; margin: 0;
+                            position: absolute;
+                            top: 50%;
+                            -ms-transform: translateY(-50%);
+                            transform: translateY(-50%);">
+                          +
+                        </p>
+                      </div>
+                      <div class="col-4" style="float: left;">
+                        <p style="padding-top: 15px; color: #005ACA !important;">Otros costos</p>
+                      </div>
+                    </div>
+                  </th>
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    font-weight: bold !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-right: none;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 0 19px 19px 0;
+                    min-width: 180px;
+                    background-color: #f54a62 !important;
+                    color: #fff !important;">{{ costoTotalMAIP | currency: '$' : 'symbol' : '1.0-2' }}
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" [ngStyle]="{'display': idTipoModeloOperacion == 4 ? '' : 'none'}">
+
+
+      <div class="col-12" style="margin-top: 20px;">
+        <div class="row">
+
+          <div class="col-8" style="float: left;">
+            <table style="
+              border-spacing: 0;
+              border-top: 1px solid #005ACA;
+              border-right: 1px solid #005ACA;
+              border-left: 1px solid #005ACA;
+              border-bottom: 1px solid #005ACA;
+              border-radius: 19px 19px 19px 19px;">
+              <thead>
+                <tr style="
+                  border-spacing: 0;
+                  border-top: none;
+                  border-right: none;
+                  border-left: none;
+                  border-bottom: none;
+                  border-radius: 0 0 0 0">
+                  <th style="
+                    padding: 5px 15px;
+                    text-align: center;
+                    background-color: aliceblue !important;
+                    font-weight: bold !important;
+                    color: #005ACA !important;
+                    border-spacing: 0;
+                    border-top: none;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 0 0 0 0;
+                    font-size: 10px;">
+                    <div class="row" style="position: relative; color: #005ACA !important;">
+                      <div class="col-5" style="float: left;">
+                        <p style="padding-top: 15px; color: #005ACA !important;">Costos de suministro</p>
+                      </div>
+                      <div class="col-1" style="float: left;">
+                        <p style="color: #005ACA !important; margin: 0;
+                            position: absolute;
+                            top: 50%;
+                            -ms-transform: translateY(-50%);
+                            transform: translateY(-50%);">
+                          +
+                        </p>
+                      </div>
+                      <div class="col-4" style="float: left;">
+                        <p style="padding-top: 15px; color: #005ACA !important;">Otros costos</p>
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>

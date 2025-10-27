@@ -1,0 +1,23 @@
+<div>
+  <div class="sub">Las sedes de la ETC:</div>
+  <br>
+  <div class="BordeRedondoUno" id="chart-general" *ngIf="yaCargoChartOptions">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-61.png "> <span class="titulo"> Cuenta con Concepto
+      Higiénico Sanitario (CHS):</span>
+
+    <apx-chart 
+    [series]="chartOptions.series" 
+    [chart]="chartOptions.chart" 
+    [stroke]="chartOptions.stroke"
+      [plotOptions]="chartOptions.plotOptions" 
+      [fill]="chartOptions.fill" 
+      [legend]="chartOptions.legend"
+      [yaxis]="chartOptions.yaxis" 
+      [xaxis]="chartOptions.xaxis" 
+      [colors]="chartOptions.colors"
+      [dataLabels]="chartOptions.dataLabels" 
+      [grid]="chartOptions.grid" 
+      [tooltip]="chartOptions.tooltip">
+    </apx-chart>
+  </div>
+</div>

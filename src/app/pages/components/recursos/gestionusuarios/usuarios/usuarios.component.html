@@ -1,0 +1,272 @@
+<style>
+  .tableFiltroUsuario {
+    border-spacing: 0;
+    color: #005ACA;
+  }
+
+  .tableFiltroUsuario td {
+    text-align: center;
+    font-size: 13px !important;
+    color: #005ACA !important;
+    padding: 2.5px 10px;
+    border-top: 1px solid #005ACA;
+    border-right: 1px solid #005ACA;
+    border-bottom: 1px solid #005ACA;
+  }
+
+  .tableFiltroUsuario td b {
+    color: #005ACA;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroUsuario td div {
+    color: #005ACA;
+    font-weight: 500;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroUsuario td:first-child {
+    border-left: 1px solid #005ACA;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .tableFiltroUsuario td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .tableUsuarios th,
+  .tableUsuarios td {
+    font-size: 13px;
+  }
+
+  table.tableUsuarios thead th:last-child {
+    border-top-right-radius: 20px !important;
+  }
+
+
+  table.tableFormUsuarios tr td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #005ACA;
+    font-size: 14px;
+  }
+
+  table.tableFormUsuarios tr td:first-child {
+    padding-left: 35px;
+  }
+
+  table.tableFormUsuarios tr td:last-child {
+    padding-right: 35px;
+  }
+
+  input,
+  select {
+    border: 1px #005ACA solid;
+    padding: 3px 10px;
+    width: 100%;
+    color: #005ACA;
+  }
+
+  input:not(.noRadius),
+  select:not(.noRadius) {
+    border-radius: 5px;
+  }
+
+  .cssForm {
+    font-size: 12px;
+  }
+
+  i {
+    font-style: normal;
+  }
+
+  .tableFiltroUsuario i {
+    font-size: 25px;
+  }
+
+  .btn.btn-middle {
+    background-color: aliceblue;
+    border: 1px solid aliceblue;
+  }
+
+  .btn.btn-high {
+    background-color: #005ACA !important;
+    border: 1px solid #005ACA !important;
+  }
+
+  .title-busqueda-usuario {
+    padding: 0;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #E23465;
+  }
+
+  .title-busqueda-usuario label {
+    color: #E23465;
+    margin-bottom: 2px;
+  }
+
+  .btn-registrar {
+    color: #005ACA;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .linkdisable {
+    pointer-events: none;
+    visibility: hidden;
+  }
+</style>
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #E23465;">Usuarios</div>
+    </div>
+    <div class="tab-item nothing" style="width: 69.5%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="col-12" style="margin-top: 20px; padding: 0%;">
+  <div class="col-12 pae-text-filter">
+    <div class="row pae-border-blue pt-xl-1">
+
+      <div class="col-xl-7 col-12 d-flex align-items-center justify-content-center py-2 py-xl-0">
+        <span>
+          Utilice cualquier campo de la tabla para buscar Usuarios. Si no aparecen, <strong>regístrelos</strong> en el
+          sistema.
+        </span>
+      </div>
+
+      <div class="col-xl-3 col-12 pae-border-xl-up-left-blue text-center pae-border-lg-down-top-blue py-2 py-xl-0">
+        <span>Filtro</span>
+        <input (keyup)="applyFilter($any($event).target.value)" type="text" class="" #fil1>
+      </div>
+
+      <div class="col-xl-2 col-12 pae-border-xl-up-left-blue text-center pae-border-lg-down-top-blue py-2 py-xl-0">
+        <a (click)="applyFilter('')">
+          <img src="../../../../../../assets/images/Iconos/eye_blue.png">
+          <div>Ver listado completo</div>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="col-12 title-busqueda-usuario">
+      <label><img src="../../../../../../assets/images/Iconos/user_red.png"> Resultados de la b&uacute;squeda de
+        Usuarios</label>
+    </div>
+
+    <div class="col-12 responsive-table-pae" style=" padding: 0%;">
+      <table mat-table [dataSource]="dataSource" class="tableUsuarios left-radius right-radius">
+
+        <!-- tipoID Column -->
+        <ng-container matColumnDef="tipoID">
+          <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;"><b>Tipo ID</b></th>
+          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Tipo ID"> {{
+            element.tipoDocumentoIden }} </td>
+        </ng-container>
+
+        <!-- numeroID Column -->
+        <ng-container matColumnDef="numeroID">
+          <th mat-header-cell *matHeaderCellDef> <b>Número Identificación </b></th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;" data-label="N. Identificación"> {{
+            element.documentoIden }} </td>
+        </ng-container>
+
+        <!-- nombre Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> <b>Nombres</b> </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;" data-label="Nombres">
+            {{element.primerNombre + ' ' +
+            element.segundoNombre}} </td>
+        </ng-container>
+
+        <!-- apellido Column -->
+        <ng-container matColumnDef="apellido">
+          <th mat-header-cell *matHeaderCellDef> <b>Apellidos</b> </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;" data-label="Apellidos">
+            {{element.primerApellido + ' ' +
+            element.segundoApellido}} </td>
+        </ng-container>
+
+        <!-- correoElectronico Column -->
+        <ng-container matColumnDef="correoElectronico">
+          <th mat-header-cell *matHeaderCellDef> <b> Correo Electrónico </b></th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;" data-label="C. Electrónico"> {{
+            element.email }} </td>
+        </ng-container>
+
+        <!-- celular Column -->
+        <ng-container matColumnDef="celular">
+          <th mat-header-cell *matHeaderCellDef> <b> Celular</b> </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;" data-label="Celular"> {{
+            element.phoneNumber }} </td>
+        </ng-container>
+
+        <!-- cargo Column -->
+        <!-- <ng-container matColumnDef="cargo">
+        <th mat-header-cell *matHeaderCellDef> Cargo </th>
+        <td mat-cell *matCellDef="let element" style="text-align: center;"> {{ element.cargo }} </td>
+      </ng-container> -->
+
+        <!-- rol Column -->
+        <ng-container matColumnDef="rol">
+          <th mat-header-cell *matHeaderCellDef> <b>Rol base</b></th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;" data-label="Rol base"> {{ element.sid_Rol
+            }} </td>
+        </ng-container>
+
+        <!-- rolTemoo Column -->
+        <!-- <ng-container matColumnDef="rolTempo">
+        <th mat-header-cell *matHeaderCellDef> Rol temporal</th>
+        <td mat-cell *matCellDef="let element" style="text-align: center;"> {{ element.sid_RolTempo }} </td>
+      </ng-container> -->
+
+        <!-- UbicacionBase Column -->
+        <ng-container matColumnDef="ubicacionBase">
+          <th mat-header-cell *matHeaderCellDef> <b> Ubicación base </b></th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;" data-label="U. base"> {{
+            element.ubicacionBase }} </td>
+        </ng-container>
+
+        <!-- Ubicacion Column -->
+        <!-- <ng-container matColumnDef="ubicacion">
+        <th mat-header-cell *matHeaderCellDef> Ubicación</th>
+        <td mat-cell *matCellDef="let element" style="text-align: center;"> {{ element.ubicacion }} </td>
+      </ng-container> -->
+
+        <!-- options Column -->
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center; padding: 0 5px;">
+            <a (click)="openDialog('Actualizar',element)" [ngClass]="{'linkdisable':!getModulePermission(19,'editar')}">
+              <img src="../../../../../../assets/images/Iconos/edit_blue.png">
+            </a>
+            <a (click)="openDialog('Eliminar',element)" style="margin-left: 3px;"
+              [ngClass]="{'linkdisable':!getModulePermission(19,'eliminar')}">
+              <img src="../../../../../../assets/images/Iconos/delete_blue.png">
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      <mat-paginator style="color:#005ACA ;" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
+        showFirstLastButtons>
+      </mat-paginator>
+    </div>
+
+    <div style="width: 100%; float: right;" class="align-items-center textagregar "
+      [ngClass]="{'linkdisable':!getModulePermission(19,'crear')}">
+      <div class="text-right ">
+        <a class="btn-registrar" (click)="openDialog('Adicionar',{})"><img
+            src="../../../../../../assets/images/Iconos/add_blue.png"> Registrar Usuario</a>
+      </div>
+    </div>
+  </div>

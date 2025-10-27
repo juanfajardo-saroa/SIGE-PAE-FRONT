@@ -1,0 +1,68 @@
+<div class="content-detail">
+   <div *ngIf="displayResults || (addRubroActive == true)" class="col-12 mt-sm px-lg-down-0 responsive-table-pae">
+      <table class="table-default w-down-100" [ngStyle]="{ 'width': anchoTable }">
+         <thead>
+            <tr class="text-center">
+               <th *ngFor="let item of displayedColumnsContratos">{{item.descripcion}}</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="text-center" *ngFor="let item of dataTabla">
+               <td data-label="Concepto">{{item.concepto}}</td>
+               <td class="border-rigth-primary" data-label="Valor">{{item.valor | currency:'$':'symbol':'1.0-2'}}</td>
+               <a class="card-link ml-n1" (click)="deleteRubro(item.id)">
+                  <img style="width: 25px; height: 25px;" src="../../../../assets/iconos_PAE/SVG/Iconos_PAE-53.svg">
+               </a>
+            </tr>
+            <tr *ngIf="addRubroActive">
+               <td data-label="Concepto">
+                  <div class="col-12 px-lg-down-0">
+                     <input class="input-text" type="text" name="concepto"
+                        placeholder="Ingrese texto"
+                        [(ngModel)]="rubroData.concepto"
+                        (ngModelChange)="ChangeItem($event, 'concepto')">
+                        <div class="div-label">
+                          <small class="color-invalid" *ngIf="showValidation && (rubroData.concepto === '')">Complete este campo</small>
+                        </div>
+                  </div>
+               </td>
+               <td class="border-rigth-primary" data-label="Valor">
+                  <div class="col-12 px-lg-down-0 ">
+                     <input class="input-text" type="number" name="valor"
+                        placeholder="Ingrese cifra" [(ngModel)]="rubroData.valor">
+                        <div class="div-label">
+                          <small class="color-invalid" *ngIf="showValidation && (rubroData.valor <= 0)">Complete este campo</small>
+                        </div>
+                  </div>
+               </td>
+               <div data-label="Acciones" class="text-center">
+                  <a class="card-link" (click)="saveRubro()">
+                     <img style="width: 25px; height: 25px; margin-right: 5px;"
+                        src="../assets/images/Iconos/save_mini.png">
+                  </a>
+                  <a class="card-link" (click)="cancelItem()">
+                     <img style="width: 25px; height: 25px; margin-right: 5px;"
+                        src="../assets/images/Iconos/eliminar_mini.png">
+                  </a>
+               </div>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   <br>
+   <div class="col-12 col-xl-10 d-xl-block d-flex justify-content-end" >
+      <div [ngStyle]="{ 'width': anchoTable }">
+         <div class="text-right" (click)="addRubro()">
+            <img class="mr-2" src="../assets/images/Iconos/add_blue.png" style="cursor: pointer;">
+            <label style="cursor: pointer;">Agregar rubro</label>
+         </div>
+      </div>
+   </div>
+</div>
+<br>
+<div class="row">
+   <div class="col-12 col-xl-4 ml-4 ml-lg-down-0">
+      <app-costo-total-tab [Titulo]="'Rubros Adicionales'" [TotalGeneral]="valTotalRubros" [Orientacion]="'H'">
+      </app-costo-total-tab>
+   </div>
+</div>

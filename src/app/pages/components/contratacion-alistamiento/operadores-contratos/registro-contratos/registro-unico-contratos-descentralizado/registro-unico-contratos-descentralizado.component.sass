@@ -1,0 +1,147 @@
+@import '/src/assets/styles/variable.scss'
+@import '../../../../../../../assets/sass/theme/table-sigepae'
+@import '../../../../../../../assets/styles/radio_button'
+
+
+input[type='checkbox']
+  width: 1.8rem !important
+
+.form-label
+  width: auto !important
+  margin-right: 10px !important
+
+  &.maxWidth-250
+    width: 250px !important
+    max-width: 250px !important
+
+textarea
+  max-width: 500px !important
+
+table
+  border: 1px solid $base-azulPAE
+  border-radius: 10px
+
+#tabla-categoria
+  tr, td
+    border: none !important
+
+  #td2
+    border-bottom: 1px dotted $base-azulPAE !important
+
+#tabla-modelo-operacion
+  padding: 0
+  color: $base-azulPAE
+  tr, td
+    border: none !important
+
+  #td-modelo-operacion1
+    border-bottom: 1px dotted $base-azulPAE !important
+
+
+.titulos_estado_diligenciamiento
+  color: $base-azulPAE
+  border: 1px dotted $base-azulPAE
+  border-radius: 10px
+  padding: 10px
+  margin-top: 20px
+  margin-bottom: 20px
+
+.pendiente_diligenciar, .incompleto, .completo
+  height: 16px
+  width: 16px
+  border-radius: 50%
+  border: 1px solid $base-azulPAE
+
+
+.pendiente_diligenciar
+  background-color: $header_table
+
+
+.incompleto
+  background-color: $semaforo-amarillo
+
+
+.completo
+  background-color: $semaforo-verde
+
+  /* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label
+  font-family: "Montserrat",sans-serif
+  border-radius: 20px 20px 0px 0px !important
+  color: $base-color !important
+  font-size: 15px
+  background-color: #E2ECFD !important
+  width: 50%
+  margin: 0.5px
+  border-bottom: $base-color 1px solid
+
+:host ::ng-deep .mat-tab-label-active
+  font-family: "Montserrat",sans-serif
+  font-size: 15px
+  border-width: 1px
+  border-color: $base-color
+  border-bottom-color: white
+  border-style: solid solid hidden solid
+  border-radius: 20px 20px 0px 0px !important
+  color: $base-color !important
+  background-color: white !important
+  //width: 25%
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar
+  background-color: none!important
+  display: none!important
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar
+  background-color: none!important
+  display: none!important
+  /* background-color: #1e88e5 */
+
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar, .blue .mat-tab-nav-bar.mat-primary .mat-ink-bar
+  background-color: none!important
+  display: none!important
+  /* background-color: #1e88e5 */
+
+::ng-deep.mat-tab-label .mat-tab-label-content
+  font-weight: 800!important
+
+:host ::ng-deep .mat-tab-body-content
+  border: 1px solid $base-azulPAE
+  border-top: none
+  border-radius: 0px 0px 20px 20px
+  overflow: hidden
+
+  @media (max-width: 1024px)
+    overflow: auto
+
+
+/* --------------------------- FIN TABS */
+
+.table-fix-head
+  border-top-left-radius: 15px
+  border-top-right-radius: 35px
+  overflow: auto
+  max-height: 250px !important
+
+.table-fix-head thead th
+  position: sticky
+  top: 0
+  z-index: 1
+
+.boton-ordenar-tabla
+  color: $base-colorred !important
+  cursor: pointer !important
+
+@import "~bootstrap/scss/bootstrap-grid"
+
+@include media-breakpoint-down(lg)
+  :host table:not(.table-row-expanded):not(.table-default-red) tbody
+    tr:last-child td
+      border-bottom-style: dashed !important
+    tr td
+      border-left: none !important
+
+  :host ::ng-deep .mat-tab-body-content
+    border: hidden !important
+    overflow: hidden !important
+

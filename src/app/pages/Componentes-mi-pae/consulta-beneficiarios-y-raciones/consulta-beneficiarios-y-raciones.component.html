@@ -1,0 +1,87 @@
+<!-- <div class="col-md-9 ms-sm-auto col-lg-10 px-md-5"
+  style="color: #004884;font-size: 1em !important;box-sizing: border-box;">
+  <div class="flex-wrap flex-md-nowrap mt-3">
+    <div class="col-xs-12">
+      <label class="anio-text" style="float: right;">A&ntilde;o | <strong class="strongheader"> {{currentYear}}
+        </strong></label>
+      <label class="banner-text">Operador | <strong class="strongheader">{{nombreOperador}}</strong></label>
+    </div>
+    <hr style="margin: 0;">
+    <div class="col-xs-12 text-right">
+      <label class="last-update-text">Última actualizaci&oacute;n <span> {{ dateToday | date: "longDate"
+          }}</span></label>
+    </div>
+  </div>
+  <div class="mt-2">
+    <router-outlet></router-outlet>
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active w-down-fit-content" style="width: 30%;">
+      <div style="color: #00A9AB;">Contratos de suministro</div>
+    </div>
+    <div class="tab-item nothing w-down-fit-content" style="width: 70%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+
+
+
+    <div class="responsive-table-pae">
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 shadow-none">
+
+        <ng-container matColumnDef="id_contrato">
+          <th class="LeftUpCorner Invisible d-none" mat-header-cell *matHeaderCellDef> Número de <br> </th>
+          <td class="Invisible d-none" mat-cell *matCellDef="let element"> {{element.id_contrato == null ? '-' :(element.id_contrato)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="numeroContrato">
+          <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef> Número de <br> contrato </th>
+          <td mat-cell *matCellDef="let element" data-label="No. contrato"> {{element.numeroContrato == null ? '-' :(element.numeroContrato)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="etC_Nombre">
+          <th mat-header-cell *matHeaderCellDef> ETC/ET </th>
+          <td mat-cell *matCellDef="let element" data-label="ETC/ET"> {{element.etC_Nombre == null ? '-' :(element.etC_Nombre)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="municipio">
+          <th mat-header-cell *matHeaderCellDef> Municipio </th>
+          <td mat-cell *matCellDef="let element" data-label="municipio"> {{element.municipio == null ? '-' :(element.municipio)}} </td>
+        </ng-container>
+
+        <div *ngIf="operador">
+          <ng-container matColumnDef="tipoContrato">
+            <th mat-header-cell *matHeaderCellDef> Tipo de <br> contrato  </th>
+            <td mat-cell *matCellDef="let element" data-label="T. Contrato"> {{element.tipoContrato == null ? '-' :(element.tipoContrato)}} </td>
+          </ng-container>
+        </div>
+        <div *ngIf="!operador">
+          <ng-container matColumnDef="tipoContrato">
+            <th mat-header-cell *matHeaderCellDef> Operador  </th>
+            <td mat-cell *matCellDef="let element" data-label="Operador"> {{element.operador == null ? '-' :(element.operador)}} </td>
+          </ng-container>
+        </div>
+
+        <ng-container matColumnDef="modeloOper">
+          <th class="RightUpCorner" mat-header-cell *matHeaderCellDef style="border-right:0 ;"> Modelo de <br> operación </th>
+          <td class="pr-0" mat-cell *matCellDef="let element" style="border-right:0 ;" data-label="M. operación"> {{element.modeloOper == null ? '-' :(element.modeloOper)}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="IrABenficiarios(row.id_contrato, row.operado)"></tr>
+      </table>
+      <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+      </mat-paginator>
+      <div *ngIf="isLoading"
+        style="display: flex; justify-content: center; align-items: center; background: white;">
+        <mat-progress-spinner color="primary" mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+
+    </div>

@@ -1,0 +1,83 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            Crear Criterio
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <div class="course-app">
+    <mat-card-content class="text-center">
+      <mat-dialog-content class="mat-typography" *ngIf="action != 'Delete'; else elseTemplate">
+        <br />
+
+        <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+
+          <div *ngIf="action !='Add'">
+            <div class="example-full-width">
+              <br />
+              <input matInput id="id" formControlName="id" readonly="true" class=" form-control" />
+            </div>
+          </div>
+
+          <div class="px-xl-5 px-3">
+
+            <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+              <div class="flex-basis-0 flex-grow-1 TextosBlueLeft">1. Prioridad<span style="color:red;">* </span></div>
+
+              <div class="flex-basis-0 flex-grow-1">
+                <input matInput id="prioridad" formControlName="prioridad" required placeholder="Prioridad"
+                  class="form-control tablaform mt-lg-down-0" type="number"/>
+                <div
+                  *ngIf="form.get('prioridad').invalid && (form.get('prioridad').dirty || form.get('prioridad').touched)"
+                  class="invalid-feedback">
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0 pt-3 pt-xl-0">
+              <div class="flex-basis-0 flex-grow-1 TextosBlueLeft">2. Nombre<span style="color:red;">* </span></div>
+              <div class="flex-basis-0 flex-grow-1">
+                <input matInput id="nombre" formControlName="nombre" required placeholder="Nombre"
+                  class="form-control tablaform mt-lg-down-0" />
+                <div *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                  class="invalid-feedback">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <mat-card>
+            <mat-card-content>
+              <section class="example-section">
+                <mat-checkbox class="example-margin" id="activo" formControlName="activo">Activo<span style="color:red;">* </span></mat-checkbox>
+              </section>
+            </mat-card-content>
+          </mat-card>
+
+
+        </div>
+      </mat-dialog-content>
+      <ng-template #elseTemplate>
+        ¿Está seguro de eliminar el registro <b>{{local_data.id}}</b>?
+      </ng-template>
+
+      <div class="BordeSuperior d-flex flex-column flex-xl-row justify-content-center">
+        <div class="d-flex">
+          <button class="flex-grow-1" [disabled]="form.invalid && action !='Eliminar'" (click)="doAction()">Adicionar </button>
+        </div>
+        <div class="d-flex">
+          <button class="flex-grow-1 mt-lg-down-0" (click)="closeDialog()">Cancelar</button>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </div>
+</div>

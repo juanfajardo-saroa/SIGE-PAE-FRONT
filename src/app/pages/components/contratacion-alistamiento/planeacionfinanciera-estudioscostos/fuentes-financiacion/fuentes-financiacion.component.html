@@ -1,0 +1,135 @@
+<style>
+    table.table-fuentefinanciacion-detalle {
+        border-collapse: separate;
+    }
+
+    table.table-fuentefinanciacion-detalle th {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    table.table-fuentefinanciacion-detalle td {
+        font-size: 13px;
+    }
+</style>
+
+
+<!-- <app-costos-cobertura-financiera class="mt-xl" style="width: 100%;"></app-costos-cobertura-financiera>
+ -->
+<app-titulo-tab [titulo]="'Costos y cobertura financiera'"></app-titulo-tab>
+
+<div class="row">
+    <div class="col-12 overflow-auto" style="margin-top: 20px;">
+        <table mat-table [dataSource]="dataFinanciera" class="table-cuadro-info right-radius">
+
+            <ng-container matColumnDef="descripcion">
+                <th width="250px" mat-header-cell *matHeaderCellDef class="no-header"></th>
+                <td mat-cell *matCellDef="let element" class="text-center px-2 header">{{ element.descripcion}}</td>
+            </ng-container>
+
+            <!-- Institucion Column -->
+            <ng-container matColumnDef="fMAEM">
+                <th width="150px" mat-header-cell *matHeaderCellDef class="table2">
+                  <div class="flex align-items-center justify-content-center">
+                    <div class="flex">
+                      <img style="width: 30px; height: 30px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-203.png">
+                    </div>
+                    <div class="flex ml-xs">
+                      <div>MAEM<br>{{anio}}</div>
+                    </div>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-center b-l">
+                    <div class="d-flex flex-lg-row flex-column justify-content-center align-items-center">
+                      <span *ngIf="element.tipoFila == 'P'" class="bg-round" [class]="element.colorMAEM"></span>
+                      <span *ngIf="element.tipoFila == 'P'">{{ element.ingresosMAEM / 100 | percent }}</span>
+                      <span *ngIf="element.tipoFila == 'V'">{{ element.ingresosMAEM | currency: '$': 'symbol': '1.0-2' }}</span>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Sede Column -->
+            <ng-container matColumnDef="fMAER">
+                <th width="150px" mat-header-cell *matHeaderCellDef>
+                  <div class="flex align-items-center justify-content-center">
+                    <div class="flex">
+                      <img style="width: 30px; height: 30px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-204.png">
+                    </div>
+                    <div class="flex ml-xs">
+                      <div>MAER<br>{{anio}}</div>
+                    </div>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-center">
+                  <div class="d-flex flex-lg-row flex-column justify-content-center align-items-center">
+                    <span *ngIf="element.tipoFila == 'P'" class="bg-round" [class]="element.colorMAER"></span>
+                    <span *ngIf="element.tipoFila == 'P'">{{ element.ingresosMAER / 100 | percent }}</span>
+                    <span *ngIf="element.tipoFila == 'V'">{{ element.ingresosMAER | currency: '$': 'symbol': '1.0-2' }}</span>
+                  </div>
+                </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="fMAIP">
+                <th width="150px" mat-header-cell *matHeaderCellDef>
+                  <div class="flex align-items-center justify-content-center">
+                    <div class="flex">
+                      <img style="width: 30px; height: 30px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-205.png">
+                    </div>
+                    <div class="flex ml-xs">
+                      <div>PAEPI<br>{{anio}}</div>
+                    </div>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-center">
+                  <div class="d-flex flex-lg-row flex-column justify-content-center align-items-center">
+                    <span *ngIf="element.tipoFila == 'P'" class="bg-round" [class]="element.colorMAIP"></span>
+                    <span *ngIf="element.tipoFila == 'P'">{{ element.ingresosMAIP / 100 | percent }}</span>
+                    <span *ngIf="element.tipoFila == 'V'">{{ element.ingresosMAIP | currency: '$': 'symbol': '1.0-2' }}</span>
+                  </div>
+                </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="totalPAEC">
+              <th width="150px" mat-header-cell *matHeaderCellDef>Costo total<br>PAE {{anio}}</th>
+              <td mat-cell *matCellDef="let element" class="text-center">
+                <div class="d-flex flex-lg-row flex-column justify-content-center align-items-center">
+                  <span *ngIf="element.tipoFila == 'P'" class="bg-round" [class]="element.colorTotal"></span>
+                  <span *ngIf="element.tipoFila == 'P'">{{ element.total / 100 | percent }}</span>
+                  <span *ngIf="element.tipoFila == 'V'">{{ element.total | currency: '$': 'symbol': '1.0-2' }}</span>
+                </div>
+              </td>
+</ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsFinanciera"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsFinanciera"></tr>
+
+        </table>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 40px;">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="tab-control-secondary">
+                    <div id="MAEM" class="tab-item pestanaCC active" (click)="cargarCostosCobertura($event)" style="width: 33.33333%;">
+                        <div>Costos y cobertura MAEM</div>
+                    </div>
+                    <div id="MAER" class="tab-item pestanaCC" (click)="cargarCostosCobertura($event)" style="width: 33.33333%;">
+                        <div>Costos y cobertura MAER</div>
+                    </div>
+                    <div id="MAIP" class="tab-item pestanaCC" (click)="cargarCostosCobertura($event)" style="width: 33.33333%;">
+                        <div>Costos y cobertura PAEPI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 40px;">
+            <div class="col-12">
+                <app-costos-cobertura-pae (enviar)="recargarCostoCobertura($event)" [idETC]="idETC" [idTipoModeloOperacion]="tipoSeleccionado" [idVigencia]="idVigencia" [porcRecaudados]="porcRecaudados" [porcReconocidos]="porcReconocidos"></app-costos-cobertura-pae>
+            </div>
+        </div>
+    </div>
+</div>

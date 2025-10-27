@@ -1,0 +1,203 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+               <span class="course-name">     Acción <strong>{{ action }}</strong></span>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+  <div class="container">
+    <mat-card-content class="text-center">
+      <mat-dialog-content *ngIf="action != 'Eliminar'; else elseTemplate">
+        <div class="dialog-form" [formGroup]="form" (ngSubmit)="doAction()">
+          <table class="tableFormUsuarios">
+
+                <tr class="d-flex">
+     <td class="col-6" style ="text-align:start">""</td>
+     <td class="col-6" >
+        <input matInput id="id" formControlName="id"  required placeholder="" class="cssForm"/>
+        <div *ngIf = "form.get('id')?.invalid && (form.get('id')?.dirty || form.get('id')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Nombre"</td>
+     <td class="col-6" >
+        <input matInput id="nombre" formControlName="nombre"  required placeholder="Nombre" class="cssForm"/>
+        <div *ngIf = "form.get('nombre')?.invalid && (form.get('nombre')?.dirty || form.get('nombre')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Tipo Minuta Patron"</td>
+     <td class="col-6" >
+        <input matInput id="iD_TipoMinutaPatron" formControlName="iD_TipoMinutaPatron"  required placeholder="Tipo Minuta Patron" class="cssForm"/>
+        <div *ngIf = "form.get('iD_TipoMinutaPatron')?.invalid && (form.get('iD_TipoMinutaPatron')?.dirty || form.get('iD_TipoMinutaPatron')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Tipo Estado Minuta"</td>
+     <td class="col-6" >
+        <input matInput id="iD_TipoEstadoMinuta" formControlName="iD_TipoEstadoMinuta"  required placeholder="Tipo Estado Minuta" class="cssForm"/>
+        <div *ngIf = "form.get('iD_TipoEstadoMinuta')?.invalid && (form.get('iD_TipoEstadoMinuta')?.dirty || form.get('iD_TipoEstadoMinuta')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Tipo Modelo Operacion"</td>
+     <td class="col-6" >
+        <input matInput id="iD_TipoModeloOperacion" formControlName="iD_TipoModeloOperacion"  required placeholder="Tipo Modelo Operacion" class="cssForm"/>
+        <div *ngIf = "form.get('iD_TipoModeloOperacion')?.invalid && (form.get('iD_TipoModeloOperacion')?.dirty || form.get('iD_TipoModeloOperacion')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"E T C"</td>
+     <td class="col-6" >
+        <input matInput id="iD_ETC" formControlName="iD_ETC"  required placeholder="E T C" class="cssForm"/>
+        <div *ngIf = "form.get('iD_ETC')?.invalid && (form.get('iD_ETC')?.dirty || form.get('iD_ETC')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Modalidad Racion Id"</td>
+     <td class="col-6" >
+        <input matInput id="modalidadComplementoId" formControlName="modalidadComplementoId"  required placeholder="Modalidad Racion Id" class="cssForm"/>
+        <div *ngIf = "form.get('modalidadComplementoId')?.invalid && (form.get('modalidadComplementoId')?.dirty || form.get('modalidadComplementoId')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Tipo Racion Id"</td>
+     <td class="col-6" >
+        <input matInput id="tipoComplementoId" formControlName="tipoComplementoId"  required placeholder="Tipo Racion Id" class="cssForm"/>
+        <div *ngIf = "form.get('tipoComplementoId')?.invalid && (form.get('tipoComplementoId')?.dirty || form.get('tipoComplementoId')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Tipo Nivel Educativo Id"</td>
+     <td class="col-6" >
+        <input matInput id="tipoNivelEducativoId" formControlName="tipoNivelEducativoId"  required placeholder="Tipo Nivel Educativo Id" class="cssForm"/>
+        <div *ngIf = "form.get('tipoNivelEducativoId')?.invalid && (form.get('tipoNivelEducativoId')?.dirty || form.get('tipoNivelEducativoId')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Tipo Actividad Fisica Id"</td>
+     <td class="col-6" >
+        <input matInput id="tipoActividadFisicaId" formControlName="tipoActividadFisicaId"  required placeholder="Tipo Actividad Fisica Id" class="cssForm"/>
+        <div *ngIf = "form.get('tipoActividadFisicaId')?.invalid && (form.get('tipoActividadFisicaId')?.dirty || form.get('tipoActividadFisicaId')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Recomendaciones"</td>
+     <td class="col-6" >
+        <input matInput id="recomendaciones" formControlName="recomendaciones"  required placeholder="Recomendaciones" class="cssForm"/>
+        <div *ngIf = "form.get('recomendaciones')?.invalid && (form.get('recomendaciones')?.dirty || form.get('recomendaciones')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Justificacion"</td>
+     <td class="col-6" >
+        <input matInput id="justificacion" formControlName="justificacion"  required placeholder="Justificacion" class="cssForm"/>
+        <div *ngIf = "form.get('justificacion')?.invalid && (form.get('justificacion')?.dirty || form.get('justificacion')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Adjunto Justificacion P A T H"</td>
+     <td class="col-6" >
+        <input matInput id="adjuntoJustificacionPATH" formControlName="adjuntoJustificacionPATH"  required placeholder="Adjunto Justificacion P A T H" class="cssForm"/>
+        <div *ngIf = "form.get('adjuntoJustificacionPATH')?.invalid && (form.get('adjuntoJustificacionPATH')?.dirty || form.get('adjuntoJustificacionPATH')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Rechazado"</td>
+     <td class="col-6" >
+        <mat-card>
+            <mat-card-content>
+             <section class="example-section">
+                    <mat-checkbox class="example-margin" id="rechazado" formControlName="rechazado">Rechazado</mat-checkbox>
+              </section>
+            </mat-card-content>
+        </mat-card>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Vigencia"</td>
+     <td class="col-6" >
+        <input matInput id="id_Vigencia" formControlName="id_Vigencia"  required placeholder="Vigencia" class="cssForm"/>
+        <div *ngIf = "form.get('id_Vigencia')?.invalid && (form.get('id_Vigencia')?.dirty || form.get('id_Vigencia')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Minuta Aprobacion"</td>
+     <td class="col-6" >
+        <input matInput id="iD_MinutaAprobacion" formControlName="iD_MinutaAprobacion"  required placeholder="Minuta Aprobacion" class="cssForm"/>
+        <div *ngIf = "form.get('iD_MinutaAprobacion')?.invalid && (form.get('iD_MinutaAprobacion')?.dirty || form.get('iD_MinutaAprobacion')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+  
+           
+          </table>
+        </div>
+      </mat-dialog-content>
+      <ng-template #elseTemplate>
+        Esta Seguro de Eliminar el Registro <b>{{ local_data.id }}</b
+        >?
+      </ng-template>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      <div mat-dialog-actions align="center">
+        <button
+          class="btn btn-round btn-middle"
+          [disabled]="form.invalid && action != 'Eliminar'"
+          mat-raised-button
+          color="primary"
+          mat-button
+          (click)="doAction()"
+        >
+          {{ action }}
+        </button>
+        <button
+          class="btn btn-round btn-high"
+          mat-raised-button
+          color="warn"
+          mat-button
+          (click)="closeDialog()"
+          mat-flat-button
+        >
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-12">
+        <div class="tab-control-secondary">
+            <div style="width: 33.333%;" class="tab-item w-down-auto" [class]="item.active ? 'active': ''"
+                *ngFor="let item of datosPestanasProductos" (click)="seleccionarTab(item)">
+                <div class="tabSize">{{ item.descripcion }}</div>
+            </div>
+            <div class="tab-item nothing w-down-auto" style="width: 33.333%;">
+                <div>-</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div *ngIf="componenteSeleccionado == 1">
+        <div *ngIf="presentComponent == undefined">
+            <app-productos-disponibles></app-productos-disponibles>
+        </div>
+        <div *ngIf="presentComponent == 1">
+            <app-aprobacion-producto-materia-prima></app-aprobacion-producto-materia-prima>
+        </div>
+        <div *ngIf="presentComponent == 2">
+            <app-aprobacion-producto-complemento-industrializado></app-aprobacion-producto-complemento-industrializado>
+        </div>
+    </div>
+    <div *ngIf="componenteSeleccionado == 2">
+        <div *ngIf="presentComponent == undefined">
+            <app-productos-proceso-aprobacion></app-productos-proceso-aprobacion>
+        </div>
+        <div *ngIf="presentComponent == 1">
+            <app-aprobacion-producto-materia-prima></app-aprobacion-producto-materia-prima>
+        </div>
+        <div *ngIf="presentComponent == 2">
+            <app-aprobacion-producto-complemento-industrializado></app-aprobacion-producto-complemento-industrializado>
+        </div>
+    </div>
+</div>

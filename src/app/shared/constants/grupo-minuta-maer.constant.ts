@@ -1,0 +1,4 @@
+export enum GrupoMinutaMAER {
+    CARNES_HUEVOS_LEGUMINOSAS_SECAS_FRUTOS_SECOS_Y_SEMILLAS = 4,
+    GRASAS = 5,
+}

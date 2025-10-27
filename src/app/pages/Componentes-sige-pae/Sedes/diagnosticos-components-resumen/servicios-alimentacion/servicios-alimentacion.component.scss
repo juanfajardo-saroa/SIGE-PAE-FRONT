@@ -1,0 +1,74 @@
+
+ @import '/src/assets/styles/variable.scss';
+
+ .BordeRedondoTres{
+     border: 1px solid $base-azulPAE;
+   padding: 1%;
+   border-radius: 1px 1px 1px 1px;
+ }
+ 
+ .BordeRedondoUno{
+   border: 1px solid $base-azulPAE;
+   padding: 1%;
+   border-radius: 20px 20px 1px 1px;
+ }
+ .BordeRedondoDos{
+   border: 1px solid $base-azulPAE;
+   padding: 1%;
+   border-radius: 1px 1px 20px 20px;
+ }
+ img {
+   height: 20px;
+   align-items: center;
+   margin: auto;
+ }
+ 
+ #chart-alimento{
+   max-width: 90%;
+   margin: auto;
+   padding: auto;
+   
+ }
+ #chart-preparacion {
+   max-width: 90%;
+   margin: auto;
+   padding: auto;
+   
+ }
+ #chart-consumo {
+   max-width: 90%;
+   margin: auto;
+   padding: auto;
+   
+ }
+ #chart-residuos {
+   max-width: 90%;
+   margin: auto;
+   padding: auto;
+   
+ }
+ #chart-sanitarias {
+   max-width: 90%;
+   margin: auto;
+   padding: auto;
+   
+ }
+ #chart-dotacion {
+  max-width: 90%;
+  margin: auto;
+  padding: auto;
+  
+}
+ .titulo{
+ font-size: 16px;
+ color: $base-color;
+ max-width: 100%;
+ font-weight: 100;
+ }
+ .sub{
+ font-size: 16px;
+ margin-left: 50px;
+ color: #ed0057
+ }
+ 
+ 

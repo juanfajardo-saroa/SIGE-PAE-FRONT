@@ -1,0 +1,50 @@
+
+ @import '/src/assets/styles/variable.scss';
+  .BordeRedondoUno{
+    border: 1px solid $base-azulPAE;
+    padding: 1%;
+    border-radius: 20px 20px 1px 1px;
+  }
+  .BordeRedondoDos{
+    border: 1px solid $base-azulPAE;
+    padding: 1%;
+    border-radius: 1px 1px 20px 20px;
+  }
+  img {
+    height: 20px;
+    align-items: center;
+    margin: auto;
+}
+
+  #chart-contaminacion{
+    max-width: 90%;
+    margin: auto;
+    padding: auto;
+
+  }
+  #chart-ubicada {
+    max-width: 90%;
+    margin: auto;
+    padding: auto;
+
+  }
+.titulo{
+  font-size: 16px;
+  color: $base-color;
+  max-width: 100%;
+  font-weight: 100;
+}
+.sub{
+  font-size: 16px;
+  margin-left: 50px;
+  color: #ed0057
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  ::ng-deep.cdk-overlay-pane {
+    max-width: 95vw !important;
+  }
+
+}

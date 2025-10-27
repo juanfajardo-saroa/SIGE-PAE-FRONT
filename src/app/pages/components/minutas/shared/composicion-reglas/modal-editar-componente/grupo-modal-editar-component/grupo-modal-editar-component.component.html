@@ -1,0 +1,57 @@
+<!-- Para flujo de grupos existentes y nuevos subGrupos -->
+<div *ngIf="!isNewGroup && grupo" class="separador-bottom-botted mt-3">
+    <select name="grupo" id="grupo" class="control-md"
+        [(ngModel)]="grupo.id">
+        <option [ngValue]="grupo.id">{{ grupo.nombre }}</option>
+    </select>
+    <div class="ml-5 my-2" *ngFor="let subGrupo of grupo.listSubGrupo">
+        <select name="subGrupo" id="subGrupo" class="control-md"
+            [(ngModel)]="subGrupo.id">
+            <option [ngValue]="subGrupo.id">{{ subGrupo.nombre }}</option>
+        </select>
+    </div>
+    <ng-container *ngFor="let newSubGroup of listNewSubGroup; index as i">
+        <div class="ml-5 my-2">
+            <select name="newSubGrupo{{ i }}" id="newSubGrupo{{ i }}"
+                class="control-md" [(ngModel)]="newSubGroup.id" (ngModelChange)="changeModel('nombre', $event, newSubGroup, 'subGrupo')">
+                <option [ngValue]="0" selected>Selecciona un subgrupo</option>
+                <option *ngFor="let subGrupo of filtrarSubgruposPorIdGrupo(grupo.id)" [ngValue]="subGrupo.id">{{ subGrupo.nombre }}</option>
+            </select>
+        </div>
+    </ng-container>
+    <div class="text-right mb-2">
+        <button class="btn border-0" (click)="habilitarNuevoSubgrupo()">
+            <img alt="agregar"
+                class="ml-n3"
+                style="width: 20px; height: 20px"
+                src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png"/>
+                Agregar subgrupo
+        </button>
+    </div>
+</div>
+<!-- Para flujo de nuevos grupos -->
+<div *ngIf="isNewGroup && grupo" class="separador-bottom-botted mt-3">
+    <select name="grupo" id="grupo" class="control-md"
+        [(ngModel)]="grupo.id" [(ngModel)]="newGroup.id" (ngModelChange)="changeModel('nombre', $event, newGroup, 'grupo')">
+        <option [ngValue]="0" selected>Selecciona un grupo</option>
+        <option *ngFor="let aGrupo of listGrupos" [ngValue]="aGrupo.id">{{ aGrupo.nombre }}</option>
+    </select>
+    <ng-container *ngFor="let newSubGroup of listNewSubGroup; index as i">
+        <div class="ml-5 my-2">
+            <select name="newSubGrupo{{ i }}" id="newSubGrupo{{ i }}"
+                class="control-md" [(ngModel)]="newSubGroup.id" (ngModelChange)="changeModel('nombre', $event, newSubGroup, 'subGrupo')">
+                <option [ngValue]="0" selected>Selecciona un subgrupo</option>
+                <option *ngFor="let subGrupo of filtrarSubgruposPorIdGrupo(grupo.id)" [ngValue]="subGrupo.id">{{ subGrupo.nombre }}</option>
+            </select>
+        </div>
+    </ng-container>
+    <div class="text-right mb-2">
+        <button class="btn border-0" (click)="habilitarNuevoSubgrupo()">
+            <img alt="agregar"
+                class="ml-n3"
+                style="width: 20px; height: 20px"
+                src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png"/>
+                Agregar subgrupo
+        </button>
+    </div>
+</div>

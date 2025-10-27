@@ -1,0 +1,186 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            Nuevo Recurso
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div>
+      <div class="SizeDialog">
+        <div>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+              <br />
+
+              <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+
+                <div *ngIf="action !='Adicionar'">
+                  <div>
+                    <br />
+                    <input matInput id="id" formControlName="id" readonly="true" class=" form-control" />
+                  </div>
+                </div>
+
+                <table>
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Tipo de recurso:<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                  
+                        <mat-select id="idCategoria" formControlName="idCategoria" class="tablaform"placeholder="Tipo de recurso">
+                          <mat-option *ngFor="let item of CategoriasList" [value]="item.id">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Nombre del documento:<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+                        <input id="nombre" formControlName="nombre" required placeholder="Nombre del documento"
+                            class="form-control" />
+                          <div
+                            *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">3. Descripción (opcional):</div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+                        <input id="descripcion" formControlName="descripcion" 
+                            placeholder="Este documento contiene......." class="formcontrol2" />
+                          <div
+                            *ngIf="form.get('descripcion').invalid && (form.get('descripcion').dirty || form.get('descripcion').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">4. Fecha de expedición:<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+
+                        <!-- <input class="fechaText" matInput [matDatepicker]="fechaArchivo" 
+                            id="fechaArchivo" placeholder="Fecha de expedición">
+                          <mat-datepicker-toggle matSuffix [for]="fechaArchivo">
+                            <mat-icon style="color: rgb(14, 92, 235);" matDatepickerToggleIcon>calendar_month</mat-icon>
+                          </mat-datepicker-toggle>
+                          <mat-datepicker #fechaArchivo></mat-datepicker> -->
+                          <input class="fechaText" type="date" id="start" name="trip-start" formControlName="fechaArchivo" required>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  
+                  <ng-container >
+                    <tr class="Oculto">
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft"> Nombre Archivo:<span style="color:red;">* </span> </div>
+                      </td>
+                      <td class="BordeSeparador">
+                        <!-- <mat-form-field>
+                          <mat-label>Nombre Archivo Storage</mat-label>
+                          <br />
+                          <input matInput id="Nombre Archivo Storage" formControlName="pahtArchivo" 
+                            placeholder="Nombre Archivo Storage" class="form-control" readonly />
+                          <div
+                            class="invalid-feedback">
+                          </div>
+                        </mat-form-field> -->
+                        <input matInput id="Nombre Archivo Storage" formControlName="pahtArchivo" required
+                        placeholder="Nombre Archivo" class="form-control" readonly />
+                      <div
+                        class="invalid-feedback">
+                      </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                
+                  <ng-container>
+                    <tr>
+                      <td class="">
+                        <div class="TextosBlueLeft">5. Archivo Adjunto:<span style="color:red;">* </span></div>
+                      </td>
+                      <td>
+                        <div class="container">
+                          <div class="button-wrap">
+
+                            <div>
+                              <button class="buttonAr text-center btn-file CenterAll" > <p  style="float: left; margin-right: 2px;">Adjuntar Archivo</p>
+                                <p  style="float: left; margin-right: 2px">{{contenidoRespuesta}}</p> 
+                                <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description</mat-icon>
+                                  <input name="photo" type="file" data-max-size="3064" 
+                                    (change)="onFileSelected($any($event).currentTarget.files)" 
+                                    accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                    'application/vnd.rar', 'application/zip', 'application/msword',
+                                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                    'application/pdf', 'application/vnd.ms-excel',
+                                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                    'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </td>
+                    </tr>
+                  </ng-container>
+                </table>
+              </div>
+            </mat-dialog-content>
+
+            <ng-template #elseTemplate>
+              ¿Está Seguro de Eliminar el Registro?
+            </ng-template>
+            <!-- ---------------------------------Botones----------------------------- -->
+            <table class="BordeSuperior">
+              <ng-container>
+                <div>
+                  <div class="CenterButton text-center">
+                    <div class="AlignRight">
+                      <button (click)="closeDialog()">Cancelar
+                      </button>
+                     
+                    </div>
+                    <div>
+                      <button [disabled]="form.invalid && action !='Eliminar'" (click)="doAction()">Finalizar
+                      </button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </table>
+
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</div>

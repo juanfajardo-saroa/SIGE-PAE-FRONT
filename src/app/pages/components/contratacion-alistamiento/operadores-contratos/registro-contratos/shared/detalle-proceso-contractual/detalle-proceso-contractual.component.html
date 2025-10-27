@@ -1,0 +1,179 @@
+<form class="form-default-inline" [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+            <h4 class="panel-title">
+                {{headerText}}
+            </h4>
+        </div>
+        <div class="panel-body" style="border-radius: 0px !important;">
+            <div class="pt-xxl pb-md">
+                <div class="row align-items-center">
+                    <div class="col clearfix" style="padding-left: 9px">
+                        <app-chapter-azul-bg
+                            [numberChapter]="1"
+                            [titleChapter]="'Detalles del proceso contractual'">
+                        </app-chapter-azul-bg>
+                        <br />
+                    </div>
+                    <div class="col clearfix text-right" style="padding: 20px">
+                        <div class="msg-alerta">
+                            <div>
+                                <img *ngIf="tipoOperacion == LOGISTICA"
+                                    src="../assets/images/Iconos/logistica/item1activo.png" />
+                                <img *ngIf="tipoOperacion == MATERIA_PRIMA"
+                                    src="../assets/images/Iconos/materia-prima/item1activo.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-item" style="padding-left: 15px">
+                <label class="form-label w-down-100" style="margin-left: 6px">
+                    1. Modalidad de contrataci&oacute;n CHIP:
+                </label>
+                <div class="inline-block">
+                    <select class="form-control w-down-100 ml-lg-down-0" name="cboTipo" style="width: 320px;"
+                        formControlName="iD_TipoContratacion" required>
+                        <option value="">Elija una opci&oacute;n</option>
+                        <option *ngFor="let i of listModalidaContratacionChip" [ngValue]="i.id">{{ i.nombre }}</option>
+                    </select>
+                    <div class="color-invalid" *ngIf="!getValid('iD_TipoContratacion')">Elija una opci&oacute;n</div>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="form-label w-down-100 mr-2">
+                    2. Contrato publicado en el SECOP o la TVEC:
+                </label>
+                <div class="inline-block form-checkbox ml-xs w-down-100 ml-lg-down-0">
+                    <label id="ckContratoPublicadoSi" class="check-si w-down-50"
+                        [class]="myForm.value.publicadorSECOP ? 'active' : ''"
+                        (click)="changeMyForm('publicadorSECOP', true)">
+                        Si
+                    </label>
+                    <label id="ckContratoPublicadoNo" class="check-no w-down-50"
+                        [class]="!myForm.value.publicadorSECOP ? 'active' : ''"
+                        (click)="changeMyForm('publicadorSECOP', false)">
+                        No
+                    </label>
+                </div>
+            </div>
+
+            <div [class]="myForm.value.publicadorSECOP ? '' : 'disabled'">
+                <div class="form-item">
+                    <div class="ml-md">
+                        <label class="form-label w-down-100">2.1. Plataforma:</label>
+                        <div class="inline-block ml-xs ml-lg-down-0">
+                            <div class="flex border-sm">
+                                <div class="flex" style="padding: 2px 10px;">
+                                    <label>
+                                        <input id="ckPla1" name="iD_PlataformaContrato" type="radio"
+                                            formControlName="iD_PlataformaContrato"
+                                            style="width: auto !important;" [value]="1"
+                                            [required]="myForm.value.publicadorSECOP"
+                                            [disabled]="myForm.value.publicadorSECOP == false">
+                                            SECOP I
+                                    </label>
+                                </div>
+                                <div class="flex border-left" style="padding: 2px 10px;">
+                                    <label>
+                                        <input id="ckPla2" name="iD_PlataformaContrato" type="radio"
+                                            formControlName="iD_PlataformaContrato"
+                                            style="width: auto !important;" [value]="2"
+                                            [required]="myForm.value.publicadorSECOP">
+                                            SECOP II
+                                    </label>
+                                </div>
+                                <div class="flex border-left" style="padding: 2px 10px;">
+                                    <label>
+                                        <input id="ckPla3" name="iD_PlataformaContrato" type="radio"
+                                            formControlName="iD_PlataformaContrato"
+                                            style="width: auto !important;" [value]="3"
+                                            [required]="myForm.value.publicadorSECOP">
+                                            TVEC
+                                    </label>
+                                </div>
+                                <div class="color-invalid" *ngIf="!getValid('iD_PlataformaContrato')">Elija una opci&oacute;n {{!getValid('iD_PlataformaContrato')}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <div class="ml-md">
+                        <label class="form-label w-down-100">
+                            2.2. N° del proceso registrado en SECOP:
+                        </label>
+                        <div class="inline-block w-down-100">
+                            <input type="text" class="form-control w-down-100 ml-lg-down-0" name="txtNumeroRegistroSecop"
+                            style="width: 260px;"
+                            formControlName="numeroProcesoRegistradoSECOP"
+                            [required]="myForm.value.publicadorSECOP" />
+                            <div class="color-invalid" *ngIf="!getValid('numeroProcesoRegistradoSECOP')">Complete este campo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <div class="ml-md">
+                        <label class="form-label w-down-100">
+                            2.3. Link del contrato en SECOP:
+                        </label>
+                        <div class="inline-block w-down-100">
+                            <input type="text" class="form-control w-down-100 ml-lg-down-0" name="txtLinkContratoSecop"
+                            style="width: 315px;"
+                            formControlName="linkContratoSECOP"
+                            [required]="myForm.value.publicadorSECOP" />
+                            <div class="color-invalid" *ngIf="!getValid('linkContratoSECOP')">Complete este campo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="form-label w-down-100" style="width: 260px;">
+                    3. Fecha de suscripci&oacute;n del contrato:
+                </label>
+                <div class="inline-block w-down-100">
+                    <input type="date" class="form-control w-down-100 ml-lg-down-0" name="txtFechaSuscripcion"
+                    style="width: 180px;"
+                    formControlName="fechaSuscripcion"
+                    required />
+                    <div class="color-invalid" *ngIf="!getValid('fechaSuscripcion')">Seleccione una opción</div>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="form-label w-down-100" style="width: 260px;">
+                    4. Fecha de adjudicaci&oacute;n del contrato:
+                </label>
+                <div class="inline-block w-down-100">
+                    <input type="date" class="form-control w-down-100 ml-lg-down-0" name="txtFechaAdjudicacion"
+                    style="width: 180px;" placeholder="dd/mm/yyyy"
+                    formControlName="fechaAdjudicacion"
+                    required />
+                    <div class="color-invalid" *ngIf="!getValid('fechaAdjudicacion')">Seleccione una opción</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-12 col-xl clearfix">
+                    <button class="btn btn-blue w-down-100" (click)="finalizar()">
+                        Guardar y continuar m&aacute;s tarde
+                    </button>
+                </div>
+                <div class="col-12 col-xl d-xl-block d-flex flex-column-reverse flex-xl-row gap-down-15-px clearfix">
+                    <button class="btn btn-blue w-down-100" (click)="regresar()">
+                        Anterior
+                    </button>
+                    <button class="btn btn-blue ml-sm ml-lg-down-0 w-down-100" type="submit">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

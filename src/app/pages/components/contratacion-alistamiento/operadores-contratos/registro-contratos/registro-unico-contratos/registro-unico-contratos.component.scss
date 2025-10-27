@@ -1,0 +1,45 @@
+@import "/src/assets/styles/variable.scss";
+@import '../../../../../../../assets/sass/theme/table-sigepae';
+@import '../../../../../../../assets/styles/radio_button.scss';
+
+
+.msg-alerta {
+  font-size: 15px;
+  background-color: #fff;
+  border: none;
+  color: #005ACA;
+  border-radius: 30px;
+  padding: 5px 15px;
+  text-align: left;
+
+  min-width: 120px;
+}
+
+button {
+  border-radius: 60px;
+}
+.labelred {
+    color: #f54a62 !important;
+    font-size: 15px;
+    padding-top: 10px;
+
+}
+.tableRed {
+  color: #f54a62 !important;
+  border-spacing: 0;
+  border-top: 1px solid #f54a62 !important;
+  border-right: 1px solid #f54a62 !important;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 19px 19px 0 0;
+}
+
+.tabla-suministro-entrega{
+  td {
+    display: inline-flex;
+  }
+  input {
+    margin-right: 5px;
+  }
+}
+

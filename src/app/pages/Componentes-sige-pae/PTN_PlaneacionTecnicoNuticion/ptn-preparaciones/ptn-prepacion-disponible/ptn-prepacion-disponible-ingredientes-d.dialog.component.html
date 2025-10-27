@@ -1,0 +1,132 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>Agregar ingrediente</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                <br />
+                <div *ngIf="action !='Adicionar'">
+                  <div class="example-full-width">
+                    <br />
+                    <input matInput id="id" formControlName="id" readonly="true" class=" form-control"
+                      style="display: none;" />
+                  </div>
+                </div>
+                <table>
+                  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Grupo de alimentos:
+                        </div>
+                      </td>
+                      <td>
+                        <input matInput id="nombre" formControlName="nombre" required placeholder="Nombre del Documento"
+                          class="form-control" />
+                        <div
+                          *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Subgrupo de alimentos:</div>
+                      </td>
+                      <td>
+                        <input matInput id="descripcionDiagnostico" formControlName="descripcionDiagnostico" required
+                          placeholder="Descripción Diagnóstico" class="form-control" />
+                        <div
+                          *ngIf="form.get('descripcionDiagnostico').invalid && (form.get('descripcionDiagnostico').dirty || form.get('descripcionDiagnostico').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Alimento:</div>
+                      </td>
+                      <td>
+                        <input matInput id="descripcionDiagnostico" formControlName="descripcionDiagnostico" required
+                          placeholder="Descripción Diagnóstico" class="form-control" />
+                        <div
+                          *ngIf="form.get('descripcionDiagnostico').invalid && (form.get('descripcionDiagnostico').dirty || form.get('descripcionDiagnostico').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                </table>
+                <div style="width: 100%; float: right; color: #005ACA;" class="align-items-center textagregar ">
+                  <div class="text-right ">
+                    <button (click)="Buscar()">Buscar
+                    </button>
+                  </div>
+                </div>
+                <!-- Resultados de busqueda -->
+                <div class="sub">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-114.png " height="30px" width="auto">
+                  <span style="color:#E43466 !important; margin-left: 10px; ">Materia prima: 11 resultados disponibles
+                  </span>
+                </div>
+                <hr class="linea">
+                <br>
+                <!-- fin Resultados de busqueda -->
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                  [(ngModel)]="favoriteSeason">
+                  <mat-radio-button class="example-radio-button"  *ngFor="let season of tipoRacionList" [value]="season.id">
+                    {{season.nombre}}
+                  </mat-radio-button>
+                </mat-radio-group>
+
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <div style="text-align: center;">
+                  ¿Está seguro de eliminar el registro?
+                </div>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+
+                      </div>
+                      <button (click)="doAction()">Agregar
+                      </button>
+                      <div>
+
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

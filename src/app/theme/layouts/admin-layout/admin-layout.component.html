@@ -1,0 +1,140 @@
+<!-- <link href="https://cdn.www.gov.co/assets/css/styles.css" rel="stylesheet" />  -->
+<!-- <link href="../../../../assets/styles/govco.css" rel="stylesheet" type="text/css"/> -->
+<STYLE>
+  @import "../../../../assets/styles/govco.css";
+</STYLE>
+
+<div *ngIf="showLayout">
+  <app-navbar (newItemEvent)="newItem($event)" (openSideNavEvent)="openSideNav($event)"  ></app-navbar>
+
+  <!-- #sidenav
+  mode="side"
+  class="example-sidenav"
+  [ngStyle]="{ 'width.em': sidenavWidth }"
+  opened="true"
+  (mouseenter)="increase()"
+  (mouseleave)="decrease()"
+
+ class="menuvar-container"
+-->
+
+  <mat-sidenav-container fullscreen class="tp-container" >
+    <mat-sidenav #sidenav mode="side" *ngIf="mostrarmenu && showLayoutMenubar" opened="true" class="menuvar-container pt-md-down-40-px" [ngClass]="isOpenSideNav ? '' : 'd-none d-lg-block' " [ngStyle]="{ 'width.em': sidenavWidth }">
+
+
+      <div *ngIf="mostrarmenu" class="menuvar-container container-fluid content-wrapper align-items-center pt-md-down-40-px">
+        <app-menubar (miEventoMenuBar)="newItemMenuBar($event)"  [menuChild]="menu" [sidenavWidth]="sidenavWidth"></app-menubar>
+      </div>
+
+      <!-- <div fxLayout="row" (click)="toggleShow()">
+        <div fxLayout="row" (click)="sidenav.toggle()">
+          isMenuOpen
+        -->
+
+        <div fxLayout="row" class="d-none d-lg-block" (click)="toggleShow()">
+        <mat-icon class="UbicaFlecha2 " *ngIf="!isMenuOpen">
+          arrow_right
+        </mat-icon>
+        <mat-icon class="UbicaFlecha" *ngIf="isMenuOpen">
+          arrow_left
+        </mat-icon>
+      </div>
+
+      <!-- <div fxLayout="row" (click)="toggleShow();sidenav.toggle()">
+        <mat-icon class="UbicaFlecha " *ngIf="!sidenav.opened">
+          arrow_right
+        </mat-icon>
+        <mat-icon class="UbicaFlecha" *ngIf="sidenav.opened">
+          arrow_left
+        </mat-icon>
+      </div> -->
+    </mat-sidenav>
+
+    <!-- [ngStyle]="{ 'margin-left.px': sidenavContent ,
+    'left.px': sidenavContent}"
+
+  sidenavMarginRight-->
+
+
+    <mat-sidenav-content class="tp-containerppal" [ngStyle]="{'left' : sidenavContent + '%' ,
+    'margin-lef' : sidenavMarginRight + '%'}">
+      <div class="container-fluid content-wrapper">
+        <div class="col-12 px-lg-down-0">
+          <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 px-0 banner-breadcrumbs">
+            <div class="flex-wrap flex-md-nowrap mt-3 px-md-0 px-2">
+              <app-menadminuautorizado>
+                <ng-container autorizado>
+                  <!-- <div *ngIf="mostarEncabezadoMenu" class="row">
+                    <div class="col-md-6">
+                      <label class="banner-text">
+                        <strong class="strongheader">{{
+                          nombreUbicacion
+                          }}</strong>
+                      </label>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <label class="anio-text">Año | <strong class="strongheader"></strong>{{ currentYear }}</label>
+                    </div>
+                  </div> -->
+
+                  <div *ngIf="mostarEncabezadoMenu==true && mostrarKeyLayoutC==true" class="row">
+                    <div class="col-md-6">
+                      <label class="banner-text">
+                        <strong class="strongheader">
+                          {{nombreUbicacion}}
+                        </strong>
+                      </label>
+                    </div>
+
+
+
+                    <div class="col-md-6 text-right">
+                      <button mat-button [matMenuTriggerFor]="menu" class="botonVig">
+                        {{nombreVigAnoSeleccionada}} <mat-icon style="transform: rotate(90deg);">play_arrow</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu" class="CambioVigencia">
+
+
+                        <div *ngFor="let item of dataArrayInterno">
+                          <button mat-menu-item [(value)]="item.id" (click)="CambioVigencia($event)"
+                            *ngIf="nombreVigAnoSeleccionada == item.nombre"
+                            style="color: #FFF!important;margin:0; background-color: #005ACA!important;">
+                            <mat-icon style="color: #FFF;margin:0; background-color: #005ACA;">done</mat-icon>
+                            {{item.nombre }}
+                          </button>
+                          <button mat-menu-item [(value)]="item.id" (click)="CambioVigencia($event)"
+                            *ngIf="nombreVigAnoSeleccionada != item.nombre">
+                            {{ item.nombre }}
+                          </button>
+                        </div>
+                      </mat-menu>
+                    </div>
+                  </div>
+
+                  <!-- <hr style="margin: 0; color: red!important;" /> -->
+                  <div *ngIf="mostarEncabezadoMenu && mostrarKeyLayoutC" class="row LineaAzul">
+                    <div class="col-12 text-right">
+                      <label class="last-update-text">Ultima actualizaci&oacute;n
+                        <span> {{ dateToday | date: "longDate"  }}</span></label>
+                    </div>
+                  </div>
+                </ng-container>
+              </app-menadminuautorizado>
+            </div>
+            <div class="mt-2">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="mostrarmenu" class="row col-md-12" style="margin-top: 100px;">
+        <!-- <div *ngIf="mostrarmenu" class="row mt-3" style="display: block; border-top: 2px solid #e6effd; width: 100%;"> -->
+        <br>
+        <app-footer></app-footer>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<div *ngIf="!showLayout">
+  <router-outlet></router-outlet>
+</div>

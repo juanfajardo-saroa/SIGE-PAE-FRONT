@@ -1,0 +1,192 @@
+<div *ngIf="active == 1" class="row">
+  <div class="col-12">
+    <div class="text-right" (click)="addAnexos()">
+      <img class="mr-2" src="../assets/images/Iconos/add_blue.png">
+      <label class="letraAzul" for="">Agregar Anexo</label>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="active == 1">
+  <div class="row my-2" *ngFor="let item of dataAnexos; let indice=index">
+    <div class="col-12 text-left" style=" margin-right: 0px; padding-right: 0px;">
+      <div class="BordePendiente" style="float: left; margin: 0 -10px;">
+        <label class="card-title letraAzul" style="padding: 5px 10px 5px 10px; float: left;">Anexo {{ indice + 1 }} </label>
+    </div>
+
+      <div class="d-flex flex-column d-xl-block w-down-100" style="float: left;">
+        <button  class="BordeRedondoAgregar ml-lg-down-10-px mb-lg-down-0" style="margin-left: 20px; margin-top:9px;"
+        *ngIf="!item.readonly " (click)="guardarAnexos(indice) "   mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-54.png" alt="" height="20px" width="auto" style="margin-right: 10px;">Guardar anexo
+        </button >
+        <button  class="BordeRedondoAgregar" style="margin-left: 10px; margin-top:9px;"
+        *ngIf="!item.readonly && accion==1"  (click)="cancelarAnexos(indice) "   mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" alt="" height="20px" width="auto" style="margin-right: 10px;">Cancelar anexo
+        </button >
+
+        <button  class="BordeRedondoAgregar" style="margin-left: 20px; margin-top:9px;"
+        *ngIf="item.readonly " (click)="editarAnexos(indice) "   mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-52.png" alt="" height="20px" width="auto" style="margin-right: 10px;">Editar anexo
+        </button >
+
+        <button  class="BordeRedondoAgregar" style="margin-left: 10px; margin-top:9px;"
+        *ngIf="item.readonly && accion==1"  (click)="eliminarAnexos(item.id,item.pathArchivo,item.nombre,indice) "   mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" alt="" height="20px" width="auto" style="margin-right: 10px;">Eliminar anexo
+        </button >
+        <button  class="BordeRedondoAgregar" style="margin-left: 10px; margin-top:9px;"
+        *ngIf="!item.readonly && accion==2"  (click)="eliminarAnexos(item.id,item.pathArchivo,item.nombre,indice) "   mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" alt="" height="20px" width="auto" style="margin-right: 10px;">Eliminar anexo
+        </button >
+        <button  class="BordeRedondoAgregar" style="margin-left: 10px; margin-top:9px;"
+        *ngIf="item.readonly && accion==2"  (click)="eliminarAnexos(item.id,item.pathArchivo,item.nombre,indice) "   mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" alt="" height="20px" width="auto" style="margin-right: 10px;">Eliminar anexo
+        </button >
+
+
+
+
+
+
+      </div>
+    </div>
+    <div class="col-12 py-1 px-lg-down-0">
+      <div class="row mx-lg-down-0">
+        <div class="col-12 text-left">
+          <div class="row mx-lg-down-0">
+            <div class="col-12  BordeSeparador">
+              <label class="col-12 col-xl-3 col-sm-3 col-form-label">
+                1. Nombre:
+              </label>
+              <input *ngIf="!mesajesalert" class="col-12 col-xl-9 inputSelect" type="text" name="nombreAnexo_{{ indice }}"
+                [ngModel]="item.nombre | titlecase"
+                (ngModelChange)="ItemNombre($event, indice, 'nombre')"[disabled]="item.readonly" >
+                <input  *ngIf="mesajesalert && item.readonly" class="col-12 col-xl-9 inputSelect " type="text" name="nombreAnexo_{{ indice }}"
+                [ngModel]="item.nombre | titlecase"
+                (ngModelChange)="ItemNombre($event, indice, 'nombre')"[disabled]="item.readonly" >
+                <input  *ngIf="mesajesalert && !item.readonly" class="col-12 col-xl-9 inputSelect aletaimput" type="text" name="nombreAnexo_{{ indice }}"
+                [ngModel]="item.nombre | titlecase"
+                (ngModelChange)="ItemNombre($event, indice, 'nombre')"[disabled]="item.readonly" >
+                <label *ngIf="mesajesalert && !item.readonly" class="label" style="color: red">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                 Complete este campo
+                </label>
+            </div>
+          </div>
+
+
+          <div class="row mx-lg-down-0">
+            <div class="col-12 BordeSeparador">
+              <label class="col-12 col-xl-3 col-form-label">
+                2. Descripción:
+              </label>
+              <input *ngIf="!mesajesalert2" class="col-12 col-xl-9 inputSelect2" type="text" name="descripcion_{{ indice }}"
+                [(ngModel)]="item.descripcion"
+                (ngModelChange)="ItemDescripcion($event, indice, 'descripcion')" [disabled]="item.readonly">
+                <input *ngIf="mesajesalert2 && item.readonly" class="col-12 col-xl-9 inputSelect2 " type="text" name="descripcion_{{ indice }}"
+                [(ngModel)]="item.descripcion"
+                (ngModelChange)="ItemDescripcion($event, indice, 'descripcion')" [disabled]="item.readonly">
+                <input *ngIf="mesajesalert2&& !item.readonly" class="col-12 col-xl-9 inputSelect2 aletaimput" type="text" name="descripcion_{{ indice }}"
+                [(ngModel)]="item.descripcion"
+                (ngModelChange)="ItemDescripcion($event, indice, 'descripcion')" [disabled]="item.readonly">
+                <label *ngIf="mesajesalert2 && !item.readonly" class="label" style="color: red">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                 Complete este campo
+                </label>
+            </div>
+          </div>
+
+          <div class="row mx-lg-down-0">
+            <div class="col-12 BordeSeparador">
+              <label class="col-12 col-xl-3 col-form-label">
+                3. Fecha de actualización:
+              </label>
+              <input *ngIf="!mesajesalert3" class=" col-12 col-xl-9 inputSelect3 w-down-100"
+              type="date" id="start" name="fecha_{{ indice }}"
+                [ngModel]="item.fechaActualizacion|date:'yyyy-MM-dd'"
+                (ngModelChange)="ItemFecha($event, indice, 'fechaActualizacion')" [disabled]="item.readonly">
+                <input *ngIf="mesajesalert3  && item.readonly" class=" col-12 col-xl-9 inputSelect3 w-down-100"
+                type="date" id="start" name="fecha_{{ indice }}"
+                  [ngModel]="item.fechaActualizacion|date:'yyyy-MM-dd'"
+                  (ngModelChange)="ItemFecha($event, indice, 'fechaActualizacion')" [disabled]="item.readonly">
+                  <input *ngIf="mesajesalert3  && !item.readonly" class=" col-12 col-xl-9 inputSelect3 aletaimput w-down-100"
+                type="date" id="start" name="fecha_{{ indice }}"
+                  [ngModel]="item.fechaActualizacion|date:'yyyy-MM-dd'"
+                  (ngModelChange)="ItemFecha($event, indice, 'fechaActualizacion')" [disabled]="item.readonly">
+                <label *ngIf="mesajesalert3 && !item.readonly" class="label2" style="color: red">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                 Complete este campo
+                </label>
+            </div>
+          </div>
+
+          <div class="row mx-lg-down-0">
+            <div class="col-12 BordeSeparador">
+              <label class="col-12 col-xl-3 col-form-label">
+                4. Archivo adjunto:
+              </label>
+              
+                  <button *ngIf="!mesajesalert4 " class="buttonImg CenterAll btn-file w-down-100 h-auto ">Adjuntar archivo
+                    <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                    <input id="file-upload" name="archivo_{{ indice }}"  type="file" data-max-size="3064" requerid
+                        (change)="onFileSelected($any($event).currentTarget.files, indice, 'pathArchivo',item)"
+                        accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                        'application/vnd.rar', 'application/zip', 'application/msword',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                        'application/pdf', 'application/vnd.ms-excel',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                        'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                    <p class="textButtonImg">{{item.pathArchivo}}</p>
+                </button>
+                 
+                  <button *ngIf="mesajesalert4 && !item.readonly" class="buttonImg CenterAll btn-file w-down-100 h-auto  aletaimput">Adjuntar archivo
+                    <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                    <input id="file-upload" name="archivo_{{ indice }}"  type="file" data-max-size="3064" requerid
+                        (change)="onFileSelected($any($event).currentTarget.files, indice, 'pathArchivo',item)"
+                        accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                        'application/vnd.rar', 'application/zip', 'application/msword',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                        'application/pdf', 'application/vnd.ms-excel',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                        'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                    <p class="textButtonImg">{{item.pathArchivo}}</p>
+                </button>
+                 
+                  <button *ngIf="mesajesalert4 && item.readonly" class="buttonImg CenterAll btn-file w-down-100 h-auto">Adjuntar archivo
+                    <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                    <input id="file-upload" name="archivo_{{ indice }}"  type="file" data-max-size="3064" requerid
+                        (change)="onFileSelected($any($event).currentTarget.files, indice, 'pathArchivo',item)"
+                        accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                        'application/vnd.rar', 'application/zip', 'application/msword',
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                        'application/pdf', 'application/vnd.ms-excel',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                        'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                    <p class="textButtonImg">{{item.pathArchivo}}</p>
+                </button>
+
+                  <label *ngIf="mesajesalert4 && !item.readonly" class="label" style="color: red">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                   Complete este campo
+                  </label>
+            </div>
+          </div>
+
+          <div class="row mx-lg-down-0">
+            <div class="col-12 BordeSeparador">
+              <label class="col-12 col-xl-3 col-form-label">
+                5. Caja de herramientas:
+              </label>
+
+             <app-repositorios-cajaherramientas-uapa *ngIf="verCaja && accion==1" [idAnexo]="this.dataAnexos[indice].id" [active]="1" ></app-repositorios-cajaherramientas-uapa>
+             <app-repositorios-cajaherramientas-uapa *ngIf="!verCaja && accion==2 && !item.readonly" [idAnexo]="this.dataAnexos[indice].id" [active]="1" ></app-repositorios-cajaherramientas-uapa>
+             <app-repositorios-cajaherramientas-uapa *ngIf="verCaja && accion==2 && !item.readonly" [idAnexo]="this.dataAnexos[indice].id" [active]="1" ></app-repositorios-cajaherramientas-uapa>
+             <app-repositorios-cajaherramientas-uapa *ngIf="verCaja && accion==2 && item.readonly" [idAnexo]="this.dataAnexos[indice].id" [active]="1" ></app-repositorios-cajaherramientas-uapa>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

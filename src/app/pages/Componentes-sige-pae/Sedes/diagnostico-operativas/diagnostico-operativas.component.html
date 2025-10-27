@@ -1,0 +1,237 @@
+<style>
+  .card {
+    border: none;
+  }
+
+  .table-responsive {
+    padding-left: 0px !important;
+  }
+
+</style>
+
+<!-- Include d3.js from a CDN. -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.js"></script>
+
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="table-responsive">
+          <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="Municipio">
+              <th class="LeftUpCorner bordeBottom" mat-header-cell *matHeaderCellDef style="padding-left: 0px; min-width: 110px;"><b>Municipio </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                {{element.municipio}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Institucion Educativa">
+              <th mat-header-cell *matHeaderCellDef class="bordeBottom" style="padding-left: 0px; min-width: 200px;"> <b>Institución <br> Educativa</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.instEducativa}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="Sede">
+              <th mat-header-cell *matHeaderCellDef class="bordeBottom" style="padding-left: 0px;min-width: 290px; "><b>Sede</b> </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                {{element.sede}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="Prorizada para PAE">
+              <th mat-header-cell *matHeaderCellDef class="bordeBottom" style="padding-left: 0px; "><b>Priorizada <br> para PAE </b> </th>
+              <td mat-cell *matCellDef="let element" style=" text-align: center; ">
+                <mat-icon
+                  [ngStyle]="{'color': element.priorizadaPAE == null ? '#E2E6FE':(element.priorizadaPAE ? 'green' : 'red')}">{{
+                  element.priorizadaPAE == null ? 'minimize':( element.priorizadaPAE ? 'circle' : 'circle') }}
+                </mat-icon>
+                {{element.priorizadaPAE == null ? 'Pendiente':( element.priorizadaPAE ? 'Sí':'No')}}
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="Concepto higiénico favorable">
+              <th mat-header-cell *matHeaderCellDef class="bordeBottom" style="padding-left: 0px; "><b>Concepto<br> higiénico<br>
+                favorable  </b>  </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon
+                  [ngStyle]="{'color': element.conHigienico == null ? '#E2E6FE' : ( element.conHigienico ? 'green' : 'red')}">{{
+                  element.conHigienico == null ?'':(element.conHigienico ? 'circle' : 'circle') }}</mat-icon>
+                {{element.conHigienico == null ?'Pendiente':( element.conHigienico ? 'Sí':'No')}}
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="Dotacion y equipo">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; " class="bordeRightNone bordeBottom"><b>Dotación y equipo </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon
+                  [ngStyle]="{'color': element.dotacionEq == null ? '#E2E6FE' : element.dotacionEq == 1 ? 'green':element.dotacionEq == 0 ?'red':'yellow'}">
+                  {{element.dotacionEq == null ? '' : element.dotacionEq == 1 ? 'circle':element.dotacionEq == 0 ?'circle':'circle' }}</mat-icon>
+                {{element.dotacionEq == null ? 'Pendiente' : element.dotacionEq == 1 ? 'Suficiente':element.dotacionEq == 0 ?'Insuficiente':'Aceptable'}}
+
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Electricidad">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+               <b> Electricidad </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon
+                  [ngStyle]="{'color': element.electricidad == null ?'#E2E6FE': (element.electricidad ? 'green' : 'red')}">
+                  {{
+                  element.electricidad == null ?'minimize': (element.electricidad ? 'done' : 'close') }}</mat-icon>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="Alcantarillado">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b>Alcantarillado </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon
+                  [ngStyle]="{'color': element.alcantarillado == null ?'#E2E6FE': (element.alcantarillado ? 'green' : 'red')}">
+                  {{
+                  element.alcantarillado == null ?'minimize': (element.alcantarillado ? 'done' : 'close')}}</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Rec.basura">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b>Rec. basuras </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon
+                  [ngStyle]="{'color': element.recBasuras== null ?'#E2E6FE': (element.recBasuras ? 'green' : 'red')}">{{
+                  element.recBasuras== null ?'minimize': (element.recBasuras ? 'done' : 'close') }}</mat-icon>
+              </td>
+
+            </ng-container>
+
+            <ng-container matColumnDef="Agua potable">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Agua
+                potable </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+
+                <mat-icon
+                  [ngStyle]="{'color':element.aguaPotable== null ?'#E2E6FE': (element.aguaPotable ? 'green' : 'red')}">
+                  {{
+                  element.aguaPotable == null ?'minimize': (element.aguaPotable ? 'done' : 'close')}}</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Gas">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Gas</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon [ngStyle]="{'color':element.gas== null ?'#E2E6FE': (element.gas ? 'green' : 'red')}">
+                  {{element.gas == null ?'minimize': (element.gas ? 'done' :
+                  'close') }}</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Almacenamiento">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b>Almacenamiento </b> </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " value="aprobarid">
+                <mat-icon
+                  [ngStyle]="{'color':element.almacenamiento== null ?'#E2E6FE': ( element.almacenamiento ? 'green' : 'red')}">
+                  {{
+                  element.almacenamiento == null ?'minimize': (element.almacenamiento ? 'done' : 'close') }}</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="preparacion">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b>Preparación </b> </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+
+                <mat-icon
+                  [ngStyle]="{'color':element.preparacion == null ?'#E2E6FE': (element.preparacion ? 'green' : 'red')}">
+                  {{
+                  element.preparacion == null ?'minimize': (element.preparacion ? 'done' : 'close') }}</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="consumo">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+               <b> Consumo </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+
+                <mat-icon
+                  [ngStyle]="{'color': element.consumo == null ?'#E2E6FE': (element.consumo ? 'green' : 'red')}">{{
+                  element.consumo == null ?'minimize': (element.consumo ?
+                  'done' : 'close') }}</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Disp.residuos">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+               <b> Disp. residuos </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+
+                <mat-icon
+                  [ngStyle]="{'color': element.dispResiduos== null ?'#E2E6FE': ( element.dispResiduos ? 'green' : 'red')}">
+                  {{
+                  element.dispResiduos == null ?'minimize': (element.dispResiduos ? 'done' : 'close') }}</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Areas sanitarias">
+              <th class="verticalText" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Áreas
+                sanitarias </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+
+                <mat-icon
+                  [ngStyle]="{'color': element.areaSanitarias == null ?'#E2E6FE': (  element.areaSanitarias ? 'green' : 'red')}">
+                  {{
+                  element.areaSanitarias == null ?'minimize': (element.areaSanitarias ? 'done' : 'close') }}</mat-icon>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="diagnostico">
+              <th class="LeftUpCorner2 borde" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Estado del<br>
+                diagnóstico</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon
+                  [ngStyle]="{'color': element.diagnostico == 1 ?'#E2E6FE': element.diagnostico == null ?'#E2E6FE':  element.diagnostico ==3? 'yellow' : element.diagnostico==2 ?'#E2E6FE': element.diagnostico==4 ?'green':'red'}">
+                  {{element.diagnostico == null ?'circle': element.diagnostico == 1 ?'circle':  element.diagnostico == 3 ?'circle' : element.diagnostico ==2 ? 'circle': element.diagnostico ==4 ?'circle':'circle' }}
+                </mat-icon>
+                {{element.estadoCaract}}
+
+              </td>
+            </ng-container>
+
+            <!-- Header row second group -->
+            <ng-container matColumnDef="h_PRINCIPAL">
+              <th style=" visibility:hidden" mat-header-cell *matHeaderCellDef [attr.colspan]="6"></th>
+            </ng-container>
+            <ng-container matColumnDef="h_SERVICIOS">
+              <th class="header2" mat-header-cell *matHeaderCellDef [attr.colspan]="5"><b>Servicios <br> públicos</b></th>
+            </ng-container>
+            <ng-container matColumnDef="h_AREA">
+              <th style="border-left: 1px solid #ffff;" class="header2" mat-header-cell *matHeaderCellDef [attr.colspan]="5"><b>Áreas físicas <br> disponibles</b></th>
+            </ng-container>
+            <ng-container matColumnDef="h_FINAL">
+              <th style=" visibility:hidden" mat-header-cell *matHeaderCellDef ></th>
+            </ng-container>
+            <tr mat-header-row
+            *matHeaderRowDef="['h_PRINCIPAL', 'h_SERVICIOS', 'h_AREA', 'h_FINAL']"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "
+              [ngStyle]="{'background-color': myRowData.id_sede == idSedesUbicacion?'#7798D3':'#ffffff'} "
+              idSedesUbicacion=first
+              (click)="openInfraesturaDetalle(myRowData.id_sede,myRowData.sede,myRowData.municipio,myRowData.instEducativa,myRowData.estadoCaract,myRowData.diagnostico)">
+            </tr>
+          </table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+          </mat-paginator>
+          <div *ngIf="isLoading"
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

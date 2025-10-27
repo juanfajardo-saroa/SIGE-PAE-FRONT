@@ -1,0 +1,355 @@
+# Azure DevOps Pipeline - SIGE-PAE Frontend
+# Pipeline para build y deployment del frontend Angular
+# Migrado desde UAPA-SIPAE a hernan0871
+
+trigger:
+  branches:
+    include:
+    - main
+    - master
+    - develop
+  paths:
+    include:
+    - src/*
+    - package.json
+    - angular.json
+    - Dockerfile
+
+variables:
+  # Build Variables
+  buildConfiguration: 'production'
+  nodeVersion: '16.x'
+  
+  # Azure Container Registry
+  containerRegistry: 'azrcaksalimentosdev.azurecr.io'
+  imageRepository: 'sige-pae-front'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+  
+  # Azure Kubernetes Service
+  azureSubscription: 'svc-azure-destino'
+  kubernetesCluster: 'az-aks-alimentos-dev-westus2'
+  resourceGroup: 'SIPAE-DEV'
+  namespace: 'alimentos-dev'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: 'Build Angular Application'
+  jobs:
+  - job: BuildJob
+    displayName: 'Build and Test'
+    steps:
+    
+    # Node.js Setup
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: '$(nodeVersion)'
+    
+    # Cache node_modules
+    - task: Cache@2
+      displayName: 'Cache node modules'
+      inputs:
+        key: 'npm | "$(Agent.OS)" | package-lock.json'
+        restoreKeys: |
+          npm | "$(Agent.OS)"
+        path: '$(Build.SourcesDirectory)/node_modules'
+    
+    # Install dependencies
+    - script: |
+        npm ci
+      displayName: 'npm install'
+    
+    # Update environment for migration
+    - script: |
+        echo "Updating environment configuration for migrated APIs..."
+        
+        # Backup original files
+        cp src/environments/environment.ts src/environments/environment.ts.backup
+        cp src/environments/environment.prod.ts src/environments/environment.prod.ts.backup
+        
+        # Update environment.ts for development
+        sed -i "s|baseUrlAPI_Acceso: 'https://core.sipae.gov.co/sispae-api-acceso/api/'|baseUrlAPI_Acceso: 'http://4.155.92.235/api/'|g" src/environments/environment.ts
+        sed -i "s|apiURI_Acceso: 'https://core.sipae.gov.co/sige-pae-acceso-api/api/'|apiURI_Acceso: 'http://4.155.92.235/api/'|g" src/environments/environment.ts
+        
+        # Update environment.prod.ts for production
+        sed -i "s|baseUrlAPI_Acceso: 'https://core.sipae.gov.co/sispae-api-acceso/api/'|baseUrlAPI_Acceso: 'http://4.155.92.235/api/'|g" src/environments/environment.prod.ts
+        sed -i "s|apiURI_Acceso: 'https://core.sipae.gov.co/sige-pae-acceso-api/api/'|apiURI_Acceso: 'http://4.155.92.235/api/'|g" src/environments/environment.prod.ts
+        
+        echo "Environment configuration updated for migrated API"
+        
+        # Show changes
+        echo "=== Changes in environment.ts ==="
+        grep -n "baseUrlAPI_Acceso\|apiURI_Acceso" src/environments/environment.ts || true
+        echo "=== Changes in environment.prod.ts ==="
+        grep -n "baseUrlAPI_Acceso\|apiURI_Acceso" src/environments/environment.prod.ts || true
+        
+      displayName: 'Update Environment Configuration'
+    
+    # Run tests (optional)
+    - script: |
+        npm run test -- --watch=false --browsers=ChromeHeadless
+      displayName: 'Run unit tests'
+      continueOnError: true
+    
+    # Build Angular application
+    - script: |
+        npm run build -- --configuration=$(buildConfiguration)
+      displayName: 'Build Angular App'
+    
+    # Verify build output
+    - script: |
+        echo "Build completed. Checking dist folder..."
+        ls -la dist/
+        du -sh dist/*
+      displayName: 'Verify Build Output'
+    
+    # Publish build artifacts
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Build Artifacts'
+      inputs:
+        pathToPublish: 'dist'
+        artifactName: 'angular-build'
+
+- stage: Docker
+  displayName: 'Build and Push Docker Image'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - job: DockerJob
+    displayName: 'Docker Build and Push'
+    steps:
+    
+    # Download build artifacts
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build Artifacts'
+      inputs:
+        artifactName: 'angular-build'
+        downloadPath: '$(Build.SourcesDirectory)'
+    
+    # Prepare Dockerfile context
+    - script: |
+        echo "Preparing Docker context..."
+        ls -la
+        
+        # Copy nginx configuration
+        if [ ! -f nginx.conf ]; then
+          echo "Creating nginx.conf..."
+          cat > nginx.conf << 'EOF'
+        events {
+            worker_connections 1024;
+        }
+        
+        http {
+            include       /etc/nginx/mime.types;
+            default_type  application/octet-stream;
+            
+            gzip on;
+            gzip_vary on;
+            gzip_min_length 1000;
+            gzip_proxied any;
+            gzip_comp_level 6;
+            gzip_types application/javascript application/json text/css text/plain text/xml application/xml application/xml+rss text/javascript;
+        
+            server {
+                listen 80;
+                server_name localhost;
+                root /usr/share/nginx/html;
+                index index.html;
+                
+                # Angular routing
+                location / {
+                    try_files $uri $uri/ /index.html;
+                }
+                
+                # Health check
+                location /health {
+                    return 200 "healthy\n";
+                    add_header Content-Type text/plain;
+                }
+                
+                # Cache static assets
+                location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+                    expires 1y;
+                    add_header Cache-Control "public, immutable";
+                }
+            }
+        }
+        EOF
+        fi
+        
+        # Update Dockerfile if needed
+        if [ ! -f Dockerfile ]; then
+          echo "Creating Dockerfile..."
+          cat > Dockerfile << 'EOF'
+        # Build stage
+        FROM node:16-alpine as build-step
+        RUN mkdir -p /app
+        WORKDIR /app
+        COPY package*.json /app/
+        RUN npm ci --only=production
+        COPY . /app
+        RUN npm run build --prod
+        
+        # Production stage
+        FROM nginx:1.22-alpine
+        COPY --from=build-step /app/dist/SIGE-PAE-Front /usr/share/nginx/html
+        COPY nginx.conf /etc/nginx/nginx.conf
+        EXPOSE 80
+        CMD ["nginx", "-g", "daemon off;"]
+        EOF
+        fi
+        
+      displayName: 'Prepare Docker Context'
+    
+    # Azure Container Registry Login
+    - task: AzureCLI@2
+      displayName: 'ACR Login and Docker Build'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          echo "Logging into Azure Container Registry..."
+          az acr login --name azrcaksalimentosdev
+          
+          echo "Building Docker image..."
+          docker build -t $(containerRegistry)/$(imageRepository):$(tag) \
+                       -t $(containerRegistry)/$(imageRepository):latest \
+                       -f $(dockerfilePath) .
+          
+          echo "Pushing Docker image..."
+          docker push $(containerRegistry)/$(imageRepository):$(tag)
+          docker push $(containerRegistry)/$(imageRepository):latest
+          
+          echo "Docker image pushed successfully:"
+          echo "- $(containerRegistry)/$(imageRepository):$(tag)"
+          echo "- $(containerRegistry)/$(imageRepository):latest"
+
+- stage: Deploy
+  displayName: 'Deploy to AKS'
+  dependsOn: Docker
+  condition: succeeded()
+  jobs:
+  - deployment: DeployToAKS
+    displayName: 'Deploy Frontend to AKS'
+    environment: 'alimentos-dev'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          
+          # Prepare Kubernetes manifests
+          - script: |
+              echo "Creating Kubernetes deployment manifests..."
+              
+              cat > k8s-deployment.yaml << EOF
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: sige-pae-front
+                namespace: $(namespace)
+                labels:
+                  app: sige-pae-front
+                  tier: frontend
+              spec:
+                replicas: 2
+                strategy:
+                  type: RollingUpdate
+                  rollingUpdate:
+                    maxSurge: 1
+                    maxUnavailable: 0
+                selector:
+                  matchLabels:
+                    app: sige-pae-front
+                template:
+                  metadata:
+                    labels:
+                      app: sige-pae-front
+                      tier: frontend
+                  spec:
+                    containers:
+                    - name: sige-pae-front
+                      image: $(containerRegistry)/$(imageRepository):$(tag)
+                      ports:
+                      - containerPort: 80
+                      resources:
+                        requests:
+                          memory: "128Mi"
+                          cpu: "100m"
+                        limits:
+                          memory: "256Mi"
+                          cpu: "200m"
+                      livenessProbe:
+                        httpGet:
+                          path: /health
+                          port: 80
+                        initialDelaySeconds: 30
+                        periodSeconds: 10
+                      readinessProbe:
+                        httpGet:
+                          path: /health
+                          port: 80
+                        initialDelaySeconds: 5
+                        periodSeconds: 5
+                    imagePullSecrets:
+                    - name: acr-secret
+              ---
+              apiVersion: v1
+              kind: Service
+              metadata:
+                name: sige-pae-front-service
+                namespace: $(namespace)
+                labels:
+                  app: sige-pae-front
+              spec:
+                type: LoadBalancer
+                ports:
+                - port: 80
+                  targetPort: 80
+                  protocol: TCP
+                selector:
+                  app: sige-pae-front
+              EOF
+              
+              echo "Kubernetes manifests created successfully"
+              cat k8s-deployment.yaml
+              
+            displayName: 'Create Kubernetes Manifests'
+          
+          # Deploy to AKS
+          - task: AzureCLI@2
+            displayName: 'Deploy to AKS'
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                echo "Getting AKS credentials..."
+                az aks get-credentials --resource-group $(resourceGroup) --name $(kubernetesCluster) --overwrite-existing
+                
+                echo "Creating namespace if it doesn't exist..."
+                kubectl create namespace $(namespace) --dry-run=client -o yaml | kubectl apply -f -
+                
+                echo "Applying Kubernetes manifests..."
+                kubectl apply -f k8s-deployment.yaml
+                
+                echo "Waiting for deployment to be ready..."
+                kubectl rollout status deployment/sige-pae-front -n $(namespace) --timeout=300s
+                
+                echo "Getting deployment status..."
+                kubectl get pods -n $(namespace) -l app=sige-pae-front
+                kubectl get service -n $(namespace) -l app=sige-pae-front
+                
+                echo "Getting external IP (may take a few minutes)..."
+                kubectl get service sige-pae-front-service -n $(namespace) -o wide
+                
+                # Show deployment details
+                echo "=== DEPLOYMENT SUMMARY ==="
+                echo "Namespace: $(namespace)"
+                echo "Image: $(containerRegistry)/$(imageRepository):$(tag)"
+                echo "Service: sige-pae-front-service"
+                echo "Frontend will be available at the LoadBalancer external IP"

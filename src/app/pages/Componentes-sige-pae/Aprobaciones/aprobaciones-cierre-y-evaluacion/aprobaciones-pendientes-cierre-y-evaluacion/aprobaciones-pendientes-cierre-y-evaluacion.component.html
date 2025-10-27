@@ -1,0 +1,96 @@
+<!-- <div>
+
+  <div class="d-flex flex-column flex-xl-row tableFiltroUsuario bordeado-table-filter">
+    <div class="d-flex align-items-center flex-grow-table-2_6 border-right-table-filter border-right-down-none justify-content-center text-center p-2">
+      <span class="font-size-13">Utilice cualquier campo de la tabla para buscar Aprobaciones.</span>
+    </div>
+    <div class="d-flex flex-column align-items-center flex-grow-table-1_5 border-right-table-filter border-right-down-none border-top-table-filter p-2">
+      <span class="font-size-13">Filtro</span>
+      <div class="d-flex flex-row align-items-center w-100 justify-content-center">
+        <input (keyup)="applyFilter($any($event).target.value)" type="text" class="">
+        <ng-container>
+          <input class="btn-file" style="width:0px;" matInput [matDatepicker]="fechaConsulta" id="fechaConsulta"
+            (dateChange)="aplicarfiltrofecha($event.value)">
+          <mat-datepicker-toggle matSuffix [for]="fechaConsulta">
+            <mat-icon style="color: rgb(14, 92, 235);" matDatepickerToggleIcon>calendar_month</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #fechaConsulta></mat-datepicker>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="d-flex flex-grow-table-1 justify-content-center border-top-table-filter p-2">
+      <a class="text-center" (click)="applyFilter2()">
+        <img src="../../../../../../assets/images/Iconos/eye_blue.png">
+        <div class="font-size-13">Ver listado completo</div>
+      </a>
+    </div>
+  </div>
+
+</div> -->
+
+<br>
+
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content class="responsive-table-pae">
+        <table mat-table [dataSource]="dataSource " class="left-radius" matSort>
+          <!-- modulo Column -->
+          <ng-container matColumnDef="modulo">
+            <th class="LeftUpCorner" mat-header-cell  *matHeaderCellDef style="padding-left: 0px; "><b>Módulo</b>
+            </th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Módulo"> {{element.sID_Submodulos==null?'-':(element.sID_Submodulos)}}
+            </td>
+          </ng-container>
+          <!-- seccion Column -->
+          <ng-container matColumnDef="seccion">
+            <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Sección</b>
+            </th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Sección"> {{element.sId_Secciones==null?'-':(element.sId_Secciones)}}
+            </td>
+          </ng-container>
+          <!-- solicitado Column -->
+          <ng-container matColumnDef="documento">
+            <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Documento por aprobar</b></th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Doc. aprobar">
+              {{element.documentoParaAprobar==null?'-':(element.documentoParaAprobar)}} </td>
+          </ng-container>
+
+          <!-- fecha Column -->
+          <ng-container matColumnDef="enviado">
+            <th mat-header-cell *matHeaderCellDef   style="padding-left: 0px; "><b>Enviado para aprobación</b></th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Env. aprobación">
+              {{element.fecha==null?'-':( element.fecha | date:'dd-MMM-yyyy' | uppercase | withoutDots)}} </td>
+          </ng-container>
+           <!-- fecha Column -->
+           <ng-container matColumnDef="aprobado">
+            <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Fue aprobada/rechazada</b></th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="aprobada/rechazada">
+              {{element.fechaAprobacion==null?'-':( element.fechaAprobacion | date:'dd-MMM-yyyy' | uppercase | withoutDots)}} </td>
+          </ng-container>
+
+          <!-- accion Column -->
+          <ng-container matColumnDef="accion">
+            <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Acciones </b></th>
+            <td mat-cell *matCellDef="let element" class="pr-down-0" style="padding-left: 0px; text-align: center; " data-label="Acciones">
+
+
+              <div *ngIf="element.fechaAprobacion==null" class="verDetalle" title="Aprobaciones Cierre y evaluación" target="_blank" (click)="direccionarce(element.id)">Ir al módulo para aprobar/rechazar</div>
+
+
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+          <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
+        </table>
+        <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+        </mat-paginator>
+        <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

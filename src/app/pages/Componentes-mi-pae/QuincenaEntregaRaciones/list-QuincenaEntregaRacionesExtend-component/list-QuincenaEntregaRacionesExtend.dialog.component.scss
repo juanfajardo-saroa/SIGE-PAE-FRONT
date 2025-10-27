@@ -1,0 +1,129 @@
+@import '/src/assets/styles/variable.scss';
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+.mat-select-value{
+  color: $base-azulPAE;
+}
+
+.course-header {
+  &.Angular {
+    background-color: #fc4b6c!important;
+  }
+
+  &.Web {
+    background-color: #1e88e5!important;
+  }
+
+  &.Design {
+    background-color: #26c6da!important;
+  }
+
+  &.Android {
+    background-color: #ffb22b!important;
+  }
+  background-color:  $base-azulPAE!important;
+  color: #fff;
+
+  .mat-card-title {
+    font-size: 15px !important;
+    display: flex;
+    align-items: center;
+
+    .course-duration {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.mat-card-actions {
+  border-top: 1px solid rgba(120, 130, 140, 0.13);
+  padding: 8px 0 !important;
+}
+
+
+input,
+
+select{
+  border: 1px $base-azulPAE solid!important;
+  padding: 2px 0px!important;
+  background-color: ghostwhite!important;
+  width: 100%!important;
+  color: $base-azulPAE!important;
+}
+
+input:not(.noRadius),
+select:not(.noRadius){
+  border-radius: 7px;
+}
+
+.cssForm{
+  font-size: 12px;
+}
+
+i{
+  font-style: normal;
+}
+
+.text-center {
+  input,
+  select{
+    border: 1px $base-azulPAE solid;
+    padding: 3px 10px;
+    width: 100%;
+    color: $base-azulPAE;
+  }
+
+  input:not(.noRadius),
+  select:not(.noRadius){
+    border-radius: 5px;
+  }
+
+  .cssForm{
+    font-size: 12px;
+  }
+
+  i{
+    font-style: normal;
+  }
+
+  background-color:  aliceblue!important;
+
+  .course-header {
+
+    background-color:  aliceblue!important;
+    color: #fff;
+
+    .mat-card-title {
+      font-size: 15px !important;
+      display: flex;
+      align-items: center;
+
+      .course-duration {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+}

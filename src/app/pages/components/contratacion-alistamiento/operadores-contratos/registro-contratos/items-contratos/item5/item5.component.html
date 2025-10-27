@@ -1,0 +1,346 @@
+
+<style>
+    .tableFiltroUsuario{
+      border-spacing: 0;
+      color: #005ACA;
+    }
+  
+    .tableFiltroUsuario td{
+      text-align: center;
+      font-size: 13px !important;
+      color: #005ACA !important;
+      padding: 2.5px 10px;
+      border-top: 1px solid #005ACA;
+      border-right: 1px solid #005ACA;
+      border-bottom: 1px solid #005ACA;
+    }
+    .tableFiltroUsuario td b{
+      color: #005ACA;
+      font-size: 13px !important;
+    }
+    .tableFiltroUsuario td div{
+      color: #005ACA;
+      font-weight: 500;
+      font-size: 13px !important;
+    }
+  
+    .tableFiltroUsuario td:first-child{
+      border-left: 1px solid #005ACA;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  
+    .tableFiltroUsuario td:last-child{
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  
+    .tableUsuarios th,
+    .tableUsuarios td{
+      font-size: 13px;
+    }
+    table.tableUsuarios thead th:last-child{
+      border-top-right-radius: 20px !important;
+    }
+  
+  
+    table.tableFormUsuarios tr td{
+      padding-top: 12px;
+      padding-bottom: 12px;
+      color: #005ACA;
+      font-size: 14px;
+    }
+  
+    table.tableFormUsuarios tr td:first-child{
+      padding-left: 35px;
+    }
+    table.tableFormUsuarios tr td:last-child{
+      padding-right: 35px;
+    }
+  
+    input,
+    select{
+      border: 1px #005ACA solid;
+      padding: 3px 10px;
+      width: 100%;
+      color: #005ACA;
+    }
+  
+    input:not(.noRadius),
+    select:not(.noRadius){
+      border-radius: 5px;
+    }
+  
+    .cssForm{
+      font-size: 12px;
+    }
+  
+    i{
+      font-style: normal;
+    }
+  
+    .tableFiltroUsuario i{
+      font-size: 25px;
+    }
+  
+    .btn.btn-middle{
+      background-color: aliceblue;
+      border: 1px solid aliceblue;
+    }
+    .btn.btn-high{
+      background-color: #005ACA !important;
+      border: 1px solid #005ACA !important;
+    }
+  </style>
+  
+
+  <div class="row">
+    <div class="col-12">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+            <h4 class="panel-title">Registro &uacute;nico de Contratos - Supervisi&oacute;n</h4>
+        </div>
+        <div class="panel-body">
+          <form class="form-default-inline">              
+            <div class="form-item">
+                <div class="row">
+                    <div class="col clearfix">
+                        <app-chapterblue [numberChapter]="4" [titleChapter]="'Información presupuestal'"></app-chapterblue><br/>       
+                    </div>
+                    <div class="col clearfix text-right" style="padding: 20px;">                        
+                        <button class="msg-alerta" >
+                            <div>
+                              <img src="../../../../../../assets/images/Iconos/item4Supervision.png">
+                            </div>                    
+                        </button>
+                    </div>
+                </div>   
+            </div> 
+            
+            <div class="form-item">
+              <label for="exampleFormControlInput1" class="form-label">
+                1. Fuente de financiaci&oacute;n presupuestal destinadas a cubrir el costo del contrato:
+              </label>
+              <div class="d-flex justify-content-left">   
+                <table class="tableFiltroUsuario col-3">
+                  <tr>            
+                    <td>                         
+                        Fuente <br/> N° 1    
+                    </td>
+                    <td style="width: 500px;">         
+                        
+                        Fuente:<select id="cboTipo" class="form-control">
+                            <option value="0">Elija una opci&oacute;n</option>                  
+                        </select> 
+                        Tipo:
+                        <select id="cboTipo" class="form-control">
+                            <option value="0">Elija una opci&oacute;n</option>                  
+                        </select>
+                        <label class="ml-xs">Valor: </label>
+                        <input type="text" class="form-control" id="txtDigVerfi" style="min-width: 70px;">
+                    </td>                    
+                  </tr>
+                </table>
+              </div><br/> 
+              <label for="exampleFormControlInput1" class="form-label">
+                &nbsp;&nbsp;&nbsp; Certificados de dispónibilidad presupuestal (CDP) y certificados de registro presupuestal(CRP) asociados a la fuente N° 1:
+              </label>    
+              
+              
+              <div class="row">
+                <div class="col-6" style="float: left;">
+                  <table style=" border-spacing: 0;
+                    border-top: 1px solid #005ACA;
+                    border-right: 1px solid #005ACA;
+                    border-left: none;
+                    border-bottom: none;
+                    border-radius: 19px 19px 0 0;">
+                    <thead>
+                      <tr>
+                        <th style="
+                          padding: 5px 15px;
+                          text-align: center;
+                          background-color: aliceblue !important;
+                          font-weight: bold !important;
+                          color: #005ACA !important;
+                          border-top: none;
+                          border-left: 1px solid #005ACA;
+                          border-bottom: 1px solid #005ACA;
+                          border-right: 1px solid #005ACA;
+                          border-radius: 19px 0 0 0;">Concepto</th>
+                        <th style="
+                          padding: 5px 15px;
+                          text-align: center;
+                          background-color: aliceblue !important;
+                          font-weight: bold !important;
+                          color: #005ACA !important;
+                          border-top: none;
+                          border-left: none;
+                          border-right: none;
+                          border-bottom: 1px solid #005ACA;
+                          border-radius: 0 0 0 0;">Valor anual</th>
+                          <th style="
+                          padding: 5px 15px;
+                          text-align: center;
+                          background-color: aliceblue !important;
+                          font-weight: bold !important;
+                          color: #005ACA !important;
+                          border-top: none;
+                          border-left: 1px solid #005ACA;
+                          border-right: none;
+                          border-bottom: 1px solid #005ACA;
+                          border-radius: 0 0 0 0;">Valor anual</th>
+                          <th style="
+                          padding: 5px 15px;
+                          text-align: center;
+                          background-color: aliceblue !important;
+                          font-weight: bold !important;
+                          color: #005ACA !important;
+                          border-top: none;
+                          border-left: 1px solid #005ACA;
+                          border-bottom: 1px solid #005ACA;
+                          border-right: 1px none #005ACA;
+                          border-radius: 0 19px 0 0;">Valor anual</th>
+                      </tr>
+                    </thead>
+                    <tbody style="
+                      border-top: none;
+                      border-left: none;
+                      border-right: none;
+                      border-bottom: none;
+                      border-radius: 0 0 0 0;">
+                      <tr>
+                        <td class="row1-otros-gastos" style="font-weight: bold !important;">                          
+                        </td>                        
+                        <td class="row1-otros-gastos" style="font-weight: bold !important;">                          
+                        </td>
+                        <td class="row1-otros-gastos" style="font-weight: bold !important;">                          
+                        </td>
+                        <td class="row1-otros-gastos" style="font-weight: bold !important;">                          
+                        </td>
+                      </tr>   
+    
+    
+                    </tbody>
+                  </table>
+                </div>
+                <div >
+                    <div>
+                      <div class="float-right mt-2">Agregar CDP</div>
+                      <img class="float-right mr-2" src="../../../../../../assets/images/Iconos/add_blue.png">
+                    </div>
+                  </div>
+              </div><br/>
+              <label for="exampleFormControlInput1" class="form-label">
+                &nbsp;&nbsp;&nbsp; Valor total en CRPs:
+              </label>
+              <input type="text" class="form-control" id="txtNit" style="width: 110px;">
+              <div class="container-icon">&nbsp;&nbsp;
+                <img style="width: 50px; height: 50px;" src="../../../../../../assets/images/Iconos/alert.png">&nbsp;&nbsp;
+                <label for="exampleFormControlInput1" class="labelred">
+                    Asegurate de que el monto total en CRPs coincida <br/> con el valor de la fuente de financiaci&oacute;n
+                </label>
+              </div>
+
+
+
+            </div>
+              
+  
+            <div class="form-item">
+                <input type="text" class="form-control" id="txtNit" style="width: 110px;">         
+                <div class="float-right mt-2">Agregar fuente de financiaci&oacute;n</div>
+                <img class="float-right mr-2" src="../../../../../../assets/images/Iconos/add_blue.png">      
+                    
+            </div><br/>
+  
+            <div class="form-item">
+              <label for="exampleFormControlInput1" class="form-label float-left">
+                2. Suma total de las fuentes de financiaci&oacute;n registradas:
+                <input type="text" class="form-control" id="txtNit" placeholder="Automatico" style="width: 110px;">
+              </label><br/><br/>
+              <div class="row">   
+                    <div class="container-body form-label">
+                      <div class="container-icon float-left">&nbsp;&nbsp;
+                        <img style="width: 50px; height: 50px;" src="../../../../../../assets/images/Iconos/alert.png">&nbsp;&nbsp;
+                        <label for="exampleFormControlInput1" class="labelred">
+                            Asegurate de que el valor total de las fuentes de <br/> financiacion coincida con el valor total del contrato
+                        </label>
+                      </div>
+                      
+                      <div class="row">
+                        <div>
+                          <table class="tableRed" >
+                            <thead>
+                              <tr>
+                                <th style="
+                                  padding: 5px 15px;
+                                  text-align: center;
+                                  background-color: #f54a62 !important;
+                                  font-weight: bold !important;
+                                  color: aliceblue !important;
+                                  border-top: none;
+                                  border-left: 1px solid #f54a62;
+                                  border-bottom: 1px solid #f54a62;
+                                  border-right: 1px solid #f54a62;
+                                  border-radius: 19px 19px 0 0;">
+                                  Valor&nbsp;contrato
+                                </th>                                
+                              </tr>
+                            </thead>
+                            <tbody style="
+                              border-top: 1px solid #f54a62 !important;
+                              border-left: 1px solid #f54a62 !important;
+                              border-right: 1px solid #f54a62 !important;
+                              border-bottom: 1px solid #f54a62 !important;
+                              ">
+                              <tr>
+                                <td class="row1-otros-gastos" style="font-weight: bold !important; color:#f54a62; ">
+                                  Automatico
+                                </td>                                
+                              </tr>  
+                            </tbody>
+                          </table>
+                        </div>
+                      </div><br/>
+                    </div>
+              </div>
+              
+
+
+            </div><br/>
+  
+            <div class="form-item">
+                <label for="exampleFormControlInput1" class="form-label float-left">
+                    3. PDF del contrato: &nbsp;&nbsp;&nbsp;                   
+                </label>
+                <div class="btn-fileUpload">
+                    <span>Adjunta el archivo</span>
+                    <mat-icon>check</mat-icon>
+                    <img src="../../../../../../assets/images/Iconos/input-file.png">
+                    <input class="" type="file" id="fileRutUpload" name="fileRutUpload" accept="application/pdf">
+                </div>
+            </div>
+  
+            
+  
+          </form>
+        </div>
+  
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col clearfix">
+                    <button class="btn btn-blue">Guardar y continuar m&aacute;s tarde</button>        
+                </div>
+                <div class="col clearfix">
+                    <button class="btn btn-blue" (click)="Anterior()">Anterior</button>&nbsp;&nbsp;
+                    <button class="btn btn-blue">&nbsp;Finalizar&nbsp;</button>
+                </div>
+            </div>   
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <br/>
+  <br/>

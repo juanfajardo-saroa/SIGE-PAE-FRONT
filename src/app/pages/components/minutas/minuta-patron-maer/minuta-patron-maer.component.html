@@ -1,0 +1,123 @@
+<div class="row">
+    <div class="col-12">
+        <div class="tab-control-secondary d-flex">
+            <div class="tab-item w-down-100 d-flex" style="width: 33.333%;" [class]="item.active ? 'active': ''"
+                *ngFor="let item of datosPestanas" (click)="seleccionarTab(item)">
+                <div>{{ item.descripcion }}</div>
+            </div>
+            <div class="flex-grow-1 tab-item-blank"></div>
+        </div>
+    </div>
+    <!-- <mat-tab-group  *ngFor="let item of datosPestanas"  [selectedIndex]="selectedTabIndex" class="px-3" style="width: 100%; display: flex;"
+            (selectedIndexChange)="seleccionarTab($event)">
+            <mat-tab>
+            </mat-tab >
+            <mat-tab [disabled]="true">
+            </mat-tab >
+    </mat-tab-group> -->
+</div>
+
+<div class="mt-xxl " *ngIf="minutaVisible && iD_MinutaPatronAlimento > 0">
+    <div class="row ml-2">
+        <div class="flex align-items-center">
+            <app-chapter-azul-bg *ngIf="bgColorChapterBlue" [numberChapter]="1"
+                [titleChapter]="'Composición y reglas'"></app-chapter-azul-bg>
+            <app-chapter *ngIf="bgColorChapterRed" [numberChapter]="1"
+                [titleChapter]="'Composición y reglas'"></app-chapter>
+        </div>
+
+        <div *ngIf="minutaVisible && iD_MinutaPatronAlimento > 0" class="col-12 col-sm-5">
+            <ng-container *ngIf="editaMinuta && itemsDisabled">
+                <div class="">
+                    <button class="btn btn-blue text-left" style="width: 164px;" [disabled]="!itemsDisabled"
+                        (click)="editarMinuta()">
+                        <mat-icon>edit</mat-icon>
+                        <span> Editar Minuta </span>
+                    </button>
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-blue text-left" style="width: 164px;" [disabled]="!itemsDisabled"
+                        (click)="eliminarMinuta()">
+                        <img src="../../../../../assets/images/Iconos/delete_blue.png" />
+                        <span>Eliminar Minuta</span>
+                    </button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="editaMinuta && !itemsDisabled">
+                <div class="text-center">
+                    <app-footer-patron-maer [iD_MinutaPatronAlimento]="iD_MinutaPatronAlimento"
+                        [dataSourceComponentes]="dataSourceComponentes"
+                        [dataSourceComponentesPrep]="dataSourceComponentesPrep" [TipoComplementoId]="dataMinuta?.tipoComplementoId"
+                        [dataMacroNutrientes]="dataMacroNutrientes" [dataMicroNutrientes]="dataMicroNutrientes"
+                        (cancelarEdicionMod)="cancelarEdicionMod($event)">
+                    </app-footer-patron-maer>
+                </div>
+            </ng-container>
+        </div>
+
+        <div class="col-12 mt-md" *ngIf="bgColorChapterBlue">
+            <label class="text-basecolor no-margin"><b>{{dataMinuta.tipoRacion | uppercase}}</b></label>
+            <ul class="list-style-default-blue">
+                <li>Modalidad: {{dataMinuta.modalidad}}</li>
+            </ul>
+        </div>
+        <div class="col-12 mt-md" *ngIf="bgColorChapterRed">
+            <label class="text-basered no-margin"><b>{{dataMinuta.tipoRacion | uppercase}}</b></label>
+            <ul class="list-style-default">
+                <li>Modalidad: {{dataMinuta.modalidad}}</li>
+            </ul>
+        </div>
+        <div class="col-12 mt-sm">
+            <app-composicion-reglas-maer class="responsive-table" *ngIf="iD_MinutaPatronAlimento > 0"
+                [IdMinutaPatronAlimento]="iD_MinutaPatronAlimento" [ItemsDisabled]="itemsDisabled"
+                (dataSourceComponentesMod)="dataSourceComponentesMod($event)" [TipoComplementoId]="dataMinuta?.tipoComplementoId"
+                (dataComponentInPreparationsMod)="dataSourceComponentesPrepMod($event)" onchange="">>
+            </app-composicion-reglas-maer>
+        </div>
+    </div>
+
+    <div class="row mt-xxl ml-2">
+        <app-chapter-azul-bg *ngIf="bgColorChapterBlue" [numberChapter]="2"
+            [titleChapter]="'Aporte nutricional'"></app-chapter-azul-bg>
+        <app-chapter *ngIf="bgColorChapterRed" [numberChapter]="2" [titleChapter]="'Aporte nutricional'"></app-chapter>
+
+        <div *ngIf="bgColorChapterBlue" class="col-12 mt-md">
+            <label class="text-basecolor no-margin"><b>{{dataMinuta.tipoRacion | uppercase}}</b></label>
+            <ul class="list-style-default-blue">
+                <li>Modalidad: {{dataMinuta.modalidad}}</li>
+            </ul>
+        </div>
+        <div *ngIf="bgColorChapterRed" class="col-12 mt-md">
+            <label class="text-basered no-margin"><b>{{dataMinuta.tipoRacion | uppercase}}</b></label>
+            <ul class="list-style-default">
+                <li>Modalidad: {{dataMinuta.modalidad}}</li>
+            </ul>
+        </div>
+
+        <div class="col-12 mt-sm">
+            <div class="row">
+                <div class="col-12 flex-xl-row flex-column offset-sm-1 col-sm-10 info-aportes">
+                    <div *ngFor="let item of aportes" class="item-info">
+                        <div>
+                            <p><b>{{item.title}}</b><br>{{item.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4 ml-2">
+        <div class="col-12 offset-sm-1 col-sm-10">
+            <app-aporte-nutricional-maer class="responsive-table" *ngIf="iD_MinutaPatronAlimento > 0"
+                [iD_MinutaPatronAlimento]="iD_MinutaPatronAlimento" [itemsDisabled]="itemsDisabled"
+                [tipoMinuta]="tipoMinutaMAER" (dataMacroNutrientesMod)="dataMacroNutrientesMod($event)"
+                (dataMicroNutrientesMod)="dataMicroNutrientesMod($event)">
+            </app-aporte-nutricional-maer>
+        </div>
+    </div>
+
+
+</div>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>

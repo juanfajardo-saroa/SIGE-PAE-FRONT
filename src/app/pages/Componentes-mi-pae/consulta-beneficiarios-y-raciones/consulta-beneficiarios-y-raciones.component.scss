@@ -1,0 +1,182 @@
+@import '/src/assets/styles/variable.scss';
+/* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label{
+  font-family: "Montserrat",sans-serif;
+  border-radius: 20px 20px 0px 0px !important;
+  color: $base-azulPAE !important;
+  font-size: $base-fontSize;
+  background-color: #fff !important;
+  width: 30%;
+}
+.mat-select-value{
+    color: $base-azulPAE;
+}
+:host ::ng-deep .mat-tab-label-active{
+  font-family: "Montserrat",sans-serif;
+  font-size: $base-fontSize;
+  border-width: 2px;
+  border-color: $base-azulPAE;
+  border-bottom-color:white;
+  border-style: solid solid hidden solid;
+  border-radius: 20px 20px 0px 0px !important;
+  color: $base-colorverde !important;
+  background-color: white !important;
+  width: 25%;
+}
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none!important;
+  display: none!important;
+}
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none!important;
+  display: none!important;
+  /* background-color: #1e88e5; */
+}
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar, .blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none!important;
+  display: none!important;
+  /* background-color: #1e88e5; */
+
+}
+/* --------------------------- FIN TABS */
+
+mat-icon {
+    color: #E2E6FE;
+}
+
+.Invisible {
+    display: none;
+}
+
+.iconLargo {
+    border-radius: 10px;
+}
+
+.titletable {
+    float: right;
+    background-color: $base-azulPAE !important;
+    color: #fff !important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border-radius: 5px 10px $base-azulPAE;
+    -webkit-border-radius: 5px 10px;
+}
+
+/* .itemPorcentaje{
+    margin-right: auto;
+    display: block;
+} */
+.rectangle {
+    background-color: blue;
+    width: 60px;
+    height: 15px;
+    border-radius: 40%;
+}
+
+.circulo {
+    background-color: #E2ECFD !important;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /*     margin: auto;
+    display: block; */
+}
+
+.smallLetter {
+    font-size: 10px;
+    margin: 0px;
+    letter-spacing: 0px;
+}
+
+.LeftUpCorner {
+    border-top-left-radius: 20px;
+
+}
+.RightUpCorner {
+    border-top-right-radius: 20px;
+
+}
+
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border: $base-azulPAE 1px solid;
+    border-style: hidden solid solid solid;
+    border-radius: 20px 20px 1px 1px;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-azulPAE;
+    font-size: $base-fontSize;
+    text-align: center;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+    border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 24px;
+    border-right: 1px solid;
+}
+
+
+.titletable {
+    float: right;
+    background-color: $base-azulPAE !important;
+    color: #fff !important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border-radius: 12px 12px 0px 0px !important;
+}
+
+.buttonAr {
+    color: $base-azulPAE;
+    border-color: $base-azulPAE;
+    padding: 14px 18px;
+    font-size: $base-fontSize;
+    cursor: pointer;
+    border-radius: 12px 12px 12px 12px !important;
+}
+
+.espaciobutton {
+    margin-left: 5px !important;
+}
+
+// .mat-table::ng-deep {
+//   border: 1px solid $base-azulPAE;
+// }
+th.mat-header-cell {
+    text-align: center !important;
+    background-color: #E2ECFD !important;
+    //color: #fff!important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    /* border: 1px solid $base-azulPAE; */
+    padding: 20px !important;
+}
+
+.mat-row:hover .mat-cell {
+    background-color: $base-azulPAE;
+    color: #ffffff;
+}
+
+.mat-column-select {
+    overflow: initial;
+}
+
+.card {
+    border: none;
+}

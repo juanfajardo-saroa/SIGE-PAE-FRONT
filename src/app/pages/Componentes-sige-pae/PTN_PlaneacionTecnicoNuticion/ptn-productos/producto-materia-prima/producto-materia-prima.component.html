@@ -1,0 +1,458 @@
+<div>
+    <div class="positionTable w-down-100">
+        <div class="tablaForm3 bordeIzq mx-lg-down-0" [formGroup]="productForm">
+            <div class="TituloDialog">
+                Registro de producto - Materia prima
+            </div>
+
+            <div class="px-3 px-xl-0 d-flex flex-column gap-down-10-px">
+
+                <div class="lineDashed d-flex flex-column flex-xl-row">
+                    <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">1. Nombre del producto:<span style="color:red;"> *</span></div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <input matInput id="NombreProducto" formControlName="NombreProducto"
+                            class="tablaForm2 w-down-100 h-auto" (keydown)="onKeyNumber2($event)" />
+                        <br>
+                        <mat-error>
+                            <mat-error class="error-message errorM"
+                                *ngIf="productForm.get('NombreProducto').invalid && alertOpened">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                                    width="auto"> Complete este campo
+                            </mat-error>
+                        </mat-error>
+                    </div>
+                </div>
+
+                <div class="lineDashed d-flex flex-column flex-xl-row">
+                    <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">2. Grupo de alimentos:<span style="color:red;"> *</span></div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <mat-select class="tablaForm w-down-100 h-auto form-control" id="GrupoAlimentos"
+                            formControlName="GrupoAlimentos" required placeholder="Elija una opción"
+                            (selectionChange)="onGrupoClick($event.value)">
+                            <mat-option *ngFor="let item of grupoAlimentosList" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <br>
+                        <mat-error>
+                            <mat-error class="error-message errorM"
+                                *ngIf="productForm.get('GrupoAlimentos').invalid && alertOpened">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                                    width="auto"> Complete este campo
+                            </mat-error>
+                        </mat-error>
+                    </div>
+                </div>
+
+                <div class="lineDashed d-flex flex-column flex-xl-row">
+                    <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">3. Subgrupo de alimentos:<span style="color:red;"> *</span></div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <mat-select class="tablaForm w-down-100 h-auto form-control" id="SubgrupoAlimentos"
+                            formControlName="SubgrupoAlimentos" required placeholder="Elija una opción">
+                            <mat-option *ngFor="let item of selectSubGrupoAlimentosList"
+                                [value]="item.iD_SubGrupoAlimento">
+                                {{item.subGrupoAlimento}}</mat-option>
+                        </mat-select>
+                        <br>
+                        <mat-error>
+                            <mat-error class="error-message errorM"
+                                *ngIf="productForm.get('SubgrupoAlimentos').invalid && alertOpened">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                                    width="auto"> Complete este campo
+                            </mat-error>
+                        </mat-error>
+                    </div>
+                </div>
+
+                <div class="lineDashed d-flex flex-column flex-xl-row">
+                    <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">4. Imagen del producto (opcional):</div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <button class="buttonImg btn-file w-down-100 h-auto">Adjuntar imagen
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-87.png " height="15px"
+                                width="auto">
+                            <input id="file-upload" name="file-upload" type="file" data-max-size="3064" required
+                                (change)="onFileSelected($any($event).currentTarget.files, 'image')"
+                                accept="application/pdf">
+                            <p class="textButtonImg">{{contenidoRespuesta}}</p>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lineDashed d-flex flex-column flex-xl-row">
+                    <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">5. Tipo de fuente de información nutricional:<span
+                                style="color:red;"> *</span></div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <mat-select class="tablaForm w-down-100 h-auto form-control"
+                            id="TipoFuenteInformacionNutricional" formControlName="TipoFuenteInformacionNutricional"
+                            required placeholder="Elija una opción">
+                            <mat-option *ngFor="let item of tipoFuenteNutricionalList" [value]="item.id">
+                                {{item.nombre}}</mat-option>
+                        </mat-select>
+                        <br>
+                        <mat-error>
+                            <mat-error class="error-message errorM"
+                                *ngIf="productForm.get('TipoFuenteInformacionNutricional').invalid && alertOpened">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                                    width="auto"> Complete este campo
+                            </mat-error>
+                        </mat-error>
+                    </div>
+                </div>
+
+                <div class="lineDashed d-flex flex-column flex-xl-row">
+                    <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft2">5.1. Documento soporte:<span style="color:red;"> *</span></div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <button class="buttonImg btn-file w-down-100 h-auto"
+                            style="padding-left: 0px !important;">Adjuntar archivo
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-87.png " height="15px"
+                                width="auto">
+                            <input id="file-upload" name="file-upload" type="file" data-max-size="3064" required
+                                (change)="onFileSelected($any($event).currentTarget.files, 'file')"
+                                accept="application/pdf">
+                            <p class="textButtonImg">{{contenidoRespuestaFile}}</p>
+                        </button>
+                        <br>
+                        <mat-error>
+                            <mat-error class="error-message errorM"
+                                *ngIf="productForm.get('pathFile').invalid && alertOpened">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                                    width="auto"> Complete este campo
+                            </mat-error>
+                        </mat-error>
+                    </div>
+                </div>
+
+                <div class="lineDashed d-flex flex-column flex-xl-row">
+                    <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">6. Unidad de medida del producto:<span style="color:red;"> *</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <mat-selection-list #estadoList [multiple]="false" formControlName="unidad"
+                            class="marginTop d-flex">
+                            <mat-list-option class="listOption flex-grow-1 flex-xl-grow-0"
+                                *ngFor="let element of unidadMedidaProductoList" [value]="element.id">
+                                {{element.descripcion}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                        <br>
+                        <mat-error>
+                            <mat-error class="error-message errorM"
+                                *ngIf="productForm.get('unidad').invalid && alertOpened">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                                    width="auto"> Complete este campo
+                            </mat-error>
+                        </mat-error>
+                    </div>
+                </div>
+
+            </div>
+
+            <table>
+                <ng-container>
+                    <tr>
+                        <td class="alignTd">
+                            <div class="TextosBlueLeft" style="margin-top: 10px;">7. Aporte nutricional y de energía por
+                                100g netos:</div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </table>
+
+            <br>
+            <div class="w-down-lg-95" style="width: 85%; margin-left: 3%">
+                <div class="titleTableBlue"> Aporte nutricional y de energía para una porción de 100g de
+                    "{{productForm.get('NombreProducto').value}}"
+                </div>
+                <div class="container maxWidth">
+                    <div class="row2 flex-nowrap flex-column flex-xl-row gap-10-px">
+                        <div class="flex-grow-1">
+                            <div class="row mx-0">
+                                <div class="col4 mini-box margen1" style="margin-left: 0px !important;">
+                                    <div class="SizeDialog2">
+                                        <mat-card-header class="TituloDialog4">
+                                            <ng-container>
+                                                <div mat-dialog-actions class="tituloneto">
+                                                    <tr class="CenterButton">
+                                                        <td>
+                                                            Equivalencias
+                                                        </td>
+                                                    </tr>
+                                                </div>
+                                            </ng-container>
+                                        </mat-card-header>
+                                        <mat-card-content class="TituloDialog5">
+                                            <div>
+                                                <div class="SizeDialog">
+                                                    <div>
+                                                        <mat-card-content class="text-center">
+                                                            <mat-dialog-content class="mat-typography">
+                                                                <table mat-table [dataSource]="equivalencia"
+                                                                    class="left-radius" matSort>
+                                                                    <ng-container matColumnDef="nombre">
+                                                                        <td mat-cell *matCellDef="let element"
+                                                                            class="colorTextTable">
+                                                                            {{element.nombre}} <span
+                                                                                *ngIf="element.required"
+                                                                                style="color:red;"> *</span>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="valor">
+                                                                        <td mat-cell *matCellDef="let element">
+
+                                                                            <input *ngIf="!element.decimal"
+                                                                                class="tablaForm inputTable"
+                                                                                type="number"
+                                                                                (change)="onChangeEquivalencia(element.formName)"
+                                                                                [formControlName]="element.formName"
+                                                                                min="0" name="cantidad"
+                                                                                (keydown)="onKeyNumber($event)">
+                                                                            <input *ngIf="element.decimal"
+                                                                                class="tablaForm inputTable"
+                                                                                type="number" step="0.01" value="0.00"
+                                                                                (change)="onChangeEquivalencia(element.formName)"
+                                                                                [formControlName]="element.formName"
+                                                                                min="0" name="cantidad"
+                                                                                (keypress)="decimalFilter($event)">
+                                                                            <mat-error class="error-message errorM"
+                                                                                *ngIf="productForm.get(element.formName).invalid && alertOpened">
+                                                                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                                                    alt="" height="10px" width="auto">
+                                                                                Complete este campo
+                                                                            </mat-error>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <tr mat-row *matRowDef=" let myRowData; columns:
+                                                                                columnNames; ">
+                                                                    </tr>
+                                                                </table>
+                                                            </mat-dialog-content>
+                                                        </mat-card-content>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row mx-0">
+                                <div class="col4 mini-box margen1" style="margin-left: 0px !important;">
+                                    <div class="SizeDialog2">
+                                        <mat-card-header class="TituloDialog4">
+                                            <ng-container>
+                                                <div mat-dialog-actions class="tituloneto">
+                                                    <tr class="CenterButton">
+                                                        <td>
+                                                            Energía
+                                                        </td>
+                                                    </tr>
+                                                </div>
+                                            </ng-container>
+                                        </mat-card-header>
+                                        <mat-card-content class="TituloDialog5">
+                                            <div>
+                                                <div class="SizeDialog">
+                                                    <div>
+                                                        <mat-card-content class="text-center">
+                                                            <mat-dialog-content class="mat-typography">
+                                                                <table mat-table [dataSource]="energia"
+                                                                    class="left-radius" matSort>
+                                                                    <ng-container matColumnDef="nombre">
+                                                                        <td mat-cell *matCellDef="let element"
+                                                                            class="colorTextTable alignElementEnergia">
+                                                                            {{element.nombre}} <span
+                                                                                *ngIf="element.required"
+                                                                                style="color:red;"> *</span>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <ng-container matColumnDef="valor">
+                                                                        <td mat-cell *matCellDef="let element">
+
+                                                                            <input *ngIf="!element.decimal"
+                                                                                class="tablaForm inputTable"
+                                                                                type="number"
+                                                                                [formControlName]="element.formName"
+                                                                                min="0" name="cantidad"
+                                                                                (keydown)="onKeyNumber($event)">
+                                                                            <input *ngIf="element.decimal"
+                                                                                class="tablaForm inputTable"
+                                                                                type="number" step="0.01" value="0.00"
+                                                                                [formControlName]="element.formName"
+                                                                                min="0" name="cantidad"
+                                                                                (keypress)="decimalFilter($event)">
+                                                                            <mat-error class="error-message errorM"
+                                                                                *ngIf="productForm.get(element.formName).invalid && alertOpened">
+                                                                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                                                    alt="" height="10px" width="auto">
+                                                                                Complete este campo
+                                                                            </mat-error>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <tr mat-row
+                                                                        *matRowDef="let myRowData; columns: columnNames; ">
+                                                                    </tr>
+                                                                </table>
+                                                            </mat-dialog-content>
+                                                        </mat-card-content>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 big-box">
+                            <div class="SizeDialog2">
+                                <mat-card-header class="TituloDialog4">
+                                    <ng-container>
+                                        <div mat-dialog-actions class="tituloneto">
+                                            <tr class="CenterButton">
+                                                <td>
+                                                    Macronutrientes
+                                                </td>
+                                            </tr>
+                                        </div>
+                                    </ng-container>
+                                </mat-card-header>
+                                <mat-card-content class="TituloDialog5">
+                                    <div>
+                                        <div class="SizeDialog">
+                                            <div>
+                                                <mat-card-content class="text-center">
+                                                    <mat-dialog-content class="mat-typography">
+                                                        <table mat-table [dataSource]="macronutrientes"
+                                                            class="left-radius" matSort>
+                                                            <ng-container matColumnDef="nombre">
+                                                                <td mat-cell *matCellDef="let element"
+                                                                    class="colorTextTable alignElementMacronutriente">
+                                                                    {{element.nombre}} <span *ngIf="element.required"
+                                                                        style="color:red;"> *</span>
+                                                                </td>
+                                                            </ng-container>
+                                                            <ng-container matColumnDef="valor">
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    <input *ngIf="!element.decimal"
+                                                                        class="tablaForm inputTable" type="number"
+                                                                        [formControlName]="element.formName" min="0"
+                                                                        name="cantidad" (keydown)="onKeyNumber($event)">
+                                                                    <input *ngIf="element.decimal"
+                                                                        class="tablaForm inputTable" type="number"
+                                                                        step="0.01" value="0.00"
+                                                                        [formControlName]="element.formName" min="0"
+                                                                        name="cantidad"
+                                                                        (keypress)="decimalFilter($event)">
+                                                                    <mat-error class="error-message errorM"
+                                                                        *ngIf="productForm.get(element.formName).invalid && alertOpened">
+                                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                                            alt="" height="10px" width="auto">
+                                                                        Complete este campo
+                                                                    </mat-error>
+                                                                </td>
+                                                            </ng-container>
+                                                            <tr mat-row
+                                                                *matRowDef="let myRowData; columns: columnNames; ">
+                                                            </tr>
+                                                        </table>
+                                                    </mat-dialog-content>
+                                                </mat-card-content>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 big-box" style="margin-right: 0px !important;">
+                            <div class="SizeDialog2">
+                                <mat-card-header class="TituloDialog4">
+                                    <ng-container>
+                                        <div mat-dialog-actions class="tituloneto">
+                                            <tr class="CenterButton">
+                                                <td>
+                                                    Micronutrientes
+                                                </td>
+                                            </tr>
+                                        </div>
+                                    </ng-container>
+                                </mat-card-header>
+                                <mat-card-content class="TituloDialog5">
+                                    <div>
+                                        <div class="SizeDialog">
+                                            <div>
+                                                <mat-card-content class="text-center">
+                                                    <mat-dialog-content class="mat-typography">
+                                                        <table mat-table [dataSource]="micronutrientes"
+                                                            class="left-radius" matSort>
+                                                            <ng-container matColumnDef="nombre">
+                                                                <td mat-cell *matCellDef="let element"
+                                                                    class="colorTextTable">
+                                                                    {{element.nombre}} <span *ngIf="element.required"
+                                                                        style="color:red;"> *</span>
+                                                                </td>
+                                                            </ng-container>
+                                                            <ng-container matColumnDef="valor">
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    <input *ngIf="!element.decimal"
+                                                                        class="tablaForm inputTable" type="number"
+                                                                        [formControlName]="element.formName" min="0"
+                                                                        name="cantidad" (keydown)="onKeyNumber($event)">
+                                                                    <input *ngIf="element.decimal"
+                                                                        class="tablaForm inputTable" type="number"
+                                                                        step="0.01" value="0.00"
+                                                                        [formControlName]="element.formName" min="0"
+                                                                        name="cantidad"
+                                                                        (keypress)="decimalFilter($event)">
+                                                                    <mat-error class="error-message errorM"
+                                                                        *ngIf="productForm.get(element.formName).invalid && alertOpened">
+                                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                                            alt="" height="10px" width="auto">
+                                                                        Complete este campo
+                                                                    </mat-error>
+                                                                </td>
+                                                            </ng-container>
+                                                            <tr mat-row
+                                                                *matRowDef="let myRowData; columns: columnNames; ">
+                                                            </tr>
+                                                        </table>
+                                                    </mat-dialog-content>
+                                                </mat-card-content>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="SizeTextRed w-down-100 px-lg-down-1 mt-lg-down-1 float-none float-xl-right">
+                *Si desea usar este producto para el PAE Rural, la información sobre la Vitamina A y
+                el Zinc es
+                obligatoria.
+            </div>
+            <hr class="lineSolid">
+            <div class="alignCenter flex-column-reverse flex-xl-row gap-down-10-px mx-lg-down-1">
+                <button (click)="goToBack()" class="BordeRedondoAgregar m-down-0">Anterior</button>
+                <button [disabled]="isSubmitDisabled || (!productForm.valid && alertOpened)" (click)="onSubmitClick()"
+                    class="BordeRedondoAgregar marginIzq m-down-0">Enviar producto para
+                    aprobación</button>
+            </div>
+            <!-- Spinner -->
+            <div *ngIf="spinnerService.spinnerState | async" class="spinner-overlay">
+                <div class="spinner"></div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>

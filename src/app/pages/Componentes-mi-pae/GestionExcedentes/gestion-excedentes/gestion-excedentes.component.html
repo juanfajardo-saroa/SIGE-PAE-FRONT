@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="tab-control-secondary d-flex">
+    <div class="tab-item active w-down-auto" style="width: 30%; margin-left: 20px;">
+      <div style="color: #47b9a4;">Gestión de complementos</div>
+    </div>
+    <div class="tab-item nothing d-flex w-100" style="width: 67%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+<div fxLayout="row wrap " style=" float: right; align-items: center; margin-right: 1%;"
+  [ngClass]="{'linkdisable':!getModulePermission(93,'crear')}">
+  <button class="BordeRedondoAgregar" mat-raised-button (click)="openDialog('Enviar para aprobación del rector',{})">
+    <img src="../.././../assets/images//Iconos/add_blue.png" height="auto">
+    Nuevo reporte de excedentes
+  </button>
+</div>
+<br>
+<br>
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="table-responsive responsive-table-pae p-down-0" style="padding-left: 0px;">
+          <table mat-table [dataSource]="dataSource" class="left-radius" matSort>
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "><b> No.</b> </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="No.">
+                {{element.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="fechaReporte">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Fecha del
+                  reporte </b></th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="F. reporte">
+                {{element.fechaReporte | date:'dd-MMM-yyyy' | uppercase | withoutDots}} </td>
+            </ng-container>
+            <ng-container matColumnDef="sedeEducativa">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Sede
+                  educativa con excedente </b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="S. E. con excedente">
+                {{element.sede}} </td>
+            </ng-container>
+            <ng-container matColumnDef="gradoEscolar">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Grado
+                  escolar con excedente</b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="G. E. con excedente">
+                {{element.grado}} </td>
+            </ng-container>
+            <ng-container matColumnDef="cantidadRaciones">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "><b> Cantidad
+                  de complementos excedentes</b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="C. comp. excedente">
+                {{element.cantExcedentes}} </td>
+            </ng-container>
+            <ng-container matColumnDef="destinoRaciones">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Destino
+                  de las complementos excedentes</b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="D. compl. excedente">
+                {{element.destinoComplemento}} </td>
+            </ng-container>
+            <ng-container matColumnDef="estadoReporte">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; ">
+                <b>Estado
+                  del reporte</b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Est. reporte">
+                <!-- <i class="fa fa-circle"[style.color]="this.stateColorsMap.get(element.estadoExcedentesRaciones)"></i> -->
+                <mat-icon aria-hidden="false"
+                  [style.color]="this.stateColorsMap.get(element.estadoExcedentesComplementos)">
+                  circle</mat-icon>
+                {{element.estadoExcedentesComplementos}}
+              </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="action">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef mat-sort-header><b> Acción </b> </th>
+              <td mat-cell *matCellDef="let element" style="text-align: center; padding: 0 5px;">
+                <a *ngIf="this.stateColorsMap.get(element.sId_TipoEstadoExcedentesComplementos) == 'yellow'"
+                  [ngClass]="{'linkdisable':!getModulePermission(93,'aprobar')}"
+                  (click)="openDialog('Enviar solicitud',element)" class="m-r-10 cursor-pointer">
+                  <i class="fa fa-check-square-o"></i>
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-54.png" alt="" height="30px" width="auto">
+                </a>
+                <a (click)="openDialog('Borrar',element)" class="m-r-10 cursor-pointer"
+                  [ngClass]="{'linkdisable':!getModulePermission(93,'eliminar')}">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" alt="" height="30px" width="auto">
+                </a>
+              </td>
+            </ng-container> -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumns;" (click)="openGestionDetalle(myRowData)">
+            </tr>
+          </table>
+          <mat-paginator style="color: #005ACA ;" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
+            showFirstLastButtons>
+          </mat-paginator>
+          <div *ngIf="isLoading"
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<!-- </mat-tab>
+</mat-tab-group> -->
+<br>
+<br>

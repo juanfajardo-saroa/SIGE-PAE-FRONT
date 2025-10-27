@@ -1,0 +1,80 @@
+  <!-- Novedades -->
+
+  <div style="float: left;">
+    <div style="float: left; background-color: #00A9AB ; padding: 12px 0px 12px 0px;">
+
+    </div>
+    <div style="display: inline-block; background-color: #00A9AB ; padding: 12px 0px 12px 0px; color: #ffffff;">
+      <div style="display: flex; margin-left: 10px;">Novedades</div>
+
+    </div>
+    <div
+      style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0; margin-left: -26px;float: right;">
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div *ngIf="!yaCargoNovedades">
+    <div style="display: flex;">
+      <div style="padding-left:10px;">
+        <span class="textoinformativo">No se han reportado novedades</span>
+      </div>
+    </div>
+    <hr class="linea">
+  </div>
+
+  <div fxLayout="row wrap" *ngIf="yaCargoNovedades">
+    <div fxFlex="100">
+      <mat-card style="margin: 0px;">
+        <mat-card-content class="responsive-table-pae">
+          <table mat-table [dataSource]="dataSourceNovedades">
+
+            <ng-container matColumnDef="fecha">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef> <b> Fecha </b> </th>
+              <td class="pl-down-0" mat-cell *matCellDef="let element" data-label="Fecha"> {{element.fecha == null ? '-':(element.fecha)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="DescripcionNovedad">
+              <th mat-header-cell *matHeaderCellDef> <b> Descripción de la Novedad </b></th>
+              <td mat-cell *matCellDef="let element" data-label="Desc. novedad"> {{element.descripcion == null?'-':element.descripcion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Soporte">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef> <b>Soporte <br> (si aplica)</b> </th>
+              <td class="pr-down-0" mat-cell *matCellDef="let element" data-label="Soporte">
+              <!--   <button class="buttonAr" (click)="downloadFile(element.archivo)">
+                  <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon> Ver Archivo adjunto
+                </button> -->
+                <div class="verDetalle" target="_blank"
+                (click)="downloadFile(element.archivo)">
+                <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon> Ver Archivo adjunto</div>
+              </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsNovedades"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsNovedades;"></tr>
+          </table>
+
+          <div *ngIf="isLoading"
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <br>
+  <div fxLayout="row wrap " style=" float: right; align-items: center;"
+    [ngClass]="{'linkdisable':!getModulePermission(89,'crear')}">
+    <button class="BordeRedondoAgregar2" mat-raised-button (click)="openDialogNovedades('Adicionar',{})">
+      <img src="../.././../assets/images//Iconos/add_blue.png" alt="" height="18px" width="auto">
+      Nuevo reporte de novedades
+    </button>
+  </div>
+  <br>
+  <br>
+
+  <!-- fin Novedades -->

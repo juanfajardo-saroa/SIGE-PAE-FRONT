@@ -1,0 +1,109 @@
+
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #E23465;">Menú </div>
+    </div>
+    <div class="tab-item nothing" style="width: 69.5%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="col-12" style="margin-top: 20px; padding: 0%;">
+  <div class="col-12 pae-text-filter">
+    <div class="row pae-border-blue pt-xl-1">
+
+      <div class="col-xl-7 col-12 d-flex align-items-center justify-content-center py-2 py-xl-0">
+        <span>
+          Utilice cualquier campo de la tabla para buscar Menús. Si no aparecen, <strong>regístrelos</strong> en el sistema.
+        </span>
+      </div>
+
+      <div class="col-xl-3 col-12 pae-border-xl-up-left-blue text-center pae-border-lg-down-top-blue py-2 py-xl-0">
+        <span>Filtro</span>
+        <input (keyup)="applyFilter($any($event).target.value)" type="text" class="">
+      </div>
+
+      <div class="col-xl-2 col-12 pae-border-xl-up-left-blue text-center pae-border-lg-down-top-blue py-2 py-xl-0">
+        <a (click)="applyFilter('')">
+          <img src="../../../../../../assets/images/Iconos/eye_blue.png">
+          <div>Ver listado completo</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-12 title-busqueda-Menu">
+    <label><img src="../../../../../../assets/images/Iconos/user_red.png"> Resultados de la b&uacute;squeda de
+      Menús</label>
+  </div>
+
+  <div class="col-12 responsive-table-pae" style=" padding: 0%;">
+    <table mat-table [dataSource]="dataSource" matSort class="tableMenus left-radius right-radius">
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b> Nombre</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Nombre">
+          {{element.nombre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="grupoEsquema">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Grupo Esquema</b>
+        </th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="G. Esquema">
+          {{element.grupoEsquema}} </td>
+      </ng-container>
+      <ng-container matColumnDef="orden">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Orden</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Orden">
+          {{element.orden}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ordenPadre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Orden Padre</b>
+        </th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="O. Padre">
+          {{element.ordenPadre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="padre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Padre</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Padre">
+          {{element.padre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="icono">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Icono</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Icono">
+          {{element.icono}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" style="text-align: center; padding: 0 5px;">
+          <a [ngClass]="{'linkdisable':!getModulePermission(23,'editar')}" (click)="openDialog('Actualizar',element)">
+            <img src="../../../../../../assets/images/Iconos/edit_blue.png">
+          </a>
+          <a [ngClass]="{'linkdisable':!getModulePermission(23,'eliminar')}" (click)="openDialog('Eliminar',element)" style="margin-left: 3px;">
+            <img src="../../../../../../assets/images/Iconos/delete_blue.png">
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let myRowData; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+
+
+
+  <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+    <div class="text-right ">
+      <a  [ngClass]="{'linkdisable':!getModulePermission(23,'crear')}" class="btn-agregar " (click)="openDialog('Adicionar',{})"><img
+          src="../.././../assets/images//Iconos/add_blue.png "> Agregar Menú</a>
+    </div>
+  </div>
+</div>
+<br>
+<br>

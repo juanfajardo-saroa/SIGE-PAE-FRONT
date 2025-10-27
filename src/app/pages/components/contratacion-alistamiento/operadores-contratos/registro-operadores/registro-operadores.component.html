@@ -1,0 +1,1183 @@
+<ng-template #modalPDF>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer
+    [src]="srcPDF"
+    [useBrowserLocale]="true"
+    [textLayer]="true"
+    [showHandToolButton]="true"
+    [showPresentationModeButton]="true"
+    [showDownloadButton]="true"
+  >
+  </ngx-extended-pdf-viewer>
+</ng-template>
+
+<style>
+  .tableFiltroUsuario {
+    border-spacing: 0;
+    color: #005aca;
+  }
+
+  .tableFiltroUsuario td {
+    text-align: center;
+    font-size: 13px !important;
+    color: #005aca !important;
+    padding: 2.5px 20px;
+    border-top: 1px solid #005aca;
+    border-right: 1px solid #005aca;
+    border-bottom: 1px solid #005aca;
+  }
+
+  .tableFiltroUsuario td b {
+    color: #005aca;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroUsuario td div {
+    color: #005aca;
+    font-weight: 500;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroUsuario td:first-child {
+    border-left: 1px solid #005aca;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .tableFiltroUsuario td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .tableUsuarios th,
+  .tableUsuarios td {
+    font-size: 13px;
+  }
+
+  table.tableUsuarios thead th:last-child {
+    border-top-right-radius: 20px !important;
+  }
+
+  table.tableFormUsuarios tr td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #005aca;
+    font-size: 14px;
+  }
+
+  table.tableFormUsuarios tr td:first-child {
+    padding-left: 35px;
+  }
+
+  table.tableFormUsuarios tr td:last-child {
+    padding-right: 35px;
+  }
+
+  input,
+  select {
+    border: 1px #005aca solid;
+    padding: 3px 10px;
+    width: 100%;
+    color: #005aca;
+  }
+
+  input:not(.noRadius),
+  select:not(.noRadius) {
+    border-radius: 5px;
+  }
+</style>
+
+<app-titulo-tab [titulo]="'Operadores y proveedores'"></app-titulo-tab>
+
+<div class="row mt-xl mb-xl">
+  <div class="col-12">
+    <div
+      class="d-flex flex-column flex-xl-row table-filter table-filter-border"
+    >
+      <div
+        class="w-down-100 table-filter-border-right table-filter-border-bottom d-flex align-items-center padding-filter"
+        style="width: 50%"
+      >
+        <span class="text-center">
+          Utilice el <b>NIT o la cédula de ciudadanía</b> para buscar
+          Operadores/Proveedores. Si no aparecen, <b>registrelos</b> en el
+          sistema.
+        </span>
+      </div>
+
+      <div
+        class="w-down-100 w-down-100 table-filter-border-right table-filter-border-bottom d-flex flex-column justify-content-center padding-filter"
+        style="width: 22%"
+      >
+        <span class="text-center">
+          NIT (con c&oacute;digo de verificaci&oacute;n)
+        </span>
+        <div>
+          <input
+            style="width: 65%"
+            type="text"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="itemFiltroBusqueda.nit"
+            (ngModelChange)="changeItemFiltroBusqueda('nit', $event)"
+          />
+
+          <label style="width: 10%" class="text-center">-</label>
+
+          <input
+            style="width: 25%; float: right"
+            type="text"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="itemFiltroBusqueda.digitoVerificacion"
+            (ngModelChange)="
+              changeItemFiltroBusqueda('digitoVerficacion', $event)
+            "
+          />
+        </div>
+      </div>
+
+      <div class="d-flex flex-row p-0 w-down-100" style="width: 28%">
+        <div
+          class="w-50 table-filter-border-right table-filter-border-right-down d-flex justify-content-center padding-filter"
+        >
+          <a class="text-center" (click)="buscarUsuarios(false)">
+            <img src="../assets/images/Iconos/search_blue.png" />
+            <div>Buscar<br />operario/<br />proveedor</div>
+          </a>
+        </div>
+
+        <div class="w-50 d-flex justify-content-center padding-filter">
+          <a class="text-center" (click)="buscarUsuarios(true)">
+            <img src="../assets/images/Iconos/eye_blue.png" />
+            <div>Ver<br />listado<br />completo</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="!gridVisible" class="row">
+  <div class="col-12">
+    <div class="encabezado-text-underline">
+      <label>
+        <img src="../assets/images/Iconos/operador_red.png" />
+        Resultados de la b&uacute;squeda de Operadores/Proveedores
+      </label>
+    </div>
+  </div>
+
+  <div *ngIf="dataOperadores._data._value.length == 0" class="col-12 mt-sm">
+    <div class="border-top-radius-sm flex pl-xxl pr-xxl pt-md pb-md">
+      <app-alert-message
+        class="pl-xxl pr-xxl ml-xl mr-xl"
+        [imgSize]="'sm'"
+        [textSize]="'sm'"
+        [message]="messageSinregistros"
+      >
+      </app-alert-message>
+    </div>
+  </div>
+
+  <div
+    [hidden]="!(dataOperadores._data._value.length > 0)"
+    class="col-12 mt-sm"
+  >
+    <div class="table-responsive responsive-table-pae pl-down-0">
+      <table
+        mat-table
+        [dataSource]="dataOperadores"
+        class="left-radius right-radius table-hover"
+      >
+        <ng-container matColumnDef="tipoIdentificacion">
+          <th mat-header-cell *matHeaderCellDef>Tipo de identificación</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="verOperador(element)"
+            class="pl-down-0"
+            [class]="element.operadorId == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center"
+            data-label="T. identificación"
+          >
+            {{ element.tipoIdentificacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="identificacion">
+          <th mat-header-cell *matHeaderCellDef>Número de identificación</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="verOperador(element)"
+            [class]="element.operadorId == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center"
+            data-label="N. identificación"
+          >
+            {{ element.identificacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombreRazonSocial">
+          <th mat-header-cell *matHeaderCellDef>Nombre o razón social</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="verOperador(element)"
+            [class]="element.operadorId == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center"
+            data-label="Nom. / razón social"
+          >
+            {{ element.nombreRazonSocial }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operadorMAEM">
+          <th mat-header-cell *matHeaderCellDef>Operador MAEM</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="verOperador(element)"
+            [class]="element.operadorId == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center"
+            data-label="Op. MAEM"
+          >
+            <app-semaforo
+              class="d-flex justify-content-end justify-content-xl-center"
+              [bgColor]="element.bgOperadorMAEM"
+              [texto]="element.esOperadorMAEM"
+              [align]="'center'"
+            >
+            </app-semaforo>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operadorMAER">
+          <th mat-header-cell *matHeaderCellDef>Operador MAER</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="verOperador(element)"
+            [class]="element.operadorId == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center"
+            data-label="Op. MAER"
+          >
+            <app-semaforo
+              class="d-flex justify-content-end justify-content-xl-center"
+              [bgColor]="element.bgOperadorMAER"
+              [texto]="element.esOperadorMAER"
+              [align]="'center'"
+            >
+            </app-semaforo>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operadorMAIP">
+          <th mat-header-cell *matHeaderCellDef>Operador PAEPI</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="verOperador(element)"
+            [class]="element.operadorId == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center"
+            data-label="Op. PAEPI"
+          >
+            <app-semaforo
+              class="d-flex justify-content-end justify-content-xl-center"
+              [bgColor]="element.bgOperadorMAIP"
+              [texto]="element.esOperadorMAIP"
+              [align]="'center'"
+            >
+            </app-semaforo>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="proveedorPAE">
+          <th mat-header-cell *matHeaderCellDef>Proveedor del PAE</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="verOperador(element)"
+            [class]="element.operadorId == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center"
+            data-label="Prov. PAE"
+          >
+            <app-semaforo
+              class="d-flex justify-content-end justify-content-xl-center"
+              [bgColor]="element.bgProveedorPAE"
+              [texto]="element.esProveedorPAE"
+              [align]="'center'"
+            >
+            </app-semaforo>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fichaColor">
+          <th mat-header-cell *matHeaderCellDef>Estado del registro</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="verOperador(element)"
+            class="pr-down-0"
+            [class]="element.operadorId == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center"
+            data-label="Est. registro"
+          >
+            <app-semaforo
+              class="d-flex justify-content-end justify-content-xl-center"
+              [bgColor]="element.bgColorEstado"
+              [texto]="element.estadoOperador"
+            >
+            </app-semaforo>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsOperadores"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsOperadores"
+        ></tr>
+      </table>
+
+      <mat-paginator
+        [pageSize]="paginador.pageSize"
+        [pageSizeOptions]="paginador.pageSizeOptions"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+
+  <div class="col-12 text-right mt-3">
+    <a
+      class="btn-link"
+      (click)="nuevoOperador()"
+      *ngIf="getModulePermission(14, 'crear')"
+      ><img src="../assets/images/Iconos/add_blue.png" /> Registrar
+      Operador/Proveedor</a
+    >
+  </div>
+</div>
+
+<div *ngIf="formVisible" class="row mb-xxl">
+  <app-chapter
+    *ngIf="disabledOperador"
+    class="mb-xl"
+    [numberChapter]="1"
+    [titleChapter]="'Información general'"
+  >
+  </app-chapter>
+
+  <div class="col-12">
+    <div class="panel panel-blue">
+      <div class="panel-header no-border-bottom text-center">
+        <h4 class="panel-title">
+          Registro &Uacute;nico de Operadores/Proveedores
+        </h4>
+      </div>
+      <div class="panel-body">
+        <form class="form-default-inline" [formGroup]="formularioOperadores">
+          <!-- TODO: Formulario -->
+          <div class="form-item">
+            <label for="exampleFormControlInput1" class="form-label mt-2">
+              1. Nombre o Razón Social del Operador (tal y como aparece en el
+              RUT):
+            </label>
+            <mat-form-field class="ml-lg-down-0 w-down-100" id="nit">
+              <input
+                matInput
+                [ngClass]="razonSocialEsInvalida() ? 'borderRed' : ''"
+                id="nombreRazonSocial"
+                formControlName="nombreRazonSocial"
+                type="text"
+                class="form-control w-down-100 ml-lg-down-0"
+                [(ngModel)]="itemOperador.nombreRazonSocial"
+                (ngModelChange)="
+                  changeItemOperador('nombreRazonSocial', $event)
+                "
+                [disabled]="disabledOperador"
+                required
+              />
+              <mat-error
+                class="error-message ml-2"
+                *ngIf="razonSocialEsInvalida()"
+                >Complete este campo</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div class="form-item">
+            <label for="exampleFormControlInput1" class="form-label mt-2">
+              2. NIT del Operador incluyendo código de verificación (tal y como
+              aparece en el RUT):
+            </label>
+            <mat-form-field>
+              <input
+                matInput
+                [ngClass]="nitEsInvalido() ? 'borderRed' : ''"
+                id="nitParteUno"
+                formControlName="nitParteUno"
+                class="form-control"
+                style="width: 140px"
+                [(ngModel)]="itemOperador.nit"
+                (ngModelChange)="changeItemOperador('nit', $event)"
+                [disabled]="disabledOperador"
+                onpaste="return false"
+                (keydown)="onlyNumber($event)"
+              />
+              <mat-error class="error-message ml-2 py-2" *ngIf="nitEsInvalido()"
+                >Complete este campo</mat-error
+              >
+            </mat-form-field>
+            <label class="ml-xs mt-2">-</label>
+            <mat-form-field>
+              <input
+                matInput
+                [ngClass]="nitEsInvalido() ? 'borderRed' : ''"
+                id="nitParteDos"
+                formControlName="nitParteDos"
+                type="text"
+                class="form-control"
+                id="txtDigVerfi"
+                style="width: 90px"
+                [(ngModel)]="itemOperador.dv"
+                (ngModelChange)="changeItemOperador('dv', $event)"
+                [disabled]="disabledOperador"
+                onpaste="return false"
+                (keydown)="onlyNumber($event)"
+              />
+              <mat-error class="error-message ml-2" *ngIf="nitEsInvalido()"
+                >Complete este campo</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div class="form-item">
+            <label
+              for="exampleFormControlInput1"
+              class="form-label float-left mr-2"
+            >
+              3. RUT del Operador:
+            </label>
+            <div style="display: inline-block; overflow: hidden">
+              <div
+                *ngIf="!disabledOperador"
+                id="buttonPDF"
+                class="btn-fileUpload"
+                (click)="uploadPDF('rutPath')"
+                [ngClass]="itemOperador.rutPath ? '' : 'borderRed'"
+              >
+                <span>Adjunte el archivo</span>
+                <img
+                  class="float-right ml-3"
+                  src="../assets/images/Iconos/input-file.png"
+                />
+                <input
+                  type="file"
+                  id="fileUpload_rutPath"
+                  name="fileUpload_rutPath"
+                  accept="application/pdf"
+                />
+              </div>
+              <a
+                class="visorPDF"
+                (click)="abrirPDF(modalPDF, 'rutPath')"
+                *ngIf="itemOperador.rutPath"
+              >
+                {{ itemOperador.rutPath }}
+              </a>
+              <span
+                class="text-danger"
+                id="alertaAdjunto"
+                *ngIf="!itemOperador.rutPath"
+              ></span>
+            </div>
+          </div>
+
+          <div class="form-item">
+            <label class="form-label">
+              4. Tipo y subtipo de Registro Mercantil del Operador:
+            </label>
+            <div class="mt-sm ml-md">
+              <label style="width: 60px" class="form-label">Tipo:</label>
+              <select
+                id="cboTipo"
+                class="form-control w-down-100 ml-lg-down-0"
+                formControlName="tipoRegistro"
+                [ngClass]="validarSelect('tipoRegistro') ? 'borderRed' : ''"
+                [(ngModel)]="itemOperador.iD_TipoRegistroMercantil"
+                (ngModelChange)="
+                  changeItemOperador('iD_TipoRegistroMercantil', $event)
+                "
+                [disabled]="disabledOperador"
+              >
+                <option value="0">Elija una opci&oacute;n</option>
+                <option
+                  *ngFor="let item of listTiposRegistroMercantil"
+                  [ngValue]="item.id"
+                >
+                  {{ item.nombre }}
+                </option>
+              </select>
+              <span
+                class="text-danger ml-2"
+                *ngIf="validarSelect('tipoRegistro')"
+                >Elija una opción</span
+              >
+            </div>
+            <div class="mt-sm ml-md">
+              <label style="width: 60px" class="form-label">Subtipo:</label>
+              <select
+                id="cboSubTipo"
+                class="form-control w-down-100 ml-lg-down-0"
+                formControlName="subtipoRegistro"
+                [ngClass]="validarSelect('subtipoRegistro') ? 'borderRed' : ''"
+                [(ngModel)]="itemOperador.iD_SubTipoRegistroMercantil"
+                (ngModelChange)="
+                  changeItemOperador('iD_SubTipoRegistroMercantil', $event)
+                "
+                [disabled]="disabledOperador"
+              >
+                <option value="0">Elija una opci&oacute;n</option>
+                <option
+                  *ngFor="let item of listSubTiposRegistroMercantil"
+                  [ngValue]="item.id"
+                >
+                  {{ item.nombre }}
+                </option>
+              </select>
+              <span
+                class="text-danger ml-2"
+                *ngIf="validarSelect('subtipoRegistro')"
+                >Elija una opción</span
+              >
+            </div>
+          </div>
+
+          <ng-container *ngIf="validarSubTipoRegistroMercantil()">
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label">
+                  4.1. Cantidad de empresas que conforman la Unión o el
+                  Consorcio:
+                </label>
+                <input
+                  id="txtCantidadEmpresas"
+                  type="number"
+                  min="0"
+                  class="form-control w-down-100 ml-lg-down-0"
+                  style="width: 50px"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="itemOperador.cantidadEmpresas"
+                  (ngModelChange)="
+                    changeItemOperadorTipoSubtipo('cantidadEmpresas', $event)
+                  "
+                  [disabled]="disabledOperador"
+                />
+              </div>
+            </div>
+
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label">
+                  4.2. Listado de empresas que conforman la Unión o el
+                  Consorcio:
+                </label>
+                <div class="row align-items-center">
+                  <div class="col-12 col-md-8">
+                    <table class="table-info-llenado">
+                      <thead>
+                        <tr class="text-center">
+                          <th>Nombre o raz&oacute;n social</th>
+                          <th>
+                            NIT, incluyendo c&oacute;digo de verificaci&oacute;n
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of itemOperador.listConsorcios">
+                          <td>
+                            <select
+                              id="cboEmpresaConsorcioNombre{{ item.id }}"
+                              class="form-control w-down-100 ml-lg-down-0"
+                              [ngModelOptions]="{ standalone: true }"
+                              [(ngModel)]="item.iD_Operador"
+                              (ngModelChange)="
+                                changeItemOperadorEmpresa(item, $event)
+                              "
+                              [disabled]="disabledOperador"
+                            >
+                              <option value="0">Elija una opci&oacute;n</option>
+                              <option
+                                *ngFor="let item of listOperadoresCopy"
+                                [ngValue]="item.operadorId"
+                              >
+                                {{ item.nombreRazonSocial }}
+                              </option>
+                            </select>
+                          </td>
+                          <td>
+                            <select
+                              id="cboEmpresaConsorcioNit{{ item.id }}"
+                              class="form-control w-down-100 ml-lg-down-0"
+                              [ngModelOptions]="{ standalone: true }"
+                              [(ngModel)]="item.iD_Operador"
+                              (ngModelChange)="
+                                changeItemOperadorEmpresa(item, $event)
+                              "
+                              [disabled]="disabledOperador"
+                            >
+                              <option value="0">Elija una opci&oacute;n</option>
+                              <option
+                                *ngFor="let item of listOperadoresCopy"
+                                [ngValue]="item.operadorId"
+                              >
+                                {{ item.identificacion }}
+                              </option>
+                            </select>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <app-alert-message
+                      [imgSize]="'sm'"
+                      [textSize]="'xs'"
+                      [message]="alertMessage"
+                    >
+                    </app-alert-message>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="form-item">
+            <label class="form-label">
+              5. Nombre del Representante Legal del Operador:
+            </label>
+            <input
+              type="text"
+              class="form-control w-down-100 ml-lg-down-0"
+              id="txtNombreRepresentante"
+              formControlName="representanteLegal"
+              [ngClass]="
+                validarRepresentante('representanteLegal') ? 'borderRed' : ''
+              "
+              [(ngModel)]="itemOperador.nombreRepresentanteLegal"
+              (ngModelChange)="
+                changeItemOperador('nombreRepresentanteLegal', $event)
+              "
+              [disabled]="disabledOperador"
+            />
+            <span
+              class="text-danger ml-2"
+              *ngIf="validarRepresentante('representanteLegal')"
+              >Complete este campo</span
+            >
+          </div>
+          <div class="form-item">
+            <label style="width: 442px" class="form-label w-down-100">
+              6. Tipo de Identificación del Representante Legal del Operador:
+            </label>
+            <select
+              id="cboTipoidentificacion"
+              class="form-control w-down-100 ml-lg-down-0"
+              formControlName="tipoIdRepresentante"
+              [ngClass]="
+                validarSelect('tipoIdRepresentante') ? 'borderRed' : ''
+              "
+              [(ngModel)]="itemOperador.iD_Tipoldentificacion"
+              (ngModelChange)="
+                changeItemOperador('iD_Tipoldentificacion', $event)
+              "
+              [disabled]="disabledOperador"
+            >
+              <option value="0">Elija una opci&oacute;n</option>
+              <option
+                *ngFor="let item of listTiposIdentificacion"
+                [ngValue]="item.id"
+              >
+                {{ item.nombre }}
+              </option>
+            </select>
+            <span
+              class="text-danger ml-2"
+              *ngIf="validarSelect('tipoIdRepresentante')"
+              >Elija una opción</span
+            >
+          </div>
+
+          <div class="form-item">
+            <label style="width: 442px" class="form-label w-down-100">
+              7. Número de Identificación del Representante Legal del Operador:
+            </label>
+            <input
+              type="number"
+              class="form-control w-down-100 ml-lg-down-0"
+              id="txtNumIdentRepresentante"
+              formControlName="idRepresentante"
+              [ngClass]="
+                validarRepresentante('idRepresentante') ? 'borderRed' : ''
+              "
+              [(ngModel)]="itemOperador.numeroldentificacion"
+              (ngModelChange)="
+                changeItemOperador('numeroldentificacion', $event)
+              "
+              [disabled]="disabledOperador"
+              (keydown)="onlyNumber($event)"
+            />
+            <span
+              class="text-danger ml-2"
+              *ngIf="validarRepresentante('idRepresentante')"
+              >Complete este campo</span
+            >
+          </div>
+
+          <div class="form-item">
+            <label style="width: 442px" class="form-label w-down-100">
+              8. Correo electrónico del Operador:
+            </label>
+            <input
+              type="text"
+              class="form-control w-down-100 ml-lg-down-0"
+              formControlName="correoOperador"
+              [ngClass]="validarOperador('correoOperador') ? 'borderRed' : ''"
+              id="txtCorreoElectronico"
+              [(ngModel)]="itemOperador.correo"
+              (ngModelChange)="changeItemOperador('correo', $event)"
+              [disabled]="disabledOperador"
+            />
+            <span
+              class="text-danger ml-2"
+              *ngIf="validarOperador('correoOperador')"
+              >Complete este campo</span
+            >
+          </div>
+
+          <div class="form-item">
+            <label style="width: 443px" class="form-label w-down-100">
+              9. Teléfono de contacto del Operador:
+            </label>
+            <input
+              class="form-control w-down-100 ml-lg-down-0"
+              id="txtTelefono"
+              formControlName="telefonoOperador"
+              [ngClass]="validarOperador('telefonoOperador') ? 'borderRed' : ''"
+              [(ngModel)]="itemOperador.telefono"
+              (ngModelChange)="changeItemOperador('telefono', $event)"
+              [disabled]="disabledOperador"
+            />
+            <span
+              class="text-danger ml-2"
+              *ngIf="validarOperador('telefonoOperador')"
+              >Complete este campo</span
+            >
+          </div>
+
+          <div class="form-item">
+            <label style="width: 443px" class="form-label w-down-100">
+              10. Ciudad de domicilio principal del Operador:
+            </label>
+            <select
+              id="cboCiudadDomicilio"
+              class="form-control w-down-100 ml-lg-down-0"
+              formControlName="ciudadOperador"
+              [ngClass]="validarSelect('ciudadOperador') ? 'borderRed' : ''"
+              [(ngModel)]="itemOperador.iD_Divipola"
+              (ngModelChange)="changeItemOperador('iD_Divipola', $event)"
+              [disabled]="disabledOperador"
+            >
+              <option value="0">Elija una opci&oacute;n</option>
+              <option *ngFor="let item of listDivipolas" [ngValue]="item.id">
+                {{ item.nombre }}
+              </option>
+            </select>
+            <span
+              class="text-danger ml-2"
+              *ngIf="validarSelect('ciudadOperador')"
+              >Elija una opción</span
+            >
+          </div>
+
+          <div class="form-item">
+            <label style="width: 443px" class="form-label w-down-100">
+              11. Dirección de domicilio principal del Operador:
+            </label>
+            <input
+              type="text"
+              class="form-control w-down-100 ml-lg-down-0"
+              id="txtDireccion"
+              formControlName="direccionOperador"
+              [ngClass]="
+                validarOperador('direccionOperador') ? 'borderRed' : ''
+              "
+              [(ngModel)]="itemOperador.direccion"
+              (ngModelChange)="changeItemOperador('direccion', $event)"
+              [disabled]="disabledOperador"
+            />
+            <span
+              class="text-danger ml-2"
+              *ngIf="validarOperador('direccionOperador')"
+              >Complete este campo</span
+            >
+          </div>
+
+          <div class="form-item">
+            <label style="width: 443px" class="form-label w-down-100">
+              12. Registrar como Operador del MAEM:
+            </label>
+            <div class="inline-block form-checkbox ml-xs w-down-sm-100">
+              <label
+                id="ckMAEMSi"
+                class="check-si w-down-sm-50"
+                [class]="itemOperador.operadorMAEM ? 'active' : ''"
+                (click)="changeItemOperador('operadorMAEM', true)"
+                >Si</label
+              >
+              <label
+                id="ckMAEMNo"
+                class="check-no w-down-sm-50"
+                [class]="!itemOperador.operadorMAEM ? 'active' : ''"
+                (click)="changeItemOperador('operadorMAEM', false)"
+                >No</label
+              >
+            </div>
+          </div>
+
+          <div class="form-item">
+            <label style="width: 443px" class="form-label w-down-100">
+              13. Registrar como Operador del MAER:
+            </label>
+            <div class="inline-block form-checkbox ml-xs w-down-sm-100">
+              <label
+                id="ckMAERSi"
+                class="check-si w-down-sm-50"
+                [class]="itemOperador.operadorMAER ? 'active' : ''"
+                (click)="changeItemOperador('operadorMAER', true)"
+                >Si</label
+              >
+              <label
+                id="ckMAERNo"
+                class="check-no w-down-sm-50"
+                [class]="!itemOperador.operadorMAER ? 'active' : ''"
+                (click)="changeItemOperador('operadorMAER', false)"
+                >No</label
+              >
+            </div>
+          </div>
+
+          <div class="form-item">
+            <label style="width: 443px" class="form-label w-down-100">
+              14. Registrar como Operador del PAEPI:
+            </label>
+            <div class="inline-block form-checkbox ml-xs w-down-sm-100">
+              <label
+                id="ckMAIPSi"
+                class="check-si w-down-sm-50"
+                [class]="itemOperador.operadorMAIP ? 'active' : ''"
+                (click)="changeItemOperador('operadorMAIP', true)"
+                >Si</label
+              >
+              <label
+                id="ckMAIPNo"
+                class="check-no w-down-sm-50"
+                [class]="!itemOperador.operadorMAIP ? 'active' : ''"
+                (click)="changeItemOperador('operadorMAIP', false)"
+                >No</label
+              >
+            </div>
+          </div>
+
+          <div class="form-item">
+            <label style="width: 443px" class="form-label w-down-100">
+              15. Registrar como Proveedor:
+            </label>
+            <div class="inline-block form-checkbox ml-xs w-down-sm-100">
+              <label
+                id="ckProveedorSi"
+                class="check-si w-down-sm-50"
+                [class]="itemOperador.proveedorPAE ? 'active' : ''"
+                (click)="changeItemOperador('proveedorPAE', true)"
+                >Si</label
+              >
+              <label
+                id="ckProveedorNo"
+                class="check-no w-down-sm-50"
+                [class]="!itemOperador.proveedorPAE ? 'active' : ''"
+                (click)="changeItemOperador('proveedorPAE', false)"
+                >No</label
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div
+        *ngIf="!disabledOperador"
+        class="panel-footer d-flex flex-column gap-down-15-px d-xl-block"
+      >
+        <button
+          class="btn btn-blue"
+          (click)="guardarFinalizar(1)"
+          *ngIf="getModulePermission(14, 'crear')"
+        >
+          Guardar y continuar m&aacute;s tarde
+        </button>
+        <button
+          class="btn btn-blue ml-sm ml-lg-down-0"
+          (click)="guardarFinalizar(2)"
+          *ngIf="getModulePermission(14, 'crear')"
+        >
+          Finalizar
+        </button>
+        <button class="btn btn-default ml-sm ml-lg-down-0" (click)="cancelar()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="disabledOperador && formVisible">
+  <div class="row mt-xxl">
+    <app-chapter
+      [numberChapter]="2"
+      [titleChapter]="'Contratos como Operador directo'"
+    ></app-chapter>
+
+    <div class="col-12 mt-md pl-xxl pr-xxl responsive-table-pae">
+      <table class="table-default table-hover">
+        <thead>
+          <tr class="text-center">
+            <th
+              *ngFor="let item of displayedColumnsContratos"
+              [innerHTML]="item"
+            ></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="text-center"
+            *ngFor="let item of dataContratosOperadorDirecto"
+          >
+            <td data-label="N. contrato">{{ item.numeroContrato }}</td>
+            <td data-label="Operador">{{ item.nombreRazonSocial }}</td>
+            <td data-label="ET/ETC">{{ item.etc }}</td>
+            <td data-label="Mod. operación">{{ item.modeloOperacion }}</td>
+            <td data-label="F. inicio">{{ item.fechaInicioContratoString }}</td>
+            <td data-label="F. finalización">
+              {{ item.fechaFinalContratoString }}
+            </td>
+            <td data-label="Fi. contrato">
+              <a (click)="cargarFicha(item)">Ver ficha</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-xxl">
+    <app-chapter
+      [numberChapter]="3"
+      [titleChapter]="'Contratos como Unión temporal o Consorcio'"
+    ></app-chapter>
+
+    <div class="col-12 mt-md pl-xxl pr-xxl responsive-table-pae">
+      <table class="table-default table-hover">
+        <thead>
+          <tr class="text-center">
+            <th
+              *ngFor="let item of displayedColumnsContratos"
+              [innerHTML]="item"
+            ></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="text-center"
+            *ngFor="let item of dataContratosUnionTemporalConsorcio"
+          >
+            <td data-label="N. contrato">{{ item.numeroContrato }}</td>
+            <td data-label="Operador">{{ item.nombreRazonSocial }}</td>
+            <td data-label="ET/ETC">{{ item.etc }}</td>
+            <td data-label="Mod. operación">{{ item.modeloOperacion }}</td>
+            <td data-label="F. inicio">{{ item.fechaInicioContratoString }}</td>
+            <td data-label="F. finalización">
+              {{ item.fechaFinalContratoString }}
+            </td>
+            <td data-label="Fic. contrato"><a>Ver ficha</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-xxl">
+    <app-chapter
+      [numberChapter]="4"
+      [titleChapter]="
+        'Participación y desempeño del Operador en el mercado del PAE'
+      "
+    >
+    </app-chapter>
+
+    <div class="col-12 mt-xl">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <img
+            style="width: 350px; height: 350px"
+            src="../assets/images/MapaColombia.jpg"
+          />
+          <label class="label-participacion-operador">{{
+            itemParticipacion.porcentajeContrato | percent : "1.2-2"
+          }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="row mt-xxl mb-xxl"
+    *ngIf="
+      itemOperador.iD_TipoEstadoOperador !== estadoOperadorEnum.RECHAZADO &&
+      itemOperador.iD_TipoEstadoOperador !== estadoOperadorEnum.ACTIVO_CONTRATOS_VIGENTES
+    "
+  >
+    <app-chapter
+      [numberChapter]="5"
+      [titleChapter]="'Aprobaciones'"
+      [numberBadge]="'1'"
+    ></app-chapter>
+
+    <div class="col-12 mt-xl">
+      <div class="encabezado-text-underline">
+        <label>
+          <img src="../assets/images/Iconos/operador_red.png" />
+          Aprobaciones pendientes
+        </label>
+      </div>
+    </div>
+    <div class="col-12 mt-xl pl-xxl pr-xxl">
+      <table class="table-aprovaciones">
+        <tr>
+          <th colspan="2">1. Decisi&oacute;n de aprobaci&oacute;n</th>
+        </tr>
+        <tr>
+          <td width="15%" class="text-center">
+            <div>
+              <button
+                class="btn"
+                [class]="
+                  itemAprobacion.iD_TipoEstadoOperador == 4
+                    ? 'btn-green'
+                    : 'btn-default'
+                "
+                (click)="changeItemAprobacion('iD_TipoEstadoOperador', 4)"
+              >
+                Aprobar
+              </button>
+            </div>
+            <div>
+              <button
+                class="btn mt-sm"
+                [class]="
+                  itemAprobacion.iD_TipoEstadoOperador == 3
+                    ? 'btn-red'
+                    : 'btn-default'
+                "
+                (click)="changeItemAprobacion('iD_TipoEstadoOperador', 3)"
+              >
+                Rechazar
+              </button>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label>Observaciones / Justificaciones</label>
+              <input
+                type="text"
+                class="form-control"
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="itemAprobacion.observaciones"
+                (ngModelChange)="changeItemAprobacion('observaciones', $event)"
+              />
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-12 mt-sm text-right pr-xxl">
+      <button class="btn btn-blue" (click)="enviarResultado()">
+        Enviar resultado
+      </button>
+    </div>
+
+    <div class="col-12 mt-md">
+      <div class="encabezado-text-underline">
+        <label>
+          <img src="../assets/images/Iconos/operador_red.png" />
+          Hist&oacute;rico de aprobaciones
+        </label>
+      </div>
+    </div>
+    <div class="col-12 mt-xl pl-xxl pr-xxl responsive-table-pae">
+      <table class="table-default table-hover">
+        <thead>
+          <tr class="text-center">
+            <th
+              *ngFor="let item of displayedColumnsHistorico"
+              [innerHTML]="item"
+            ></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="text-center"
+            *ngFor="let item of dataHistoricoAprobaciones"
+          >
+            <td data-label="Fecha">{{ item.fechaAprobacionString }}</td>
+            <td data-label="Responsable">{{ item.responsable }}</td>
+            <td data-label="Rol. responsable">{{ item.rolResponsable }}</td>
+            <td data-label="Acción">{{ item.accion }}</td>
+            <td data-label="Ob. / Justificación">{{ item.observaciones }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-xxl mb-xxl">
+    <div class="col-12 text-center">
+      <button class="btn btn-blue" (click)="cancelar()">Regresar</button>
+    </div>
+  </div>
+</ng-container>
+
+<div *ngIf="itemFichaContrato.visible">
+  <app-registro-contratos
+    [fichaContratoOperadores]="itemFichaContrato"
+    [redirectOtherRouter]="true"
+    (regresarHabilitado)="regresarFichaContrato()"
+  ></app-registro-contratos>
+  <div class="row">
+    <div class="col-12 text-center">
+      <button
+        *ngIf="itemFichaContrato.visible"
+        class="btn btn-primary m-4"
+        (click)="regresarFichaContrato()"
+      >
+        Regresar
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>

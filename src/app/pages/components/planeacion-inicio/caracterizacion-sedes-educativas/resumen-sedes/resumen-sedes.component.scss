@@ -1,0 +1,81 @@
+@import '/src/assets/styles/variable.scss';
+.panel{
+  margin: 20px 40px auto;
+  border: 1px solid $base-azulPAE;
+  border-radius: 12px;
+}
+.title-distribution{
+  text-align: center;
+  color: $base-azulPAE;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 5px 0 25px 0;
+}
+
+.img-panel-footer{
+  width: 35px;
+  margin: 0 auto;
+}
+
+.table-accesos{
+  margin-top: 15px;
+  width: 100%;
+  border: none;
+}
+.table-accesos thead,
+.table-accesos tbody,
+.table-accesos tbody td{
+  border: none;
+  border-style: none !important;
+}
+.table-accesos{
+  width: 100%;
+  border: none;
+}
+.table-accesos th{
+  padding: 0;
+  height: 35px;
+  font-size: 13px;
+  font-weight: bold;
+  border: none;
+}
+.table-accesos .th-acceso-facil{
+  background-color: green;
+  color: #fff;
+  border-top-left-radius: 15px;
+}
+.table-accesos .th-acceso-medio{
+  background-color: $semaforo-amarillo;
+  color: #3a729d;
+}
+.table-accesos .th-acceso-dificil{
+  background-color: red;
+  color: #fff;
+  border-top-right-radius: 15px;
+}
+
+.text-accesos td{
+  padding: 10px;
+  color: darkblue;
+  font-size: 11px;
+}
+
+.tabletipominuta{
+  border: 1px solid $base-azulPAE;
+  border-radius: 12px 12px 0px 0px;
+
+}
+
+.tabletipominuta div{
+  text-align: center;
+  padding: 10px
+}
+
+.tabletipominuta div:not(:last-child){
+  border-right: 1px solid;
+}
+
+.active{
+  background-color: #f54a62;
+  color: #fff;
+}

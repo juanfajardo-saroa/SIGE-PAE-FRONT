@@ -1,0 +1,530 @@
+<div class="container-fluid content-wrapper">
+    <div class="row">
+        <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 banner-breadcrumbs">
+            <div class="flex-wrap flex-md-nowrap mt-3">
+                <app-menadminuautorizado>
+                    <ng-container autorizado>
+                        <div class="row mx-lg-down-0">
+                            <div class="col-md-10">
+                                <label class="banner-text">
+                                    <strong class="strongheader">{{nombreMunicipio}} | {{nombreInstitucion}} |
+                                        {{nombreSede}}</strong>
+                                </label>
+                            </div>
+                            <!-- <div class="col-md-2 text-right">
+                  <label class="anio-text">Año | <strong class="strongheader"></strong>{{ currentYear }}</label>
+                </div> -->
+                        </div>
+                        <!-- <hr style="margin: 0; color: red!important;" /> -->
+                        <!-- <div class="row LineaAzul">
+                <div class="col-12 text-right">
+                  <label class="last-update-text">Ultima actualizaci&oacute;n
+                    <span> {{ dateToday | date: "longDate" }}</span></label>
+                </div>
+              </div> -->
+                    </ng-container>
+                </app-menadminuautorizado>
+            </div>
+            <div class="mt-2">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div>
+    <div class="row mx-lg-down-0">
+        <div class="tab-control-secondary d-flex">
+            <div class="tab-item active w-down-auto" style="width: 30%;">
+                <div style="color: #00A9AB ;">Seguimiento a complementos</div>
+            </div>
+            <div class="tab-item nothing d-flex w-down-100" style="width: 70%;">
+                <div>-</div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <mat-expansion-panel class="mat-elevation-z0" (opened)="panelOpenState[element.numero_semana] = true"
+            (closed)="panelOpenState[element.numero_semana] = false" *ngFor="let element of dataArray"
+            [expanded]="resumenPanel[element.numero_semana]" [expanded]="resumenPanel[element.numero_semana]" disabled>
+            <mat-expansion-panel-header>
+                <mat-panel-title (click)="expandPanel(element.numero_semana, element.first_day)">
+                    <div class="panelExpansion">
+                        <div *ngIf="panelOpenState[element.numero_semana]" class="panelExpansionLess">
+                            <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-25.png" alt="" height="25px"
+                                width="auto">
+                            Semana {{element.numero_semana}}: {{nameMonth}} {{element.first_day}} - {{element.last_day}}
+                            | {{element.estado}}
+                            <mat-icon class="icon-display" [ngStyle]="applyStyles(element.colorEstado)">
+                                circle
+                            </mat-icon>
+                            <mat-icon class="iconExpansionLess"> expand_less</mat-icon>
+                        </div>
+                        <div *ngIf="!panelOpenState[element.numero_semana]" class="panelExpansionMore">
+                            <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-85.png" alt="" height="15px"
+                                width="auto">
+                            Semana {{element.numero_semana}}: {{nameMonth}} {{element.first_day}} - {{element.last_day}}
+                            | {{element.estado}}
+                            <mat-icon class="icon-display" [ngStyle]="applyStyles(element.colorEstado)">
+                                circle
+                            </mat-icon>
+                            <mat-icon class="iconExpansionMore"> expand_more</mat-icon>
+                            <hr class="lineaB">
+                        </div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-card-content>
+
+              <div class="d-flex flex-column flex-xl-row gap-row-2 pt-3">
+
+                <div class="d-flex align-self-xl-start align-self-center">
+                  <div class="text-center BordeRedondoCalendar" style="max-width: 216px!important;">
+                    <mat-toolbar color="primary" class="no-shadow">
+                        <mat-toolbar-row>
+                            <span fxFlex fxShow="false" fxShow.gt-xs>{{ viewDate |
+                                calendarDate:(view + 'ViewTitle'):'es'| titlecase }}</span>
+                        </mat-toolbar-row>
+                    </mat-toolbar>
+                    <div [ngSwitch]="view">
+                        <mwl-calendar-month-view *ngSwitchCase="'month'"
+                            [viewDate]="viewDate" [events]="element.events"
+                            [activeDayIsOpen]="activeDayIsOpen">
+                        </mwl-calendar-month-view>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column flex-xl-row gap-5-px">
+
+                  <div class="d-flex flex-column gap-5-px px-lg-down-0 EspacioColumnas BordeBlueColumnas border-down-none">
+
+                    <div class="d-flex flex-column flex-xl-row align-items-center justify-content-between">
+                      <div class="d-flex flex-row w-down-100">
+                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-13.png "
+                          height="12px" width="auto"
+                          style="float: left; margin-top: 3px !important; border: 1px solid #005ACA;">
+                        <div class="example-margin">
+                            Días PAE de {{nameMonth}} {{element.first_day}} -
+                            {{element.last_day}}:
+                        </div>
+                      </div>
+                      <div class="w-down-100">
+                        <input class="BorderDatos w-down-100 py-lg-down-1_5" type="number" name="cantidad" min=0
+                            max=100 required value={{element.dias_pae_number}} readonly>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-xl-row align-items-center justify-content-between">
+                      <mat-label class="example-margin w-down-100">Complementos diarios a preparar:</mat-label>
+                      <div class="w-down-100">
+                        <input class="BorderDatos w-down-100 py-lg-down-1_5" type="number" name="cantidad" min=0
+                            max=100 required value={{element.complementos_preparar}}
+                            readonly>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-xl-row align-items-center justify-content-between">
+                      <mat-label class="example-margin w-down-100">- Complementos Almuerzo (A) PS:</mat-label>
+                      <div class="w-down-100">
+                        <input style="background-color: white;" class="BorderDatos w-down-100 py-lg-down-1_5"
+                            type="number" name="cantidad" min=0 max=100 required
+                            value={{element.complemetos_almuerzos}} readonly>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-xl-row align-items-center justify-content-between">
+                      <mat-label class="example-margin w-down-100">- Complementos AM/PM (C) PS:</mat-label>
+                      <div class="w-down-100">
+                        <input style="background-color: white;" class="BorderDatos w-down-100 py-lg-down-1_5"
+                            type="number" name="cantidad" min=0 max=100 required
+                            value={{element.complemetos_anpm}} readonly>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-xl-row align-items-center justify-content-between gap-col-10-px">
+                      <mat-label class="example-margin w-down-100">Total complementos programados:</mat-label>
+                      <div class="w-down-100">
+                        <input class="BorderDatos w-down-100 py-lg-down-1_5" type="number" name="cantidad" min=0
+                            max=100 required
+                            value={{element.total_complementos_Programados}} readonly>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="d-flex flex-column gap-5-px EspacioColumnas px-lg-down-0">
+
+                    <div class="d-flex flex-column flex-xl-row align-items-center justify-content-between">
+                      <mat-label class="example-margin w-down-100">Total complementos preparados:</mat-label>
+                      <div class="w-down-100">
+                        <input class="BorderDatos w-down-100 py-lg-down-1_5" type="number" name="cantidad" min=0
+                            [ngStyle]="{'background-color':((element.total_complementos_Preparados*100)/element.total_complementos_Programados)>80 ? 'green' : 'red', 'color':'white' }"
+                            max=100 required value={{element.total_complementos_Preparados}}
+                            readonly>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-xl-row align-items-center justify-content-between gap-col-10-px">
+                      <mat-label class="example-margin w-down-100">Total complementos no preparados:</mat-label>
+                      <div class="w-down-100">
+                        <input class="BorderDatos w-down-100 py-lg-down-1_5" type="number" name="cantidad" min=0
+                            max=100 required
+                            value={{element.total_complementos_no_Preparados}} readonly>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </mat-card-content>
+            <br>
+            <div class="d-flex flex-row" fxLayout="row wrap" style="margin-left: -30px;">
+                <div class="d-flex flex-row">
+                    <div class="d-flex align-items-center" style="background-color: #00A9AB; padding: 10px;">
+                        <div class="NumeroPendiente">
+                            1
+                        </div>
+                    </div>
+                    <div class="borderRightSection"
+                        style="display: inline-block; background-color: #00A9AB; padding: 12px; color: #ffffff; padding-left: 0px;">
+                        Complementos entregados por grado
+                    </div>
+                </div>
+                <div class="BordePendiente d-flex align-items-center">
+                    <mat-icon class="icon-display" [ngStyle]="applyStyles(colorsByWeek[element.numero_semana])">
+                        circle
+                    </mat-icon>
+                    <div style="float: right;">
+                        {{statesByWeek[element.numero_semana]}}</div>
+                </div>
+            </div>
+            <!--------------------- inicio Filtro por Grado escolar y Reporte entrega------------------------------>
+
+          <div class="d-flex flex-column flex-xl-row py-5 gap-row-2">
+
+            <div class="d-flex flex-column flex-xl-row ubicaciontabla BordeRedondo py-2 w-down-100" style="gap: 1rem;">
+
+              <div class="d-flex flex-column w-100 inputText">
+                <div class=" text-left" style="margin-top: 5px;">
+                  <b> Jornada</b>
+                </div>
+                <div class="text-center ">
+                    <mat-select id="id_Jornada"
+                        (selectionChange)="onJornadaClick($event.value)"
+                        [(value)]="selJornada[element.numero_semana]"
+                        required placeholder="Seleccione"
+                        class="tablaform4">
+                        <mat-option
+                            *ngFor="let item of selectSedesJornadaList"
+                            [value]="item.iD_Jornada">
+                            {{item.sID_Jornada}} </mat-option>
+                    </mat-select>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column w-100 inputText">
+                <div class="text-left " style="margin-top: 5px;">
+                  <b> Grado escolar</b>
+                </div>
+                <div class="text-center ">
+                    <mat-select id="id_grado"
+                        [(value)]="selGrado[element.numero_semana]" required
+                        placeholder="Seleccione" class="tablaform4">
+                        <mat-option
+                            *ngFor="let item of GradosSedesJornadasListBySede"
+                            [value]="item.iD_Grado">
+                            {{item.sID_Grado}} </mat-option>
+                    </mat-select>
+                </div>
+              </div>
+
+              <div class="d-flex flex-row py-1 pl-4 pr-2 borderLeftSep align-items-center justify-content-center border-down-none">
+                <div class="d-flex flex-column">
+                  <img (click)="fillTable(element.numero_semana)"
+                    class="imgFilter m-0"
+                    src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png ">
+                  <div class="textF">Filtrar</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="d-flex flex-column align-self-center w-down-100">
+              <button
+                  *ngIf="!isEdit[element.numero_semana] && element.estado != 'Aprobado'"
+                  class="BordeRedondoAgregar mb-0 mr-0" mat-raised-button
+                  (click)="onEditClick(element.numero_semana)">
+                  <mat-icon style="color:#ffffff;">edit
+                  </mat-icon>Editar
+              </button>
+            </div>
+
+          </div>
+
+            <br>
+            <!--------------------- Fin Filtro por por Grado escolar y Reporte entrega------------------------------>
+            <!--------------------- Inicio tabla ------------------------------>
+            <div class="responsive-table-pae" [ngClass]="{'hidden': !filteredWeek[element.numero_semana]}">
+                <table mat-table [dataSource]="dataSourceBySemana[element.numero_semana]" matSort>
+                    <ng-container matColumnDef="fecha">
+                        <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef><b class="sizeCols">Fecha</b></th>
+                        <td mat-cell *matCellDef="let item" data-label="Fecha">
+                            {{item.fecha | date:'dd-MMM-yyyy' | uppercase | withoutDots}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="complementosAsignados">
+                        <th mat-header-cell *matHeaderCellDef><b class="sizeCols">Complementos diarios <br> asignados en
+                                la
+                                <br>
+                                priorización</b></th>
+                        <td mat-cell *matCellDef="let item" data-label="C.D.A. priorización">
+                            {{item.complementosAsignados }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="complementosPreparados">
+                        <th mat-header-cell *matHeaderCellDef><b class="sizeCols">Complementos diarios <br>
+                                preparados</b>
+                        </th>
+                        <td mat-cell *matCellDef="let item" data-label="C.D. preparados">
+                            <div *ngIf="isEdit[element.numero_semana] ">
+                                <input (focusout)="onComplementosPreparados(item, element.numero_semana)" matInput
+                                    type="number" min="0" id="complementosPreparados"
+                                    [(ngModel)]="item.complementosPreparados" (keydown)="onKeyNumber($event)"
+                                    class="formcontrol" />
+                            </div>
+                            <div *ngIf="!isEdit[element.numero_semana]">
+                                {{item.complementosPreparados }}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="reporte">
+                        <th mat-header-cell *matHeaderCellDef><b class="sizeCols">Reporte de <br> la entrega</b></th>
+                        <td mat-cell *matCellDef="let item" data-label="R. entrega">
+                            <mat-icon class="icon-display" [ngStyle]="applyStyles(item.colorEstado)">
+                                circle
+                            </mat-icon>
+                            {{item.estadoReporte }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="justificacion">
+                        <th class="RightUpCorner" mat-header-cell *matHeaderCellDef><b
+                                class="sizeCols">Justificación</b>
+                        </th>
+                        <td mat-cell *matCellDef="let item" data-label="Justificación">
+                            <div class="selectInTable" *ngIf="isEdit[element.numero_semana]">
+                                <div *ngIf="item.complementosPreparados == item.complementosAsignados">
+                                    No aplica
+                                </div>
+                                <div
+                                    *ngIf="item.complementosPreparados != item.complementosAsignados && (item.justificacion == '' || item.justificacion == null) ">
+                                    <button (click)="openDialog('Adicionar', item, element.numero_semana)"
+                                        class="formcontrol5">Redactar
+                                        justificación</button>
+                                </div>
+                                <div
+                                    *ngIf="item.complementosPreparados != item.complementosAsignados && (item.justificacion != '' && item.justificacion != null) ">
+                                    <button (click)="openDialog('Actualizar', item, element.numero_semana)"
+                                        class="formcontrol3">Editar
+                                        justificación</button>
+                                </div>
+                            </div>
+                            <div class="selectInTable" *ngIf="!isEdit[element.numero_semana]">
+                                <div *ngIf="item.complementosPreparados == item.complementosAsignados">
+                                    No aplica
+                                </div>
+                                <div *ngIf="item.complementosPreparados != item.complementosAsignados">
+                                    <b (click)="openDialog('Ver',item, element.numero_semana)" class="underLine">Ver
+                                        justificación</b>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator style="color:#005ACA ;" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
+                    showFirstLastButtons>
+                </mat-paginator>
+                <br>
+                <div fxLayout="row wrap" class="alignCenter">
+                    <button class="BordeRedondoAgregar" *ngIf="isEdit[element.numero_semana]" mat-raised-button
+                        [disabled]="!validButton[element.numero_semana]" (click)="onSaveClick(element.numero_semana);">
+                        Guardar cambios</button>
+                    <button class="BordeRedondoAgregar" *ngIf="isEdit[element.numero_semana]"
+                        [disabled]="!yaCargoAprobaciones[element.numero_semana] || !validButton[element.numero_semana]"
+                        mat-raised-button (click)="onSaveAndApproveClick(element.numero_semana);">
+                        Guardar y enviar para aprobación</button>
+                </div>
+            </div>
+            <!--------------------- Fin tabla ------------------------------>
+            <br>
+            <!-- inicio de Aprobaciones--->
+            <!-- <div fxLayout="row wrap" style="margin-left: -30px;">
+                <div style="float: left;" [matBadge]="cantAprobaciones"  [matBadgeHidden]="cantAprobaciones===0">
+                    <div style="float: left; background-color: #00A9AB; padding: 10px;">
+                        <div class="NumeroPendiente">
+                            2
+                        </div>
+                    </div>
+                    <div style="display: inline-block; background-color: #00A9AB; padding: 12px; color: #ffffff;">
+                        Aprobaciones
+                    </div>
+                    <div class="FinalRedondo"></div>
+                </div>
+            </div> -->
+            <div *ngIf="getModulePermission(2,'aprobar')">
+                <div style="float: left; margin-left: -30px;" [matBadge]="cantAprobaciones"
+                    [matBadgeHidden]="cantAprobaciones===0">
+                    <div style="float: left; background-color: #00A9AB ; padding: 10px;">
+                        <div style="  height: 24px; width: 24px; background-color: #ffffff;
+                  border-radius: 50%; text-align: center; color: #00A9AB ; font-weight: 500; padding-top: 3px;
+                  ">2</div>
+                    </div>
+                    <div
+                        style="display: inline-block; background-color: #00A9AB ; height: 44px; padding: 8px 0px 8px 0px; color: #ffffff;">
+                        Aprobaciones
+                    </div>
+                    <div style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+                margin-left: -26px;float: right;"></div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="sub">
+                    <img style="margin-bottom: 8px;" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-168.png "
+                        height="30px" width="auto">
+                    <span style="color:#00A9AB;">Aprobaciones pendientes</span>
+                </div>
+                <hr class="linea">
+                <br>
+                <div *ngIf="element.estado != 'Por Aprobar'">
+                    <div style="display: flex;">
+                        <div><img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-21.png "
+                                style="width:30px; height: 30px; float:left;"></div>
+                        <div style="padding-left:10px;">
+                            <span class="textoinformativo">La semana estará lista para ser aprobada cuando haya
+                                completado
+                                la <br>
+                                información de los complementos
+                                entregados para todos los grados.</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div *ngIf="element.estado == 'Por Aprobar'">
+                    <div [formGroup]="form" fxLayout="row wrap">
+
+                        <div class="bordeado">
+                          <div class="BordeadoSup">
+                            <span>Decisión de aprobación</span>
+                          </div>
+                          <div class="d-flex flex-lg-row flex-column-reverse">
+                            <div class="borderRight border-down-md-none d-flex flex-column justify-content-center">
+                              <div *ngFor="let item of AccionesAprobacionesList" style="text-align: center;">
+                                <button id="accionAprobacion{{item.id}}" [class]="idaccion === 0  ? 'buttonAprobar' : idaccion ===1 ? (idaccion === item.id  ? 'btverde':'buttonAprobar') :idaccion ===7 ? (idaccion === item.id   ? 'btrojo' :'buttonAprobar'):'buttonAprobar' " (click)="joinRoom(item)">{{item.nombre}}</button>
+                              </div>
+                            </div>
+                            <div class="w-100 mt-3 ml-xl-1 ml-0">
+                              <div class="form-group m-0 px-lg-down-10-px">
+                                <label class="TextosBlueLeft">Observaciones / Justificaciones</label>
+                                <input id="observaciones" formControlName="observaciones" class="inputFull2 mx-sm-down-0 w-down-sm-100" type="text" required />
+                                <div
+                                    *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+                                    class="invalid-feedback">
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div fxFlex="100">
+                            <br>
+                            <div fxLayout="row wrap ">
+                                <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+                                    <div class="text-right ">
+                                        <button [ngClass]="{'linkdisable':!getModulePermission(2,'aprobar')}"
+                                            [disabled]="!form.valid " style="margin-left: 20px; height: 40px;"
+                                            (click)="mensaje(element.numero_semana)">
+                                            <span>Enviar resultado</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="sub">
+                    <img style="margin-bottom: 8px;" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-168.png "
+                        height="30px" width="auto">
+                    <span style="color: #00A9AB;">Histórico de aprobaciones</span>
+                </div>
+                <hr class="linea">
+                <br>
+                <div style="margin-left: -10px;" fxLayout="row wrap">
+                    <div style="margin-left: -10px;" fxFlex="100">
+                        <mat-card style="margin-left: -10px;">
+                            <mat-card-content>
+                                <div class="table-responsive responsive-table-pae">
+                                    <table mat-table [dataSource]="dataSourceAprobaciones" class="left-radius" matSort>
+                                        <ng-container matColumnDef="fecha">
+                                            <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef>
+                                                <b> Fecha </b>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 0px; text-align: center;" data-label="Fecha">
+                                                {{element.fecha==null?'-': (element.fecha | date:'dd-MMM-yyyy' |
+                                                uppercase | withoutDots)
+                                                }} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="responsable">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <b>Responsable </b>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 0px; text-align: center;" data-label="Responsable">
+                                                {{element.responsable==null?'-': (element.responsable)}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="rol">
+                                            <th mat-header-cell *matHeaderCellDef><b> Rol del <br>
+                                                    responsable</b>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 0px; text-align: center;" data-label="Rol. responsable">
+                                                {{element.rol==null?'-': (element.rol)}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="accion">
+                                            <th mat-header-cell *matHeaderCellDef><b> Acción </b>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 0px; text-align: center;" data-label="Acción">
+                                                {{element.accion==null?'-': (element.accion)}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="observaciones">
+                                            <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef>
+                                                <b>Observaciones / <br> Justificaciones</b>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 0px; text-align: center;" data-label="O. / Justificaciones">
+                                                {{element.observaciones==null?'-': (element.observaciones)}} </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsAprobaciones"></tr>
+                                        <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsAprobaciones;">
+                                        </tr>
+                                    </table>
+                                    <mat-paginator style="color:#005ACA ;" #paginator2 [pageSize]="10"
+                                        [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+                                    </mat-paginator>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <!-- fin de Aprobaciones--->
+        </mat-expansion-panel>
+    </div>
+</div>

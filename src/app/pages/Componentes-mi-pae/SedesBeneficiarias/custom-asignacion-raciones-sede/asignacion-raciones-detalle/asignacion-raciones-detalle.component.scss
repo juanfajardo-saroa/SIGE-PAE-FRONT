@@ -1,0 +1,473 @@
+@import '/src/assets/styles/variable.scss';
+
+::ng-deep table tbody tr:last-child td.mat-cell.cdk-cell.FondoAzul.cdk-column-jornada.mat-column-jornada.ng-star-inserted {
+  border-bottom: 1px solid $base-azulPAE;
+  border-bottom-style: solid !important;
+  background-color: $base-azulPAE  !important;
+}
+
+::ng-deep table tbody tr:last-child td:last-child .mat-cell.cdk-cell.FondoAzul.cdk-column-jornada.mat-column-jornada.ng-star-inserted {
+  border-bottom: 1px solid $base-azulPAE;
+  border-bottom-style: solid !important;
+  background-color: $base-azulPAE  !important;
+}
+
+::ng-deep mat-card {
+  box-shadow: none !important;
+}
+
+.FondoAzul {
+  color: #ffffff;
+}
+
+
+.ButtonBlue {
+  border: 1px $base-color solid;
+  border-radius: 20px;
+  background-color: $base-color;
+  color: #ffffff;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.ButtonBlue {
+  border: 1px $base-color solid;
+  border-radius: 20px;
+  background-color: $base-color;
+  color: #ffffff;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 2px 15px;
+}
+
+.BordeRedondoAgregar {
+  border-radius: 20px;
+  border: $base-color solid 1px;
+  background-color: $base-color;
+  color: #fff;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  float: right;
+  padding: 2px 15px;
+}
+
+.sinLinea {
+  border-bottom: $base-azulPAE 1px hidden!important;
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  border-bottom: $base-azulPAE 1px dashed;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0%;
+}
+
+.tablaform {
+  width: 100%;
+  border-color: $base-azulPAE;
+  color: $base-azulPAE;
+  border: 1px solid;
+  font-size: 17px;
+}
+
+.LeftUpCorner {
+  border-radius: 20px 1px 1px 1px;
+}
+
+.LeftUpCorner2 {
+  border-radius: 1px 20px 1px 1px;
+}
+
+.CenterButton {
+  margin: auto;
+  display: block;
+}
+
+
+.table-responsive {
+  padding-left: 0px !important;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+}
+
+.tablaform2 {
+  color: $base-color;
+  text-align: left;
+  font-size: 17px;
+  width: 0%;
+}
+
+.bordeAtras {
+  text-align: center !important;
+  border: 1px solid $base-azulPAE;
+  border-radius: 13px;
+  padding: 5px;
+}
+
+.linkdisable {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.LeftUpCorner {
+  border: 1px $base-color solid;
+  border-radius: 20px 1px 1px 1px;
+}
+
+.LeftUpCorner2 {
+  border-top-right-radius: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+}
+
+.tablaform2 {
+  color: $base-color;
+  text-align: left;
+  font-size: 17px;
+  width: 0%;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  color: $base-color;
+  font-size: 12px;
+}
+
+mat-card-title,
+mat-card-content {
+  color: $base-color;
+  font-size: 12px !important;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+  border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 24px;
+  border-right: 1px solid;
+}
+
+td.mat-cell {
+  padding: 16px 0 16px 0;
+  border-bottom: 1px dotted $base-azulPAE;
+  text-align: center;
+  //border-style: dotted;
+}
+
+table thead {
+  background-color: $header_table  !important;
+  color: $base-color;
+  border: 1px solid;
+}
+
+table thead th {
+  border-top: 1px solid $base-azulPAE;
+  border-right: 1px solid $base-azulPAE;
+  padding: 20px;
+}
+
+table thead th:first-child {
+  border-left: 1px solid $base-azulPAE;
+  border-top-left-radius: 20px !important;
+}
+
+table td:first-child {
+  border-left: 0px solid $base-azulPAE;
+  background-color: #00A9AB !important;
+  color: #ffffff!important;
+}
+
+.textoinformativo {
+  color: $base-azulPAE;
+}
+
+.linea {
+  background-color: $base-color  !important;
+}
+
+/* tr:last-child td:first-child {
+  background-color: #005ACA !important;
+  color: #fff !important;
+  border-right: 1px;
+} */
+
+.mat-expansion-panel-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px !important;
+  border-radius: inherit;
+  transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-expansion-panel {
+  box-shadow: none !important;
+}
+
+table.left-radius thead th:first-child {
+  border-top-left-radius: 20px !important;
+  border-left: 1px solid $base-azulPAE;
+}
+
+table.right-radius thead th:last-child {
+  border-top-right-radius: 20px;
+  border-left: 1px solid $base-azulPAE;
+}
+
+table tbody {
+  color: $base-color;
+}
+
+table tbody td {
+  border-bottom: 1px dashed $base-color  !important;
+}
+
+table tbody tr td:first-child {
+  border-top: 1px solid $base-color;
+  border-left: 1px solid $base-color;
+}
+
+table tbody tr td:last-child {
+  border-right: 1px solid $base-color;
+}
+
+table tbody tr:last-child td {
+  border-bottom: 1px solid $base-color;
+  border-bottom-style: solid !important;
+}
+
+td.mat-cell:first-of-type {
+  padding-left: 0 px !important
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 24px;
+  border-bottom: 1px solid !important;
+}
+
+.BordeRedondo {
+  border-radius: 20px;
+  border: 1px solid $base-color;
+}
+
+.titletable {
+  text-align: center !important;
+  background-color: #E2ECFD !important;
+  color: $base-color  !important;
+  width: 100%;
+  padding: 4px 75px !important;
+  margin-bottom: -1px !important;
+  border-radius: 12px 12px 0px 0px !important;
+  border: 1px solid $base-color;
+  border-bottom: 1.5px $base-borderStyle ;
+}
+
+// .mat-table::ng-deep {
+//   border: 1px solid $base-azulPAE;
+// }
+
+.mat-table .mat-row:hover .mat-cell {
+  background-color: #E2ECFD;
+  color: $base-azulPAE !important;
+}
+
+th.mat-header-cell {
+  text-align: center !important;
+  background-color: #E2ECFD !important;
+  //color: #fff!important;
+  width: fit-content;
+  padding: 4px 75px !important;
+  margin-bottom: -1px !important;
+  border-bottom: 1px solid $base-azulPAE;
+  padding: 20px !important;
+}
+
+.red {
+  background-color: red;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.green {
+  background-color: green;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.yellow {
+  background-color: yellow;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.mat-row:hover .mat-cell .mat-row:last-child {
+  background-color: $base-color;
+  color: #ffffff;
+}
+
+.mat-row:hover .StyleInput {
+  cursor: pointer;
+  background-color: #E2ECFD;
+  color: #005aca;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+
+.fixed-button {
+  position: fixed;
+  bottom: 10px;
+  right: 25px;
+}
+
+.StyleInput {
+  border: none;
+  color: $base-azulPAE;
+  text-align: center !important;
+  font-size: 12px !important;
+  padding-left: 8px !important;
+  border: 1px solid;
+  width: 90%;
+  border-radius: 15px;
+
+}
+
+::ng-deep .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
+  display: none !important;
+}
+
+mat-form-field {
+  border-radius: 10px;
+  border: 1px solid $base-color;
+}
+
+.blue-title {
+  color: $base-color;
+}
+
+mat-selection-list {
+  padding: 0;
+
+  .mat-list-option {
+    display: inline-block;
+    height: auto;
+    width: auto;
+    color: $base-color;
+  }
+}
+
+mat-list-option[aria-selected="true"] {
+  color: #ffffff !important;
+  background-color: $base-color;
+}
+
+/* tr:last-child td:last-child {
+  background-color: $base-azulPAE;
+  color: #fff !important;
+  border-right: 1px;
+} */
+
+img {
+  margin-right: 10px;
+}
+
+.bordeDerecho {
+  border-right: 1px solid $base-color  !important;
+}
+
+.bordeizq {
+  border-left: 1px solid $base-color  !important;
+}
+
+.TablaSeparada {
+  background-color: #E2ECFD !important;
+  padding: auto;
+}
+
+.TotalR {
+  background-color: $base-azulPAE  !important;
+}
+
+.Border {
+  border-top: solid 1px;
+  border-bottom: solid 1px;
+  border-left: solid 1px;
+}
+
+td.mat-footer-cell:first-of-type tr:last-child:hover td:last-child:hover {
+  background-color: #E2ECFD !important;
+  color: $base-color  !important;
+  border-right: 1px;
+  margin-top: 10%;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  color: $base-color;
+  font-size: 12px;
+}
+
+.header2 {
+  background-color: #E2ECFD !important;
+  text-align: center;
+  font-size: 12px;
+  color: $base-color;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.header4 {
+  background-color: #E2ECFD !important;
+  text-align: center;
+  font-size: 12px;
+  color: $base-color;
+  border-top: 1px solid;
+  border-right: 1px dotted;
+  border-bottom: 1px solid;
+}
+
+.ColorTotalJornada {
+  background-color: #E2ECFD;
+}
+
+.paddingBottom {
+  padding-bottom: 2% !important;
+}

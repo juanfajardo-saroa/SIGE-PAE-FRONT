@@ -1,0 +1,88 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>{{ action }} Módulo</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                <br />
+                <div *ngIf="action !='Adicionar'">
+                  <div class="example-full-width">
+                    <input matInput id="id" formControlName="id" readonly="true" class=" form-control"
+                      style="display: none;" />
+                  </div>
+                </div>
+
+                <ng-container>
+
+                  <div class="d-flex flex-column px-5">
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center BordeSeparador">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100"> 1. Nombre<span style="color:red;">* </span> </div>
+
+                      <div class="w-100">
+                        <input id="nombre" formControlName="nombre" class="form-control" />
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pt-4 pb-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">2. Sistema<span style="color:red;">* </span></div>
+
+                      <div class="w-100">
+                        <mat-select class="control-md tablaform" id="id_Sistema" formControlName="id_Sistema">
+                          <mat-option *ngFor="let item of SistemaList" [value]="item.id">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </ng-container>
+
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <br>
+                <div style="text-align: center; color: #005ACA;">
+                  ¿Está seguro de eliminar el registro?
+                </div>
+                <br>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                        <button [disabled]="!form.valid && action !='Eliminar'" (click)="doAction()">{{action}}
+                        </button>
+                      </div>
+                      <div>
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

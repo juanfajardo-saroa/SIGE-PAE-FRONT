@@ -1,0 +1,288 @@
+@import '/src/assets/styles/variable.scss';
+
+mat-card,
+mat-card-title,
+mat-card-content,
+mat-list-option,
+div,
+input,
+td,
+th.mat-header-cell,
+td.mat-cell,
+table {
+    color: #005ACA;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+::ng-deep.mat-cell {
+    text-align: center !important;
+}
+
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text {
+    color: #005ACA !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-panel {
+    max-width: 100% !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-placeholder {
+    font-size: 13px !important;
+}
+
+mat-select {
+    padding: 0px !important;
+}
+
+div.col {
+    margin: 1% !important;
+}
+
+::ng-deep.table-default thead tr th:not(.empty):first-child {
+    width: 42% !important;
+}
+
+::ng-deep.table-default thead tr th:nth-child(2) {
+    width: 22% !important;
+}
+
+::ng-deep.table-default thead tr th:nth-child(3) {
+    width: 17% !important;
+}
+
+::ng-deep.table-default thead tr th:not(.empty):last-child {
+    width: 19% !important;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: center !important;
+    justify-self: center !important;
+    font-size: 12px !important;
+    border-radius: 20px !important;
+    background-image: url(../../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+    background-size: contain !important;
+    padding: 2% 0% !important;
+    width: 30% !important;
+    color: $base-color !important;
+    background-position: top !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
+    display: inline-block;
+    object-fit: contain !important;
+}
+
+::ng-deep.swal2-close {
+    color: #ffff;
+    margin-top: -15px !important;
+    box-shadow: none !important;
+    background-color: transparent;
+    font-size: 2em !important;
+}
+
+.positionTable {
+    width: 90%;
+    margin-top: 2%;
+}
+
+.tablaForm3 {
+    width: 100%;
+    border-color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 20px !important;
+    margin: 0% 5% 0% 5% !important;
+}
+
+.tablaForm {
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 70%;
+    height: 30%;
+    margin: 2% 0% 2% 0% !important;
+    padding: 3px;
+}
+
+.tablaForm2 {
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 70%;
+    height: 30%;
+    margin: 1% 0% 1% 0% !important;
+    padding: 3px;
+}
+
+.bordeIzq {
+    border-left: 1px solid #005ACA !important;
+    border-radius: 20px !important;
+}
+
+.lineSolid {
+    border-top: 1px solid #005ACA;
+}
+
+.lineDashed {
+    border-bottom: 1px dashed #005ACA;
+}
+
+.TituloDialog {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #E6EFFD;
+    text-align: center;
+    padding: 15px 0px;
+    width: 100%;
+    font-size: 15px !important;
+}
+
+.alignTd {
+    width: 30% !important;
+}
+
+.alignCenter {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.BordeRedondoAgregar {
+    border-radius: 20px;
+    border: solid 1px #005ACA;
+    background-color: #005ACA;
+    color: #ffff;
+    padding: 2px 20px;
+    margin: 0px 2px 0px 0px;
+}
+
+.BordeRedondoAgregar:disabled {
+    opacity: 0.2 !important;
+}
+
+.marginIzq {
+    margin: 0px 0px 0px 2px !important;
+}
+
+.TextosBlueLeft {
+    margin-left: 5%;
+    text-align: left;
+    float: left;
+}
+
+.TextosBlueLeft2 {
+    margin-left: 12%;
+}
+
+.TextosBlueLeft3 {
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.AlingText {
+    margin-left: 30px !important;
+}
+
+.AlingLeft{
+    text-align: left !important;
+}
+
+.SmallBlue {
+    font-size: 10px !important;
+    margin-left: 25px;
+    line-height: 15px;
+}
+
+.SizeTable {
+    width: 95% !important;
+    margin: 1% 2% !important;
+}
+
+.buttonImg {
+    background-color: #ffff;
+    color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 95%;
+    height: 40% !important;
+    margin: 2% 0% 2% 0% !important;
+}
+
+.inputV {
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 90%;
+    height: 30% !important;
+    margin: 2% 0% 2% 0% !important;
+    padding: 3px;
+}
+
+.textButtonImg {
+    float: center !important;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 0% !important;
+}
+
+.cursorP{
+    cursor: pointer !important;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.redCircle {
+    color: #FF0000;
+}
+
+.yellowCircle {
+    color: #ffd400;
+}
+
+.grayCircle {
+    color: #E2ECFD;
+}
+
+.greenCircle {
+    color: #009922;
+}
+
+.fg-0_4 {
+  flex-grow: 0.4;
+}
+
+.tablaFormAux {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 32%;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  .responsive-table-pae .mat-table .mat-row:hover .mat-cell {
+    background-color: transparent !important;
+    opacity: 1 !important;
+  }
+}

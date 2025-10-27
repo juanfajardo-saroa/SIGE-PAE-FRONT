@@ -1,0 +1,57 @@
+// @import './variable.scss';
+
+input[type='radio'],
+input[type='checkbox'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 1.8rem;
+  width: 1.8rem;
+  border-radius: 4px;
+  outline: none;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  border: 1px solid $base-azulPAE;
+  background: $white;
+  transform: scale(0.7);
+
+  &:after {
+    content: '';
+    display: block;
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: $white;
+    opacity: 0;
+    transform: translate(65%, 65%);
+  }
+
+  &:checked {
+    background: $base-azulPAE;
+    background-color: $base-azulPAE;
+  }
+
+  &:not(.switch) {
+    &:after {
+      opacity: 1;
+    }
+
+    &:checked {
+      opacity: 1;
+    }
+  }
+
+  &+label {
+    font-size: 14px;
+    line-height: 21px;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+}

@@ -1,0 +1,192 @@
+@import '/src/assets/styles/variable.scss';
+
+mat-card,
+mat-card-title,
+mat-card-content,
+mat-list-option,
+div,
+input,
+td,
+th.mat-header-cell,
+td.mat-cell,
+table {
+    color: #005ACA;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+::ng-deep.mat-cell {
+    text-align: center !important;
+}
+
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text {
+    color: #005ACA !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-panel {
+    max-width: 100% !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-placeholder {
+    font-size: 13px !important;
+}
+
+.divI {
+    margin-top: 2rem !important;
+}
+
+.TextWarning {
+    float: left;
+    margin-top: -15px;
+    font-size: 10px !important;
+    line-height: 15px;
+}
+
+.ImgWarning {
+    margin-right: 7px;
+    margin-top: 5px;
+}
+
+.ImgDivWarning {
+    float: left;
+    margin-top: -10px;
+    margin-left: 37% !important;
+}
+
+.positionTable {
+    width: 90%;
+    margin-top: 2%;
+}
+
+.tablaForm3 {
+    width: 100%;
+    border-color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 20px !important;
+    margin: 0% 5% 0% 5% !important;
+}
+
+.ImputBlue {
+    background-color: #E6EFFD;
+    border: 1px transparent !important;
+    width: 30%;
+}
+
+.ImputWhite {
+    border: 1px solid #005ACA;
+    width: 30% !important;
+}
+
+.ImputWhite2 {
+    border: 1px solid #005ACA;
+    width: 40%;
+}
+
+input {
+    border-radius: 8px !important;
+    margin: 2% 0% 2% 0% !important;
+    padding: 3px;
+    text-align: center;
+}
+
+mat-select {
+    border-radius: 8px !important;
+    margin: 2% 0% 2% 0% !important;
+    padding: 1px;
+    text-align: center;
+}
+
+.bordeIzq {
+    border-left: 1px solid #005ACA !important;
+    border-radius: 20px !important;
+}
+
+.TitleDialog {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #E6EFFD;
+    text-align: center;
+    padding: 15px 0px;
+    width: 100%;
+    font-size: 15px !important;
+}
+
+.alignTd {
+    width: 40% !important;
+}
+
+.lineDashed2 {
+    border-bottom: 1px dashed #005ACA !important ;
+    width: 150% !important;
+}
+
+.lineSolid {
+    border-top: 1px solid #005ACA;
+}
+
+.lineDashed {
+    border-bottom: 1px dashed #005ACA;
+}
+
+.TextosBlueLeft {
+    margin-left: 7%;
+    text-align: left;
+    float: left;
+}
+
+.TextosBlueLeft2 {
+    margin-left: 12%;
+}
+
+.TextJustify {
+    margin: 1% 2% 0% 3% !important;
+    line-height: 15px;
+    text-align: justify !important;
+}
+
+.alignCenter {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.BordeRedondoAgregar {
+    border-radius: 20px;
+    border: solid 1px #005ACA;
+    background-color: #005ACA;
+    color: #ffff;
+    padding: 2px 20px;
+    margin: 0px 2px 0px 0px;
+}
+
+.BordeRedondoAgregar:disabled {
+    opacity: 0.2 !important;
+}
+
+.alignDiv {
+    float: left;
+    padding: 2.5% 2% 2% 2% !important;
+}
+
+.floatleft {
+    float: left !important;
+}
+
+.marginIzq {
+    margin: 0px 0px 0px 10px !important;
+}
+
+.alignImg {
+    margin-right: 5% !important;
+    margin-left: -10% !important;
+}
+.linkdisable{
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+.fg-0_4 {
+  flex-grow: 0.4;
+}

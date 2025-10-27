@@ -1,0 +1,211 @@
+
+<div class="SizeDialog">
+  <mat-card-content>
+    <div fxLayout="row wrap" class="course-app">
+      <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+        <div>
+          <mat-card-header class="TituloDialog ">
+            <ng-container>
+              <div mat-dialog-actions>
+                <tr class="CenterButton">
+                  <td class="titleJustification">
+                    {{fh | date:'dd-MMMM-yyyy' | uppercase}} - Entrega justificada
+                  </td>
+                </tr>
+              </div>
+            </ng-container>
+          </mat-card-header>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+              <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+                <div *ngIf="action !='Adicionar'">
+                  <div class="Ocultar">
+                    <br />
+                    <input matInput id="id_EntregaRacion" formControlName="id_EntregaRacion" readonly="true"
+                      class=" form-control" />
+                  </div>
+                </div>
+                <table>
+                  <ng-container *ngIf="action=='Adicionar'">
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">1. Justificaci&oacute;n<span style="color:red;">* </span> </div>
+                        <textarea matInput id="justificacion" formControlName="justificacion" required
+                          class="tablaform3 control-md"></textarea>
+                        <mat-error>
+                          <mat-error class="error-message messageError"
+                            *ngIf="form.get('justificacion').invalid && (form.get('justificacion').dirty || form.get('justificacion').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                              width="auto"> Complete este campo
+                          </mat-error>
+                        </mat-error>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action=='Adicionar'" class="example-full-width">
+                    <tr class="Ocultar">
+                      <td>
+                        <div class="TextosBlueLeft">8. path </div>
+                      </td>
+                      <td>
+                        <input matInput id="pathDocumentoContrato" formControlName="pathDocumentoContrato" required
+                          class="tablaform" />
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action=='Adicionar'">
+                    <div class="borderLine">
+                      <tr *ngIf="action=='Adicionar'" fxLayout="row wrap">
+                        <td fxFlex="30">
+                          <div class="TextosBlueLeft2">2. PDF del Contrato:<span style="color:red;">* </span> </div>
+                          <div class="container">
+                            <button class="buttonAr3 btn-file" requerid>
+                              <p style="float: left; margin-right: 2px; font-weight: 500; font-size: 13px;">Adjuntar soporte</p>
+                              <p style="float: left; margin-right: 2px; font-weight: 500; font-size: 13px;">{{contenidoRespuesta}}</p>
+                              <mat-icon class="espaciobutton" style="color: #005ACA;float: left; font-size: 13px;">description</mat-icon>
+                              <input id="file-upload" name="file-upload" type="file" data-max-size="3064" requerid
+                                (change)="onFileSelectedContrato($any($event).currentTarget.files)"
+                                accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                              'application/vnd.rar', 'application/zip', 'application/msword',
+                              'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                              'application/pdf', 'application/vnd.ms-excel',
+                              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                              'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                            </button>
+                            <!-- <button *ngIf="form.value.pathDocumentoContrato" class="buttonAr3 btn-file" (click)="downloadFile()" mat-raised-button> <i class="fa fa-download"></i>
+                              Descargar archivo previo</button> -->
+                          </div>
+                        </td>
+                      </tr>
+                      <mat-error>
+                        <mat-error class="error-message messageError" style="margin-top: -10px !important;" *ngIf="form.get('pathDocumentoContrato').invalid">
+                          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                            width="auto"> Complete este campo
+                        </mat-error>
+                      </mat-error>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="action=='Actualizar'">
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">1. Justificaci&oacute;n<span style="color:red;">* </span> </div>
+                        <textarea matInput id="justificacion" formControlName="justificacion" required readonly="false"
+                          class="tablaform3 control-md"></textarea>
+                        <mat-error>
+                          <mat-error class="error-message messageError"
+                            *ngIf="form.get('justificacion').invalid && (form.get('justificacion').dirty || form.get('justificacion').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                              width="auto"> Complete este campo
+                          </mat-error>
+                        </mat-error>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action=='Actualizar'" class="example-full-width">
+                    <tr class="Ocultar">
+                      <td>
+                        <div class="TextosBlueLeft">8. path </div>
+                      </td>
+                      <td>
+                        <input matInput id="pathDocumentoContrato" formControlName="pathDocumentoContrato" required
+                          class="tablaform" />
+                        <mat-error>
+                          <mat-error class="error-message messageError"
+                            *ngIf="form.get('pathDocumentoContrato').invalid && (form.get('pathDocumentoContrato').dirty || form.get('pathDocumentoContrato').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                              width="auto"> Complete este campo
+                          </mat-error>
+                        </mat-error>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action=='Actualizar'">
+                    <tr *ngIf="action=='Actualizar'" fxLayout="row wrap">
+                      <td fxFlex="30" class="borderLine">
+                        <div class="TextosBlueLeft2">2. PDF del Contrato:<span style="color:red;">* </span> </div>
+                        <div class="container">
+                          <button class="btn-file buttonS" id="pathDocumentoContrato2" (click)="downloadFile()"
+                            mat-raised-button>
+                            Ver soporte <mat-icon class="espaciobutton" style="color: #005ACA; font-size: 13px;">description</mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action=='Ver'">
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">1. Justificaci&oacute;n<span style="color:red;">* </span> </div>
+                        <textarea matInput id="justificacion" formControlName="justificacion" required readonly="true"
+                          class="tablaform3 control-md"></textarea>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action=='Ver'" class="example-full-width">
+                    <tr class="Ocultar">
+                      <td>
+                        <div class="TextosBlueLeft">8. path </div>
+                      </td>
+                      <td>
+                        <input matInput id="pathDocumentoContrato" formControlName="pathDocumentoContrato" required
+                          class="tablaform" />
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="action=='Ver'">
+                    <tr *ngIf="action=='Ver'" fxLayout="row wrap">
+                      <td fxFlex="30" class="borderLine">
+                        <div class="TextosBlueLeft2">2. PDF del Contrato:<span style="color:red;">* </span> </div>
+                        <div class="container">
+                          <button class="btn-file buttonS" id="pathDocumentoContrato2" (click)="downloadFile()"
+                            mat-raised-button>
+                            Ver soporte <mat-icon class="espaciobutton" style="color: #005ACA; font-size: 13px;">description</mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                  </ng-container>
+                </table>
+              </div>
+            </mat-dialog-content>
+            <ng-template #elseTemplate>
+              ¿Está Seguro de Eliminar el Registro?
+            </ng-template>
+            <table>
+              <ng-container *ngIf="action=='Adicionar'">
+                <div>
+                  <div class="CenterButton text-center">
+                    <div class="AlignRight">
+                      <button (click)="closeDialog()">Cancelar</button>
+                    </div>
+                    <div>
+                      <button (click)="doAction()">Guardar </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="action=='Actualizar'">
+                <div>
+                  <div class="CenterButton text-center">
+                    <div class="AlignRight">
+                      <button (click)="closeDialog()">Cancelar</button>
+                    </div>
+                    <div>
+                      <button (click)="doAction()">Guardar </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="action=='Ver'">
+                <div class="CenterButton text-center">
+                  <div class="AlignRight">
+                    <button (click)="closeDialog()">Cerrar</button>
+                  </div>
+                </div>
+              </ng-container>
+            </table>
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</div>

@@ -1,0 +1,126 @@
+@import '/src/assets/styles/variable.scss';
+
+* {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  //color: #004884;
+}
+
+/* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 20px 20px 0px 0px !important;
+  color: $base-color  !important;
+  font-size: 15px;
+  background-color: #E2ECFD !important;
+  width: 30%;
+  margin: 0.5px;
+  border-bottom: $base-color 2px solid;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  border-width: 2px;
+  border-color: $base-color;
+  border-bottom-color: white;
+  border-style: solid solid hidden solid;
+  border-radius: 20px 20px 0px 0px !important;
+  color: $base-colorred  !important;
+  background-color: white !important;
+  //width: 25%;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+  /* background-color: #1e88e5; */
+}
+
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar,
+.blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+  /* background-color: #1e88e5; */
+
+}
+
+::ng-deep.mat-tab-label .mat-tab-label-content {
+  font-weight: 800 !important;
+}
+
+/* --------------------------- FIN TABS */
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: center !important;
+  justify-self: center !important;
+  border-radius: 20px !important;
+  font-size: 13px !important;
+  background-image: url(../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+  background-size: cover;
+  padding: 2% 0% !important;
+  width: 30% !important;
+  color: $base-color  !important;
+  background-position: top !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  display: inline-block;
+  object-fit: contain !important;
+
+}
+
+.swal2-actions {
+  margin: 10px auto !important;
+}
+
+::ng-deep.swal2-close {
+  color: #fff !important;
+  margin-top: -1px !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  font-size: 2em !important;
+}
+
+::ng-deep.swal2-styled.swal2-confirm {
+  display: none !important;
+}
+
+.swal2-html-container {
+  text-align: left !important;
+}
+
+
+
+
+
+.tabletipominuta{
+
+
+  border: 1px solid $base-azulPAE;
+  border-radius: 12px 12px 0px 0px;
+
+}
+
+.tabletipominuta div {
+  text-align: center;
+  padding: 10px
+}
+
+.tabletipominuta div:not(:last-child) {
+  border-right: 1px solid;
+}
+
+.active {
+  background-color: #f54a62;
+  color: #fff;
+}

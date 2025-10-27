@@ -1,0 +1,307 @@
+<!--------------------- inicio Presupuesto General------------------------------>
+<div class="row">
+  <div class="col-12">
+    <div style="margin-top: 20px; float: left;">
+      <table class="table-fuentefinanciacion-resumen">
+        <tr>
+          <th class="th-title" width="40%" rowspan="2">Presupuesto General de la Naci&oacute;n</th>
+          <th width="30%">Ingresos asignados</th>
+        </tr>
+        <tr>
+          <td class="td-ingreso">{{ingresoTotal |currency:'$':'symbol':'0.0'}}</td>
+        </tr>
+      </table>
+    </div>
+    <div style="margin-top: 23px; margin-left: 20px; float: left;">
+      <button class="btn-consultar-resoluciones">
+        <div style="float: left; margin-right: 5px;"><img
+            src="../../../../../../assets/images/Iconos/consulta_blue.png"></div>
+        <div><a style="color: #ffffff;" title="Resoluciones Plan Giros" target="_blank"
+            (click)="openInfraesturaDetalle()">Consultar Resoluciones</a></div>
+      </button>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<!--------------------- Fin Presupuesto General------------------------------>
+
+<!--------------------- inicio Filtro por Mes y ETC------------------------------>
+
+<div class="ubicaciontabla w-down-100">
+
+  <div class="d-flex flex-column flex-xl-row filter-container filter-container-border">
+
+    <div class="filter-container-pdg-inpunt w-down-100" style="width: 50%;">
+      <span>Entidad Territorial Certificada (ETC)</span>
+      <div class="text-center ">
+        <mat-select id="DropdownOptions" placeholder="Todos" class="tablaform4" [(value)]="selETC">
+          <mat-option [value]=0> Seleccionar una opción</mat-option>
+          <mat-option [value]=-1> Todos</mat-option>
+          <mat-option *ngFor="let opt of ETCList" [value]="opt.id">{{ opt.nombre }}
+          </mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <div class="filter-container-border-right filter-container-pdg-inpunt w-down-100" style="width: 40%;">
+      <span>
+        Mes
+      </span>
+      <div class="text-center ">
+        <mat-select id="DropdownOptions" placeholder="Todos" class="tablaform4" [(value)]="selMes">
+          <mat-option [value]=0> Seleccionar una opción</mat-option>
+          <mat-option [value]=-1> Todos</mat-option>
+          <mat-option *ngFor="let opt of mesesList" [value]="opt.id">{{ opt.nombre }}
+          </mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center w-down-100" style="width: 10%;">
+      <a class="btn-agregar d-flex flex-column text-center">
+        <img (click)="onchangeMesETC(selMes,selETC)" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png "
+          style="width:50px; height: 50px; margin-top: 10px;cursor: pointer;">Filtrar
+      </a>
+    </div>
+  </div>
+
+</div>
+<button class="ButtonBlue CenterButton ml-lg-down-0" mat-raised-button (click)="cleanFilters()">
+  <mat-icon class="espaciobutton" style="margin-right: 10px;color:#ffffff;">description</mat-icon>
+  Limpiar
+  filtros
+</button>
+
+
+<br>
+<br>
+<br>
+<br>
+<!--------------------- Fin Filtro por Mes y ETC------------------------------>
+
+<!--------------------- inicio Tabla------------------------------>
+<div class="sub">
+
+  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-87.png ">
+
+  <span style=" color: #005ACA !important;">PAC | {{nombreETC}}</span>
+</div>
+<hr class="linea">
+
+<br>
+<div style="width: 100%; float: right;" class="align-items-center textagregar ">
+  <div class="text-right ">
+    <button class="buttonAr" style="justify-content: right;" *ngIf="!esEdicion" (click)="onEditar()" [ngClass]="{'linkdisable':!getModulePermission(45,'editar')}">
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-3.png "
+        style="width:20px; height: 20px;     margin-top: 0px; margin-left: 0px;;cursor: pointer;"><span
+        style="color:#ffffff;">Editar
+        PAC</span>
+    </button>
+    <button class="buttonAr" style="justify-content: right;" *ngIf="esEdicion" (click)="onGuardar()">
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-6.png "
+        style="width:20px; height: 20px;     margin-top: 0px; margin-left: 0px;;cursor: pointer;">
+      <span style="color:#ffffff;">Guardar
+        cambios</span>
+    </button>
+
+    <button disabled class="buttonAr" style="margin-left: 20px; justify-content: right;" *ngIf="!esNotificacion">
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-9.png "
+        style="width:20px; height: 20px;     margin-top: 0px; margin-left: 0px;;cursor: pointer;"><span
+        style="color:#ffffff;">Notificar a la
+        ETC</span>
+    </button>
+
+    <button class="buttonAr" style="margin-left: 20px; justify-content: right;" *ngIf="esNotificacion"
+      (click)="onNotificacion()">
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-9.png "
+        style="width:20px; height: 20px;     margin-top: 0px; margin-left: 0px;;cursor: pointer;"><span
+        style="color:#ffffff;">Guardar cambios
+        y notificar a la ETC</span>
+    </button>
+  </div>
+</div>
+<br>
+<br>
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <div class="example-form" [formGroup]="form">
+      <mat-card>
+        <mat-card-content>
+          <div class="table-responsive responsive-table-pae">
+
+            <table mat-table [dataSource]="dataSource" class="left-radius bordeizq" matSort>
+              <ng-container matColumnDef="siD_ETC">
+                <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; min-width: 90px; ">
+                  <b> ETC </b></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                  <div *ngIf="element.giroProyectado !=null"
+                    [ngStyle]="{'color':element.giroConfirmado == null ?'red': ''}">
+                    {{element.sID_ETC==null?'-':(element.sID_ETC)}}
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="mes">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;  min-width: 90px; "><b> Mes</b></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                  <div *ngIf="element.giroProyectado !=null"
+                    [ngStyle]="{'color':element.giroConfirmado == null ?'red': ''}">
+                    {{element.sMes==null?'-':(element.sMes)}}
+                  </div>
+                  <!-- <div *ngIf="esEdicion">
+                    <mat-select id="mes" value="{{element.mes}}" class="tablaform5">
+                      <mat-option *ngFor="let item of mesesList" [value]="item.id">{{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div> -->
+
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="giroProyectado">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Solicitado por ETC</b></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                  <div *ngIf="element.giroProyectado !=null"
+                    [ngStyle]="{'color':element.giroConfirmado == null ?'red': ''}">
+                    {{element.giroProyectado==null?'-':(element.giroProyectado |currency:'$':'symbol':'0.0')}}
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="giroConfirmado">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b> Transferido por UAPA</b></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                  <div *ngIf="!esEdicion" [ngStyle]="{'color':element.giroConfirmado == null ?'red': ''}">
+                    {{element.giroConfirmado==null?'Pendiente':(element.giroConfirmado |currency:'$':'symbol':'0.0')}}
+                  </div>
+                  <div *ngIf="esEdicion ">
+                    <input (change)="ongiroConfirmado($any($event).target.value, element)" matInput type="number"
+                      min="0" id="giroConfirmado" value={{element.giroConfirmado}} placeholder="ingrese cantidad"
+                      class="form-control" />
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Fecha de transferencia</b>
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+
+
+                  <div *ngIf="!esEdicion" [ngStyle]="{'color':element.giroConfirmado == 0 ?'red': ''}">
+                    {{element.fechaGiro=='1900-01-01'?'Pendiente':(element.fechaGiro| date:'dd-MMM-yyyy' | uppercase | withoutDots)}}
+
+                  </div>
+                  <div *ngIf="esEdicion ">
+                    <input class="fechaText" type="date" id="start" name="trip-start" value={{element.fechaGiro}}  (change)="onfechaTransferencia($any($event).target.value, element)">
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="orden">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b> No. orden de pago</b></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+
+                  <div *ngIf="!esEdicion" [ngStyle]="{'color':element.giroConfirmado == 0 ?'red': ''}">
+
+                    {{element.documentoGiro==0?'Pendiente':(element.documentoGiro)}} </div>
+                  <div *ngIf="esEdicion">
+                    <input (change)="onnumeroOrden($any($event).target.value, element)" matInput type="number" min="0"
+                      id="numeroOrden" value="{{element.documentoGiro}}" placeholder="ingrese No." class="form-control" />
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="diferencia">
+                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b> Diferencia
+                    (Transferido-Solicitado)</b>
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                  <div *ngIf="!esEdicion" [ngStyle]="{'color':element.giroConfirmado == null ?'red': ''}">
+                    {{element.giroConfirmado==null?'Pendiente':(element.giroConfirmado - element.giroProyectado |currency:'$':'symbol':'0.0')}}
+                  </div>
+                  <div *ngIf="esEdicion">
+                    <input matInput type="number" min="0" id="numeroOrden"
+                      value="{{element.giroConfirmado-element.giroProyectado}}" placeholder="Automático"
+                      class="form-control2" readonly="true" />
+                  </div>
+
+                </td>
+              </ng-container>
+
+              <!--  <ng-container matColumnDef="action">
+                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px;"> </th>
+                <td mat-cell *matCellDef="let element" class="action-link">
+                  <a [ngClass]="{'linkdisable':!getModulePermission(45,'editar')}"
+                    (click)="openDialog('Actualizar',element)" class="m-r-10 cursor-pointer">
+                      <img src="../../../../../../assets/images/Iconos/edit_blue.png"></a>
+                </td>
+              </ng-container> -->
+
+              <ng-container matColumnDef="h_PRINCIPAL">
+                <th class="header2" mat-footer-cell *matFooterCellDef [attr.colspan]="2">Total (sin pendientes)</th>
+              </ng-container>
+              <ng-container matColumnDef="h_SERVICIOS">
+                <th class="header2" mat-footer-cell *matFooterCellDef>{{solicitadoTotal|currency:'$':'symbol':'3.0'}}
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="h_AREA">
+                <th class="header2" mat-footer-cell *matFooterCellDef>{{transferidoTotal|currency:'$':'symbol':'3.0'}}
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="h_FINAL">
+                <th class="header2" mat-footer-cell *matFooterCellDef [attr.colspan]="2"></th>
+              </ng-container>
+              <ng-container matColumnDef="h_FINAL1">
+                <th class="header2" mat-footer-cell *matFooterCellDef>{{diferenciaTotal|currency:'$':'symbol':'3.0'}}
+                </th>
+              </ng-container>
+              <ng-container matColumnDef="h_FINAL2">
+                <th class="header2" mat-footer-cell *matFooterCellDef></th>
+              </ng-container>
+              <tr mat-footer-row
+                *matFooterRowDef="['h_PRINCIPAL', 'h_SERVICIOS', 'h_AREA', 'h_FINAL','h_FINAL1','h_FINAL2']"></tr>
+
+
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let myRowData; columns: displayedColumns;"></tr>
+            </table>
+
+            <!-- <table mat-table [dataSource]="dataSource" class="left-radius bordeizq" matSort>
+              <ng-container matColumnDef="h_PRINCIPAL">
+                <th style="padding-left: 0px; min-width: 90px; " class="header2"  mat-header-cell *matHeaderCellDef [attr.colspan]="2">Total(sin pendientes)</th>
+              </ng-container>
+              <ng-container matColumnDef="h_SERVICIOS">
+                <th class="header2" mat-header-cell *matHeaderCellDef>{{solicitadoTotal|currency:'$':'symbol':'3.0'}}</th>
+              </ng-container>
+              <ng-container matColumnDef="h_AREA">
+                <th  class="header2" mat-header-cell *matHeaderCellDef>{{transferidoTotal|currency:'$':'symbol':'3.0'}}</th>
+              </ng-container>
+              <ng-container matColumnDef="h_FINAL">
+                <th class="header2" mat-header-cell *matHeaderCellDef [attr.colspan]="2" ></th>
+              </ng-container>
+              <ng-container matColumnDef="h_FINAL1">
+                <th class="header2" mat-header-cell *matHeaderCellDef  >{{diferenciaTotal|currency:'$':'symbol':'3.0'}}</th>
+              </ng-container>
+              <ng-container matColumnDef="h_FINAL2">
+                <th class="header2" mat-header-cell *matHeaderCellDef ></th>
+              </ng-container>
+              <tr mat-header-row
+            *matHeaderRowDef="['h_PRINCIPAL', 'h_SERVICIOS', 'h_AREA', 'h_FINAL','h_FINAL1','h_FINAL2']"></tr>
+
+
+
+
+            </table> -->
+
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+            </mat-paginator>
+            <div *ngIf="isLoading"
+              style="display: flex; justify-content: center; align-items: center; background: white;">
+              <mat-progress-spinner color="primary" mode="indeterminate">
+              </mat-progress-spinner>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<!--------------------- fin Tabla------------------------------>
+<br>

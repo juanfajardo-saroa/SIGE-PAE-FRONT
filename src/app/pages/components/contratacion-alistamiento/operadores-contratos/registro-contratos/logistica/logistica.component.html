@@ -1,0 +1,1191 @@
+<style>
+    .tableFiltroUsuario {
+        border-spacing: 0;
+        color: #005ACA;
+    }
+
+    .tableFiltroUsuario td {
+        text-align: center;
+        font-size: 13px !important;
+        color: #005ACA !important;
+        padding: 2.5px 10px;
+        border-top: 1px solid #005ACA;
+        border-right: 1px solid #005ACA;
+        border-bottom: 1px solid #005ACA;
+    }
+
+    .tableFiltroUsuario td b {
+        color: #005ACA;
+        font-size: 13px !important;
+    }
+
+    .tableFiltroUsuario td div {
+        color: #005ACA;
+        font-weight: 500;
+        font-size: 13px !important;
+    }
+
+    .tableFiltroUsuario td:first-child {
+        border-left: 1px solid #005ACA;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .tableFiltroUsuario td:last-child {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .tableUsuarios th,
+    .tableUsuarios td {
+        font-size: 13px;
+    }
+
+    table.tableUsuarios thead th:last-child {
+        border-top-right-radius: 20px !important;
+    }
+
+    table.tableFormUsuarios tr td {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        color: #005ACA;
+        font-size: 14px;
+    }
+
+    table.tableFormUsuarios tr td:first-child {
+        padding-left: 35px;
+    }
+
+    table.tableFormUsuarios tr td:last-child {
+        padding-right: 35px;
+    }
+
+    input,
+    select {
+        border: 1px #005ACA solid;
+        padding: 3px 10px;
+        width: 100%;
+        color: #005ACA;
+    }
+
+    input:not(.noRadius),
+    select:not(.noRadius) {
+        border-radius: 5px;
+    }
+
+    .cssForm {
+        font-size: 12px;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    .tableFiltroUsuario i {
+        font-size: 25px;
+    }
+
+    .btn.btn-middle {
+        background-color: aliceblue;
+        border: 1px solid aliceblue;
+    }
+
+    .btn.btn-high {
+        background-color: #005ACA !important;
+        border: 1px solid #005ACA !important;
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    .disabledWithoutOpacity {
+        pointer-events: none;
+    }
+
+    .mt-2 {
+        margin-top: 20px;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="tab-control-items d-flex">
+            <div class="tab-item" *ngFor="let item of dataPestanas">
+                <h3>{{ item.descripcion }}</h3>
+            </div>
+            <div class="flex-grow-1 tab-item-blank"></div>
+        </div>
+    </div>
+</div>
+
+<!--FORM : CONTRATO-->
+<div *ngIf="contratoForm">
+    <app-registro-unico [data]="contrato" (onSubmitEvent)="onSubmitEvent($event)"></app-registro-unico>
+</div>
+
+<!-- FORM : PROCESO CONTRATUAL-->
+<div *ngIf="procesoContractualForm">
+    <app-detalle-proceso-contractual [headerText]="headerText2" [data]="itemDetalleProcesoContrato" [tipoOperacion]="contrato.subTipoContratoId"
+        (onSubmitEvent)="onSubmitEvent($event)" (regresarEvent)="regresarEvent($event)"
+        (finalizarEvent)="finalizarEvent($event)">
+    </app-detalle-proceso-contractual>
+</div>
+
+<!-- FORM : DETALLE SUMINISTRO -->
+
+<div *ngIf="detalleSuministroForm" class="row">
+    <div class="col-12 mb-3">
+        <form class="form-default-inline" (ngSubmit)="onSubmit('DETALLE-SUMINISTRO')" #detalleSuministro="ngForm"
+            autocomplete="off">
+            <div class="panel panel-blue">
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="panel-title">
+                        Registro &uacute;nico de Contratos - Log&iacute;stica
+                    </h4>
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" class="panel-title">
+                        Registro &uacute;nico de Contratos - Materia prima
+                    </h4>
+                </div>
+                <div class="panel-body" style="border-radius: 0px !important;">
+                    <div class="pt-xxl pb-md">
+                        <div class="row">
+                            <div class="col-12 col-xl clearfix" style="padding-left: 4px">
+                                <app-chapterblue [numberChapter]="2" [titleChapter]="'Detalles del suministro'">
+                                </app-chapterblue>
+                                <br />
+                            </div>
+                            <div class="col clearfix text-right" style="padding: 20px">
+                                <div class="msg-alerta">
+                                    <div>
+                                        <img *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica"
+                                            src="../assets/images/Iconos/logistica/item2activo.png" />
+                                        <img *ngIf="contrato.subTipoContratoId == proveerMateriaPrima"
+                                            src="../assets/images/Iconos/materia-prima/item2activo.png" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item d-xl-inline-block d-flex flex-column w-100" style="padding-left: 15px">
+                        <label class="form-label" style="margin-left: 6px">
+                            1. Valor total del contrato:
+                        </label>
+                        <input class="col-12 input-text w-down-100" type="number" name="txtValorTotalContrato"
+                            [(ngModel)]="contrato.valorTotalContrato" #valorTotalContrato="ngModel"
+                            (ngModelChange)="changeValorAnticipo($event)" required />
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="valorTotalContrato.valid || valorTotalContrato.pristine">
+                            El campo valor total del contrato es requerido
+                        </label>
+                    </div>
+
+                    <div class="form-item d-xl-inline-block d-flex flex-column w-100" style="padding-left: 15px">
+
+
+                        <label class="form-label" style="margin-left: 6px">
+                            2. Fecha de inicio del contrato:
+                        </label>
+                        <input class="input-text width-180 w-down-100" type="date" name="txtFechaInicioContrato"
+                            [ngModel]="contrato.fechalnicioContrato|date:'yyyy-MM-dd'"
+                            (ngModelChange)="contrato.fechalnicioContrato=$event" #FechaInicioContrato="ngModel"
+                            required />
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="FechaInicioContrato.valid || FechaInicioContrato.pristine">
+                            El campo fecha de inicio del contrato es requerido
+                        </label>
+                    </div>
+
+                    <div class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <label class="form-label">
+                            3. Fecha estimada de terminaci&oacute;n del contrato:
+                        </label>
+                        <input class="input-text width-180 w-down-100" type="date" name="txtFechaFinalizacionContrato"
+                            [ngModel]="contrato.fechaFinalContrato|date:'yyyy-MM-dd'"
+                            (ngModelChange)="contrato.fechaFinalContrato=$event" #fechaFinalContrato="ngModel"
+                            required />
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="fechaFinalContrato.valid || fechaFinalContrato.pristine">
+                            El campo fecha de finalizacion de contrato es requerido
+                        </label>
+                    </div>
+
+                    <div *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <label class="form-label">
+                            4. Información sobre log&iacute;stica contratada
+                        </label>
+                    </div>
+
+
+                    <div *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <label class="form-label ml-xl">
+                            4.1. Total de complementos diarios contratados para ensamble y/o operación log&iacute;stica:
+                        </label>
+                        <input class="input-text col-12 col-xl-1 w-down-100" type="number" name="txtTotalRacionesDiarias"
+                            [(ngModel)]="suministros.TotalComplementosContratadas" #totalRacionesDiarias="ngModel"
+                            (ngModelChange) = "calcSumValTotal('TotalComplementosContratadas', $event)"
+                            required />
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="totalRacionesDiarias.valid || totalRacionesDiarias.pristine">
+                            El campo total complementos diarios contratados es requerido
+                        </label>
+                    </div>
+
+                    <div class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <label *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="form-label ml-xl">
+                            4.2. N&uacute;mero de d&iacute;as de suministro contratados:
+                        </label>
+                        <label *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" class="form-label">
+                            4. N&uacute;mero de d&iacute;as de suministro contratados:
+                        </label>
+                        <input class="input-text col-12 col-xl-1 w-down-100" type="text" name="txtNumeroDiasSuministro"
+                            [ngModel]="suministros.NumeroDiasSuministro"
+                            (ngModelChange)="calcSumValTotal('NumeroDiasSuministro', $event); calcularValorTotalMateriaPrimaDiasSuministro()"
+                            (keyup)="soloNumeros($event)"
+                            #numeroDiasSuministro="ngModel" maxlength="3" required /><br>
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="numeroDiasSuministro.valid || numeroDiasSuministro.pristine">
+                            El campo numero de d&iacute;as de suministro contratados es requerido
+                        </label>
+                    </div>
+
+                    <div *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <label class="form-label">
+                            5. Informaci&oacute;n sobre la materia príma contratada:
+                        </label>
+                        <app-materia-prima [iD_Contrato]="contrato.id"
+                            [numeroRacionesDiarias]="suministros.NumeroDiasSuministros"
+                            (materiaPrima)="materiaPrima($event)"
+                            (valorTotalMateriaPrima)="obtenerValorTotalMateriaPrima($event); calcularValorTotalMateriaPrimaDiasSuministro()">
+                        </app-materia-prima>
+                        <div class="col-12 col-xl-4 ml-0 ml-xl-3 mt-lg-down-1">
+                            <app-costo-total-tab [Titulo]="'Total'" [TotalGeneral]="valorTotalMateriaPrimaDiasSuministro" [Orientacion]="'H'">
+                            </app-costo-total-tab>
+                        </div>
+                        <div class="form-item row">
+                            <div class="col-12 col-xl-4 mx-lg-down-0 flex align-items-center">
+                               <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                                  [textColor]="'text-basered'" [message]="'El valor total del contrato ingresado en el formulario NO coincide con el
+                                  valor total calculado por el sistema. ¿Desea agregar rubros adicionales?'">
+                               </app-alert-message>
+                            </div>
+                            <div class="col-12 col-xl-2 mx-lg-down-0 mt-lg-down-1">
+                               <div class="inline-block form-checkbox-red ml-xs w-down-100">
+                                  <label id="RubrosAddSi" class="check-si-red w-down-50" [class]="rubroAdd ? 'active' : ''"
+                                     (click)="disableRubrosAdd($event, 'rubroAdd', true)">
+                                     Si
+                                  </label>
+                                  <label id="RubrosAddNo" class="check-no-red w-down-50" [class]="!rubroAdd ? 'active' : ''"
+                                     (click)="disableRubrosAdd($event, 'rubroAdd', false)">
+                                     No
+                                  </label>
+                               </div>
+                            </div>
+                         </div>
+                    </div>
+                    <div *ngIf="contrato.subTipoContratoId == proveerMateriaPrima && rubroAdd" class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <label class="form-label">
+                           6. Rubros adicionales:
+                        </label>
+                        <app-rubros-adicionales [ValorTotalServicios]="valorTotalMateriaPrimaDiasSuministro"
+                           [ValorContrato]="contrato.valorTotalContrato" [IdContrato]="contrato.id"
+                           (ValRubros)="validaRespuestaRubros($event)">
+                        </app-rubros-adicionales>
+                     </div>
+                    <div *ngIf="contrato.subTipoContratoId == proveerMateriaPrima && tieneRubros && rubroAdd" class="form-item row">
+                    <div class="col-12 col-xl-4 ml-0 ml-xl-4">
+                        <app-costo-total-tab [Titulo]="'VALOR TOTAL DEL CONTRATO\n(Total + Rubros Adicionales)'"
+                            [TotalGeneral]="valorTotalMateriaPrimaDiasSuministro + valTotalRubros" [Orientacion]="'H'">
+                        </app-costo-total-tab>
+                    </div>
+                    <div class="col-12 col-xl-4 mx-lg-down-0 px-lg-down-0 mt-lg-down-1 flex align-items-center">
+                        <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                            [textColor]="'text-basered'"
+                            [message]="'Asegúrese de que el valor del contrato ingresado en el formulario, coincida con el valor total calculado por el sistema.'">
+                        </app-alert-message>
+                    </div>
+                    </div>
+
+                    <div *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <label class="form-label ml-xl">
+                            4.3 Costo unitario de ensamble y/o operaci&oacute;n log&iacute;stica por complemento:
+                        </label>
+                        <input class="input-text col-12 col-xl-2 w-down-100" type="text" name="txtCostoUnitarioEnsambre"
+                            [(ngModel)]="suministros.CostoUnitarioEnsambleOperacion" #costoUnitarioEnsambre="ngModel"
+                            (ngModelChange)="calcSumValTotal('CostoUnitarioEnsambleOperacion', $event)"
+                            required/>
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="costoUnitarioEnsambre.valid || costoUnitarioEnsambre.pristine">
+                            El campo costo unitario de ensambre es requerido
+                        </label>
+                    </div>
+
+                    <div *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <div class="col-12 col-xl-4">
+                            <app-costo-total-tab [Titulo]="'Total'" [TotalGeneral]="valorTotalSuministros" [Orientacion]="'H'">
+                            </app-costo-total-tab>
+                        </div>
+                        <div class="form-item row">
+                            <div class="col-12 col-xl-4 px-lg-down-0 flex align-items-center">
+                               <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                                  [textColor]="'text-basered'" [message]="'El valor total del contrato ingresado en el formulario NO coincide con el
+                                  valor total calculado por el sistema. ¿Desea agregar rubros adicionales?'">
+                               </app-alert-message>
+                            </div>
+                            <div class="col-12 col-xl-2 px-lg-down-0">
+                               <div class="inline-block form-checkbox-red ml-xs w-down-100">
+                                  <label id="RubrosAddSi" class="check-si-red w-down-50" [class]="rubroAdd ? 'active' : ''"
+                                     (click)="disableRubrosAdd($event, 'rubroAdd', true)">
+                                     Si
+                                  </label>
+                                  <label id="RubrosAddNo" class="check-no-red w-down-50" [class]="!rubroAdd ? 'active' : ''"
+                                     (click)="disableRubrosAdd($event, 'rubroAdd', false)">
+                                     No
+                                  </label>
+                               </div>
+                            </div>
+                         </div>
+                    </div>
+                    <div *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica && rubroAdd" class="form-item d-xl-inline-block d-flex flex-column w-100">
+                        <label class="form-label">
+                           5. Rubros adicionales:
+                        </label>
+                        <app-rubros-adicionales [ValorTotalServicios]="valorTotalSuministros"
+                           [ValorContrato]="contrato.valorTotalContrato" [IdContrato]="contrato.id"
+                           (ValRubros)="validaRespuestaRubros($event)"
+                           [anchoTable]="'55%'">
+                        </app-rubros-adicionales>
+                     </div>
+                     <div *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica && tieneRubros && rubroAdd" class="form-item row">
+                        <div class="col-12 col-xl-4 ml-0 ml-xl-4">
+                           <app-costo-total-tab [Titulo]="'VALOR TOTAL DEL CONTRATO\n(Total + Rubros Adicionales)'"
+                              [TotalGeneral]="valorTotalSuministros + valTotalRubros" [Orientacion]="'H'">
+                           </app-costo-total-tab>
+                        </div>
+                        <div class="col-12 col-xl-4 px-lg-down-0 flex align-items-center">
+                           <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                              [textColor]="'text-basered'"
+                              [message]="'Asegúrese que el valor del contrato ingresado en el formulario, coincida con el valor total calculado por el sistema.'">
+                           </app-alert-message>
+                        </div>
+                     </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-12 col-xl clearfix">
+                            <button class="btn btn-blue w-down-100" (click)="finalizar()">
+                                Guardar y continuar m&aacute;s tarde
+                            </button>
+                        </div>
+                        <div class="col-12 col-xl d-xl-block d-flex flex-column-reverse flex-xl-row gap-down-15-px clearfix">
+                            <button class="btn btn-blue w-down-100 mr-4" (click)="regresar()">
+                                Anterior
+                            </button>
+                            <button class="btn btn-blue w-down-100" *ngIf="contrato.subTipoContratoId == proveerMateriaPrima"
+                                type="submit" [disabled]="detalleSuministro.invalid || btnMateriaPrimaDisab || ((valorTotalMateriaPrimaDiasSuministro + valTotalRubros) != contrato.valorTotalContrato)? false : null">
+                                Siguiente
+                            </button>
+                            <button class="btn btn-blue w-down-100" *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica"
+                                type="submit" [disabled]="detalleSuministro.invalid || ((valorTotalSuministros + valTotalRubros) != contrato.valorTotalContrato) ? false : null">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- FORM : SEDES BENEFICIARIAS -->
+
+<div *ngIf="sedesBeneficiariasForm" class="row">
+    <div class="col-12 mb-3">
+        <form class="form-default-inline" (ngSubmit)="onSubmit('SEDES-BENEFICIARIAS')"
+            #caracteristicasFinancieras="ngForm" autocomplete="off">
+            <div class="panel panel-blue">
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="panel-title">
+                        Registro &uacute;nico de Contratos - Log&iacute;stica
+                    </h4>
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" class="panel-title">
+                        Registro &uacute;nico de Contratos - Materia prima
+                    </h4>
+                </div>
+                <div class="panel-body" style="border-radius: 0px !important;">
+                    <div class="row">
+                        <div class="col-12 col-xl clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="3" [titleChapter]="'Sedes beneficiarias'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img src="../assets/images/Iconos/logistica/item3activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item px-lg-down-0">
+                        <div class="row mx-lg-down-1 justify-content-center">
+                            <div class="titulos_estado_diligenciamiento w-down-100">
+                                <div class="d-flex flex-column flex-xl-row align-items-start align-xl-items-center">
+                                    <span>Estado del diligenciamiento: </span>
+                                    <div class="d-flex align-items-center">
+                                      <div class="pendiente_diligenciar ml-3 mr-2"></div>Pendiente por diligenciar
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                      <div class="incompleto ml-3 mr-2"></div>Incompleto
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                      <div class="completo ml-3 mr-2"></div>Completo
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <mat-tab-group  [selectedIndex]="selectedTabIndex" class="px-3" style="width: 100%; display: flex;"
+                            (selectedIndexChange)="myTabFocusChange($event)">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <div class="d-flex align-items-center">
+                                        <div [ngClass]="obtenerClaseEstadoDiligenciamiento()"></div>
+                                        <label class="form-label mx-2">
+                                            <img src="../assets/images/Iconos/maem.png">
+                                        </label>
+                                    </div>
+                                </ng-template>
+
+                                <form class="form-default">
+                                    <div class="form-item px-lg-down-0">
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <p style="color: rgb(242, 110, 120);">Elija las sedes que desea
+                                                        agregar como beneficiarias y selecciona “Agregar”.</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="table-fix-head border-bottom-red responsive-table-pae">
+                                                        <table class="table-sort table-default table-red table-hover-disabled">
+                                                            <thead>
+                                                                <tr class="text-center">
+                                                                    <th style="width: 5% !important;">
+                                                                        <input type="checkbox"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            [(ngModel)]="itemUtil.seleccionTodo"
+                                                                            (ngModelChange)="changeItemUtil('seleccionTodo', $event)">
+                                                                    </th>
+                                                                    <th class="sort" width="20%">
+                                                                        Municipio
+                                                                        <span class="boton-ordenar-tabla-red">&#x25BC;</span>
+                                                                    </th>
+                                                                    <th width="30%">
+                                                                        Institucón Educativa
+                                                                        <span class="boton-ordenar-tabla-red">&#x25BC;</span>
+                                                                    </th>
+                                                                    <th width="30%">
+                                                                        Sede Educativa
+                                                                        <span class="boton-ordenar-tabla-red">&#x25BC;</span>
+                                                                    </th>
+                                                                    <th>
+                                                                        Jornada
+                                                                        <span class="boton-ordenar-tabla-red">&#x25BC;</span>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="text-center"
+                                                                    *ngFor="let item of dataSedesNoBen">
+                                                                    <td class="w-down-100"  style="width: 5%;">
+                                                                        <input type="checkbox"
+                                                                            *ngIf="item.municipio"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            [(ngModel)]="item.seleccion"
+                                                                            (ngModelChange)="changeItem(item, 'seleccion', $event)">
+                                                                    </td>
+                                                                    <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                                                    <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                                                    <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                                                    <td class="w-down-100" data-label="Jornada">{{item.jornada}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mt-sm text-center">
+                                                    <button class="btn btn-red" (click)="agregarSedes()">Agregar al
+                                                        listado de beneficiarias</button>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-xl" *ngIf="dataSedesBen.length != 0">
+                                                <div class="col-12">
+                                                    <p style="color: rgb(22, 99, 205);">Sedes beneficiarias</p>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="table-fix-head border-bottom-base_color responsive-table-pae">
+                                                        <table class="table-sort table-default table-hover-disabled">
+                                                            <thead>
+                                                                <tr class="text-center">
+                                                                    <th style="width: 5% !important;">
+                                                                        <input type="checkbox"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            [(ngModel)]="itemUtil.seleccionTodoBen"
+                                                                            (ngModelChange)="changeItemUtil('seleccionTodoBen', $event)">
+                                                                    </th>
+                                                                    <th class="sort" width="20%">
+                                                                        Municipio
+                                                                        <span class="boton-ordenar-tabla-blue">&#x25BC;</span>
+                                                                    </th>
+                                                                    <th width="30%">
+                                                                        Institucón Educativa
+                                                                        <span class="boton-ordenar-tabla-blue">&#x25BC;</span>
+                                                                    </th>
+                                                                    <th width="30%">
+                                                                        Sede Educativa
+                                                                        <span class="boton-ordenar-tabla-blue">&#x25BC;</span>
+                                                                    </th>
+                                                                    <th>
+                                                                        Jornada
+                                                                        <span class="boton-ordenar-tabla-blue">&#x25BC;</span>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="text-center"
+                                                                    *ngFor="let item of dataSedesBen">
+                                                                    <td class="w-down-100" style="width: 5%;">
+                                                                        <input type="checkbox"
+                                                                            *ngIf="item.municipio"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            [(ngModel)]="item.seleccion"
+                                                                            (ngModelChange)="changeItem(item, 'seleccion', $event)">
+                                                                    </td>
+                                                                    <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                                                    <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                                                    <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                                                    <td class="w-down-100" data-label="Jornada">{{item.jornada}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mt-sm text-center">
+                                                    <button class="btn btn-blue" (click)="eliminarSedes()">
+                                                        Eliminar del listado de beneficiarias
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-item col ml-3">
+                                        <div class="row gap-down-15-px">
+                                            <div class="col-12 col-xl-4 responsive-table-pae">
+                                                <div class="text-center titulo-total-complementos-contratados mb-3">
+                                                    Total complementos <br class="d-none d-xl-inline"> diarios contratados
+                                                </div>
+                                                <table class="table-default table-red table-hover-disabled">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>Jornada</th>
+                                                            <th>Complemento<br>Almuerzo</th>
+                                                            <th>Complemento<br>AM/PM</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="text-center">
+                                                        <tr>
+                                                            <td data-label="Jornada">Mañana</td>
+                                                            <td data-label="C. Almuerzo"></td>
+                                                            <td data-label="C. AM/PM"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Jornada">Tarde</td>
+                                                            <td data-label="C. Almuerzo"></td>
+                                                            <td data-label="C. AM/PM"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Jornada">Única</td>
+                                                            <td data-label="C. Almuerzo"></td>
+                                                            <td data-label="C. AM/PM"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Jornada">Total</td>
+                                                            <td data-label="C. Almuerzo"></td>
+                                                            <td data-label="C. AM/PM">{{suministros.TotalComplementosContratadas | number}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-12 col-xl-4 responsive-table-pae">
+                                                <div class="text-center titulo-total-complementos-necesarios mb-3">
+                                                    Total complementos diarios necesarios <br class="d-none d-xl-inline"> para cubrir las sedes beneficiarias
+                                                </div>
+                                                <table class="table-default table-hover-disabled">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>Jornada</th>
+                                                            <th>Complemento<br>Almuerzo</th>
+                                                            <th>Complemento<br>AM/PM</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="text-center">
+                                                        <tr>
+                                                            <td data-label="Jornada">Mañana</td>
+                                                            <td data-label="C. Almuerzo"></td>
+                                                            <td data-label="C. AM/PM"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Jornada">Tarde</td>
+                                                            <td data-label="C. Almuerzo"></td>
+                                                            <td data-label="C. AM/PM"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Jornada">Única</td>
+                                                            <td data-label="C. Almuerzo"></td>
+                                                            <td data-label="C. AM/PM"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td data-label="Jornada">Total</td>
+                                                            <td data-label="C. Almuerzo"></td>
+                                                            <td data-label="C. AM/PM">{{SumRacionesSedesBeneficSinJornada | number}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-12 col-xl-4 flex align-items-center">
+                                                <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'V'"
+                                                    [message]="'Asegúrese de que la cantidad de complementos contratados alcance para cubrir las necesidades de las sedes beneficiarias.'">
+                                                </app-alert-message>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </mat-tab >
+                            <mat-tab [disabled]="true">
+                            </mat-tab >
+                        </mat-tab-group>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-12 col-xl clearfix">
+                            <button class="btn btn-blue w-down-100" (click)="finalizar()">
+                                Guardar y continuar m&aacute;s tarde
+                            </button>
+                        </div>
+                        <div class="col-12 col-xl d-xl-block d-flex flex-column-reverse flex-xl-row gap-down-15-px clearfix">
+                            <button class="btn btn-blue w-down-100 mr-4" (click)="regresar()">
+                                Anterior
+                            </button>
+                            <button class="btn btn-blue w-down-100" type="submit" [disabled]="btnSedesBenefDisab">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--<pre>{{ anticipoContrato | json }}</pre>-->
+    </div>
+</div>
+
+<!-- FORM : CARACTERISTICAS FINANCIERAS -->
+
+<!-- <div class="row" *ngIf="caracteristicasFinancierasForm">
+    <div class="col-12 mb-3">
+        <form class="form-default-inline" (ngSubmit)="onSubmit('CARACTERISTICAS-FINANCIERAS')" #caracteristicasFinancieras="ngForm" autocomplete="off">
+            <div class="panel panel-blue">
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="panel-title">
+                        Registro &uacute;nico de Contratos - Log&iacute;stica
+                    </h4>
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" class="panel-title">
+                        Registro &uacute;nico de Contratos - Materia prima
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="contrato.subTipoContratoId == proveerOperacionLogistica ? 4 : 3" [titleChapter]="'Caracter&iacute;sticas financieras'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" src="../assets/images/Iconos/logistica/item4activo.png" />
+                                    <img *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" src="../assets/images/Iconos/materia-prima/item3activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item" style="padding-left: 15px">
+
+
+                        <div class="row">
+                            <div class="col-5">
+                                <label class="form-label" style="margin-left: 6px">
+                  1. Valor total del contrato:
+                </label>
+                                <input class="col-12 input-text" type="number" name="txtValorTotalContrato" [(ngModel)]="contrato.valorTotalContrato" #valorTotalContrato="ngModel" (ngModelChange)="changeValorAnticipo($event)" required />
+                                <label class="form-label" style="color: red !important;" [hidden]="valorTotalContrato.valid || valorTotalContrato.pristine">
+                  El campo valor total del contrato es requerido
+                </label>
+                            </div>
+
+                            <div class="col-4 flex align-items-center">
+                                <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'" [textColor]="'text-basered'" [message]="'Aseg&uacute;rese de que el valor del contrato coincida con el costo total calculado por el sistema.'">
+                                </app-alert-message>
+                            </div>
+
+                            <div class="col-3">
+                                <app-costo-total-tab [Titulo]="'COSTO TOTAL'" [TotalGeneral]="dataTotalGeneralContratado.valorTotal">
+                                </app-costo-total-tab>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+              2. Contrato con anticipo:
+            </label>
+                        <div class="inline-block form-checkbox ml-xs">
+                            <label id="ContratoAntSi" class="check-si" [class]="contrato.conAnticipo ? 'active' : ''" (click)="disabledSubPuntos($event, 'conAnticipo', true)">
+                Si
+              </label>
+                            <label id="ContratoAntNo" class="check-no" [class]="!contrato.conAnticipo ? 'active' : ''" (click)="disabledSubPuntos($event, 'conAnticipo', false)">
+                No
+              </label>
+                        </div>
+
+                    </div>
+                    <div [ngClass]="{ disabled: !contrato.conAnticipo }">
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                  2.1. Porcentaje de anticipo:
+                </label>
+                                <input type="number" class="input-text" name="txtPorcentajeAnticipo" [(ngModel)]="anticipoContrato.porcentajeAnticipo" (ngModelChange)="changeValorAnticipo($event)" #porcAnticipo="ngModel" maxlength="3" placeholder="0 - 100" [required]="contrato.conAnticipo"
+                                />
+                            </div>
+                            <label class="form-label" style="color: red !important;" [hidden]="porcAnticipo.valid || porcAnticipo.pristine">
+                El campo porcentaje de anticipo es requerido
+              </label>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                  2.2. Valor del anticipo:
+                </label>
+                                <input type="text" class="input-text" name="txtValorAnticipo" placeholder="Autom&aacute;tico" [ngModel]="anticipoContrato.valorAnticipo | currency: '$' : 'symbol' : '.2'" style="pointer-events: none;" />
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                  2.3. Periodicidad de amortización:
+                </label>
+                                <select class="input-text" name="cboPeriodicidadAmortizacion" [(ngModel)]="anticipoContrato.iD_tipoperiodicidad" #perioricidadAmortizacion="ngModel" [required]="contrato.conAnticipo">
+                  <option value>Elija una opci&oacute;n</option>
+                  <option *ngFor="let item of listPerioricidadAmortizacion" [ngValue]="item.id">
+                    {{ item.nombre }}
+                  </option>
+                </select>
+                                <label class="form-label" style="color: red !important;" [hidden]="perioricidadAmortizacion.valid || perioricidadAmortizacion.pristine">
+                  El campo perioricidad de amortizació es requerido
+                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                  2.4. N&uacute;mero de pagos de amortizaci&oacute;n:
+                </label>
+                                <input class="input-text" type="number" name="txtNumeroPagoAmortizacion" [(ngModel)]="anticipoContrato.numeroPagos" #numeroPagoAmortizacion="ngModel" [required]="contrato.conAnticipo" />
+                                <label class="form-label" style="color: red !important;" [hidden]="numeroPagoAmortizacion.valid || numeroPagoAmortizacion.pristine">
+                  El campo perioricidad de amortizació es requerido
+                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                  2.5. Plan de pagos del anticipo:
+                </label>
+                                <table class="table table-info-llenado text-center" style="max-width: 500px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Per&iacute;odo</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><label>Autom&aacute;tico</label></td>
+                                            <td><label>Autom&aacute;tico</label></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="finalizar()">
+                Guardar y continuar m&aacute;s tarde
+              </button>
+                        </div>
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="regresar()">
+                Anterior
+              </button> &nbsp;&nbsp;
+                            <button class="btn btn-blue" type="submit" [disabled]="caracteristicasFinancieras.invalid">
+                Siguiente
+              </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div> -->
+
+<!-- FORM : COMPRAS LOCALES -->
+
+<!-- <div *ngIf="comprasLocalesForm" class="row">
+    <div class="col-12 mb-3">
+        <form class="form-default-inline" (ngSubmit)="onSubmit('COMPRAS-LOCALES')" #compraLocal="ngForm">
+            <div class="panel panel-blue">
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="panel-title">
+                        Registro &uacute;nico de Contratos - Log&iacute;stica
+                    </h4>
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" class="panel-title">
+                        Registro &uacute;nico de Contratos - Materia prima
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="contrato.subTipoContratoId == proveerOperacionLogistica ? 6 : 5" [titleChapter]="'Compras locales'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" src="../assets/images/Iconos/logistica/item6activo.png" />
+                                    <img *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" src="../assets/images/Iconos/materia-prima/item5activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item" style="padding-left: 15px">
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="form-label">
+                  1. Criterio empleado para asegurar la cuota de compras locales:
+                </label>
+                                <select name="iD_TipoReglaCompraLocal" class="input-text" [(ngModel)]="comprasLocales.iD_TipoReglaCompraLocal" #iD_TipoReglaCompraLocal="ngModel" required>
+                  <option value="">Elija una opci&oacute;n</option>
+                  <option *ngFor="let i of listCriterioEmpleadoCuota" [ngValue]="i.id">
+                    {{ i.nombre }}
+                  </option>
+                </select><br>
+                                <label class="label" style="color: red" [hidden]="iD_TipoReglaCompraLocal.valid || iD_TipoReglaCompraLocal.pristine">
+                  El campo criterio empleado para asegurar la cuota es requerido
+                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+              2.A. Porcentaje mínimo de compras locales:
+            </label>
+                        <input type="number" class="input-text col-2" name="porcentajeMinimo" [(ngModel)]="comprasLocales.porcentajeMinimo" maxlength="3" #porcentajeMinimo="ngModel" required /><br>
+                        <label class="label" style="color: red" [hidden]="porcentajeMinimo.valid || porcentajeMinimo.pristine">
+              El campo porcentaje minimo es requerido
+            </label>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+              2.B. N&uacute;mero m&iacute;nimo de empresas locales para compra:
+            </label>
+                        <input type="number" class="input-text col-2" name="numeroEmpresasMinimo" [(ngModel)]="comprasLocales.numeroEmpresasMinimo" #numeroEmpresasMinimo="ngModel" required /><br>
+                        <label class="label" style="color: red" [hidden]="numeroEmpresasMinimo.valid || numeroEmpresasMinimo.pristine">
+              El campo número minimo de empresas es requerido
+            </label>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+              3. Criterio de evaluci&oacute;n:
+            </label>
+                        <select name="iD_TipoCriterioEvaluacion" class="input-text" [(ngModel)]="comprasLocales.iD_TipoCriterioEvaluacion" #iD_TipoCriterioEvaluacion="ngModel" required>
+              <option value="">Elija una opci&oacute;n</option>
+              <option *ngFor="let i of listCriterioEvaluacion" [ngValue]="i.id">
+                {{ i.nombre }}
+              </option>
+            </select><br>
+                        <label class="label" style="color: red" [hidden]="iD_TipoCriterioEvaluacion.valid || iD_TipoCriterioEvaluacion.pristine">
+              El campo criterio de evaluación es requerido
+            </label>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+              4. Periodicidad de la evaluaci&oacute;n:
+            </label>
+                        <select name="TipoPeriodicidadCL" class="input-text width-80" [(ngModel)]="comprasLocales.iD_TipoPeriodicidad" #TipoPeriodicidadCL="ngModel" required>
+              <option value="">Elija una opci&oacute;n</option>
+              <option *ngFor="let i of listPeriodicidadEvaluacion" [ngValue]="i.id">
+                {{ i.nombre }}
+              </option>
+            </select><br>
+                        <label class="label" style="color: red" [hidden]="TipoPeriodicidadCL.valid || TipoPeriodicidadCL.pristine">
+              El campo tipo de periodicidad es requerido
+            </label>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+              5. Zona geogr&aacute;fica autorizada como compra local:
+            </label>
+                        <select name="iD_ZonaGeografica" class="input-text">
+              <option value="" selected>Elija una opci&oacute;n
+              </option>
+              <option *ngFor="let i of listMunicios" [ngValue]="i.id">
+                {{ i.nombre }}
+              </option>
+            </select>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="finalizar()">
+                Guardar y continuar m&aacute;s tarde
+              </button>
+                        </div>
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="regresar()">
+                Anterior
+              </button> &nbsp;&nbsp;
+                            <button class="btn btn-blue" type="submit" [disabled]="compraLocal.invalid">
+                Siguiente
+              </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> -->
+<!--<pre>{{ comprasLocales | json }}</pre>-->
+
+<!-- FORM : POLIZAS -->
+
+<!-- <div *ngIf="polizasForm" class="row">
+    <div class="col-12 mb-3">
+        <div class="panel panel-blue">
+            <div class="panel-header no-border-bottom text-center">
+                <h4 *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="panel-title">
+                    Registro &uacute;nico de Contratos - Log&iacute;stica
+                </h4>
+                <h4 *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" class="panel-title">
+                    Registro &uacute;nico de Contratos - Materia prima
+                </h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-default-inline">
+                    <div class="row">
+                        <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="contrato.subTipoContratoId == proveerOperacionLogistica ? 5 : 4" [titleChapter]="'Informaci&oacute;n de p&oacute;lizas'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" src="../assets/images/Iconos/logistica/item5activo.png" />
+                                    <img *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" src="../assets/images/Iconos/materia-prima/item4activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item" style="padding-left: 15px">
+
+                        <app-poliza [idContrato]="contrato.id" (polizaLength)="poliza($event)"></app-poliza>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col clearfix">
+                        <button class="btn btn-blue" (click)="finalizar()">
+              Guardar y continuar m&aacute;s tarde
+            </button>
+                    </div>
+                    <div class="col clearfix">
+                        <button class="btn btn-blue" (click)="regresar()">
+              Anterior
+            </button> &nbsp;&nbsp;
+                        <button class="btn btn-blue" (click)="onSubmit('POLIZAS')" [disabled]="btnPolizasDisab">
+              Siguiente
+            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- ITEM 14 : FUENTE FINANCIERA -->
+
+<div *ngIf="infPresupuestalForm">
+    <div class="row">
+        <div class="col-12 mb-3">
+            <div class="panel panel-blue">
+
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica" class="panel-title">
+                        Registro &uacute;nico de Contratos - Log&iacute;stica
+                    </h4>
+                    <h4 *ngIf="contrato.subTipoContratoId == proveerMateriaPrima" class="panel-title">
+                        Registro &uacute;nico de Contratos - Materia prima
+                    </h4>
+                </div>
+                <div class="panel-body" style="border-radius: 0px !important;">
+                    <div class="row">
+                        <div class="col-12 col-xl clearfix" style="padding-left: 3px">
+                            <app-chapterblue
+                                [numberChapter]="contrato.subTipoContratoId == proveerOperacionLogistica ? 4 : 3"
+                                [titleChapter]="'Informaci&oacute;n presupuestal'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col-12 col-xl clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img *ngIf="contrato.subTipoContratoId == proveerOperacionLogistica"
+                                        src="../assets/images/Iconos/logistica/item4activo.png" />
+                                    <img *ngIf="contrato.subTipoContratoId == proveerMateriaPrima"
+                                        src="../assets/images/Iconos/materia-prima/item3activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-default-inline">
+                        <div class="form-item" style="padding-left: 15px">
+
+                            <label class="form-label">
+                                1. Fuentes de financiaci&oacute;n presupuestal destinadas a
+                                cubrir el costo del contrato:
+                            </label>
+                            <app-informacion-presupuestal [iD_Contrato]="contrato.id" [TipoFuncionalida]="1"
+                                (data)="actualizarGranTotal($event)"></app-informacion-presupuestal>
+                        </div>
+                        <div class="form-item d-xl-inline-block d-flex flex-column w-100">
+                            <div class="row mb-3">
+                                <div class="col-12 pl-down-0">
+                                    <label class="form-label" style="margin-left: 6px">
+                                        2. Suma total de las fuentes de financiaci&oacute;n
+                                        registradas:
+                                    </label>
+                                    <input type="text" class="input-text disabledWithoutOpacity w-down-100 width-180"
+                                        name="txtSumaTotalFuentesFinanciacion"
+                                        [ngModel]="dataTotalGeneralContratado.totalFuentesFinanciacion | currency: '$' : 'symbol' : '1.0-2'"
+                                        placeholder="Autom&aacute;tico" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-xl-6 flex pr-0 wmx-down-lg-100 align-items-center advertencia-valor-total-fuentes">
+                                    <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                                        [textColor]="'text-basered'"
+                                        [message]="' Aseg&uacute;rese de que el valor total de las fuentes de financiaci&oacute;n coincida con el valor total del contrato.'">
+                                    </app-alert-message>
+                                </div>
+                                <div class="ml-0 ml-xl-3 w-down-100 width-180">
+                                    <app-costo-total-tab [Titulo]="'VALOR CONTRATO'"
+                                        [TotalGeneral]="contrato.valorTotalContrato"></app-costo-total-tab>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-item">
+                            <label for="exampleFormControlInput1" class="form-label float-left">
+                                3. PDF del contrato: &nbsp;&nbsp;&nbsp;
+                            </label>
+                            <div class="btn-fileUpload"
+                                (click)="uploadPDF('fileRutUpload', contrato, 'nombreArchivo', 'archivo')">
+                                <span>Adjunte el archivo</span>
+                                <img src="../assets/images/Iconos/input-file.png" />
+                                <input class type="file" id="fileRutUpload" name="fileRutUpload"
+                                    accept="application/pdf" />
+                            </div>
+                            <a class="visorPDF" (click)="abrirPDF(modalPDF, contrato, 'archivo')">
+                                {{ contrato.nombreArchivo }}
+                            </a>
+                            <label [hidden]="!showPDFValidation || contrato.nombreArchivo !=''"  class="label"
+                            style="color:red">El pdf del contrato es requerido</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-12 col-xl clearfix">
+                            <button class="btn btn-blue w-down-100" (click)="finalizar()">
+                                Guardar y continuar m&aacute;s tarde
+                            </button>
+                        </div>
+                        <div class="col-12 col-xl d-xl-block d-flex flex-column-reverse flex-xl-row gap-down-15-px clearfix">
+                            <button class="btn btn-blue w-down-100 mr-4" (click)="regresar()">
+                                Anterior
+                            </button>
+                            <button (click)="onSubmit('FUENTE-FINANCIERA')" class="btn btn-blue w-down-100">
+                                Finalizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalPDF>
+    <div class="col-12 text-right mt-xs mb-xs">
+        <a class="btn-link" (click)="dismissAllModal()">
+            Cerrar
+            <mat-icon>clear</mat-icon>
+        </a>
+    </div>
+    <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+        [showPresentationModeButton]="true" [showDownloadButton]="true">
+    </ngx-extended-pdf-viewer>
+</ng-template>

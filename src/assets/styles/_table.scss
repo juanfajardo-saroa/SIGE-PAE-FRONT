@@ -1,0 +1,438 @@
+// @import '/src/assets/styles/variable.scss';
+table {
+    width: 100%;
+    border-collapse: separate;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-color;
+    font-size: 14px;
+}
+
+table thead {
+    background-color: $header_table !important;
+    color: $base-color;
+    border: 1px solid;
+}
+
+table thead th {
+    border-top: 1px solid $base-azulPAE;
+    border-right: 1px solid $base-azulPAE;
+    padding: 20px;
+}
+
+table thead th:first-child {
+    border-left: 1px solid $base-azulPAE;
+}
+
+table.left-radius thead th:first-child {
+    border-top-left-radius: 20px;
+}
+
+table.right-radius thead th:last-child {
+    border-top-right-radius: 20px;
+}
+
+table tbody {
+    color: $base-color;
+}
+
+table tbody td {
+    border-bottom: 1px dashed $base-color !important;
+}
+
+table tbody tr td:first-child {
+    border-left: 1px solid $base-color;
+}
+
+table tbody tr td:last-child {
+    border-right: 1px solid $base-color;
+}
+
+table:not(.table-row-expand) tbody tr:last-child td {
+    border-bottom: 1px solid $base-color;
+    border-bottom-style: solid !important;
+}
+
+td.mat-cell:first-of-type {
+    padding-left: 0 px !important
+}
+
+.titletable {
+    float: right;
+    background-color: $base-color;
+    color: #fff;
+    width: fit-content;
+    padding: 4px 75px;
+    margin-bottom: -1px;
+    border-radius: 12px 12px 0px 0px;
+}
+
+th.mat-header-cell {
+    text-align: center !important;
+}
+
+.red {
+    background-color: red;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.green {
+    background-color: green;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.yellow {
+    background-color: yellow;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.mat-table:not(.nohover) .mat-row:hover .mat-cell {
+    background-color: $base-color;
+    color: #ffffff;
+}
+
+
+/** Table ETC **/
+
+tr.h-auto {
+    height: 0;
+}
+
+.mat-row:hover .nohover {
+    background-color: transparent;
+    color: $base-color;
+}
+
+.etc tr.mat-row {
+    height: 0px !important;
+}
+
+.coletc {
+    margin-left: 4%;
+    max-width: 46%;
+}
+
+.distri {
+    width: 100%;
+    margin-left: 1px;
+}
+
+.distri div {
+    border: 1px solid $base-color;
+    text-align: center;
+}
+
+.distri div:first-child {
+    border-radius: 10px 0px 0px 10px;
+}
+
+.distri div:last-child {
+    border-radius: 0px 10px 10px 0px;
+    border-left: none;
+    color: $base-color;
+}
+
+.totalasig {
+    background-color: $base-colorred;
+    color: #fff;
+}
+
+.table-row-expand {
+    border-spacing: 0;
+    border-collapse: separate;
+    input {
+        margin: 0;
+        width: 100%;
+        border: none;
+        padding: 0;
+        background-color: aliceblue;
+        color: $base-color;
+        text-align: center;
+        font-size: 15px;
+    }
+    thead {
+        border: none;
+        th {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            color: $base-color;
+            font-size: 15px;
+        }
+        th:first-child {
+            border-top-left-radius: 15px;
+        }
+    }
+    tbody {
+        tr {
+            td {
+                padding: 10px;
+                color: $base-color;
+                font-size: 15px;
+                border-top: 1px solid $base-color !important;
+                border-left: 1px solid $base-color !important;
+                border-bottom: none !important;
+                border-right: none !important;
+            }
+            td.nopadding {
+                padding: 0 !important;
+            }
+            td:last-child {
+                border-right: 1px solid $base-color !important;
+            }
+        }
+    }
+    tr:not(:first-child) {
+        td {
+            border-top: 1px dashed $base-color !important;
+        }
+    }
+    .row-expanded {
+        td {
+            background-color: aliceblue;
+        }
+    }
+    .td-fuente {
+        display: flex;
+        align-items: center;
+    }
+    .td-fuente-enum,
+    .td-fuente-text {
+        float: left;
+        margin: 0;
+        padding: 0;
+        color: $base-color;
+        font-weight: normal !important;
+        text-decoration: none;
+        cursor: default !important;
+    }
+    .td-fuente-enum {
+        background-color: aliceblue;
+        border-radius: 15px;
+        padding: 2px 10px;
+        font-weight: bold !important;
+    }
+    .td-fuente-text {
+        margin-left: 5px;
+        max-width: 85%;
+        width: 85%;
+    }
+    .mat-icon {
+        float: right;
+        color: $base-color;
+    }
+    .row-expanded-enum {
+        padding-left: 45px;
+    }
+    tfoot {
+        td {
+            padding: 10px;
+        }
+    }
+}
+
+
+/** Fuentes Financiación **/
+
+// Tabla Minuta
+.table-cuadro-info th.mat-header-cell:first-child {
+    border: none;
+    background-color: #fff;
+    border-bottom: 1px solid $base-color !important;
+    ;
+}
+
+.table2 {
+    border-radius: 19px 0 0 0;
+    border-left: 1px solid;
+    padding: 5px 20px !important;
+}
+
+.table3 {
+    border-radius: 0 19px 0 0;
+    border-left: 1px solid;
+    padding: 0px 0px !important;
+}
+
+.table4 {
+    border-style: none;
+}
+
+.subtituloclaro {
+    font-weight: lighter;
+    color: rgb(117, 151, 218) !important;
+}
+
+.table-cuadro-info tbody tr th:first-child {
+    background-color: aliceblue !important;
+    color: $base-azulPAE !important;
+    font-weight: bold !important;
+}
+
+// Tablas Fuentes Financiaciión
+.table-cuadro th .mat-header-cell:first-child {
+    border-radius: 19px 0 0 0;
+    border-left: 1px solid;
+    padding: 5px 20px !important;
+}
+
+.table-cuadro thead tr th,
+.table-cuadro tbody tr td:first-child {
+    background-color: aliceblue !important;
+    font-weight: bold !important;
+    color: $base-azulPAE !important;
+    border-right: 1px solid $base-azulPAE;
+}
+
+.table-th-size {
+    width: 36% !important;
+}
+
+.table-cuadro thead tr:nth-last-child(2) th {
+    border-radius: 0 19px 0 0;
+}
+
+// Tablas cobertura Financiaciión
+.table-financiera {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-financiera td {
+    background-color: #e2e6fe;
+    color: $base-azulPAE;
+    font-size: 60px;
+    padding: 5px 15px;
+    text-align: center;
+    border-top: 1px solid $base-azulPAE;
+    border-right: 1px solid $base-azulPAE;
+    border-bottom: 1px solid $base-azulPAE;
+}
+
+.row1-cobertura-financiera {
+    padding: 5px 15px;
+    text-align: left;
+    border-right: 1px solid $base-azulPAE;
+    border-bottom: 1px dashed $base-azulPAE;
+    border-radius: 0 0 0 0;
+    color: $base-azulPAE;
+    font-size: 14px;
+}
+
+.row2-cobertura-financiera {
+    padding: 5px 15px;
+    text-align: left;
+    border-right: 1px solid $base-azulPAE;
+    border-bottom: 1px dashed $base-azulPAE;
+    border-radius: 0 0 0 0;
+    color: $base-azulPAE;
+    font-size: 14px;
+    border-bottom-style: none !important;
+}
+
+.row1-otros-gastos {
+    padding: 5px 15px;
+    text-align: left;
+    border-left: 0;
+    border-right: 1px solid $base-azulPAE;
+    border-left: none;
+    border-bottom: 1px dashed $base-azulPAE;
+    border-radius: 0 0 0 0;
+    color: $base-azulPAE;
+    font-size: 14px;
+}
+
+.row2-otros-gastos {
+    padding: 5px 15px;
+    text-align: left;
+    border-radius: 0 0 0 0;
+    color: $base-azulPAE;
+    font-size: 14px;
+    font-weight: bold !important;
+}
+
+.row1-otros-gastos-total {
+    padding: 5px 15px;
+    text-align: left;
+    border-left: 0;
+    border-right: 1px solid $base-azulPAE;
+    border-left: none;
+    border-bottom: none;
+    border-radius: 0 0 0 0;
+    color: $base-azulPAE;
+    font-size: 14px;
+    text-align: center;
+}
+
+.row-otros-gastos-total {
+    padding: 5px 15px;
+    text-align: left;
+    border-top: 1px solid $base-azulPAE;
+    border-left: 0;
+    border-right: 1px solid $base-azulPAE;
+    border-left: none;
+    border-bottom: 1px dashed $base-azulPAE;
+    border-radius: 0 0 0 0;
+    color: $base-azulPAE;
+    font-size: 14px;
+    text-align: center;
+}
+
+tfoot {
+    td {
+        text-align: center;
+        background-color: $base-azulPAE;
+        color: #ffffff !important;
+        border: none;
+    }
+}
+
+table.table-etc {
+    width: 100%;
+    border-spacing: 0;
+    tr {
+        th {
+            text-align: center;
+            padding: 3px;
+            background-color: aliceblue;
+            color: $base-color;
+            border: 1px solid $base-color;
+            border-right: none;
+        }
+        th:first-child {
+            border-top-left-radius: 15px;
+        }
+        th:last-child {
+            border-top-right-radius: 15px;
+            border-right: 1px solid $base-color;
+        }
+        td {
+            padding: 0;
+            border-left: 1px solid $base-color;
+            border-bottom: 1px solid $base-color;
+            input,
+            select {
+                padding: 0 10px;
+                color: $base-color;
+                width: 100%;
+                border: transparent;
+            }
+        }
+        td:last-child {
+            border-right: 1px solid $base-color;
+        }
+    }
+}

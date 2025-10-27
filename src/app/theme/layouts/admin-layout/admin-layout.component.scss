@@ -1,0 +1,248 @@
+@import '/src/assets/styles/variable.scss';
+
+.botonVig{
+  border: none;
+  background-color: $base-azulClaroPAE !important;
+  color: $base-azulPAE !important;
+  border-radius: 20px 20px 0 0;
+  padding: 5px 20px;
+  width: 206px!important;
+  font-size: 18px;
+}
+button.mat-menu-item {
+  background-color: $gov-white !important;
+  color: $base-azulPAE !important;
+  width: 100%;
+  height: 30px;
+  margin: 5px 0;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+::ng-deep .mat-menu-panel {
+  border-radius: 1px 1px 20px 20px!important;
+  width: 220px!important;
+}
+::ng-deep .mat-menu-panel.CambioVigencia {
+  background-color: $base-azulClaroPAE;
+  border-radius: 1px 1px 20px 20px!important;
+  padding: 0 5px 5px 5px;
+  width: 206px!important;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden!important;
+  box-shadow: none;
+}
+::ng-deep .mat-menu-panel.CambioVigencia button.mat-menu-item:hover {
+  background-color: $base-azulPAE!important;
+  color: $gov-white!important;
+}
+
+.LineaAzul {
+  border-top: $base-azulPAE solid 1px;
+}
+
+.tablaformVig {
+  max-width: 200px;
+  min-height: 30px;
+  font-size: 18px;
+  border-radius: 20px 20px 1px 1px;
+  padding: 0px 20px;
+  color: $base-azulPAE;
+  background-color: $base-azulClaroPAE;
+  border: hidden;
+}
+
+::ng-deep.tablaformVig2 {
+  max-width: 200px;
+  min-height: 30px;
+  font-size: 18px;
+  border-radius: 1px 1px 20px 20px;
+  padding: 0px 20px;
+  color: $base-azulPAE;
+  background-color: $base-azulClaroPAE;
+  border: none;
+}
+
+tp-container {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding-top: 0; //padding-top: 150px;
+  //margin-left:   -175px;
+}
+
+.UbicaFlecha {
+  position: fixed;
+  bottom: 20px;
+  left: 200px;
+  width: 50px;
+  height: 50px;
+  z-index: 100000;
+}
+
+.UbicaFlecha2 {
+  position: fixed;
+  bottom: 20px;
+  left: 70px;
+  width: 50px;
+  height: 50px;
+  z-index: 100000;
+}
+
+.OcultarAll {
+  img {
+    float: right;
+  }
+
+}
+
+.mat-icon {
+  color: #005ACA;
+  font-size: 50px;
+}
+
+.tp-containerppal {
+  //position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 14%;
+  right: 0;
+  background: white;
+  padding-top: 150px;
+  // padding-left: 40px;
+  visibility: visible !important;
+
+  //margin-left:   -175px;
+}
+
+.title-container {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding-top: 150px;
+
+}
+
+.tp-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+  width: 100px;
+}
+
+.contenedorsidenav {
+  padding-top: 80px;
+  font-size: 12px;
+  box-shadow: 4px -20px 16px 5px #ccc !important;
+  overflow: auto;
+  visibility: visible;
+}
+
+.menuvar-container {
+  //padding: 0 15px 0 40px;
+  font-size: 12px;
+  //  padding: 11px 15px;
+  line-height: 18px;
+  padding-top: 80px;
+  //width: 270px;
+  box-shadow: 4px -20px 16px 5px #ccc !important;
+  overflow: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 60px;
+  height: 100%;
+  visibility: visible;
+}
+
+
+.example-sidenav {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  line-height: 18px;
+  visibility: visible !important;
+}
+
+
+.menuvar-containerppal {
+  font-size: 12px;
+  padding-top: 80px;
+}
+
+// .mat-sidenav-closed {
+//   transform: translate3d(0, 0, 0) !important;
+//   visibility: visible !important;
+//   min-width: 64px !important;
+//   width: 64px !important;
+
+//   mat-sidenav-content {
+//       margin-left: 64px !important;
+//   }
+// }
+
+
+
+.material-symbols-outlined {
+  font-size: 65px;
+  right: 11px;
+  bottom: 11px;
+
+}
+
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+:host>mat-sidenav-container.mat-sidenav-container {
+  flex: 1;
+}
+
+/*
+ sidenav mini fix
+ 72px => 40px (button) + 16px(padding-left) + 16px(padding-right)
+*/
+
+.mat-drawer-content {
+  margin-left: 0;
+}
+
+/* mat nav list items fix */
+.item {
+  flex: 1;
+  text-align: left
+}
+
+.mat-drawer.mat-drawer-opened .item {
+  text-align: left;
+}
+
+.mat-drawer-container {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  .tp-containerppal {
+    padding-top: 80px !important;
+  }
+}

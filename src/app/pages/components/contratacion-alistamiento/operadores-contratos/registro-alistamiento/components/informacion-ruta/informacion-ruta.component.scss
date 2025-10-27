@@ -1,0 +1,129 @@
+@import '/src/assets/styles/variable.scss';
+@import '/src/assets/styles/radio_button';
+@import '/src/assets/sass/theme/table-sigepae';
+
+#tablaSedesRuta,
+#tablaEntregaProductos {
+  border-collapse: separate;
+  border-spacing: 0px;
+  color: $base-azulPAE;
+  text-align: center;
+  thead {
+    padding: 10px;
+    text-align: center;
+    background-color: $base-azulClaroPAE;
+  }
+  th {
+    border-right: none;
+    font-weight: 600;
+    padding: 10px 14px;
+    word-wrap: break-word;
+  }
+  th:first-child {
+    border-top-left-radius: 20px !important;
+  }
+  th:last-child {
+    border-right: 1px solid $base-azulPAE;
+    border-top-right-radius: 20px;
+  }
+  tbody tr {
+    td:first-child {
+      border-left: 1px solid $base-azulPAE;
+    }
+    td:last-child {
+      border-right: 1px solid $base-azulPAE;
+      flex-wrap: wrap;
+    }
+  }
+  tr:last-child td {
+    border-bottom: 1px solid $base-azulPAE !important;
+  }
+  td.mat-cell {
+    padding: 8px;
+    border-bottom: 1px dashed $base-azulPAE;
+    color: $base-azulPAE;
+  }
+  td {
+    border-bottom: 1px dashed $base-azulPAE;
+  }
+  input::placeholder {
+    font-family: FontAwesome;
+    text-align: end;
+    color: $base-azulPAE;
+  }
+  .tipoProducto {
+    border-right: 1px solid $base-azulPAE;
+    background-color: $base-azulClaroPAE;
+    font-weight: 600;
+  }
+  .mat-row:hover .mat-cell:not(.tipoProducto, .notHover) {
+    background-color: $base-azulPAE;
+    color: $white;
+  }
+}
+
+select {
+  border: 1px $base-azulPAE solid;
+  border-radius: 6px;
+  padding: 1px 6px;
+  width: 90%;
+  color: $base-azulPAE;
+  font-size: $base-fontsize;
+}
+
+footer {
+  border-top: 1px solid $base-azulPAE;
+}
+
+th.mat-header-cell {
+  border: 1px solid $base-azulPAE;
+  color: $base-azulPAE;
+}
+
+select.sedes {
+  height: 35px;
+}
+
+.panel__texto {
+  color: $base-azulPAE;
+  font-weight: 600;
+  margin: 0;
+}
+
+.form-control {
+  font-family: FontAwesome !important;
+  color: $base-azulPAE;
+  background-color: $base-azulClaroPAE;
+  height: 30px;
+}
+
+.agregarSede {
+  text-align: end;
+  color: $base-azulPAE;
+  cursor: pointer;
+}
+
+.bordeError {
+  border-color: $danger;
+}
+
+.btn {
+  border-radius: 24px;
+  background-color: $base-azulPAE;
+  border: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  min-width: 100px;
+}
+
+mat-card {
+  box-shadow: none !important;
+}
+
+mat-option {
+  color: $base-azulPAE !important;
+  height: 25px !important;
+}

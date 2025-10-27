@@ -1,0 +1,516 @@
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #00A9AB ;">Sedes beneficiarias</div>
+    </div>
+    <div class="tab-item nothing" style="width: 70%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="resumenPanel"
+  [expanded]="resumenPanel" disabled>
+
+  <mat-expansion-panel-header class="h-down-100">
+    <mat-panel-title (click)="expandPanel()">
+      <div style="float: left;">
+        <div style="float: left; background-color: #00A9AB ; padding: 10px;">
+          <div style="height: 24px; width: 24px; background-color: #ffffff;
+          border-radius: 50%; text-align: center; color: #00A9AB ; font-weight: 500; padding-top: 3px;
+          ">1</div>
+        </div>
+        <div
+          style="display: inline-block; background-color: #00A9AB ; height: 44px; padding: 8px 0px 8px 0px; color: #ffffff;">
+          Resumen
+          <mat-icon style="color: #ffffff;" *ngIf="!panelOpenState">expand_more</mat-icon>
+          <mat-icon style="color: #ffffff;" *ngIf="panelOpenState">expand_less</mat-icon>
+        </div>
+        <div style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+        margin-left: -26px;float: right;"></div>
+      </div>
+
+    </mat-panel-title>
+    <mat-panel-description>
+      <button class="BordeRedondoAgregar ml-0" style="margin-left: 10px; margin-top:6px;"
+        (click)="exporter.exportTable('xlsx', {fileName:'Resultados de sedes beneficiarias'})" mat-raised-button>
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4.png" alt="" height="20px" width="auto">
+        Descargar Excel completo</button>
+    </mat-panel-description>
+
+  </mat-expansion-panel-header>
+
+  <div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2" style="padding-left: 0!important;">
+    <div class="d-flex flex-row" style="float: left;">
+      <div class="align-self-center" style="float: left; padding: 10px;padding-left: 0!important;">
+        <div style="text-align: center; padding-top: 3px;">
+          <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-35.png" alt="" height="18px" width="auto">
+        </div>
+      </div>
+      <div style="display: inline-block; padding: 12px 0px 5px 0px; color: #005ACA;">
+        Resumen de la priorización de sedes de la ETC
+      </div>
+    </div>
+  </div>
+  <hr class="linea mx-0 mr-xl-3 ml-xl-5">
+
+
+  <div class="row m-0">
+    <div class="col-12 col-xl pr-0 pr-xl-3 pl-0" style="padding-left: 10px; border-bottom: 0px dotted !important; ">
+      <mat-card class="mr-0 mr-xl-5"  style="margin-left: 0;">
+        <mat-card-content>
+          <div class="table-responsive bordesRedondos">
+            <div style="width: 100%; float: right;">
+              <div class="titletable">Municipios de la ETC</div>
+            </div>
+            <table mat-table [dataSource]="dataSourceMunicipios" class="left-radius TablasSinBorde"
+              style="border-bottom: 0!important;" matSort>
+              <ng-container matColumnDef="nombre">
+                <td mat-cell *matCellDef="let element" class="BordeNone"
+                  style="padding-left: 24px!important;border-left: 0!important;">
+                  {{element.nombre}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="valor">
+                <td mat-cell *matCellDef="let element"
+                  style="min-width: 70px;padding-left: 24px!important; text-align: center;border-left: 1px solid #005ACA;border-right: 0!important;">
+                  {{element.valor}}
+                </td>
+              </ng-container>
+              <tr mat-row *matRowDef="let myRowData; columns: columnNames;"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12 col-xl px-0 px-xl-3" style="border-bottom: 0px dotted !important; ">
+      <mat-card class="mx-0 mx-xl-4">
+        <mat-card-content>
+          <div class="table-responsive bordesRedondos">
+            <div style="width: 100%; float: right;">
+              <div class="titletable">Sedes Educativas de la ETC</div>
+            </div>
+            <table mat-table [dataSource]="dataSourceSedes" class="left-radius TablasSinBorde" matSort>
+              <ng-container matColumnDef="nombre">
+                <td mat-cell *matCellDef="let element" style="padding-left: 24px!important;border-left: 0!important">
+                  {{element.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="valor">
+                <td mat-cell *matCellDef="let element"
+                  style="min-width: 70px;padding-left: 24px!important; text-align: center;border-left: 1px solid #005ACA;border-right: 0!important">
+                  {{element.valor}} </td>
+              </ng-container>
+              <tr mat-row *matRowDef="let myRowData; columns: columnNames;"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row m-0">
+    <div class="col-12 col-xl pr-0 pr-xl-3 pl-0" style="padding-left: 10px; border-bottom: 0px dotted !important;">
+      <mat-card class="mr-0 mr-xl-5" style="margin-left: 0;">
+        <mat-card-content>
+          <div class="table-responsive bordesRedondos">
+            <div style="width: 100%; float: right;">
+              <div class="titletable">Estudiantes de la ETC</div>
+            </div>
+            <table mat-table [dataSource]="dataSourceEstudiantes" class="left-radius TablasSinBorde" matSort>
+              <ng-container matColumnDef="nombre">
+                <td mat-cell *matCellDef="let element" style="padding-left: 24px!important;border-left:0!important;">
+                  {{element.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="valor">
+                <td mat-cell *matCellDef="let element"
+                  style="min-width: 70px;padding-left: 24px!important; text-align: center;border-left: 1px solid #005ACA;border-right: 0!important;">
+                  {{element.valor}} </td>
+              </ng-container>
+              <tr mat-row *matRowDef="let myRowData; columns: columnNames;"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12 col-xl px-0 px-xl-3" style="border-bottom: 0px dotted !important;">
+      <mat-card class="mx-0 mx-xl-4">
+        <mat-card-content>
+          <div class="table-responsive bordesRedondos">
+            <div style="width: 100%; float: right;">
+              <div class="titletable">Matrícula por modelo de operación</div>
+            </div>
+            <table mat-table [dataSource]="dataSourceMatriculas" class="left-radius TablasSinBorde" matSort>
+              <ng-container matColumnDef="nombre">
+                <td mat-cell *matCellDef="let element" style="padding-left: 24px!important;border-left: 0!important;">
+                  {{element.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="valor">
+                <td mat-cell *matCellDef="let element"
+                  style="min-width: 70px;padding-left: 24px!important; text-align: center;border-left: 1px solid #005ACA;border-right: 0!important;">
+                  {{element.valor}} </td>
+              </ng-container>
+              <tr mat-row *matRowDef="let myRowData; columns: columnNames;"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</mat-expansion-panel>
+<br>
+<mat-expansion-panel (opened)="panelOpenState2 = true" (closed)="panelOpenState2 = false" [expanded]="sedesPanel"
+  disabled>
+  <mat-expansion-panel-header class="h-down-100">
+    <mat-panel-title class="d-flex flex-column flex-xl-row">
+      <div (click)="expandPanel2()" style="display: flex; align-items: center;">
+        <div style="float: left; background-color: #00A9AB ; padding: 10px;">
+          <div style="  height: 24px; width: 24px; background-color: #ffffff;
+          border-radius: 50%; text-align: center; color: #00A9AB ; font-weight: 500; padding-top: 3px;
+          ">2</div>
+        </div>
+        <div
+          style="display: flex; align-items: center; background-color: #00A9AB ; height: 44px; padding: 8px 0px 8px 0px; color: #ffffff;">
+          Sedes beneficiarias
+          <mat-icon style="color: #ffffff;display: flex; align-items: center;" *ngIf="!panelOpenState2">expand_more
+          </mat-icon>
+          <mat-icon style="color: #ffffff;display: flex; align-items: center;" *ngIf="panelOpenState2">expand_less
+          </mat-icon>
+        </div>
+        <div style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+        margin-left: -24px;float: right;"></div>
+      </div>
+        <mat-panel-description class="w-down-100 d-flex flex-column flex-xl-row ml-xl-3 w-down-fit-content">
+          <button class="BordeRedondoAgregar ml-0 mt-2" style="margin-left: 10px; margin-top:20px;" *ngIf="!isEdit" (click)="onEditarSedes()"
+            [ngClass]="{'linkdisable':!getModulePermission(1,'editar')}" mat-raised-button>
+            <!-- <i class="fa fa-pencil"></i> -->
+            <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-3.png"alt="" height="20px" width="auto">
+            Editar sedes beneficiarias</button>
+          <button class="BordeRedondoAgregar my-2 mx-0" style="margin-left: 10px; margin-top:20px;" *ngIf="isEdit" mat-raised-button (click)="onGuardarSedes();" [ngClass]="{'linkdisable':!getModulePermission(1,'crear')}">
+            <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-6.png" alt="" height="20px" width="auto">
+            Guardar cambios</button>
+          <br>
+          <button class="BordeRedondoAgregar my-2 m-0" style="margin-top:20px; margin-left: 10px !important;" *ngIf="isEdit" mat-raised-button (click)="onCancelarSedes()"[ngClass]="{'linkdisable':!getModulePermission(1,'eliminar')}">
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png" alt="" height="20px" width="auto">
+            Cancelar</button>
+        </mat-panel-description>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <br>
+  <div class="BordeRedondo" [formGroup]="sedesForm">
+    <div class="row BordeBottom-dashed">
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Tipo de municipio</mat-card-title>
+          <mat-select class="tablaform control-md" id="tipoMunicipio" formControlName="tipoMunicipio"
+            (selectionChange)="onTipoMunicipioClick($event.value)" required placeholder="Todos">
+            <mat-option *ngFor="let item of tipoMunicipioList" [value]="item.id">{{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card class="mt-lg-down-0">
+          <mat-card-title>Municipio</mat-card-title>
+          <mat-select class="tablaform control-md" id="municipio" formControlName="municipio"
+            (selectionChange)="onMunicipioClick($event.value)" required placeholder="Todos">
+
+            <mat-option *ngFor="let item of divipolaList" [value]="item.id"> {{item.nombre}} </mat-option>
+
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card class="mt-lg-down-0">
+          <mat-card-title>Institución Educativa</mat-card-title>
+          <mat-select class="tablaform control-md" id="institucionEducativa" formControlName="institucionEducativa"
+            (selectionChange)="onInstitucionClick($event.value)" required placeholder="Todas">
+            <mat-option *ngFor="let item of institucionList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row BordeBottom-dashed">
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Sede</mat-card-title>
+          <mat-select class="tablaform control-md" id="sede" formControlName="sede"
+            (selectionChange)="onSedeClick($event.value)" required placeholder="Todas">
+            <mat-option *ngFor="let item of sedesList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card class="mt-lg-down-0">
+          <mat-card-title>Jornada</mat-card-title>
+          <mat-select class="tablaform control-md" id="jornada" formControlName="jornada"
+            (selectionChange)="onJornadaClick($event.value)" required placeholder="Todas">
+            <mat-option *ngFor="let item of sedesJornadaList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card class="mt-lg-down-0">
+          <mat-card-title>Nivel educativo</mat-card-title>
+          <mat-select class="tablaform control-md" id="nivelEducativo" formControlName="nivelEducativo"
+            (selectionChange)="onNivelClick($event.value)" required placeholder="Todos">
+            <mat-option *ngFor="let item of nivelEducativoList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Zona</mat-card-title>
+          <mat-select class="tablaform control-md" id="zona" formControlName="zona"
+            (selectionChange)="onZonaClick($event.value)" required placeholder="Todas">
+            <mat-option *ngFor="let item of zonasList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card class="mt-lg-down-0">
+          <mat-card-title>Criterios de vulnerabilidad</mat-card-title>
+          <mat-select class="tablaform control-md" id="criteriosDeVulnerabilidad"
+            formControlName="criteriosDeVulnerabilidad"
+            (selectionChange)="onCriteriosDeVulnerabilidadClick($event.value)" required placeholder="Ninguno">
+            <mat-option *ngFor="let item of criteriosDeVulnerabilidadList" [value]="item.id"> {{item.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card class="mt-lg-down-0">
+          <mat-card-title>Estado de la priorización</mat-card-title>
+          <mat-select class="tablaform control-md" id="estadoPriorizacion" formControlName="estadoPriorizacion"
+            (selectionChange)="onTipoEstadoPriorizacionClick($event.value)" required placeholder="Todos">
+            <mat-option *ngFor="let item of estadoDePriorizacionList" [value]="item.value"> {{item.label}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="ButtonBlue CenterButton" mat-raised-button (click)="cleanFilters()">
+    <mat-icon class="espaciobutton" height="30px" width="auto" style="margin-right: 10px;color:#ffffff;height: 20px;
+    width: 20px;    margin-top: 4px;">description
+    </mat-icon>
+    Limpiar filtros
+  </button>
+  <div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2" style="padding-left: 0!important;">
+    <div style="float: left;">
+      <div style="float: left; padding: 10px;padding-left: 0!important;">
+        <div style="text-align: center; padding-top: 3px;">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-35.png" alt="" height="18px" width="auto">
+        </div>
+      </div>
+      <div *ngIf="isEdit"
+        style="display: inline-block; padding: 15px 0px 0px 0px; color: #005ACA; font-size: 15px !important;">
+        Resultados: {{this.selectedMunicipio}} | {{this.selectedEstado}}
+      </div>
+      <div *ngIf="!isEdit"
+        style="display: inline-block; padding: 15px 0px 0px 0px; color: #005ACA; font-size: 15px !important;">
+        Resultados: {{this.selectedMunicipio}}
+      </div>
+    </div>
+  </div>
+  <hr class="linea">
+  <!-------------------------------edicion   -->
+  <div *ngIf="isEdit">
+    <mat-card class="example-card" style="margin-left: 0;">
+      <mat-card-subtitle>Utilice las siguientes opciones para priorizar y asignar modelos de operación automáticamente a
+        todas las sedes filtradas: </mat-card-subtitle>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <p style="color: #005ACA; font-weight: bold;">1. Asignar el mismo estado de priorización a todas las sedes
+              filtradas: </p>
+          </div>
+          <div class="col">
+            <mat-selection-list #estadoList [multiple]="false"
+              (selectionChange)="onEstadoDePriorizacionChange(estadoList.selectedOptions.selected)">
+              <mat-list-option style="border: 1px solid #005ACA;" *ngFor="let element of estadoDePriorizacionList2"
+                [value]="element.value">
+                {{element.label}}
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col">
+            <p style="color: #005ACA; font-weight: bold;">2. Asignar el mismo modelo de operación a todas las sedes
+              filtradas:
+            </p>
+          </div>
+          <div class="col">
+            <mat-selection-list #modeloTList [multiple]="false"
+              (selectionChange)="onModeloTradicionalChange(modeloTList.selectedOptions.selected)">
+              <mat-list-option style="border: 1px solid #005ACA; " *ngFor="let element of modeloTradicionalList"
+                [value]="element">
+                {{element}}
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+        </div>
+        <br>
+        <!-- <div class="row">
+          <div class="col">
+            <p style="color: #005ACA">3. Asignar el mismo modelo de operación de emergencia a todas las sedes filtradas:
+            </p>
+          </div>
+          <div class="col">
+            <mat-selection-list #modeloEList [multiple]="false"
+              (selectionChange)="onModeloEmergenciaChange(modeloEList.selectedOptions.selected)">
+              <mat-list-option style="border: 1px solid #005ACA;" *ngFor="let element of modeloEmergenciaList"
+                [value]="element">
+                {{element}}
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+        </div> -->
+      </mat-card-content>
+      <mat-card-subtitle>Utilice la tabla a continuación para revisar y completar el proceso de priorización para cada
+        sede: </mat-card-subtitle>
+    </mat-card>
+  </div>
+  <!-----------------------------Tabla General ----------------------------->
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+      <mat-card style="margin-left: 0;">
+        <mat-card-content>
+          <div class="table-responsive responsive-table-pae">
+            <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="dataSourceResultados"
+              class="left-radius centerText" matSort>
+              <ng-container matColumnDef="municipio">
+                <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef  style="padding-left: 0px;">
+                  Municipio
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Municipio">
+                  {{element.municipio}} </td>
+              </ng-container>
+              <ng-container matColumnDef="institucionEducativa">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding-left: 0px; min-width: 200px!important;" class="centerText">
+                  Institución <br> Educativa
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="I. Educativa">
+                  {{element.institEducativa}} </td>
+              </ng-container>
+              <ng-container matColumnDef="sede">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding-left: 0px; min-width: 200px!important;" class="centerText">
+                  Sede
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Sede">
+                  {{element.sede}} </td>
+              </ng-container>
+              <ng-container matColumnDef="matriculaSimat">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding: 20px 10px !important; max-width: 110px;"> Matrícula <br> SIMAT </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="M. SIMAT">
+                  {{element.matriculaSIMAT}} </td>
+              </ng-container>
+              <ng-container matColumnDef="estudiantesSisben">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding: 20px 10px !important; max-width: 150px;"> % Estudiantes <br>en
+                    SISBEN A o B </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="% E. SISBEN A o B">
+                  {{element.porcenSISBENAB ==-1 ?'-': element.porcenSISBENAB}} {{element.porcenSISBENAB ==-1 ?'': '%' }} </td>
+              </ng-container>
+              <ng-container matColumnDef="priorizada">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding: 20px 10px !important; max-width: 110px;">Priorizada <br>para PAE
+                </th>
+                <td class="priomol" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; padding: 10px;" data-label="P. PAE">
+                  <div class="selectInTable" *ngIf="isEdit">
+                    <mat-select class="tablaform control-md ItemSelect" [(ngModel)]="element.priorizada"
+                    (ngModelChange)="changeItemPrio($event,element)">
+                      <mat-option [value]="prio.value" *ngFor="let prio of estadoDePriorizacionList3">
+                        {{ prio.label }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                  <div *ngIf="!isEdit">
+                    <mat-icon style="padding-top: 5px;" class="[mat-icon circule]"
+                      [style.color]="this.stateColorsMap.get(element.priorizada)">
+                      circle</mat-icon>
+                    {{element.priorizada==1 ? "Si":element.priorizada==0 ?"No":"Pendiente"}}
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="modeloTradicional">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding: 20px 10px !important; max-width: 150px; border-top-right-radius: 20px !important;">
+                    Modelo de <br> operación </th>
+                <td class="priomol" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; padding: 15px;" data-label="M. Operación">
+                  <div *ngIf="isEdit">
+                    <mat-select class="tablaform control-md ItemSelect"
+                      [(ngModel)]="element.modeloOperacionTradicional"
+                      (ngModelChange)="changeItemMode($event,element)">
+                      <mat-option [value]="modeloT" *ngFor="let modeloT of modeloTradicionalList">
+                        {{ modeloT }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                  <div *ngIf="!isEdit">
+                    {{element.modeloOperacionTradicional}}
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="modeloEmergencia">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding: 20px 10px !important; max-width: 150px; border-top-right-radius: 20px !important;">
+                  Modelo de operación
+                    de emergencia
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; padding: 15px;">
+                  <div *ngIf="isEdit">
+                    <mat-select class="tablaform control-md ItemSelect" [(ngModel)]="element.modeloOperacionEmergencia">
+                      <mat-option [value]="modeloE" *ngFor="let modeloE of modeloEmergenciaList">
+                        {{ modeloE }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                  <div *ngIf="!isEdit">
+                    {{element.modeloOperacionEmergencia}}
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action">
+                <th class="RightUpCorner" mat-header-cell *matHeaderCellDef > Acción </th>
+                <td mat-cell *matCellDef="let element" class="text-center">
+                  <a (click)="clickedSede(element)" class="m-r-10 cursor-pointer"
+                    [ngClass]="{'linkdisable':!getModulePermission(1,'ver')}">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" alt="" height="30px" width="auto">
+                  </a>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="resultadosColumnNames"></tr>
+              <tr mat-row *matRowDef="let myRowData; columns: resultadosColumnNames;"></tr>
+            </table>
+            <mat-paginator style="color:#005ACA ;" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
+              showFirstLastButtons>
+            </mat-paginator>
+            <div fxLayout="row wrap" style="float: right;">
+              <button class="BordeRedondoAgregar" *ngIf="isEdit" mat-raised-button (click)="onGuardarSedes();"
+                [ngClass]="{'linkdisable':!getModulePermission(1,'crear')}">
+                <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-6.png" alt="" height="20px" width="auto">
+                Guardar cambios</button>
+              <br>
+              <br>
+              <br>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <button mat-raised-button class="ButtonBlue2 fixed-button" (click)="openDialog()">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-37.png" alt="" height="18px" width="auto">
+    Consultar criterios de priorización
+  </button>
+</mat-expansion-panel>
+<br>
+<br>
+<br>
+<br>

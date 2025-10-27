@@ -1,0 +1,161 @@
+<!--titulo de aprobaciones-->
+
+<div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2" >
+  <div style="float: left;" [matBadge]="cantAprobaciones"  [matBadgeHidden]="cantAprobaciones===0">
+    <div style="float: left; background-color: #ed0057; padding: 10px;">
+      <div style="height: 24px; width: 24px; background-color: #ffffff;
+                border-radius: 50%; text-align: center; color: #ed0057; font-weight: 500; padding-top: 3px;
+                ">3
+      </div>
+    </div>
+    <div style="display: inline-block; background-color: #ed0057; padding: 12px 0px 12px 0px; color: #ffffff;">
+      Aprobaciones
+    </div>
+    <div style="background-color: #ed0057; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+                  margin-left: -26px;float: right;">
+    </div>
+  </div>
+  <br>
+</div>
+<br>
+<div class="sub">
+
+  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-131.png ">
+
+  <span style=" color: #ed0057 !important;">Aprobaciones pendientes</span>
+</div>
+<hr class="linea">
+<br>
+<!--fin titulo  de aprobaciones-->
+
+<div *ngIf="!yaCargoAprobaciones">
+  <div style="display: flex;">
+    <div><img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-21.png "
+        style="width:30px; height: 30px; float:left;"></div>
+    <div style="padding-left:10px;">
+      <span class="textoinformativo">El diagnóstico Infraestructura y situacional estará listo para ser aprobado / rechazado una vez haya <br> diligenciado el cuestionario y se encuentre en estado “Por Aprobar”. </span>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div *ngIf="yaCargoAprobaciones" [ngClass]="{'linkdisable':!getModulePermission(32,'aprobar')}">
+
+  <!--inicio de aprobaciones-->
+  <div [formGroup]="form" fxLayout="row wrap" >
+    <div fxFlex="100">
+      <table class="bordeado" >
+        <ng-container>
+          <tr>
+            <td colspan="2" class="BordeadoSup"> Decisión de aprobación</td>
+          </tr>
+          <tr class="TablaObservacion BordeadoInf">
+            <td class="BordeNone">
+              <div *ngFor="let item of AccionesAprobacionesList" style="text-align: center;">
+                
+                <button id="accionAprobacion{{item.id}}"  [class]="idaccion === 0  ? 'buttonAprobar' : idaccion ===1 ? (idaccion === item.id  ? 'btverde':'buttonAprobar') :idaccion ===7 ? (idaccion === item.id   ? 'btrojo' :'buttonAprobar'):'buttonAprobar' "  (click)="joinRoom(item)">{{item.nombre}}</button>
+              </div>
+            </td>
+
+            <td class="inputFull">
+              <div>
+                <div class="TextosBlueLeft"> Observaciones / Justificaciones</div>
+              </div>
+
+              <input *ngIf=" yaCargoObservaciones" id="observaciones" formControlName="observaciones" class="form-control inputFull2" type="text"
+                required />
+              <div
+                *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+                class="invalid-feedback">
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </table>
+      <br>
+
+      <div fxLayout="row wrap ">
+
+        <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+          <div class="text-right ">
+            <button [ngClass]="{'linkdisable':!getModulePermission(32,'aprobar')}" [disabled]="!form.valid "
+              style="margin-left: 20px; height: 40px;" (click)="mensaje()">
+              <span>Enviar resultado</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--fin de aprobaciones-->
+<br>
+<br>
+
+<div class="sub">
+
+  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-131.png ">
+
+  <span style=" color: #ed0057 !important;">Histórico de aprobaciones</span>
+</div>
+<hr class="linea">
+<br>
+
+<!-- inicio Historico-->
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="table-responsive" style="padding-left: 0px !important;">
+
+          <table mat-table [dataSource]="dataSourceAprobaciones" class="left-radius" matSort>
+            <ng-container matColumnDef="fecha">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; ">
+                <b>Fecha</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.fecha==null?'-': (element.fecha) }} </td>
+            </ng-container>
+            <ng-container matColumnDef="responsable">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; ">
+               <b> Responsable</b> </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.responsable==null?'-': (element.responsable)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="rol">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> <b>Rol del
+                responsable</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.rol==null?'-': (element.rol)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="accion">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "><b> Acción</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.accion==null?'-': (element.accion)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="observaciones">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; ">
+               <b> Observaciones / Justificaciones</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.observaciones==null?'-': (element.observaciones)}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsAprobaciones"></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsAprobaciones;"></tr>
+
+          </table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+          </mat-paginator>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<!-- fin Historico-->

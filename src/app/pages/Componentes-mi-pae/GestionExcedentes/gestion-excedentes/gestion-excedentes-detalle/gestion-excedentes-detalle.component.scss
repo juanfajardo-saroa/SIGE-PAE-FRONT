@@ -1,0 +1,502 @@
+@import '/src/assets/styles/variable.scss';
+
+//regresar
+
+.tablaform2 {
+  color: $base-azulPAE;
+  text-align: left;
+  font-size: 12px;
+  width: 0% !important;
+}
+
+.bordeAtras {
+  text-align: center !important;
+  border: 1px $base-borderStyle $base-azulPAE;
+  border-radius: 13px;
+  padding: 5px;
+}
+
+.btn-agregar:hover {
+  cursor: pointer;
+}
+
+// fin regresar
+//titulo actualizado
+
+.LineaAzul {
+  border-top: $base-azulPAE $base-borderStyle 1px;
+}
+
+.row {
+  margin: 0 -30px !important;
+}
+
+// fin titulo actualizado
+
+// numero reporte
+.sub {
+  font-size: 12px;
+  color: $base-MiPAE
+}
+
+.linea {
+  background-color: $base-MiPAE !important;
+  width: 20%;
+  float: left;
+}
+
+//  fin numero reporte
+
+//tabla del reporte
+.BordeSeparador {
+  border-bottom: $base-MiPAE 1px dotted;
+}
+
+.TextosBlueLeft {
+  text-align: left;
+  color: $base-color;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.tablaform {
+  width: 20%;
+  border: $base-azulPAE solid 1px;
+  border-radius: 20px !important;
+  font-size: 12px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  //height: 30px;
+  text-align: left;
+  font-weight: 500;
+  color: $base-azulPAE;
+  background-color: #ffff;
+  padding: 1px 10px;
+}
+
+.tablaform3 {
+  width: 60%;
+  border: $base-azulPAE solid 1px;
+  border-radius: 20px !important;
+  font-size: 12px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  //height: 30px;
+  text-align: left;
+  font-weight: 500;
+  color: $base-azulPAE;
+  background-color: #ffff;
+  padding: 1px 10px;
+}
+
+.tablaform4 {
+  width: 95%;
+  border: $base-azulPAE solid 1px;
+  border-radius: 12px !important;
+  font-size: 12px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: left;
+  font-weight: 500;
+  color: $base-azulPAE;
+  background-color: #ffff;
+  height: 80px;
+  padding: 1px 10px;
+}
+
+.tablaform5 {
+  width: 30%;
+  border: $base-azulPAE solid 1px;
+  border-radius: 20px !important;
+  font-size: 12px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: left;
+  font-weight: 500;
+  color: $base-azulPAE;
+  background-color: #ffff;
+  padding: 1px 10px;
+}
+
+.tamaño {
+  width: 30%;
+}
+
+.tamanoInput {
+  width: 70%;
+}
+
+.grupo_input input {
+  outline: none;
+  padding: 1px 0px 1px 30px;
+  width: 19%;
+}
+
+.grupo_input mat-icon {
+  position: absolute;
+  margin-left: 5px;
+  margin-top: 12px;
+}
+
+//tabla del reporte
+
+//aprobacion
+.FinalRedondo {
+  background-color: $base-MiPAE;
+  height: 44px;
+  width: 44px;
+  border-radius: 0% 50% 50% 0;
+  margin-left: -26px;
+  float: right;
+}
+
+.linea2 {
+  background-color: $base-MiPAE !important;
+}
+
+.textoinformativo {
+  color: $base-azulPAE !important;
+  font-size: 12px;
+}
+
+.bordeado {
+  border-radius: $base-borderRadius;
+  border: 1px $base-borderStyle $base-azulPAE;
+}
+
+.BordeadoSup {
+  border: 1px $base-borderStyle $gov-lightBlue;
+  border-left: 1px $base-borderStyle $gov-lightBlue !important;
+  border-bottom: 1px $base-borderStyle $base-azulPAE;
+  border-radius: $base-borderRadius $base-borderRadius 1px 1px;
+  background-color: $gov-lightBlue;
+  color: $base-azulPAE;
+  padding: 2%;
+}
+
+.BordeadoInf {
+  border: 1px $base-borderStyle $gov-white;
+  border-radius: 1px 1px $base-borderRadius $base-borderRadius;
+  //background-color: $gov-white;
+  color: $base-azulPAE;
+  padding: 0%;
+}
+
+.inputFull {
+  width: 100%;
+}
+
+.inputFull2 {
+  width: 97%;
+  /* margin: 10px; */
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  height: 50px;
+  border: 1px solid $base-color;
+  border-radius: 12px;
+  text-align: center;
+  color: $base-color;
+}
+
+.buttonAprobar {
+  background-color: #E6EFFD;
+  border: #E6EFFD;
+  color: $base-color;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 80%;
+}
+
+.btrojo {
+  background-color: red;
+  color: #fff;
+  border: red;
+  padding: auto;
+  margin-bottom: 10px;
+}
+.btverde {
+  background-color: green;
+  color: #fff;
+  border: green;
+  margin-bottom: 10px;
+}
+
+.BordeNone {
+  border-right: $base-azulPAE 1px $base-borderStyle;
+  border-style: hidden $base-borderStyle hidden hidden !important;
+
+}
+
+.textagregar {
+  color: $base-azulPAE;
+
+}
+
+button:disabled {
+  background-color: $gov-black;
+  color: $gov-white;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-azulPAE 1px $base-borderStyle;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button {
+  background-color: $base-azulPAE;
+  color: $gov-white;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-azulPAE 1px $base-borderStyle;
+}
+
+//mensaje
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: center !important;
+  justify-self: center !important;
+  font-size: 13px !important;
+  border-radius: 20px !important;
+  background-image: url(../../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+  padding: 2% 0% !important;
+  width: 50% !important;
+  background-position: top;
+  color: $base-color !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
+.swal2-actions {
+  margin: 10px auto !important;
+}
+
+::ng-deep.swal2-close {
+  color: #fff !important;
+
+  margin-top: -15px !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  font-size: 2em !important;
+}
+
+.swal2-html-container {
+  text-align: center !important;
+}
+
+.swal2-styled.swal2-confirm {
+  border: 1px solid $base-azulPAE;
+  border-radius: 0px !important;
+  background: initial;
+  background-color: $base-azulPAE;
+  color: #fff !important;
+  font-size: 1em;
+  box-shadow: none;
+}
+
+.swal-button--cancel {
+  border-radius: 20px !important;
+}
+
+.LeftUpCorner {
+  border-top-left-radius: $base-borderRadius;
+
+}
+
+.LeftUpCorner2 {
+  border-top-right-radius: $base-borderRadius;
+
+}
+
+.linkdisable {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+}
+
+::ng-deep .mat-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  letter-spacing: normal;
+  outline: 0;
+  justify-content: center;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  color: $base-color;
+  font-size: 12px;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+  border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 24px;
+  border-right: 1px solid;
+}
+
+td.mat-cell {
+  padding: 16px 0 16px 0;
+  border-bottom: 1px dotted $base-azulPAE;
+  //border-style: dotted;
+}
+
+table thead {
+  background-color: $header_table !important;
+  color: $base-color;
+  border: 1px solid;
+}
+
+table thead th {
+  border-top: 1px solid $base-azulPAE;
+  border-right: 1px solid $base-azulPAE;
+  padding: 20px;
+}
+
+table thead th:first-child {
+  border-left: 1px solid $base-azulPAE;
+  border-top-left-radius: 20px !important;
+}
+
+
+
+table.left-radius thead th:first-child {
+  border-top-left-radius: 20px !important;
+  border-left: 10px solid $base-azulPAE;
+}
+
+table.right-radius thead th:last-child {
+  border-top-right-radius: 20px;
+  border-left: 1px solid $base-azulPAE;
+}
+
+.textagregar {
+  color: $base-color;
+}
+
+table tbody {
+  color: $base-color;
+}
+
+table tbody td {
+  border-bottom: 1px dashed $base-color !important;
+}
+
+table tbody tr td:first-child {
+  border-left: 1px solid $base-color;
+}
+
+table tbody tr td:last-child {
+  border-right: 1px solid $base-color;
+}
+
+table tbody tr:last-child td {
+  border-bottom: 1px solid $base-color;
+  border-bottom-style: solid !important;
+}
+
+td.mat-cell:first-of-type {
+  padding-left: 0 px !important;
+}
+
+.tablaform {
+  width: 80%;
+  border-color: $base-azulPAE;
+  color: $base-azulPAE;
+  border: 1px solid;
+  border-radius: 12px 12px 12px 12px !important;
+  font-size: 13px;
+}
+
+.SizeFilter, .btnBack {
+  width: 10%;
+}
+
+
+.bordeDer {
+  border-right: 1px solid #005ACA;
+}
+
+.sizeIconSearch {
+  position: absolute;
+  bottom: 0.8rem;
+  right: 1rem;
+}
+
+.imgFilter {
+  cursor: pointer;
+  top: 50px;
+  text-align: center !important;
+  padding-left: 5px;
+}
+
+.textF {
+  padding-top: 5px;
+  text-align: center;
+  font-weight: 500;
+  color: #005ACA;
+  cursor: pointer;
+}
+
+mat-card,
+mat-card-title,
+mat-card-content,
+div {
+  color: #005ACA;
+  font-size: 13px !important;
+  box-shadow: none !important;
+}
+
+div.col {
+  padding: 0%;
+}
+
+.bordetd {
+  border-left: 1px solid #005ACA;
+}
+
+mat-card,
+mat-card-title,
+mat-card-content,
+mat-list-option,
+td,
+div,
+input {
+    color: #005ACA;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text {
+    color: #005ACA !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-panel {
+    max-width: 100% !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-placeholder{
+    font-size: 13px !important;
+}

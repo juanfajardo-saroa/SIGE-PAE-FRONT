@@ -1,0 +1,81 @@
+.btn{
+  font-size: $base-fontsize !important;
+  padding: 2px 15px;
+  border-radius: 15px;
+  border: 1px solid;
+  font-size: 15px;
+}
+.btn:hover{
+  text-decoration: none;
+}
+
+.btn-blue{
+  border-color: $base-color;
+  background-color: $base-color;
+  color: #fff;
+}
+.btn-blue:hover{
+  box-shadow: 2px 2px 5px #999 !important;
+  border-color: #0153b6;
+  background-color: #0153b6;
+  color: #fff;
+}
+
+.btn-green{
+  border-color: green;
+  background-color: green;
+  color: #fff;
+}
+.btn-green:hover{
+  box-shadow: 2px 2px 5px #999 !important;
+  border-color: green;
+  background-color: green;
+  color: #fff;
+}
+
+.btn-red{
+  background-color: #f54a62 !important;
+  color: #fff !important;
+}
+.btn-red:hover{
+  background-color: #f7314c !important;
+  box-shadow: 2px 2px 5px #999 !important;
+}
+
+.btn-white{
+  background-color: #fff;
+  color: $base-color;
+}
+
+.btn-link{
+  font-weight: 600;
+  border: none;
+  background-color: #fff;
+}
+
+.btn-white:hover{
+  box-shadow: 2px 2px 5px #999 !important;
+  background-color: whitesmoke;
+  color: $base-color;
+}
+
+.btn-link,
+.btn-link .mat-icon{
+  color: $base-color;
+}
+
+.btn-default{
+  background-color: aliceblue;
+  color: $base-color;
+  padding: 5px 15px;
+  border: none;
+}
+
+.btn-blue .mat-icon{
+  color: #fff;
+}
+
+.btn-icon {
+  padding: 4px;
+  border-radius: 80px;
+}

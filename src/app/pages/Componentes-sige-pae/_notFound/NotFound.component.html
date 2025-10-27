@@ -1,0 +1,25 @@
+<!-- ============================================================== -->
+<!-- Simple four boxes Row -->
+<!-- ============================================================== -->
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <!-- column -->
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card style="margin: 0px 15px; background: ghostwhite;">
+            <mat-card-content>
+                <!-- Row -->
+                <div fxLayout="row" fxLayoutWrap="wrap">
+                    <!-- column -->
+                    <div fxFlex.gt-sm="50" fxFlex.gt-xs="50">
+                      <div class="login-register-box error-card text-center">
+                        <h1><mat-icon>touch_app</mat-icon></h1>
+                        <h3 class="text-uppercase">Pagina no encontrada</h3>
+                        <a mat-raised-button color="primary" [routerLink]="['/']" class="btn btn-round btn-high waves-effect waves-light m-b-40">Retornar al Inicio</a>
+                    </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- column -->
+</div>
+

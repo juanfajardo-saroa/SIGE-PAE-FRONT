@@ -1,0 +1,123 @@
+@import '/src/assets/styles/variable.scss';
+
+mat-card,
+mat-card-title,
+mat-card-content,
+div {
+    color: #005ACA;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+img {
+    margin: 10% !important;
+}
+
+mat-selection-list {
+    padding: 0;
+
+    .mat-list-option {
+        display: inline-block;
+        height: auto;
+        width: auto;
+        cursor: pointer;
+    }
+
+    ::ng-deep.mat-list-text {
+        display: flex !important;
+        align-items: center !important;
+        flex-direction: row-reverse !important;
+    }
+
+/*     ::ng-deep.mat-list-item-content {
+        padding: 0% !important;
+    } */
+}
+
+mat-list-option[aria-selected="true"] {
+    color: $gov-white !important;
+    background-color: $base-azulPAE !important;
+
+    img{
+        color: $gov-white !important;
+    }
+}
+
+.TituloDialog {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #E6EFFD;
+    text-align: center;
+    padding: 10px 0px;
+    width: 100%;
+}
+
+.tablaForm3 {
+    width: 100%;
+    border-color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 20px !important;
+}
+
+.bordeIzq {
+    border-left: 1px solid #005ACA !important;
+    border-radius: 20px !important;
+}
+
+.pRelarive {
+    position: relative;
+}
+
+.pAbsolute {
+    position: absolute;
+}
+
+.lineA {
+    background-color: #005ACA;
+}
+
+.positionTable {
+    width: 80%;
+    margin-top: 2%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.positionTable2 {
+    width: 50%;
+    margin-top: 2%;
+    text-align: center;
+    margin-left: 25%;
+}
+
+.cardBlue {
+    vertical-align: top;
+    max-width: 43%;
+    color: #005ACA !important;
+    background-color: #E6EFFD;
+    font-size: 13px !important;
+    cursor: pointer;
+    margin: 2%;
+}
+
+.textMP {
+    padding: 5% 0% !important;
+}
+
+.BordeRedondoAgregar {
+    border-radius: 20px;
+    border: solid 1px #005ACA;
+    background-color: #005ACA;
+    color: #ffff;
+    padding: 2px 20px;
+    margin: 0px 2px 0px 0px;
+}
+
+.BordeRedondoAgregar2 {
+    margin: 0px 0px 0px 2px;
+}
+
+.alignCenter {
+    display: flex !important;
+    justify-content: center !important;
+}

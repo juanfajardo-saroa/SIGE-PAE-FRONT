@@ -1,0 +1,211 @@
+<div class="row divI" *ngIf="alertOpened">
+    <div class="col-12">
+        <div class="tab-control-secondary">
+            <div class="ImgDivWarning">
+                <img class="ImgWarning" src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-20.png" width="25px"
+                    height="25px">
+            </div>
+            <div class="TextWarning">
+                Esta sección solo estará disponible cuando<br>la Documentación, los Ciclos de menús y<br>el Plan de
+                rutas hayan sido aprobados.
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!alertOpened">
+    <br>
+    <div style="float: right; margin-right: 5.4%;" *ngIf="!estadoInicioOperacion">
+        <button *ngIf="!isEdit" class="BordeRedondoAgregar marginIzq" (click)="onEditClick()"
+            [ngClass]="{'linkdisable':!getModulePermission(73,'editar')}">
+            <img class="alignImg" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-3.png" height="20px"
+                width="auto">Editar Acta de Inicio
+        </button>
+        <button *ngIf="isEdit" (click)="saveForm(false)" class="BordeRedondoAgregar marginB">Guardar
+            cambios</button>
+    </div>
+    <br>
+    <div>
+        <div class="positionTable">
+            <div class="tablaForm3 bordeIzq" [formGroup]="actaInicioForm">
+                <div class="TitleDialog">
+                    Acta de inicio operativa
+                </div>
+
+                <div class="d-flex flex-column">
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-1">1. Número del contrato:<span *ngIf="isEdit" style="color:red;">*</span></div>
+                    <div class="flex-basis-0 flex-grow-2 w-down-100">
+                      <input [readonly]="true" matInput id="NumeroContrato" formControlName="NumeroContrato"  class="ImputBlue w-down-100 h-down-auto" />
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-1">2. Fecha del acta:<span *ngIf="isEdit" style="color:red;">*</span></div>
+                    <div class="flex-basis-0 flex-grow-2 w-down-100">
+                      <input [readonly]="!isEdit" class="w-down-100" [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                                    matInput id="FechaActa" formControlName="FechaActa" type="date" />
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-1">3. Supervisor / Líder PAE {{nombreUbicacion}}:<span *ngIf="isEdit" style="color:red;"> *</span></div>
+                    <div class="flex-basis-0 flex-grow-2 w-down-100">
+                      <input [readonly]="!isEdit" [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                                    matInput id="Supervisor" formControlName="Supervisor" class="ImputWhite2 w-down-100"
+                                    (keydown)="onKeyNumber2($event)" />
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="ml-0 flex-basis-0 flex-grow-1 w-down-100">
+                      <div class="TextosBlueLeft2 ml-lg-down-0">
+                        3.1. Cédula del Supervisor:<span *ngIf="isEdit" style="color:red;"> *</span>
+                      </div>
+                    </div>
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="CedulaSupervisor" formControlName="CedulaSupervisor"
+                          [readonly]="!isEdit" [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                          class="ImputWhite2 floatleft w-down-100" (keydown)="onKeyNumber($event)" />
+                      <div class="alignDiv" *ngIf="isEdit">de:</div>
+                      <mat-select class="ImputWhite2 w-down-100 floatleft" id="LugarCedulaSupervisor"
+                          [disabled]="!isEdit" *ngIf="isEdit"
+                          [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                          formControlName="LugarCedulaSupervisor" required placeholder="Seleccione">
+                          <mat-option *ngFor="let item of DivipolasList" [value]="item.id">
+                              {{item.nombre}}
+                          </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-1 w-down-100">4. Representante legal del operador:<span *ngIf="isEdit" style="color:red;"> *</span></div>
+                    <div class="TextosBlueLeft ml-0 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="RepresentanteOperador" formControlName="RepresentanteOperador"
+                                    [readonly]="!isEdit" [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                                    class="ImputWhite2 w-down-100" (keydown)="onKeyNumber2($event)" />
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="ml-0 flex-basis-0 flex-grow-1 w-down-100">
+                      <div class="TextosBlueLeft2 ml-lg-down-0">4.1. Cédula del Representante:<span *ngIf="isEdit" style="color:red;"> *</span></div>
+                    </div>
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="CedulaRepresentante" formControlName="CedulaRepresentante"
+                          [readonly]="!isEdit" [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                          class="ImputWhite2 floatleft w-down-100" (keydown)="onKeyNumber($event)" />
+                      <div class="alignDiv" *ngIf="isEdit">de:</div>
+                      <mat-select class="ImputWhite2 floatleft w-down-100" id="LugarCedulaRepresentante"
+                          [disabled]="!isEdit" *ngIf="isEdit"
+                          [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                          formControlName="LugarCedulaRepresentante" required placeholder="Seleccione">
+                          <mat-option *ngFor="let item of DivipolasList" [value]="item.id">
+                              {{item.nombre}}
+                          </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-1 w-down-100">5. Fecha de inicio estipulada en el contrato:<span *ngIf="isEdit" style="color:red;"> *</span></div>
+                    <div class="TextosBlueLeft ml-0 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="FechaInicioContrato" formControlName="FechaInicioContrato"
+                                    type="date" [readonly]="true" class="ImputBlue w-down-100" />
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-1 w-down-100">6. Fecha de finalización estipulada en el contrato:<span *ngIf="isEdit" style="color:red;"> *</span></div>
+                    <div class="TextosBlueLeft ml-0 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="FechaFinContrato" formControlName="FechaFinContrato" type="date"
+                                    [readonly]="true" class="ImputBlue w-down-100" />
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-1 w-down-100">7. Fecha de inicio de la operación autorizada:<span *ngIf="isEdit" style="color:red;"> *</span></div>
+                    <div class="TextosBlueLeft ml-0 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="FechaInicioOperacion" formControlName="FechaInicioOperacion"
+                                    type="date" [readonly]="!isEdit"
+                                    [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}" class="ImputWhite w-down-100" />
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="TextosBlueLeft ml-0 mt-4 ml-xl-5" style="width: 100% !important;">8. Menú de inicio para cada ciclo de
+                      menús
+                      incluído en el
+                      alistamiento:
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="ml-0 flex-basis-0 flex-grow-1 w-down-100">
+                      <div class="TextosBlueLeft2 ml-lg-down-0">Urbano Zona Norte<span *ngIf="isEdit" style="color:red;">*</span></div>
+                    </div>
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="UrbanoZonaNorte" formControlName="UrbanoZonaNorte"
+                                    class="ImputWhite w-down-100" [readonly]="!isEdit"
+                                    [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                                    (keydown)="onKeyNumber($event)" />
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="ml-0 flex-basis-0 flex-grow-1 w-down-100">
+                      <div class="TextosBlueLeft2 ml-lg-down-0">Urbano Zode - Montes de María<span *ngIf="isEdit" style="color:red;"> *</span></div>
+                    </div>
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="UrbanoZodeMontesMaria" formControlName="UrbanoZodeMontesMaria"
+                                    [readonly]="!isEdit" [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                                    class="ImputWhite w-down-100" (keydown)="onKeyNumber($event)" />
+                    </div>
+                  </div>
+
+                  <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                    <div class="ml-0 flex-basis-0 flex-grow-1 w-down-100">
+                      <div class="TextosBlueLeft2 ml-lg-down-0">Urbano Zode - La Mojana<span *ngIf="isEdit" style="color:red;">*</span></div>
+                    </div>
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 flex-grow-2 w-down-100">
+                      <input matInput id="UrbanoZodeMojana" formControlName="UrbanoZodeMojana"
+                                    class="ImputWhite w-down-100" [readonly]="!isEdit"
+                                    [ngClass]="{'ImputBlue':!isEdit, 'ImputWhite':isEdit}"
+                                    (keydown)="onKeyNumber($event)" />
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="TextJustify" *ngIf="isEdit">
+                    Mediante la suscripción de la presente acta, el(la) líder PAE de la ETC - {{nombreUbicacion}},
+                    {{actaInicioForm.get('Supervisor').value}}, identifcado con CC.
+                    {{actaInicioForm.get('CedulaSupervisor').value}} de
+                    {{lugarCedulaSupervisor}}, asume plena responsabilidad por la veracidad
+                    de la información aprobada y autoriza el inicio de la operación del contrato no.
+                    {{actaInicioForm.get('NumeroContrato').value}} por parte del operador
+                    {{nomOperador}} a partir del día {{dateString}}.
+                </div>
+                <div class="TextJustify" *ngIf="!isEdit">
+                    Mediante la suscripción de la presente acta, el(la) líder PAE de la ETC - {{nombreUbicacion}},
+                    {{actaInicioForm.get('Supervisor').value}}, identifcado con CC.
+                    {{actaInicioForm.get('CedulaSupervisor').value}}, asume plena responsabilidad por la veracidad
+                    de la información aprobada y autoriza el inicio de la operación del contrato no.
+                    {{actaInicioForm.get('NumeroContrato').value}} por parte del operador
+                    {{nomOperador}} a partir del día {{dateString}}.
+                </div>
+                <hr class="lineSolid" *ngIf="!estadoInicioOperacion">
+                <div class="alignCenter">
+                    <button class="BordeRedondoAgregar" *ngIf="!estadoInicioOperacion"
+                        [disabled]="!actaInicioForm.valid" (click)="onSubmitClick()"
+                        [ngClass]="{'linkdisable':!getModulePermission(73,'crear')}">Dar inicio a la
+                        operación</button>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+<br>

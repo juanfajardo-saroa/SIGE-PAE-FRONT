@@ -1,0 +1,145 @@
+<div  [ngClass]="{'linkdisable':!getModulePermission(108,'aprobar')}">
+    <!--------inicio Aprobaciones ----------->
+    <div class="d-flex flex-auto w-full min-w-80 lt-xl:w-1/2">
+        <div [matBadge]="cantAprobaciones" [matBadgeHidden]="cantAprobaciones===0">
+            <div fxLayout="row wrap" style="margin-bottom: 7%;">
+                <div style="float: left;">
+                    <div style="float: left; background-color: #E23465; padding: 10px;">
+                        <div class="NumeroPendiente">
+                            3
+                        </div>
+                    </div>
+                    <div
+                        style="display: inline-block; background-color: #E23465; padding: 12px; color: #ffffff; padding-left: 0px;">
+                        Aprobaciones
+                    </div>
+                    <div class="FinalRedondo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--------fin Aprobaciones----------->
+    <br>
+    <div>
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-131.png" height="30px" width="auto">
+        <span class="SizeImgText">Aprobaciones pendientes</span>
+    </div>
+    <hr class="lineR">
+    <br>
+    <!--fin titulo  de aprobaciones-->
+    <div *ngIf="!yaCargoAprobaciones">
+        <div style="display: flex;">
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-21.png" height="30px" width="auto" class="sizeImg">
+            <span style="width: 45% !important;">El producto estará listo para ser aprobado / rechazado una vez
+                haya diligenciado el formulario y se encuentre en estado “Por Aprobar”.
+            </span>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="yaCargoAprobaciones">
+        <!--inicio de aprobaciones-->
+        <div [formGroup]="form" fxLayout="row wrap">
+
+          <div class="bordeado">
+            <div class="BordeadoSup">
+              <span class="text-size-13-px">Decisión de aprobación</span>
+            </div>
+            <div class="d-flex flex-lg-row flex-column-reverse">
+              <div class="borderRight BordeNone border-down-md-none d-flex flex-column justify-content-center">
+                <div *ngFor="let item of AccionesAprobacionesList" style="text-align: center;">
+                  <button class="text-size-1-rem w-down-lg-90" id="accionAprobacion{{item.id}}" value="{{item.id}}"
+                                        [class]="idaccion === 0  ? 'buttonAprobar' : idaccion ===1 ? (idaccion === item.id  ? 'btverde':'buttonAprobar') :idaccion ===7 ? (idaccion === item.id   ? 'btrojo' :'buttonAprobar'):'buttonAprobar' "
+                                        (click)="joinRoom(item)">{{item.nombre}}</button>
+                </div>
+              </div>
+              <div class="w-100 mt-3 ml-xl-1 ml-0">
+                <div class="form-group m-0 px-lg-down-10-px">
+                  <label class="TextosBlueLeft3 text-size-13-px">Observaciones / Justificaciones</label>
+                  <input id="observaciones" formControlName="observaciones" class="inputFull2 form-control mx-sm-down-0 w-down-sm-100" type="text" required />
+                  <div
+                      *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+                      class="invalid-feedback">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <div fxFlex="100">
+                <br>
+                <div fxLayout="row wrap">
+                    <div style="width: 100%; float: right;" class="align-items-center textagregar">
+                        <div class="text-right">
+                            <button [disabled]="!form.valid " style="margin-left: 20px; height: 40px;"
+                                (click)="mensaje()">
+                                <span>Enviar resultado</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--fin de aprobaciones-->
+    <div>
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-131.png" height="30px" width="auto">
+        <span class="SizeImgText">Histórico de aprobaciones</span>
+    </div>
+    <hr class="lineR">
+    <!-- inicio Historico-->
+    <div fxLayout="row wrap">
+        <div fxFlex="100">
+            <mat-card>
+                <mat-card-content class="responsive-table-pae">
+                    <table mat-table [dataSource]="dataSourceAprobaciones" class="left-radius" matSort>
+                        <ng-container matColumnDef="fecha">
+                            <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef mat-sort-header>
+                                Fecha
+                            </th>
+                            <td class="pl-down-0" mat-cell *matCellDef="let element" data-label="Fecha">
+                                {{element.fecha==null?'-': (element.fecha) }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="responsable">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                Responsable </th>
+                            <td mat-cell *matCellDef="let element" data-label="Responsable">
+                                {{element.responsable==null?'-': (element.responsable)}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="rol">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                Rol del responsable
+                            </th>
+                            <td mat-cell *matCellDef="let element" data-label="Rol responsable">
+                                {{element.rol==null?'-': (element.rol)}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="accion">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                Acción
+                            </th>
+                            <td mat-cell *matCellDef="let element" data-label="Acción">
+                                {{element.accion==null?'-': (element.accion)}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="observaciones">
+                            <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef mat-sort-header
+                                style="padding-left: 0px; ">
+                                Observaciones / Justificaciones
+                            </th>
+                            <td class="pr-down-0" mat-cell *matCellDef="let element" data-label="Ob. / Justificaciones">
+                                {{element.observaciones==null?'-': (element.observaciones)}}
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsAprobaciones"></tr>
+                        <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsAprobaciones;"></tr>
+                    </table>
+                    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+                    </mat-paginator>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <!-- fin Historico-->
+</div>

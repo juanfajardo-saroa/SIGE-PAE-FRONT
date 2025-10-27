@@ -1,0 +1,28 @@
+<div id="sinAutorizar" class="container-fluid">
+  <div class="row mt-xxl">
+    <table class="table-default table-hover">
+      <thead>
+        <tr class="text-center">
+          <th>Nombre de la minuta diferencial</th>
+          <th>Modelo de operación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="minutasUsoList?.length > 0">
+          <ng-container  *ngFor="let minuta of minutasUsoList">
+            <tr>
+              <td class="text-center">{{ minuta.nombreMinuta }}</td>
+              <td class="text-center">{{ minuta.modeloOperacion }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="minutasUsoList?.length == 0 || minutasUsoList == undefined">
+          <tr class="text-center">
+            <td colspan="2">No se encontraron minutas en uso para esta ETC.</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-spinner *ngIf="loadingVisible"></app-spinner>

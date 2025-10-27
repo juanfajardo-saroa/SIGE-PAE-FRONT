@@ -1,0 +1,636 @@
+<table class="table-default table-border-dashed-vertical">
+  <thead>
+    <tr class="text-center">
+      <th width="10%">Componente</th>
+      <th width="25%">Grupo de <br> alimentos</th>
+      <th width="25%">Subgrupo de <br> alimentos</th>
+      <th>Tamaño de la <br> porci&oacute;n (peso neto)</th>
+      <th>Frecuencia</th>
+      <th *ngIf="itemsDisabled">Intercambios</th>
+      <th *ngIf="!itemsDisabled">Editar,<br>agregar o<br>eliminar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Bebida con leche -->
+    <ng-container *ngIf="itemComponente && itemComponente.listAlimentoComponente.length > 0">
+      <tr width="10%" class="text-center">
+        <td [attr.rowspan]="itemComponente.totalRows" [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}">
+          <img style="width: 45px; height: 45px;" *ngIf="itemComponente.imagen"
+            src="../../../../../../assets/images/minutas/{{ itemComponente.imagen }}" />
+          <br>
+          {{ itemComponente.nombreComponente }}
+        </td>
+        <td [attr.rowspan]="itemComponente.listAlimentoComponente[0].totalRows"
+          [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}">
+          - {{ itemComponente.listAlimentoComponente[0].nombre }}
+        </td>
+        <td [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}">
+          - {{ itemComponente.listAlimentoComponente[0].listSubGrupo[0].nombre }}
+        </td>
+        <td [attr.rowspan]="itemComponente.listAlimentoComponente[0].totalRows"
+          [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}">
+          <ng-container *ngIf="itemComponente.listAlimentoComponente[0].listSubGrupo[0].id == 4 && 
+            (itemsDisabled || (!itemsDisabled  && !itemComponente.estado))">
+            <span>
+              Si es leche en<br>polvo: {{ itemComponente.listAlimentoComponente[0].min_Gramo }} g
+              <br>
+              Si es leche<br>líquida: {{ itemComponente.listAlimentoComponente[0].max_Gramo }} ml
+            </span>
+          </ng-container>
+          <ng-container *ngIf="!itemsDisabled && itemComponente.estado && itemComponente.listAlimentoComponente[0].listSubGrupo[0].id == 4">
+            <div class="w-100">
+              <span>
+                Si es leche en polvo: <br>
+                <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                  [(ngModel)]="itemComponente.listAlimentoComponente[0].min_Gramo"> g
+              </span>
+            </div>
+            <div class="w-100 mt-2">
+              <span>
+                Si es leche líquida: <br>
+                <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                  [(ngModel)]="itemComponente.listAlimentoComponente[0].max_Gramo"> ml
+              </span>
+            </div>
+          </ng-container>
+        </td>
+        <td [attr.rowspan]="itemComponente.totalRows" [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}">
+          <label *ngIf="itemsDisabled || (!itemsDisabled  && !itemComponente.estado)">
+            {{ itemComponente.nombreFrecuencia }}
+          </label>
+          <select class="control-md" id="disabledFrecuencia{{ itemComponente.id }}"
+            *ngIf="!itemsDisabled && itemComponente.estado" [(ngModel)]="itemComponente.frecuencia"
+            (ngModelChange)="changeModelMinuta('frecuencia', $event, itemComponente)">
+            <option value="0">Elija una opción</option>
+            <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+          </select>
+        </td>
+        <td [attr.rowspan]="itemComponente.totalRows" class="text-center">
+          <ng-container *ngIf="itemsDisabled">
+            <a>
+              Ver lista de <br>intercambios
+            </a>
+          </ng-container>
+          <ng-container *ngIf="!itemsDisabled">
+            <ng-container *ngIf="itemComponente.estado; else componenteEstadoInactivo">
+              <button class="btn border-0 col-1" disabled>
+                <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                  src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+              </button>
+              <button class="btn border-0 col-1" (click)="abrirModalEditarComponente(itemComponente)">
+                <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                  src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+              </button>
+              <button class="btn border-0 col-1"
+                (click)="actualizarEstadoComponente(itemComponente.iD_TipoComponente, false)">
+                <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                  src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+              </button>
+            </ng-container>
+            <ng-template #componenteEstadoInactivo>
+              <button class="btn border-0 col-1"
+                (click)="actualizarEstadoComponente(itemComponente.iD_TipoComponente, true)">
+                <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                  src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+              </button>
+              <button class="btn border-0 col-1" disabled>
+                <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                  src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+              </button>
+              <button class="btn border-0 col-1" disabled>
+                <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                  src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+              </button>
+            </ng-template>
+          </ng-container>
+        </td>
+      </tr>
+      <!-- Grupos restantes Bebida con Leche -->
+      <ng-container *ngFor="let grupo of itemComponente.listAlimentoComponente; index as iGrupoItem">
+        <tr *ngIf="iGrupoItem != 0" class="text-center">
+          <td [attr.rowspan]="grupo.totalRows" class="dinamic-table-border-left-dashed"
+            [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}">
+            - {{ grupo.nombre }}
+          </td>
+          <td [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}">
+            - {{ grupo.listSubGrupo[0].nombre}}
+          </td>
+          <td [attr.rowspan]="grupo.totalRows" [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}"
+            class="dinamic-table-noborder-right">
+            <ng-container *ngIf="itemsDisabled || !itemComponente.estado">
+              <span>{{ grupo.min_Gramo }}</span>
+              <span>{{ grupo.unidadMedida }}</span>
+              <span> - </span>
+              <span>{{ grupo.max_Gramo }}</span>
+              <span>{{ grupo.unidadMedida }}</span>
+            </ng-container>
+            <ng-container *ngIf="!itemsDisabled && itemComponente.estado">
+              <span class="mr-xs">
+                <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                  [(ngModel)]="grupo.min_Gramo">
+                {{ grupo.unidadMedida }}
+              </span>
+              <span> - </span>
+              <span class="mr-xs">
+                <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                  [(ngModel)]="grupo.max_Gramo">
+                {{ grupo.unidadMedida }}
+              </span>
+            </ng-container>
+          </td>
+        </tr>
+        <!-- SubGrupos restantes Grupos Bebida con Leche -->
+        <ng-container *ngFor="let subGrupo of grupo.listSubGrupo; index as ISubGrupoGrupoItem">
+          <tr *ngIf="ISubGrupoGrupoItem != 0" class="text-center">
+            <td [ngClass]="{'opacity-50': !itemsDisabled && !itemComponente.estado}" 
+              class="dinamic-table-noborder-right dinamic-table-border-left-dashed">
+              - {{ subGrupo.nombre }}
+            </td>
+          </tr>
+        </ng-container>
+        <!-- Fin SubGrupos restantes Grupos Bebida con Leche -->
+      </ng-container>
+      <!-- Fin Grupos restantes Bebida con Leche -->
+    </ng-container>
+    <!-- Fin Bebida con leche -->
+    <!-- Componente Alimento Proteico Complemento Almuerzo  -->
+    <ng-container *ngIf="tipoComplementoId == 1">
+      <ng-container *ngIf="dataSourceAlimentoProteico">
+        <tr class="text-center">
+          <td [attr.rowspan]="dataSourceAlimentoProteico.totalRows" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}">
+            <img style="width: 45px; height: 45px;" src="../../../../../../assets/images/minutas/{{ dataSourceAlimentoProteico.imagen }}" /><br />
+              {{ dataSourceAlimentoProteico.nombreComponente }}
+          </td>
+          <td [attr.rowspan]="dataSourceAlimentoProteico.listAlimentoComponente[0].totalRows" [attr.rowspan]="dataSourceAlimentoProteico.totalRows"
+            [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}">
+            - {{ dataSourceAlimentoProteico.listAlimentoComponente[0].nombre }}
+          </td>
+          <td [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}">
+            - {{ dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].nombre }}
+          </td>
+          <ng-container *ngIf="AlimentoProteicoSubGrupoIA && AlimentoProteicoSubGrupoII">
+            <ng-container *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].id == 1">
+              <td [attr.rowspan]="2" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}">
+                <ng-container *ngIf="itemsDisabled || (!itemsDisabled  && !dataSourceAlimentoProteico.estado)">
+                  <ng-container *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].minVisible">
+                    <span>
+                      {{ dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].textoMsg + ' ' + 
+                      dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].min_Gramo + ' ' + 
+                      dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].unidadMedida }}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].minVisible && 
+                    dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].maxVisible">
+                    <span class="ml-xs mr-xs">-</span>
+                  </ng-container>
+                  <ng-container *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].maxVisible">
+                    <span>
+                      {{ dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].max_Gramo + ' ' + 
+                      dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].unidadMedida + ' ' + 
+                      dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].textoMsg }}
+                    </span>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="!itemsDisabled && dataSourceAlimentoProteico.estado">
+                  <ng-container *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].minVisible">
+                    <div style="display: inline;">
+                      <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                        [(ngModel)]="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].min_Gramo" 
+                        (ngModelChange)="changeValueSubGrupos('min_Gramo')">
+                      <span>{{' ' + dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].unidadMedida}}</span>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].minVisible && 
+                    dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].maxVisible">
+                    <span class="ml-xs mr-xs">-</span>
+                  </ng-container>
+                  <ng-container *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].maxVisible">
+                    <div style="display: inline;">
+                      <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                        [(ngModel)]="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].max_Gramo" 
+                        (ngModelChange)="changeValueSubGrupos('max_Gramo')">
+                      <span>{{' ' + dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].unidadMedida}}</span>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </td>
+            </ng-container>
+          </ng-container>
+          <td [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}">
+            <label *ngIf="itemsDisabled || (!itemsDisabled  && !dataSourceAlimentoProteico.estado)">
+              {{ dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].nombreFrecuencia }}
+              <span *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].id == 1"><br>(Carnes)</span>
+              <span *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].id == 19"><br>(Huevo)</span>
+              <span *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].id == 7"><br>(Leguminosas)</span>
+            </label>
+            <select class="control-md" id="disabledFrecuencia{{ dataSourceAlimentoProteico.id }}"
+              *ngIf="!itemsDisabled && dataSourceAlimentoProteico.estado" [(ngModel)]="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].frecuencia"
+              (ngModelChange)="changeModelMinuta('frecuencia', $event, dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0])">
+              <option value="0">Elija una opción</option>
+              <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+            </select>
+          </td>
+          <td [attr.rowspan]="dataSourceAlimentoProteico.totalRows" >
+            <ng-container *ngIf="itemsDisabled">
+              <a>
+                Ver lista de <br>intercambios
+              </a>
+            </ng-container>
+            <ng-container *ngIf="!itemsDisabled">
+              <ng-container *ngIf="dataSourceAlimentoProteico.estado; else componenteEstadoInactivo">
+                <button class="btn border-0 col-1" disabled>
+                  <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                </button>
+                <button class="btn border-0 col-1" (click)="abrirModalEditarComponente(dataSourceAlimentoProteico)">
+                  <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                </button>
+                <button class="btn border-0 col-1"
+                  (click)="actualizarEstadoComponente(dataSourceAlimentoProteico.iD_TipoComponente, false)">
+                  <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                </button>
+              </ng-container>
+              <ng-template #componenteEstadoInactivo>
+                <button class="btn border-0 col-1"
+                  (click)="actualizarEstadoComponente(dataSourceAlimentoProteico.iD_TipoComponente, true)">
+                  <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                </button>
+                <button class="btn border-0 col-1" disabled>
+                  <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                </button>
+                <button class="btn border-0 col-1" disabled>
+                  <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                </button>
+              </ng-template>
+            </ng-container>
+          </td>
+        </tr>
+        <ng-container *ngFor="let grupo of dataSourceAlimentoProteico.listAlimentoComponente; index as iGrupoAlimentoProteico">
+          <tr *ngIf="iGrupoAlimentoProteico != 0" class="text-center">
+            <td [attr.rowspan]="grupo.totalRows" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}"
+              class="dinamic-table-border-left-dashed">
+              - {{ grupo.nombre }}
+            </td>
+          </tr>
+          <ng-container *ngFor="let subGrupo of grupo.listSubGrupo; index as ISubGrupoGrupoAlimentoProteico">
+            <tr *ngIf="ISubGrupoGrupoAlimentoProteico != 0" class="text-center">
+              <td [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}"
+                class="dinamic-table-border-left-dashed">
+                - {{ subGrupo.nombre }}
+              </td>
+              <ng-container *ngIf="AlimentoProteicoSubGrupoIA && AlimentoProteicoSubGrupoII">
+                <td *ngIf="subGrupo.id != 1 && subGrupo.id != 19" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}">
+                  <ng-container *ngIf="itemsDisabled || (!itemsDisabled  && !dataSourceAlimentoProteico.estado)">
+                    <ng-container *ngIf="subGrupo.minVisible">
+                      <span>{{subGrupo.textoMsg + ' ' + subGrupo.min_Gramo + ' ' + subGrupo.unidadMedida}}</span>
+                    </ng-container>
+                    <ng-container *ngIf="subGrupo.minVisible && subGrupo.maxVisible">
+                      <span class="ml-xs mr-xs">-</span>
+                    </ng-container>
+                    <ng-container *ngIf="subGrupo.maxVisible">
+                      <span>{{subGrupo.max_Gramo + ' ' + subGrupo.unidadMedida + ' ' + subGrupo.textoMsg}}</span>
+                    </ng-container>
+                  </ng-container>
+
+                  <ng-container *ngIf="!itemsDisabled && dataSourceAlimentoProteico.estado">
+                    <ng-container *ngIf="subGrupo.minVisible">
+                      <div style="display: inline;">
+                        <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                          [(ngModel)]="subGrupo.min_Gramo">
+                        <span>{{' ' + subGrupo.unidadMedida}}</span>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="subGrupo.minVisible && subGrupo.maxVisible">
+                      <span class="ml-xs mr-xs">-</span>
+                    </ng-container>
+                    <ng-container *ngIf="subGrupo.maxVisible">
+                      <div style="display: inline;">
+                        <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                          [(ngModel)]="subGrupo.max_Gramo">
+                        <span>{{' ' + subGrupo.unidadMedida}}</span>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </td>
+              </ng-container>
+              <td class="dinamic-table-noborder-right" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoProteico.estado}">
+                <label *ngIf="itemsDisabled || (!itemsDisabled  && !dataSourceAlimentoProteico.estado)">
+                  {{ subGrupo.nombreFrecuencia }}
+                  <span *ngIf="subGrupo.id == 1"><br>(Carnes)</span>
+                  <span *ngIf="subGrupo.id == 19"><br>(Huevo)</span>
+                  <span *ngIf="subGrupo.id == 7"><br>(Leguminosas)</span>
+                </label>
+                <select class="control-md" id="disabledFrecuencia{{ dataSourceAlimentoProteico.id }}"
+                  *ngIf="!itemsDisabled && dataSourceAlimentoProteico.estado" [(ngModel)]="subGrupo.frecuencia"
+                  (ngModelChange)="changeModelMinuta('frecuencia', $event, subGrupo)">
+                  <option value="0">Elija una opción</option>
+                  <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+                </select>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="modalidadComplementoId == 2">
+      <ng-container *ngIf="dataSourceAlimentoLecheInd">
+        <tr class="text-center">
+          <td [attr.rowspan]="dataSourceAlimentoLecheInd.totalRows" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoLecheInd.estado}">
+            <img style="width: 45px; height: 45px;" src="../../../../../../assets/images/minutas/{{ dataSourceAlimentoLecheInd.imagen }}" /><br />
+              {{ dataSourceAlimentoLecheInd.nombreComponente }}
+          </td>
+          <td [attr.rowspan]="dataSourceAlimentoLecheInd.listAlimentoComponente[0].totalRows" [attr.rowspan]="dataSourceAlimentoLecheInd.totalRows"
+            [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoLecheInd.estado}">
+            - {{ dataSourceAlimentoLecheInd.listAlimentoComponente[0].nombre }}
+          </td>
+          <td [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoLecheInd.estado}">
+            - {{ dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].nombre }}
+          </td>
+          <ng-container *ngIf="AlimentoProteicoSubGrupoIA">
+            <ng-container>
+              <td [attr.rowspan]="1" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoLecheInd.estado}">
+                <ng-container *ngIf="itemsDisabled || (!itemsDisabled  && !dataSourceAlimentoLecheInd.estado)">
+                  <ng-container *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].minVisible">
+                    <span>
+                      dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].min_Gramo + ' ' + 
+                      dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].subGrupoUnidadMedida + ' ' + 
+                      dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].textoMsg }}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].minVisible && 
+                  dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].maxVisible">
+                    <span class="ml-xs mr-xs">-</span>
+                  </ng-container>
+                  <ng-container *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].maxVisible">
+                    <span>
+                      {{ dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].max_Gramo + ' ' + 
+                      dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].subGrupoUnidadMedida + ' ' + 
+                      dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].textoMsg }}
+                    </span>
+                  </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="!itemsDisabled && dataSourceAlimentoLecheInd.estado">
+                  <ng-container *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].minVisible">
+                    <div style="display: inline;">
+                      <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                        [(ngModel)]="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].min_Gramo" 
+                        (ngModelChange)="changeValueSubGrupos('min_Gramo')">
+                      <span>{{' ' + dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].subGrupoUnidadMedida}}</span>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].minVisible && 
+                  dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].maxVisible">
+                    <span class="ml-xs mr-xs">-</span>
+                  </ng-container>
+                  <ng-container *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].maxVisible">
+                    <div style="display: inline;">
+                      <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                        [(ngModel)]="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].max_Gramo" 
+                        (ngModelChange)="changeValueSubGrupos('max_Gramo')">
+                      <span>{{' ' + dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].subGrupoUnidadMedida}}</span>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </td>
+            </ng-container>
+          </ng-container>
+          <td [attr.rowspan]="dataSourceAlimentoLecheInd.totalRows"  [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoLecheInd.estado}">
+            <label *ngIf="itemsDisabled || (!itemsDisabled  && !dataSourceAlimentoLecheInd.estado)">
+              {{ dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].nombreFrecuencia }}
+              <span *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].id == 1"><br>(Carnes)</span>
+              <span *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].id == 19"><br>(Huevo)</span>
+              <span *ngIf="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].id == 7"><br>(Leguminosas)</span>
+            </label>
+            <select class="control-md" id="disabledFrecuencia{{ dataSourceAlimentoLecheInd.id }}"
+              *ngIf="!itemsDisabled && dataSourceAlimentoLecheInd.estado" [(ngModel)]="dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0].frecuencia"
+              (ngModelChange)="changeModelMinuta('frecuencia', $event, dataSourceAlimentoLecheInd.listAlimentoComponente[0].listSubGrupo[0])">
+              <option value="0">Elija una opción</option>
+              <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+            </select>
+          </td>
+          <td [attr.rowspan]="dataSourceAlimentoLecheInd.totalRows" >
+            <ng-container *ngIf="itemsDisabled">
+              <a>
+                Ver lista de <br>intercambios
+              </a>
+            </ng-container>
+            <ng-container *ngIf="!itemsDisabled">
+              <ng-container *ngIf="dataSourceAlimentoLecheInd.estado; else componenteEstadoInactivo">
+                <button class="btn border-0 col-1" disabled>
+                  <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                </button>
+                <button class="btn border-0 col-1" (click)="abrirModalEditarComponente(dataSourceAlimentoLecheInd)">
+                  <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                </button>
+                <button class="btn border-0 col-1"
+                  (click)="actualizarEstadoComponente(dataSourceAlimentoLecheInd.iD_TipoComponente, false)">
+                  <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                </button>
+              </ng-container>
+              <ng-template #componenteEstadoInactivo>
+                <button class="btn border-0 col-1"
+                  (click)="actualizarEstadoComponente(dataSourceAlimentoLecheInd.iD_TipoComponente, true)">
+                  <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                </button>
+                <button class="btn border-0 col-1" disabled>
+                  <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                </button>
+                <button class="btn border-0 col-1" disabled>
+                  <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                    src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                </button>
+              </ng-template>
+            </ng-container>
+          </td>
+        </tr>
+        <ng-container *ngFor="let grupo of dataSourceAlimentoLecheInd.listAlimentoComponente; index as iGrupoAlimentoProteico">
+          <tr *ngIf="iGrupoAlimentoProteico != 0" class="text-center">
+            <td [attr.rowspan]="1" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoLecheInd.estado}"
+              class="dinamic-table-border-left-dashed">
+              - {{ grupo.nombre }}
+            </td>
+          </tr>
+          <ng-container *ngFor="let subGrupo of grupo.listSubGrupo; index as ISubGrupoGrupoAlimentoProteico">
+            <tr *ngIf="ISubGrupoGrupoAlimentoProteico != 0" class="text-center">
+              <td [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoLecheInd.estado}"
+                class="dinamic-table-border-left-dashed">
+                - {{ subGrupo.nombre }}
+              </td>
+              <ng-container *ngIf="AlimentoProteicoSubGrupoIA">
+                <td *ngIf="subGrupo.id != 4" [ngClass]="{'opacity-50': !itemsDisabled && !dataSourceAlimentoLecheInd.estado} " class="quitarBorde">
+                  <ng-container *ngIf="itemsDisabled || (!itemsDisabled  && !dataSourceAlimentoLecheInd.estado)">
+                    <ng-container *ngIf="subGrupo.minVisible">
+                      <span>{{subGrupo.min_Gramo + ' ' + subGrupo.subGrupoUnidadMedida + ' ' + subGrupo.textoMsg  }}</span>
+                    </ng-container>
+                    <ng-container *ngIf="subGrupo.minVisible && subGrupo.maxVisible">
+                      <span class="ml-xs mr-xs">-</span>
+                    </ng-container>
+                    <ng-container *ngIf="subGrupo.maxVisible">
+                      <span>{{subGrupo.max_Gramo + ' ' + subGrupo.subGrupoUnidadMedida + ' ' + subGrupo.textoMsg}}</span>
+                    </ng-container>
+                  </ng-container>
+
+                  <ng-container *ngIf="!itemsDisabled && dataSourceAlimentoLecheInd.estado">
+                    <ng-container *ngIf="subGrupo.minVisible">
+                      <div style="display: inline;">
+                        <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                          [(ngModel)]="subGrupo.min_Gramo">
+                        <span>{{' ' + subGrupo.unidadMedida}}</span>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="subGrupo.minVisible && subGrupo.maxVisible">
+                      <span class="ml-xs mr-xs">-</span>
+                    </ng-container>
+                    <ng-container *ngIf="subGrupo.maxVisible">
+                      <div style="display: inline;">
+                        <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                          [(ngModel)]="subGrupo.max_Gramo">
+                        <span>{{' ' + subGrupo.subGrupoUnidadMedida}}</span>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </td>
+              </ng-container>
+          
+            </tr>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container> 
+    <!-- Fin Componente Alimento Proteico Complemento Almuerzo  -->
+    <!-- Componentes restantes -->
+    <ng-container *ngIf="dataSourceComponentes.length > 0">
+      <ng-container *ngFor="let componente of dataSourceComponentes; index as iComponente">
+        <ng-container *ngIf="componente.listAlimentoComponente.length > 0">
+          <tr class="text-center">
+            <td [attr.rowspan]="componente.totalRows" 
+              [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+              <img style="width: 45px; height: 45px;" src="../../../../../../assets/images/minutas/{{ componente.imagen }}" /><br />
+              {{ componente.nombreComponente }}
+            </td>
+            <td [attr.rowspan]="componente.listAlimentoComponente[0].totalRows"
+              [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+              - {{ componente.listAlimentoComponente[0].nombre }}
+            </td>
+            <td [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+              - {{ componente.listAlimentoComponente[0].listSubGrupo[0].nombre }}
+            </td>
+            <td [attr.rowspan]="componente.totalRows" 
+              [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+              <ng-container *ngIf="itemsDisabled || (!itemsDisabled  && !componente.estado)">
+                <ng-container *ngIf="componente.minVisible">
+                  <span>{{ componente.min_Gramo + ' '  + componente.listAlimentoComponente[0]?.unidadMedida + ' ' + componente.textoMsg + ' '}}</span>
+                </ng-container>
+                <ng-container *ngIf="componente.minVisible && componente.maxVisible">
+                  <span class="ml-xs mr-xs">-</span>
+                </ng-container>
+                <ng-container *ngIf="componente.maxVisible">
+                  <span>{{componente.max_Gramo + ' ' + componente.listAlimentoComponente[0]?.unidadMedida + ' ' + componente.textoMsg}}</span>
+                </ng-container>
+              </ng-container>
+
+              <ng-container *ngIf="!itemsDisabled && componente.estado">
+                <ng-container *ngIf="componente.minVisible">
+                  <div style="display: inline;">
+                    <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                      [(ngModel)]="componente.min_Gramo">
+                    <span>{{' ' + componente.listAlimentoComponente[0].unidadMedida}}</span>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="componente.minVisible && componente.maxVisible">
+                  <span class="ml-xs mr-xs">-</span>
+                </ng-container>
+                <ng-container *ngIf="componente.maxVisible">
+                  <div style="display: inline;">
+                    <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                      [(ngModel)]="componente.max_Gramo">
+                    <span>{{' ' + componente.listAlimentoComponente[0].unidadMedida}}</span>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </td>
+            <td [attr.rowspan]="componente.totalRows" [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+              <label *ngIf="itemsDisabled || (!itemsDisabled  && !componente.estado)">
+                {{ componente.nombreFrecuencia }}
+              </label>
+              <select *ngIf="!itemsDisabled && componente.estado"
+                class="control-md" id="disabledFrecuencia{{ componente.id }}"
+                [(ngModel)]="componente.frecuencia" (ngModelChange)="changeModelMinuta('frecuencia', $event, componente)">
+                <option value="0">Elija una opción</option>
+                <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+              </select>
+            </td>
+            <td [attr.rowspan]="componente.totalRows" [ngClass]="{'bgAliceBlue' : !(iComponente % 2)}">
+              <a *ngIf="itemsDisabled">Ver lista de<br>intercambios</a>
+              <ng-container *ngIf="!itemsDisabled">
+                <ng-container *ngIf="componente.estado; else componenteEstadoInactivo">
+                  <button class="btn border-0 col-1" disabled>
+                    <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                      src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                  </button>
+                  <button class="btn border-0 col-1" (click)="abrirModalEditarComponente(componente)">
+                    <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                      src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                  </button>
+                  <button class="btn border-0 col-1" (click)="actualizarEstadoComponente(componente.iD_TipoComponente, false)">
+                    <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                      src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                  </button>
+                </ng-container>
+                <ng-template #componenteEstadoInactivo>
+                  <button class="btn border-0 col-1" (click)="actualizarEstadoComponente(componente.iD_TipoComponente, true)">
+                    <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                      src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                  </button>
+                  <button class="btn border-0 col-1" disabled>
+                    <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                      src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                  </button>
+                  <button class="btn border-0 col-1" disabled>
+                    <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                      src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                  </button>
+                </ng-template>
+              </ng-container>
+            </td>
+          </tr>
+          <ng-container *ngFor="let grupo of componente.listAlimentoComponente; index as iGrupoComponente">
+            <tr *ngIf="iGrupoComponente != 0" class="text-center" 
+              [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+              <td [attr.rowspan]="grupo.totalRows" [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}"
+                class="dinamic-table-border-left-dashed">
+                - {{ grupo.nombre }}
+              </td>
+              <td [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}"
+                class="dinamic-table-noborder-right">
+                - {{ grupo.listSubGrupo[0].nombre }}
+              </td>
+            </tr>
+            <ng-container *ngFor="let subGrupo of grupo.listSubGrupo; index as iSubGrupoGrupoComponente">
+              <tr *ngIf="iSubGrupoGrupoComponente != 0" class="text-center">
+                <td [ngClass]="{'opacity-50': !itemsDisabled && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}"
+                  class="dinamic-table-border-left-dashed dinamic-table-noborder-right">
+                  - {{ subGrupo.nombre }}
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </tbody>
+</table>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>

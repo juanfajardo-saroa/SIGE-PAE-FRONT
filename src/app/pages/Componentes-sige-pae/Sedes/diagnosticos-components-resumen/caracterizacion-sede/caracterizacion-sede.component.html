@@ -1,0 +1,42 @@
+<div>
+  <div class="sub">Las sedes de la ETC:</div>
+    <br>
+  <div class="BordeRedondoUno" id="chart-contaminacion" *ngIf="yaCargoChartOptions">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-59.png "> <span class="titulo"> Están cerca de potenciales
+      fuentes de contaminación (basureros, mataderos, pantanos, etc):</span>
+    <apx-chart
+     [series]="chartOptions.series" 
+     [chart]="chartOptions.chart"
+      [stroke]="chartOptions.stroke"
+      [plotOptions]="chartOptions.plotOptions" 
+      [fill]="chartOptions.fill"
+       [legend]="chartOptions.legend"
+      [yaxis]="chartOptions.yaxis" 
+      [xaxis]="chartOptions.xaxis" 
+      [colors]="chartOptions.colors"
+      [dataLabels]="chartOptions.dataLabels" 
+      [grid]="chartOptions.grid"
+      [tooltip]="chartOptions.tooltip"
+      >
+    </apx-chart>
+  </div>
+  <div class="BordeRedondoDos" id="chart-ubicada" *ngIf="yaCargoChartOptions2" >
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-60.png "> <span class="titulo"> Se encuentran ubicada en
+      una zona de conflicto armado o inestabilidad social:</span>
+    <apx-chart 
+    [series]="chartOptions2.series" 
+    [chart]="chartOptions2.chart" 
+    [stroke]="chartOptions2.stroke"
+      [plotOptions]="chartOptions2.plotOptions" 
+      [fill]="chartOptions2.fill" 
+      [legend]="chartOptions2.legend"
+      [yaxis]="chartOptions2.yaxis"
+       [xaxis]="chartOptions2.xaxis" 
+       [colors]="chartOptions2.colors"
+      [dataLabels]="chartOptions2.dataLabels" 
+      [grid]="chartOptions2.grid"
+      [tooltip]="chartOptions2.tooltip"></apx-chart>
+  </div>
+
+</div>
+<br>

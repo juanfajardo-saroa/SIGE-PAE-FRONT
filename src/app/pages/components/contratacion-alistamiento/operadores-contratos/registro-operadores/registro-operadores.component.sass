@@ -1,0 +1,56 @@
+@import 'src/assets/styles/variable.scss'
+
+.borderRed
+  border-color: $danger !important
+
+::ng-deep mat-form-field
+  padding: 0
+  margin: 0 5px
+  border-top-width: 0px
+  position: relative
+
+::ng:deep .mat-error .error-message
+  font-size: 10px !important
+
+::ng-deep .mat-form-field
+  width: auto
+  &-infix
+    border-top: 0
+    width: auto !important
+  &-underline
+    display: none
+
+.form-default-inline .form-item
+  padding: 18px 20px
+
+.table-filter
+  color: #005aca
+  &-border
+    border: 1px solid #005aca
+    border-radius: 10px
+    &-right
+      border-right: 1px solid #005aca
+  a
+    color: #005aca
+    div
+      font-size: 13px
+  span
+    font-size: 13px
+  .padding-filter
+    padding: 2.5px 20px
+
+@import "~bootstrap/scss/bootstrap-grid"
+
+@include media-breakpoint-down(lg)
+
+  .table-filter
+    &-border
+      &-right
+        border-right: none
+        &-down
+          border-right: 1px solid #005aca
+      &-bottom
+        border-bottom: 1px solid #005aca
+    .padding-filter
+      padding: 10px 20px
+

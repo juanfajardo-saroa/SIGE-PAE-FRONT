@@ -1,0 +1,645 @@
+<app-menuautorizado>
+  <mat-icon class="material-symbols-outlined"> arrow_right </mat-icon>
+  <ng-container autorizado>
+    <nav class="navbar navbar-expand-lg navbar-govco">
+      <!--                                                    -->
+      <!--Nivel 1 - Barra azul govco -- Sección de navegación -->
+      <!--                                                    -->
+
+      <div class="navbar-container pl-lg-down-3 d-flex justify-content-between w-down-100">
+        <div class="navbar-logo float-left d-flex">
+          <a class="navbar-brand" href="http://190.60.233.154/">
+            <img src="../../../../assets/images/logogov.png" width="auto" height="30" alt="Logo Gov.co" />
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsible"
+            aria-controls="navbarCollapsible" aria-expanded="false" aria-label="Toggle navigation"
+            (click)="openSideNav()">
+            <span class="navbar-toggler-bar"></span>
+            <span class="navbar-toggler-bar"></span>
+            <span class="navbar-toggler-bar"></span>
+          </button>
+        </div>
+
+        <button aria-label="Toggle navigation" class="navbar-toggler" (click)="collapse()"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" id="navigation" type="button">
+          <span class="navbar-toggler-bar navbar-kebab"> </span>
+          <span class="navbar-toggler-bar navbar-kebab"> </span>
+          <span class="navbar-toggler-bar navbar-kebab"> </span>
+        </button>
+
+        <div class="float-right d-md-none d-lg-block" style="text-align-last: right;">
+          <div>
+            <a class="text-white">{{nombreCategoriaSistema}}{{ nombreUbicacion }}</a>
+          </div>
+          <div>
+            <app-menuautorizado>
+              <ng-container autorizado style="
+                  font-family: 'Montserrat', sans-serif;
+                  overflow: hidden !important;
+                ">
+                <a class="" >{{ nombreCargo }} <app-rol></app-rol> |
+                  <strong style="color: #fff; font-size: 11px">{{
+                    nombreUsuario
+                    }}</strong></a>
+                <span></span>
+                <button [matMenuTriggerFor]="profile" (click)="openDialogUbicaciones2()" mat-icon-button
+                  class="menu m-r-5">
+                  <mat-icon class="text-white">more_vert</mat-icon>
+                </button>
+                <mat-menu #profile="matMenu" class="mymegamenu MedidaDiferencial">
+                  <button *ngIf="yaCargoUbicacion" style="font-family: 'Montserrat', sans-serif" mat-menu-item
+                    (click)="openDialogUbicaciones()">
+                    <mat-icon color="primary">pin_drop</mat-icon> Ubicación
+                  </button>
+
+                  <button style="font-family: 'Montserrat', sans-serif" mat-menu-item (click)="openDialog()">
+                    <mat-icon color="accent">supervisor_account</mat-icon>
+                    Cambiar rol
+                  </button>
+
+                  <!-- <mat-divider class="d-lg-none"></mat-divider>
+                  <button class="d-lg-none" mat-menu-item (click)="Print()">
+                    <mat-icon color="primary">print</mat-icon> Imprimir
+                  </button>
+                  <mat-divider class="d-lg-none"></mat-divider> -->
+
+                  <button style="font-family: 'Montserrat', sans-serif" mat-menu-item
+                    (click)="seguridadService.logout()">
+                    <mat-icon color="warn">logout</mat-icon>Cerrar sesión
+                  </button>
+                </mat-menu>
+              </ng-container>
+              <ng-container noAutorizado>
+                <a class="" >{{ nombreCargo }}
+                  <strong style="color: #fff">....</strong></a>
+                <a mat-button style="color: #00a9ab" class="primary" routerLink="login">Ingresar</a>
+              </ng-container>
+            </app-menuautorizado>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-100 d-lg-none d-xl-block" [ngbCollapse]="isCollapsed">
+        <div class="d-flex flex-column flex-md-row justify-content-md-between py-2 pr-1 pl-3">
+          <div>
+            <a class="text-white" >{{nombreCategoriaSistema}}{{ nombreUbicacion }}</a>
+          </div>
+          <app-menuautorizado class="d-flex justify-content-between">
+            <ng-container autorizado style="
+                font-family: 'Montserrat', sans-serif;
+                overflow: hidden !important;
+              ">
+              <a class="" >{{ nombreCargo }} <app-rol></app-rol> |
+                <strong style="color: #fff; font-size: 11px">{{
+                  nombreUsuario
+                  }}</strong></a>
+              <button [matMenuTriggerFor]="profile" (click)="openDialogUbicaciones2()" mat-icon-button
+                class="menu m-r-5">
+                <mat-icon class="text-white">more_vert</mat-icon>
+              </button>
+            </ng-container>
+          </app-menuautorizado>
+        </div>
+      </div>
+
+      <!--                                                    -->
+      <!--Nivel 2 - Barra sistema -- Sección de Ir a otro sistema -->
+      <!-- "sistemaSelect == 'sigepae' && RolSuperUapa == 'No'" -->
+      <!--                                                    -->
+
+
+      <div class="bg-color-radical-red w-100" [ngClass]="isCollapsed ? 'd-md-none d-lg-block' : ''"
+        *ngIf="sistemaSelect == 'sigepae' && RolSuperUapa == 'No'" [ngbCollapse]="isCollapsed">
+        <div class="container" class="pl-lg-down-3">
+          <div class="banner-informativo align-items-center row" style="width: 100%">
+            <div class="col-sm-12 col-md-9 col">
+              <a class="banner-informativo-text text-size-down-9" role="link"
+                href="https://www.gov.co/ficha-tramites-y-servicios/" rel="noreferrer" target=""
+                style="color: rgb(255, 255, 255); font-size: 14px">{{ nombreApp }}
+              </a>
+              <!-- <a class="banner-informativo-text" role="link" href="https://www.gov.co/ficha-tramites-y-servicios/"
+                rel="noreferrer" target="" style="color: rgb(255, 255, 255)"><i class="fa fa-bell mr-2 icon-alert"
+                  style="color: rgb(255, 255, 255)"></i>{{nombreApp}} </a> -->
+            </div>
+            <div class="col-sm-12 col-md-3 col-auto banner-informativo-recordarmelo text-right">
+              <a href="javascript:void(0)" role="button" style="color: rgb(255, 255, 255)"
+                [matMenuTriggerFor]="sistema1">
+                <u class="text-size-down-8" style="color: rgb(255, 255, 255); font-size: 13px">Ir a otro sistema</u>
+                <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png" />
+                <span class="sr-only">Opción cerrar esta información</span>
+              </a>
+            </div>
+            <mat-menu #sistema1="matMenu" class="mymegamenu">
+              <mat-chip-list class="mat-chip-list-stacked" aria-label="Fish selection">
+                <div style="display: flex; align-items: center">
+                  <div class="text-size-down-8" style="color: #e43466; font-size: 11px; padding-left: 15px">
+                    <u> Ir a otro sistema</u>
+                  </div>
+                  <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png"
+                    width="30px" />
+                </div>
+
+                <mat-chip class="mat-chip1" (click)="openInicio()" selected>
+                  Pág.principal
+                </mat-chip>
+
+                <mat-chip class="mat-chip2" (click)="onMiPAEClick()" selected style="display: block"
+                  *ngIf="sistemaSeleccionado != 'mipae'">
+                  MiPAE
+                </mat-chip>
+
+                <mat-chip class="mat-chip3" (click)="onSiGEPAEClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sigepae'">
+                  SiGEPAE
+                </mat-chip>
+                <!-- <mat-chip class="mat-chip6" (click)="onSGNUAPAClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sgnUAPA'">
+                  SNG UApA
+                </mat-chip> -->
+
+                <mat-chip class="mat-chip4" (click)="onPAEstarAlDiaClick()" selected>
+                  <a href="https://www.paestaraldia.gov.co/Home" target="“_blank”">
+                    PAEstar al dia
+                  </a>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!--                                                    -->
+      <!--Nivel 2 - Barra sistema -- Sección de Ir a otro sistema -->
+      <!-- "sistemaSelect == 'sigepae' && RolSuperUapa == 'Si'" -->
+      <!--                                                    -->
+      <div class="bg-color-radical-red w-100" [ngClass]="isCollapsed ? 'd-md-none d-lg-block' : ''"
+        *ngIf="sistemaSelect == 'sigepae' && RolSuperUapa == 'Si'" [ngbCollapse]="isCollapsed">
+        <div class="container" class="pl-lg-down-3">
+          <div class="banner-informativo align-items-center row" style="width: 100%">
+
+            <div class="col-sm-12 col-md-9 col">
+              <div class="FondoR">
+                <a role="link" (click)="RetornoBotonETC()" rel="noreferrer" class="SizeTittle">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png" height="25px" width="25px">
+                  SGN UApA
+                </a>
+                <a> - </a>
+                <a role="link" (click)="RetornoBotonETC()" rel="noreferrer" class="SizeTittle">
+                  Consulta
+                </a>
+              </div>
+              <a class="banner-informativo-text text-size-down-9" role="link"
+                href="https://www.gov.co/ficha-tramites-y-servicios/" rel="noreferrer" target=""
+                style="color: rgb(255, 255, 255); font-size: 14px">{{ nombreAppUapa }}
+              </a>
+            </div>
+
+            <div class="col-sm-12 col-md-3 col-auto banner-informativo-recordarmelo text-right">
+              <a href="javascript:void(0)" role="button" style="color: rgb(255, 255, 255)"
+                [matMenuTriggerFor]="sistema1">
+                <u class="text-size-down-8" style="color: rgb(255, 255, 255); font-size: 13px">Ir a otro sistema</u>
+                <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png" />
+                <span class="sr-only">Opción cerrar esta información</span>
+              </a>
+            </div>
+            <mat-menu #sistema1="matMenu" class="mymegamenu">
+              <mat-chip-list class="mat-chip-list-stacked" aria-label="Fish selection">
+                <div style="display: flex; align-items: center">
+                  <div class="text-size-down-8" style="color: #e43466; font-size: 11px; padding-left: 15px">
+                    <u> Ir a otro sistema</u>
+                  </div>
+                  <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png"
+                    width="30px" />
+                </div>
+
+                <mat-chip class="mat-chip1" (click)="openInicio()" selected>
+                  Pág.principal
+                </mat-chip>
+
+                <mat-chip class="mat-chip2" (click)="onMiPAEClick()" selected style="display: block"
+                  *ngIf="sistemaSeleccionado != 'mipae'">
+                  MiPAE
+                </mat-chip>
+
+                <mat-chip class="mat-chip3" (click)="onSiGEPAEClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sigepae'">
+                  SiGEPAE
+                </mat-chip>
+                <!-- <mat-chip class="mat-chip6" (click)="onSGNUAPAClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sgnUAPA'">
+                  SNG UApA
+                </mat-chip> -->
+
+                <mat-chip class="mat-chip4" (click)="onPAEstarAlDiaClick()" selected>
+                  <a href="https://www.paestaraldia.gov.co/Home" target="“_blank”">
+                    PAEstar al dia
+                  </a>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+
+      <!--                                                    -->
+      <!--Nivel 2 - Barra sistema -- Sección de Ir a otro sistema -->
+      <!-- "sistemaSelect == 'mipae'"                          -->
+      <!--                                                    -->
+      <div class="bg-color-radical-red w-100" [ngClass]="isCollapsed ? 'd-md-none d-lg-block' : ''"
+        *ngIf="sistemaSelect == 'mipae'  && RolSuperUapa == 'No'" [ngbCollapse]="isCollapsed">
+        <div class="container pl-lg-down-3" style="
+            max-width: 100%;
+            padding: 0 15px 0 40px;
+            min-height: 50px;
+            background-color: #00a9ab !important;
+          ">
+          <div class="banner-informativo align-items-center row"
+            style="width: 100%; background-color: #00a9ab !important">
+            <div class="col-sm-12 col-md-9 col">
+              <a class="banner-informativo-text text-size-down-9" role="link"
+                href="https://www.gov.co/ficha-tramites-y-servicios/" rel="noreferrer" target=""
+                style="color: rgb(255, 255, 255); font-size: 14px">{{ nombreApp }}
+              </a>
+              <!-- <a class="banner-informativo-text" role="link" href="https://www.gov.co/ficha-tramites-y-servicios/"
+                rel="noreferrer" target="" style="color: rgb(255, 255, 255)"><i class="fa fa-bell mr-2 icon-alert"
+                  style="color: rgb(255, 255, 255)"></i>{{nombreApp}} </a> -->
+            </div>
+            <div class="col-sm-12 col-md-3 col-auto banner-informativo-recordarmelo text-right pr-down-0"
+              style="background-color: #00a9ab !important">
+              <a href="javascript:void(0)" role="button" style="color: rgb(255, 255, 255)"
+                [matMenuTriggerFor]="sistema">
+                <u class="text-size-down-8" style="color: rgb(255, 255, 255); font-size: 14px">Ir a otro sistema</u>
+                <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png" />
+                <span class="sr-only">Opción cerrar esta información</span>
+              </a>
+            </div>
+
+            <mat-menu #sistema="matMenu" class="mymegamenu">
+              <mat-chip-list class="mat-chip-list-stacked" aria-label="Fish selection">
+                <div style="display: flex; align-items: center">
+                  <div class="text-size-down-8" style="color: #00a9ab; font-size: 11px; padding-left: 15px">
+                    <u> Ir a otro sistema</u>
+                  </div>
+                  <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png"
+                    width="30px" />
+                </div>
+                <mat-chip class="mat-chip1" (click)="openInicio()" selected>
+                  Pág.principal
+                </mat-chip>
+
+                <mat-chip class="mat-chip2" (click)="onMiPAEClick()" selected style="display: block"
+                  *ngIf="sistemaSeleccionado != 'mipae'">
+                  MiPAE
+                </mat-chip>
+
+                <mat-chip class="mat-chip3" (click)="onSiGEPAEClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sigepae'">
+                  SIGEPAE
+                </mat-chip>
+                <!-- <mat-chip class="mat-chip6" (click)="onSGNUAPAClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sgnUAPA'">
+                  SNG UApA
+                </mat-chip> -->
+
+                <mat-chip class="mat-chip4" (click)="onPAEstarAlDiaClick()" selected>
+                  <a href="https://www.paestaraldia.gov.co/Home" target="“_blank”">
+                    PAEstar al dia
+                  </a>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+
+
+            <!--                                                    -->
+      <!--Nivel 2 - Barra sistema -- Sección de Ir a otro sistema -->
+      <!-- "sistemaSelect == 'mipae'"                          -->
+      <!--                                                    -->
+      <div class="bg-color-radical-red w-100" [ngClass]="isCollapsed ? 'd-md-none d-lg-block' : ''"
+        *ngIf="sistemaSelect == 'mipae'  && RolSuperUapa == 'Si'" [ngbCollapse]="isCollapsed">
+        <div class="container pl-lg-down-3" style="
+            max-width: 100%;
+            padding: 0 15px 0 40px;
+            min-height: 50px;
+            background-color: #00a9ab !important;
+          ">
+          <div class="banner-informativo align-items-center row"
+            style="width: 100%; background-color: #00a9ab !important">
+
+            <div class="col-sm-12 col-md-9 col">
+              <div class="FondoRMipae">
+                <a role="link" (click)="RetornoBotonETC()" rel="noreferrer" class="SizeTittle">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png" height="25px" width="25px">
+                  SGN UApA
+                </a>
+                <a> - </a>
+                <a role="link" (click)="RetornoBotonETC()" rel="noreferrer" class="SizeTittle">
+                  Consulta
+                </a>
+              </div>
+              <a class="banner-informativo-text text-size-down-9" role="link"
+                href="https://www.gov.co/ficha-tramites-y-servicios/" rel="noreferrer" target=""
+                style="color: rgb(255, 255, 255); font-size: 14px">{{ nombreAppUapa }}
+              </a>
+            </div>
+
+
+            <!-- <div class="col-sm-12 col-md-9 col">
+              <a class="banner-informativo-text text-size-down-9" role="link"
+                href="https://www.gov.co/ficha-tramites-y-servicios/" rel="noreferrer" target=""
+                style="color: rgb(255, 255, 255); font-size: 14px">{{ nombreApp }}
+              </a>
+            </div> -->
+
+
+
+
+            <div class="col-sm-12 col-md-3 col-auto banner-informativo-recordarmelo text-right pr-down-0"
+              style="background-color: #00a9ab !important">
+              <a href="javascript:void(0)" role="button" style="color: rgb(255, 255, 255)"
+                [matMenuTriggerFor]="sistema">
+                <u class="text-size-down-8" style="color: rgb(255, 255, 255); font-size: 14px">Ir a otro sistema</u>
+                <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png" />
+                <span class="sr-only">Opción cerrar esta información</span>
+              </a>
+            </div>
+
+            <mat-menu #sistema="matMenu" class="mymegamenu">
+              <mat-chip-list class="mat-chip-list-stacked" aria-label="Fish selection">
+                <div style="display: flex; align-items: center">
+                  <div class="text-size-down-8" style="color: #00a9ab; font-size: 11px; padding-left: 15px">
+                    <u> Ir a otro sistema</u>
+                  </div>
+                  <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png"
+                    width="30px" />
+                </div>
+                <mat-chip class="mat-chip1" (click)="openInicio()" selected>
+                  Pág.principal
+                </mat-chip>
+
+                <mat-chip class="mat-chip2" (click)="onMiPAEClick()" selected style="display: block"
+                  *ngIf="sistemaSeleccionado != 'mipae'">
+                  MiPAE
+                </mat-chip>
+
+                <mat-chip class="mat-chip3" (click)="onSiGEPAEClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sigepae'">
+                  SIGEPAE
+                </mat-chip>
+                <!-- <mat-chip class="mat-chip6" (click)="onSGNUAPAClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sgnUAPA'">
+                  SNG UApA
+                </mat-chip> -->
+
+                <mat-chip class="mat-chip4" (click)="onPAEstarAlDiaClick()" selected>
+                  <a href="https://www.paestaraldia.gov.co/Home" target="“_blank”">
+                    PAEstar al dia
+                  </a>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+
+      <!--                                                    -->
+      <!--Nivel 2 - Barra sistema -- Sección de Ir a otro sistema -->
+      <!-- "sistemaSelect == 'sgnUAPA'"                         -->
+      <!--                                                    -->
+      <div class="bg-color-radical-red w-100" [ngClass]="isCollapsed ? 'd-md-none d-lg-block' : ''"
+        style="background-color: #e43466 !important; width: 100%" *ngIf="sistemaSelect == 'sgnUAPA'"
+        [ngbCollapse]="isCollapsed">
+        <div class="container pl-lg-down-3" style="
+            max-width: 100%;
+            padding: 0 15px 0 40px;
+            height: 50px;
+            min-height: 50px;
+            background-color: #ffffff !important;
+          ">
+          <div class="banner-informativo align-items-center row"
+            style="width: 100%; background-color: #ffffff !important">
+            <div class="col-sm-12 col-md-9 col">
+              <a class="banner-informativo-text text-size-down-9" role="link"
+                href="https://www.gov.co/ficha-tramites-y-servicios/" rel="noreferrer" target=""
+                style="color: #005aca; font-size: 14px">{{ nombreApp }}
+              </a>
+              <!-- <a class="banner-informativo-text" role="link" href="https://www.gov.co/ficha-tramites-y-servicios/"
+                rel="noreferrer" target="" style="color: rgb(255, 255, 255)"><i class="fa fa-bell mr-2 icon-alert"
+                  style="color: rgb(255, 255, 255)"></i>{{nombreApp}} </a> -->
+            </div>
+            <!-- <div class="col-sm-12 col-md-3 col-auto banner-informativo-recordarmelo text-right pr-down-0"
+              style="background-color: #ffffff !important">
+              <a href="javascript:void(0)" role="button" style="color: #005aca" [matMenuTriggerFor]="sistema">
+                <u class="text-size-down-8" style="color: #005aca; font-size: 14px">Ir a otro sistema</u>
+                <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png" />
+                <span class="sr-only">Opción cerrar esta información</span>
+              </a>
+            </div>
+
+            <mat-menu #sistema="matMenu" class="mymegamenu">
+              <mat-chip-list class="mat-chip-list-stacked" aria-label="Fish selection">
+                <div style="display: flex; align-items: center">
+                  <div class="text-size-down-8" style="color: #00a9ab; font-size: 11px; padding-left: 15px">
+                    <u> Ir a otro sistema</u>
+                  </div>
+                  <img style="margin-left: 5px" src="../../../../../../assets/images/Iconos/otrosistema.png"
+                    width="30px" />
+                </div>
+                <mat-chip class="mat-chip1" (click)="openInicio()" selected>
+                  Pág.principal
+                </mat-chip>
+
+                <mat-chip class="mat-chip2" (click)="onMiPAEClick()" selected style="display: block"
+                  *ngIf="sistemaSeleccionado != 'mipae'">
+                  MiPAE
+                </mat-chip>
+
+                <mat-chip class="mat-chip3" (click)="onSiGEPAEClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sigepae'">
+                  SIGEPAE
+                </mat-chip>
+                <mat-chip class="mat-chip6" (click)="onSGNUAPAClick()" selected
+                  *ngIf="sistemaSeleccionado != 'sgnUAPA'">
+                  SNG UApA
+                </mat-chip>
+
+                <mat-chip class="mat-chip4" (click)="onPAEstarAlDiaClick()" selected>
+                  <a href="https://www.paestaraldia.gov.co/Home" target="“_blank”">
+                    PAEstar al dia
+                  </a>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-menu> -->
+          </div>
+        </div>
+      </div>
+
+
+      <!--                                                    -->
+      <!--Nivel 3 - Sección de menú flotante Navegación Horizontal  -->
+      <!-- "sistemaSelect == 'sgnUAPA'"                         -->
+      <!--                                                    -->
+      <!--         *ngIf="sistemaSelect"                      -->
+
+      <div class="nav-secondary govco-content" [ngClass]="isCollapsed && hiddenMenubar ? 'd-md-none d-lg-block' : ''"
+        id="nav-secondary" *ngIf="sistemaSelect">
+        <!-- <div *ngIf="true">{{FillMenu()}}</div> -->
+
+        <nav mat-tab-nav-bar class="d-lg-none">
+          <ng-container *ngFor="let item of menubar">
+            <a class="nav-link-item" mat-tab-link (click)="mostrarSubMenu(item, true)">
+              {{ item.nombre }}
+            </a>
+          </ng-container>
+        </nav>
+        <!--                                                    -->
+        <!--Nivel 3 - Sección de menú flotante Navegación Horizontal  -->
+        <!-- "sistemaSelect == 'sgnUAPA'"                         -->
+        <!--                                                    -->
+        <!--         *Menu Superior"                      -->
+
+        <div class="d-none d-lg-block" style="padding-left: 30px; float: left">
+          <div class="collapse navbar-collapse navbar-first-menu">
+            <ul class="navbar-nav">
+              <li *ngFor="let item of menubar;let i = index" class="nav-item" [class]="item.active ? ' active' : ''">
+                <a id="{{'menusuperior'+i}}" class="nav-link" (click)="mostrarSubMenu(item, true)">{{
+                  item.nombre
+                  }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="padding-right: 50px; float: right">
+          <!-- <div style="display: inline-block; margin-right: 15px">
+            <img
+              style="margin-top: -5px"
+              src="../assets/images/download.png"
+            /><span>Descargar</span>
+          </div> -->
+          <!--   <td class="clasImp">
+            <div style="display: inline-block ">
+
+                <a class="nav-link" >
+                  <img style="margin-top: -5px; color:#005ACA !important;" (click)="Print()"
+                  src="../assets/images/print.png" /><span style="color:#005ACA !important;"
+                  (click)="Print()">Imprimir</span>
+                </a>
+
+            </div>
+          </td> -->
+          <div *ngIf="mostrarImprimir" class="collapse navbar-collapse navbar-first-menu">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link">
+                  <img class="imgcolor" (click)="Print()" src="../assets/images/print.png" /><span class="imprimir"
+                    (click)="Print()">Imprimir</span>
+                </a>
+              </li>
+
+              <li>
+                <a class="nav-link Notificacion">
+                  <span [matMenuTriggerFor]="profile" [matBadge]="notificaciones.numberOfNotifications"
+                    matBadgeColor="warn" matBadgeOverlap="true">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-95.png "
+                      style="width: 40px; height: 27px; padding-left: 12px" />
+                  </span>
+
+                  <mat-menu #profile="matMenu" class="">
+                    <mat-chip-list class="mat-chip-list-stacked" aria-label="Fish selection">
+                      <div style="
+                          border-bottom: #005aca 1px dotted;
+                          text-align: right;
+                          padding: 0% 5% 5% 5%;
+                          width: 220px;
+                        ">
+                        <div (click)="goToNotifications()" style="
+                            color: #005aca;
+                            text-decoration-line: underline !important;
+                            cursor: pointer;
+                          ">
+                          Ver todas las notificaciones
+                        </div>
+                      </div>
+
+                      <div *ngFor="let item of ObtenerNotificacionesLista">
+                        <div style="
+                            border-bottom: #005aca 1px dotted;
+                            text-align: left;
+                            padding: 5%;
+                            width: 220px;
+                          " (click)="
+                            notificationClick(
+                              item.id,
+                              item.urlMensaje,
+                              item.estadoMensaje,
+                              item.mensaje
+                            )
+                          ">
+                          <div [ngStyle]="{ color: getColor(item.modulo) }">
+                            {{ item.modulo }}
+                            <div style="color: #005aca">{{ item.mensaje }}</div>
+                            <button class="buttonVer" [hidden]="disableUrl(item.urlMensaje)"
+                              [disabled]="disableUrl(item.urlMensaje)" (click)="
+                                notificationClick(
+                                  item.id,
+                                  item.urlMensaje,
+                                  item.estadoMensaje,
+                                  item.mensaje
+                                )
+                              " style="
+                                cursor: pointer;
+                                padding: 1px 12px;
+                                color: #ffffff;
+                                background-color: #005aca;
+                                border-radius: 20px;
+                                border: none;
+                                margin-left: 76%;
+                              ">
+                              Ver
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-chip-list>
+                  </mat-menu>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </ng-container>
+
+  <ng-container noAutorizado>
+    <nav class="navbar navbar-expand-lg navbar-govco">
+      <div class="navbar-container">
+        <div class="navbar-logo float-left">
+          <a class="navbar-brand" href="http://190.60.233.154/">
+            <img src="../../../../assets/images/logogov.png" width="auto" height="30" alt="Logo Gov.co" />
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsible"
+            aria-controls="navbarCollapsible" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <div class="float-right" style="text-align: right; margin-top: 0.5em; margin-right: 2.5em">
+          <div>
+            <a class="" style="color: #fff" > </a>
+          </div>
+          <div>
+            <a class="" style="color: #fff" >
+              <strong style="color: #fff"></strong></a>
+            <a mat-button style="color: #00a9ab" class="primary" routerLink="Login">
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </ng-container>
+</app-menuautorizado>

@@ -1,0 +1,120 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            {{ action }} Recurso
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <div class="course-app">
+    <mat-card-content class="text-center">
+      <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+        <br />
+
+        <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+          <div *ngIf="action !='Adicionar'">
+            <div class="CenterAll Oculto">
+              <br />
+              <input matInput id="id" formControlName="id" readonly="true" class=" form-control" />
+            </div>
+          </div>
+
+          <table>
+            <ng-container>
+              <tr>
+                <td class="BordeSeparador">
+                  <div class="TextosBlueLeft"> 1. Nombre<span style="color:red;">* </span></div>
+                </td>
+                <td class="BordeSeparador">
+                  <div>
+                    <!-- <mat-label>Nombre</mat-label> -->
+                    <br />
+                    <input matInput id="nombre" formControlName="nombre" required placeholder="Nombre"
+                      class="form-control tablaform" />
+                    <div *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                      class="invalid-feedback">
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container>
+              <tr>
+                <td class="BordeSeparador">
+                  <div class="TextosBlueLeft"> 2. Año<span style="color:red;">* </span></div>
+                </td>
+                <td class="BordeSeparador">
+                  <div>
+                    <!-- <mat-label>Año</mat-label> -->
+                    <br />
+                    <input matInput id="ano" formControlName="ano" required placeholder="Año" class="form-control" />
+                    <div *ngIf="form.get('ano').invalid && (form.get('ano').dirty || form.get('ano').touched)"
+                      class="invalid-feedback">
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+
+            <ng-container>
+              <tr>
+                <td class="BordeSeparador">
+                  <div class="TextosBlueLeft"> 3. Fecha Inicial<span style="color:red;">* </span></div>
+                </td>
+                <td class="BordeSeparador">
+                  
+                    <br />
+                    <input class="fechaText" matInput [matDatepicker]="fechaInicial" formControlName="fechaInicial" id="fechaInicial"  required placeholder="fecha Inicial">
+                    <mat-datepicker-toggle matSuffix [for]="fechaInicial"  >
+                      <mat-icon class="blueLetter" matDatepickerToggleIcon>calendar_month</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #fechaInicial></mat-datepicker>
+                 
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+          <ng-container>
+            <mat-card>
+              <mat-card-content class="CenterButton text-center">
+                <tr>
+                  <td colspan="2">
+                    <mat-checkbox class="TextosBlueLeft " id="vigenciaActual" formControlName="vigenciaActual">
+                      Vigencia
+                      Actual</mat-checkbox>
+                  </td>
+                </tr>
+              </mat-card-content>
+            </mat-card>
+          </ng-container>
+
+
+        </div>
+      </mat-dialog-content>
+      <ng-template #elseTemplate>
+        ¿Está seguro de eliminar el registro <b>{{local_data.id}}</b>?
+      </ng-template>
+
+      <table class="BordeSuperior">
+        <ng-container>
+          <div>
+            <div class="CenterButton text-center">
+              <div class="AlignRight">
+                <button [disabled]="form.invalid && action !='Eliminar'" (click)="doAction()">{{action}} </button>
+              </div>
+              <div>
+                <button (click)="closeDialog()">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </table>
+    </mat-card-content>
+  </div>
+</div>

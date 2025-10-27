@@ -1,0 +1,75 @@
+.bg-round.bg-green,
+.bg-round.bg-green-light,
+.bg-round.bg-yellow,
+.bg-round.bg-yellow-light,
+.bg-round.bg-orange,
+.bg-round.bg-orange-light {
+    margin-right: 2px;
+    width: 70px;
+    padding: 7px 0;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.bg-semaforo-sm {
+    font-size: 7px !important;
+    padding: 7px;
+    border-radius: 60%;
+}
+
+.bg-green {
+    background-color: green;
+}
+
+.bg-green-light {
+    background-color: lightgreen;
+}
+
+.bg-yellow {
+    background-color: #FFDB58;
+}
+
+.bg-yellow-light {
+    background-color: yellow;
+}
+
+.bg-orange {
+    background-color: darkorange;
+}
+
+.bg-orange-light {
+    background-color: lightcoral;
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-grey {
+    background-color: lightgray;
+}
+
+.bg-grey-light {
+    background-color: whitesmoke;
+}
+
+.bg-title {
+    background-color: aliceblue;
+}
+
+
+.bg-circle.bg-green,
+.bg-circle.bg-green-light,
+.bg-circle.bg-yellow,
+.bg-circle.bg-yellow-light,
+.bg-circle.bg-orange,
+.bg-circle.bg-orange-light,
+.bg-circle.bg-grey,
+.bg-circle.bg-grey-light{
+    border: 1px solid $base-color;
+    margin-right: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 20px;
+    display: flex;
+}

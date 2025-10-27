@@ -1,0 +1,137 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <span class="course-name"> Acción <strong>{{ action }}</strong></span>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+  <div class="container">
+    <mat-card-content class="text-center">
+      <mat-dialog-content *ngIf="action != 'Eliminar'; else elseTemplate">
+        <div class="dialog-form" [formGroup]="form" (ngSubmit)="doAction()">
+          <table class="tableFormUsuarios">
+
+            <div *ngIf="action !='Adicionar'">
+              <tr class="d-flex">
+                <td class="col-6" style="text-align:start">Id</td>
+                <td class="col-6"> <input matInput id="id" formControlName="id" readonly="true" class=" cssForm" />
+                </td>
+              </tr>
+            </div>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">"Seleccione id Tipo Archivo"...</td>
+              <td class="col-6">
+                <select id="idTipoArchivo" formControlName="idTipoArchivo">
+                  <option *ngFor="let item of TipoArchivoList" [value]="item.id">{{item.nombre}}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">"Seleccione id Categoria"...</td>
+              <td class="col-6">
+                <select id="idCategoria" formControlName="idCategoria">
+                  <option *ngFor="let item of CategoriasList" [value]="item.id">{{item.nombre}}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">"Seleccione id Vigencia"...</td>
+              <td class="col-6">
+                <select id="idVigencia" formControlName="idVigencia">
+                  <option *ngFor="let item of VigenciasList" [value]="item.id">{{item.nombre}}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">"P A H T Archivo"</td>
+              <td class="col-6">
+                <input matInput id="pAHTArchivo" formControlName="pAHTArchivo" required placeholder="P A H T Archivo"
+                  class="cssForm" />
+                <div
+                  *ngIf="form.get('pAHTArchivo')?.invalid && (form.get('pAHTArchivo')?.dirty || form.get('pAHTArchivo')?.touched)"
+                  class="invalid-feedback">
+                </div>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">"Nombre"</td>
+              <td class="col-6">
+                <input matInput id="nombre" formControlName="nombre" required placeholder="Nombre" class="cssForm" />
+                <div *ngIf="form.get('nombre')?.invalid && (form.get('nombre')?.dirty || form.get('nombre')?.touched)"
+                  class="invalid-feedback">
+                </div>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">"Descripcion"</td>
+              <td class="col-6">
+                <input matInput id="descripcion" formControlName="descripcion" required placeholder="Descripcion"
+                  class="cssForm" />
+                <div
+                  *ngIf="form.get('descripcion')?.invalid && (form.get('descripcion')?.dirty || form.get('descripcion')?.touched)"
+                  class="invalid-feedback">
+                </div>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">"fecha Archivo"</td>
+              <td class="col-6">
+                <input matInput [matDatepicker]="fechaArchivo" formControlName="fechaArchivo" id="fechaArchivo">
+                <mat-datepicker-toggle matSuffix [for]="fechaArchivo">
+                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #fechaArchivo></mat-datepicker>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">"fecha Carga"</td>
+              <td class="col-6">
+                <input matInput [matDatepicker]="fechaCarga" formControlName="fechaCarga" id="fechaCarga">
+                <mat-datepicker-toggle matSuffix [for]="fechaCarga">
+                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #fechaCarga></mat-datepicker>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan="12" />
+
+
+          </table>
+          <br>
+        </div>
+      </mat-dialog-content>
+      <ng-template #elseTemplate>
+        Esta Seguro de Eliminar el Registro <b>{{ local_data.id }}</b>?
+      </ng-template>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      <div mat-dialog-actions align="center">
+        <button class="btn btn-round btn-middle" [disabled]="form.invalid && action != 'Eliminar'" mat-raised-button
+          color="primary" mat-button (click)="doAction()">
+          {{ action }}
+        </button>
+        <button class="btn btn-round btn-high" mat-raised-button color="warn" mat-button (click)="closeDialog()"
+          mat-flat-button>
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </div>
+</div>

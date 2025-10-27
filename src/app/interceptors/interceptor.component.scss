@@ -1,0 +1,48 @@
+@import '/src/assets/styles/variable.scss';
+
+  ::ng-deep.swal2-container.swal2-center > .swal2-popup {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: center !important;
+    justify-self: center !important;
+    font-size: 13px !important;
+    border-radius: 20px !important; 
+   background-image: url(../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+    padding: 2% 0% !important;
+    width: 90% !important;    
+    color:  $base-color !important;
+    background-size: contain !important;
+    background-position: top !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  display: inline-block;
+  object-fit: contain !important;
+
+
+  }
+
+  .swal2-actions{
+    margin: 10px auto !important;
+  }
+  
+  ::ng-deep.swal2-close{
+    color: #fff !important;
+    margin-top: -15px !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    font-size: 2em !important;
+  }
+  
+  .swal2-html-container {
+    text-align: center!important;
+  }
+  .swal2-styled.swal2-confirm {
+    border: 1px solid $base-azulPAE;
+    border-radius: 0px !important; 
+    background: initial;
+    background-color: $base-azulPAE;
+    color: #fff !important;
+    font-size: 1em;
+    box-shadow: none;
+}
+

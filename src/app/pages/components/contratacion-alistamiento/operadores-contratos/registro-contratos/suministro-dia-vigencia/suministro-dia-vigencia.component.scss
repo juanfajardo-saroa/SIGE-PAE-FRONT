@@ -1,0 +1,308 @@
+@import '/src/assets/styles/variable.scss';
+@import '/src/assets/styles/radio_button';
+@import '/src/assets/sass/theme/table-sigepae';
+
+
+.form-label {
+  width: auto !important;
+  margin-right: 10px !important;
+
+
+  &.maxWidth-250 {
+    width: 250px;
+    max-width: 250px;
+  }
+}
+
+textarea {
+  max-width: 500px;
+}
+
+
+* {
+  font-family: "Montserrat",sans-serif;
+  font-size: 1rem;
+  //color: #004884
+}
+
+/* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label {
+  font-family: "Montserrat",sans-serif;
+  border-radius: 20px 20px 0px 0px !important;
+  color: $base-color !important;
+  font-size: 15px;
+  background-color: #E2ECFD !important;
+  width: 50%;
+  margin: 0.5px;
+  border-bottom: $base-color 1px solid;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  font-family: "Montserrat",sans-serif;
+  font-size: 15px;
+  border-width: 1px;
+  border-color: $base-color;
+  border-bottom-color:white;
+  border-style: solid solid hidden solid;
+  border-radius: 20px 20px 0px 0px !important;
+  color: $base-color !important;
+  background-color: white !important;
+  //width: 25%
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none!important;
+  display: none!important;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none!important;
+  display: none!important;
+  /* background-color: #1e88e5 */
+}
+
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar, .blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none!important;
+  display: none!important;
+  /* background-color: #1e88e5 */
+}
+
+::ng-deep.mat-tab-label .mat-tab-label-content {
+  font-weight: 800!important;
+}
+
+:host ::ng-deep .mat-tab-body-content {
+  border: 1px solid $base-azulPAE;
+  border-top: none;
+  border-radius: 0px 0px 20px 20px;
+  overflow: hidden;
+
+  @media (max-width: 1024px) {
+    overflow: auto;
+  }
+}
+
+:host ::ng-deep .mat-tab-body.mat-tab-body-active {
+  margin-left: 1px;
+}
+
+/* --------------------------- FIN TABS */
+
+::ng-deep.mat-tab-header {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  border: none!important;
+}
+
+.tabletipominuta {
+  border: 1px solid $base-azulPAE;
+  border-radius: 12px 12px 0px 0px;
+}
+
+.tabletipominuta div {
+  text-align: center;
+  padding: 10px;
+}
+
+.tabletipominuta div:not(:last-child) {
+  border-right: 1px solid;
+}
+
+.active {
+  background-color: #f54a62;
+  color: #fff;
+}
+
+table {
+  border: 1px solid $base-azulPAE;
+  border-radius: 10px;
+}
+
+#tabla-categoria {
+  tr, td {
+    border: none !important;
+  }
+
+  #td1 {
+    border-bottom: 1px dotted $base-azulPAE !important;
+  }
+}
+
+#tabla-modelo-operacion {
+  padding: 0;
+  color: $base-azulPAE;
+  tr, td {
+    border: none !important;
+  }
+
+  #td-modelo-operacion1 {
+    border-bottom: 1px dotted $base-azulPAE !important;
+  }
+}
+
+.titulos_estado_diligenciamiento {
+  color: $base-azulPAE;
+  border: 1px dotted $base-azulPAE;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.pendiente_diligenciar, .incompleto, .completo {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  border: 1px solid $base-azulPAE;
+}
+
+.pendiente_diligenciar {
+  background-color: $header_table;
+}
+
+.incompleto {
+  background-color: $semaforo-amarillo;
+}
+
+.completo {
+  background-color: $semaforo-verde;
+}
+
+.contenedor-precios {
+  width: 700px;
+}
+
+.contenedor-precios-completo {
+  width: 900px;
+}
+
+.contenedor-precios-diferenciados {
+  border: 1px solid $base-azulPAE;
+  margin-top: 60px;
+  border-radius: 20px;
+  padding-bottom: 30px;
+}
+
+.titulos-precio-diferenciado {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  bottom: 16px;
+}
+
+.titulo_diferenciado{
+  width: auto;
+  padding: 10px;
+  background-color: $white;
+  border: 1px solid $base-azulPAE;
+  border-radius: 10px;
+}
+
+.titulo_diferenciado_zona_rural {
+  margin-right: 10px;
+}
+
+.titulo_diferenciado_zona_urbana {
+  margin-left: 1opx;
+}
+
+.borders {
+  border: 1px solid $base-azulPAE;
+  border-radius: 5px;
+}
+
+.border-right {
+  border-right: 1px solid $base-azulPAE;
+}
+
+.backgroundSigePAE {
+  background-color: $base-azulPAE;
+  color: $white;
+}
+
+.input-table-edit {
+  width: 100% !important;
+}
+
+.table-totales {
+  table-layout: fixed;
+}
+
+.td-jornada{
+  background-color: #e2ecfd !important;
+
+  color: $base-color  !important;
+
+  font-weight: bold !important;
+
+  border-left: 1px solid $base-color  !important;
+
+  vertical-align: middle;
+
+  height: 55px;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  ::ng-deep.mat-tab-body-content {
+    border: none !important;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .border-right {
+    border: none !important;
+  }
+
+  .border-sm-bottom-list:not(:last-child) {
+    border-bottom: 1px solid $base-azulPAE !important;
+  }
+
+}
+
+.div-label{
+  display: flex;
+  text-align: center;
+  gap: 5px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container-div {
+  width: auto;
+  overflow: auto;
+  max-width: 500px;
+}
+
+table {
+  table-layout: auto;
+  width: 100%;
+}
+
+.small-label {
+  display: inline-block;
+}
+
+.small-etiqueta {
+  display: block;
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+.div-small{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  max-width: 100px
+}
+
+.div-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

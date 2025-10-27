@@ -1,0 +1,84 @@
+<br>
+<div class="AlignRight w-down-100">
+    <table class="">
+      <ng-container>
+        <tr>
+          <div class="Redondeado d-flex flex-column flex-xl-row">
+
+            <td class="EspacioField w-down-100">
+              <div style="color: #005ACA; font-size: 13px;">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 13px;">Modelo de operación</mat-card-title>
+                  <mat-select class="control-md tablaform " placeholder="Todos" required [(value)]="selModelo" (selectionChange)="selectionModelo($event.value)">
+                    <mat-option  *ngFor ="let  i of Modelolist" [value]="i.id">
+                      {{i.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </mat-card>
+              </div>
+            </td>
+            <td class="EspacioField lineaAzulX border-right-down-none w-down-100">
+              <div>
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Modalidad</mat-card-title>
+                  <mat-select class="control-md tablaform" placeholder="Todos" id="Modalidad" [(value)]="selModalidad" >
+                    <mat-option *ngFor = "let i of ModeloModalidadfilter" [value]="i.iD_TipoModalidadComplemento" size="5"multiple>
+                        {{i.sID_TipoModalidadComplemento }}
+                    </mat-option>
+                  </mat-select>
+                </mat-card>
+              </div>
+            </td>
+            <td class="EspacioFieldBuscar alinearIcon py-4 py-xl-0">
+              <div class="text-center centerIcon">
+                <a class="TextBlue">
+                  <img (click)="onchangeBuscar(selModelo, selModalidad)"style="cursor: pointer;" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " height="30px"
+                    width="auto"> Buscar
+                </a>
+              </div>
+            </td>
+          </div>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+
+  <br>
+  <div class="Titulo">
+    <img style="cursor: pointer;" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-287.png " height="30px" width="auto" style="margin-bottom: 6px; margin-left: 5px;">
+    Resultados de la búsqueda de Ciclos de menús
+  </div>
+
+  <br>
+  <div class="text-center" [ngClass]="{'linkdisable':!getModulePermission(109,'crear')}">
+    <a class="btn-registrar" (click)="openDialog('Adicionar',{})">
+      <img src="../.././../assets/images//Iconos/add_blue.png" style="margin-right: 5px;">
+      <p class="LetraRegistro">Registrar ciclo de menú</p>
+    </a>
+  </div>
+  <br>
+  <div class="responsive-table-pae">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matTableExporter #exporter="matTableExporter">
+
+      <ng-container matColumnDef="nombre">
+        <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef> Nombre del <br> ciclo de menús</th>
+        <td class="px-lg-down-0" mat-cell *matCellDef="let element" data-label="N. Ciclo menús"> {{element.nombre == null ? '-' :(element.nombre)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="modelo">
+        <th mat-header-cell *matHeaderCellDef> Modelo de <br> operación</th>
+        <td mat-cell *matCellDef="let element" data-label="M. operación"> {{element.sID_TipoModeloOperacion== null ? '-' :(element.sID_TipoModeloOperacion)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="modalidad">
+        <th mat-header-cell *matHeaderCellDef class="RightUpCorner"> Modalidad</th>
+        <td class="px-lg-down-0" mat-cell *matCellDef="let element" data-label="Modalidad"> {{element.sID_TipoModalidadComplemento== null ? '-' :(element.sID_TipoModalidadComplemento)}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"(click)="direccionar(row)"></tr>
+    </table>
+  </div>
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+  </mat-paginator>
+

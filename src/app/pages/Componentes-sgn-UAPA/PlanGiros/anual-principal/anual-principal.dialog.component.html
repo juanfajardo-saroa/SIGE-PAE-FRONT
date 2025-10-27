@@ -1,0 +1,79 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.3.4/dist/sweetalert2.all.min.js"></script>
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            {{ action }} Programa Anual de Caja (PAC)
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <div class="course-app">
+    <mat-card-content class="text-center">
+      <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+        <br />
+
+        <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+          <div *ngIf="action !='Adicionar'">
+            <div class="CenterAll">
+              <br />
+              <input matInput id="id" formControlName="id" readonly="true" class=" form-control"  style="display: none;" />
+            </div>
+          </div>
+
+          <table>
+            <ng-container>
+              <tr>
+                <td>
+                  <div class="TextosBlueLeft">Solicitado por ETC</div>
+                </td>
+                <td>
+                 <!--  <mat-form-field >
+                    <mat-label>Solicitado por ETC</mat-label>
+                    <br />
+                    <input matInput type="number" id="giroProyectado" formControlName="giroProyectado" required
+                      placeholder="Solicitado por ETC" class="form-control" />
+                    <div
+                      *ngIf="form.get('giroProyectado').invalid && (form.get('giroProyectado').dirty || form.get('giroProyectado').touched)"
+                      class="invalid-feedback">
+                    </div>
+                  </mat-form-field> -->
+                  <input matInput type="number" id="giroProyectado" formControlName="giroProyectado" required
+                  placeholder="Solicitado por ETC" class="form-control" />
+                <div
+                  *ngIf="form.get('giroProyectado').invalid && (form.get('giroProyectado').dirty || form.get('giroProyectado').touched)"
+                  class="invalid-feedback">
+                </div>
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+      </mat-dialog-content>
+      <ng-template #elseTemplate>
+        ¿Está seguro de eliminar el registro?
+      </ng-template>
+
+      <table class="BordeSuperior">
+        <ng-container>
+          <div>
+            <div class="CenterButton text-center">
+              <div class="AlignRight">
+                <button [disabled]="form.invalid && action !='Eliminar'" (click)="doAction()">{{action}} </button>
+              </div>
+              <div>
+                <button (click)="closeDialog()">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </table>
+    </mat-card-content>
+  </div>
+</div>
+

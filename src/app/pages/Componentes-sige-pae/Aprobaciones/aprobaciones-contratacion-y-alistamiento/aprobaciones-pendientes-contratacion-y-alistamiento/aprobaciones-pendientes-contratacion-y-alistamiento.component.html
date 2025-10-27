@@ -1,0 +1,94 @@
+<!-- <div>
+  <table class="tableFiltroUsuario">
+    <tr class="text-center">
+      <td>
+        Utilice cualquier campo de la tabla para buscar Aprobaciones.
+      </td>
+      <td>
+        Filtro
+        <br>
+        <input (keyup)="applyFilter($any($event).target.value)" type="text" class="">
+        <ng-container>
+          <input class="btn-file" style="width:0px;" matInput [matDatepicker]="fechaConsulta" id="fechaConsulta"
+            (dateChange)="aplicarfiltrofecha($event.value)">
+          <mat-datepicker-toggle matSuffix [for]="fechaConsulta">
+            <mat-icon style="color: rgb(14, 92, 235);" matDatepickerToggleIcon>calendar_month</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #fechaConsulta></mat-datepicker>
+        </ng-container>
+      </td>
+      <td>
+        <a (click)="applyFilter2()">
+          <img src="../../../../../../assets/images/Iconos/eye_blue.png">
+          <div>Ver listado completo</div>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div> -->
+<br>
+
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSource " class="left-radius" matSort>
+          <!-- etc Column -->
+          <ng-container matColumnDef="modulo">
+            <th class="LeftUpCorner" mat-header-cell  *matHeaderCellDef style="padding-left: 0px; "><b>Módulo</b>
+            </th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; "> {{element.sID_Submodulos==null?'-':(element.sID_Submodulos)}}
+            </td>
+          </ng-container>
+          <!-- mes Column -->
+          <ng-container matColumnDef="seccion">
+            <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Sección</b>
+            </th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; "> {{element.sId_Secciones==null?'-':(element.sId_Secciones)}}
+            </td>
+          </ng-container>
+          <!-- solicitado Column -->
+          <ng-container matColumnDef="documento">
+            <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Documento por aprobar</b></th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+              {{element.documentoParaAprobar==null?'-':(element.documentoParaAprobar)}} </td>
+          </ng-container>
+         
+          <!-- fecha Column -->
+          <ng-container matColumnDef="enviado">
+            <th mat-header-cell *matHeaderCellDef mat-header-cell  style="padding-left: 0px; "><b>Enviado para aprobación</b></th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+
+              {{element.fecha==null?'-':( element.fecha | date:'dd-MMM-yyyy' | uppercase| withoutDots)}} </td>
+
+          </ng-container>
+           <!-- fecha Column -->
+           <ng-container matColumnDef="aprobado">
+            <th mat-header-cell *matHeaderCellDef mat-header-cell  style="padding-left: 0px; "><b>Fue aprobada/rechazada</b></th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+              {{element.fechaAprobacion==null?'-':( element.fechaAprobacion | date:'dd-MMM-yyyy' | uppercase | withoutDots)}} </td>
+          </ng-container>
+         
+          <!-- accion Column -->
+          <ng-container matColumnDef="accion">
+            <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Acciones </b></th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+
+              <div *ngIf="element.fechaAprobacion==null" class="verDetalle" title="Aprobaciones Contratación y alistamiento" target="_blank" (click)="direccionara(element.id,element.ubicacionOrigen,element.id_Secciones)">Ir al módulo para aprobar/rechazar</div> 
+
+               
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+          <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
+        </table>
+        <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+        </mat-paginator>
+        <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+@import '/src/assets/styles/variable.scss';
+
+.opacity-50 {
+  opacity: 0.50;
+}
+
+.input-aprobacion {
+  color: $base-color;
+}
+
+.card-link {
+  border: none;
+  background-color: white;
+}
+
+::ng-deep.swal2-close {
+  color: #fff;
+  margin-top: -5% !important;
+  box-shadow: none !important;
+  background-color: transparent;
+  font-size: 2em;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: center !important;
+  justify-self: center !important;
+  font-size: 12px !important;
+  border-radius: 20px !important;
+  background-size: contain !important;
+  padding: 2% 0% !important;
+  width: 40% !important;
+  color: $base-color !important;
+  background-position: top !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  display: inline-block;
+  object-fit: contain !important;
+}
+
+::ng-deep.swal2-styled.swal2-cancel {
+  border-radius: 5em !important;
+  padding: 0.2em 2em !important;
+  margin-top: 0% !important;
+  font-size: 12px !important;
+}
+
+::ng-deep.swal2-styled.swal2-confirm{
+  border-radius: 5em !important;
+  padding: 0.2em 2em !important;
+  margin-top: 0% !important;
+  font-size: 12px !important;
+}
+
+::ng-deep.swal2-styled.swal2-deny{
+  border-radius: 5em !important;
+  padding: 0.2em 2em !important;
+  margin-top: 0% !important;
+  font-size: 12px !important;
+}
+
+.mt-35-porcent{
+  margin-top: 35%;
+}
+
+.vAlignBaseline{
+  vertical-align: baseline;
+}
+
+.vAlignTop{
+  vertical-align: top;
+}
+
+.mt-35-porcent{
+  margin-top: 35%;
+}
+
+.mt-16-porcent{
+  margin-top: 16%;
+}
+
+.mt-5-porcent{
+  margin-top: 5%;
+}
+
+.bgAliceBlue{
+  background-color: aliceblue;
+}
+
+td:last-child.dinamic-table-noborder-right{
+  border-right: none !important;
+}
+
+.dinamic-table-border-left-dashed{
+  border-left: 1px dashed $base-color !important;
+}

@@ -1,0 +1,129 @@
+<div class="row search-container-asignacion">
+    <div class="col-12">
+        <div>
+            <div class="nombre-resolucion">
+                <label>Nombre de la resoluci&oacute;n</label><br>
+                <select class="form-select" aria-label="Default select example" [(ngModel)]="idSearch" (ngModelChange)="changeIdSearch($event)">
+          <option *ngFor="let i of listAsignaciones" [ngValue]="i.id">{{i.nombre}}</option>
+        </select>
+            </div>
+            <div class="btn-filtrar">
+                <a (click)="filtrar()">
+                    <img src="../assets/images/Iconos/search_blue.png">
+                    <div>Filtrar</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 30px;">
+    <div class="col-12">
+        <div class="tab-control inverted">
+            <div class="active">
+                <h3>Asignación de recursos</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12" style="float: left;">
+        <div style="float: left; background-color: #f54a62; padding: 10px;">
+            <div style="height: 24px; width: 24px; background-color: #ffffff;
+      border-radius: 50%; text-align: center; color: #f54a62; font-weight: 500; padding-top: 1px;
+      ">1</div>
+        </div>
+        <div style="display: inline-block; background-color: #f54a62; padding: 10px 15px; height: 44px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; color: #ffffff;">
+            {{ nombreResolucion }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="panel panel-blue">
+            <div class="panel-body" [class]="'noborder'">
+                <form class="form-default" [formGroup]="myForm">
+                    <div class="form-item">
+                        <div class="col ml-3">
+                            <label for="exampleFormControlInput1" class="form-label">1. Fuente de recursos:</label>
+                            <select class="form-select" aria-label="Default select example" formControlName="idFuenteRecurso">
+                    <option *ngFor="let i of listFuentesRecursos" [ngValue]="i.id">{{i.nombre}}</option>
+                  </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="col ml-3">
+                            <label for="exampleFormControlInput1" class="form-label">2. Tipo de fuente CHIP:</label>
+                            <select class="form-select" aria-label="Default select example" formControlName="idFuenteCHIP">
+                      <option *ngFor="let i of listFuentesCHIP" [ngValue]="i.id">{{i.nombre}}</option>
+                  </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="col ml-3">
+                            <label for="nombreResolucion" class="form-label">3. Nombre de la Resolución:</label>
+                            <input type="text" class="form-control" id="nombreResolucion" aria-describedby="nombreResolucionHelp" formControlName="nombre">
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="col ml-3">
+                            <label for="asignacionPresupuestal" class="form-label">4. Valor de la asignación presupuestal:</label>
+                            <input type="number" class="form-control" id="asignacionPresupuestal" aria-describedby="asignacionPresupuestalHelp" formControlName="valorPresupuestal">
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="col ml-3">
+                            <label for="exampleFormControlInput1" class="form-label">5.  Distribución:</label>
+                            <div class="row d-inline-flex">
+                                <div class="col-6 p-0 coletc">
+                                    <table class="table-etc">
+                                        <tr>
+                                            <tr>
+                                                <th width="50%">ETC</th>
+                                                <th width="50%">Valor asignado</th>
+                                            </tr>
+                                            <tr *ngFor="let item of dataSourceETC">
+                                                <td>
+                                                    <select aria-label="Default select example" [ngModel]="item.iD_ETC" [ngModelOptions]="{standalone: true}" [disabled]="disabled">
+                                  <option selected value="0">Elije ETC</option>
+                                  <option *ngFor="let i of listETC" [ngValue]="i.id">{{i.nombre}}</option>
+                                </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" [(ngModel)]="item.valorAsignado" [ngModelOptions]="{standalone: true}" [disabled]="disabled" placeholder="Ingrese cifra">
+                                                </td>
+                                            </tr>
+                                    </table>
+
+
+                                    <div class="row mt-4 distri">
+                                        <div class="col-6 totalasig">TOTAL ASIGNADO</div>
+                                        <div *ngIf="sumatoriaETC > 0" class="col-6">{{ sumatoriaETC | currency }}</div>
+                                        <div *ngIf="sumatoriaETC == 0" class="col-6">Cálculo autómatico</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 mt-4">
+                                    <div>
+                                        <img class="float-left" src="../assets/images/Iconos/alert.png">
+                                        <div class="float-left mt-1 ml-3 text-alert" style="font-size: 15px;">Asegurate de que el Total asignado coincida con el Valor de la asignación presupuestal ingresado en la pregunta 4
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="col ml-3 file">
+                            <label for="" class="form-label" style="width: auto; margin-right: 10px;">6. PDF de la Resolución:</label>
+                            <div style="display: inline-block; overflow: hidden;">
+                                <label style="margin: 0; color: #005ACA; font-size: 15px;">{{entity.nombreArchivoResolucion}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

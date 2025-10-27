@@ -1,0 +1,375 @@
+@import '/src/assets/styles/variable.scss';
+
+.MarginCero {
+    margin: 0% !important;
+}
+
+mat-label {
+    color: $base-azulPAE;
+}
+
+::ng-deep.mat-tab-label 
+.mat-tab-label-content {
+    font-weight: bold !important;
+    font-size: 18px !important;
+}
+
+.lineaAzulX {
+    border-left: none !important;
+}
+.col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    border-bottom: $base-azulPAE 1px dotted;
+  }
+  .mat-select-value{
+    color: $base-azulPAE;
+}
+
+.LeftUpCorner {
+    border-top-left-radius: 20px;
+    border: 1px solid $base-azulPAE;
+}
+
+.RightUpCorner {
+    border-top-right-radius: 20px;
+    border: 1px solid $base-azulPAE;
+}
+
+.BotonCenter {
+    background-color: #005aca;
+    color: #fff;
+    border-radius: 20px 20px 20px 20px !important;
+}
+
+.EspacioField {
+    padding: 1%;
+}
+
+mat-card {
+    box-shadow: none !important;
+}
+mat-card.NoMargin {
+    box-shadow: none !important;
+    margin: 0;
+}
+.CenterAll {
+    display: block;
+    margin: auto;
+}
+
+mat-form-field-wrapper {
+    background-color: #E2ECFD !important;
+}
+
+mat-form-field-flex {
+    background-color: #fff !important;
+    padding: 0% !important;
+}
+
+mat-form-field {
+    background-color: #fff !important;
+}
+
+.lineaAzul {
+    color: $base-azulPAE;
+    border-top: 2px$base-azulPAE dotted;
+}
+
+mat-form-field {
+    border-radius: 20px 20px 20px 20px !important;
+    border: $base-azulPAE solid 1px;
+    background-color: #fff !important;
+    padding: 0%;
+}
+
+.Redondeado {
+    border: 2px solid #005aca;
+    border-radius: 30px 30px 30px 30px !important;
+    padding: 10px !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border: 1px $base-azulPAE;
+}
+
+/* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label {
+    font-family: 'Poppins', sans-serif;
+    border-radius: 20px 20px 0px 0px !important;
+    color: $base-color  !important;
+    font-size: $base-fontSize;
+    background-color: #E2ECFD !important;
+    width: 30%;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+    font-family: 'Poppins', sans-serif;
+    font-size: $base-fontSize;
+    border-width: 2px;
+    border-color: $base-color;
+    border-bottom-color: white;
+    border-style: solid solid hidden solid;
+    border-radius: 20px 20px 0px 0px !important;
+    color: $base-colorverde  !important;
+    background-color: white !important;
+    //width: 25%;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none !important;
+    display: none !important;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none !important;
+    display: none !important;
+    /* background-color: #1e88e5; */
+}
+
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar,
+.blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none !important;
+    display: none !important;
+    /* background-color: #1e88e5; */
+
+}
+
+/* --------------------------- FIN TABS */
+.text-left {
+    font-size: $base-fontSize;
+    color: #005aca;
+    margin: 5px 20px 5px 20px;
+}
+
+.QuincenaActual {
+    font-family: 'Poppins', sans-serif;
+    font-size: $base-fontSize;
+    color: #00A9AB;
+}
+
+.title {
+    color: #00A9AB;
+    padding-bottom: 10px;
+}
+
+.TituloResults {
+    color: $base-azulPAE;
+    font-weight: bold;
+}
+
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-color;
+    font-size: $base-fontSize;
+
+}
+
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+    border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 24px;
+    border-right: 1px solid;
+}
+
+td.mat-cell {
+    padding: 0px;
+    border-bottom: 1px dotted $base-azulPAE;
+    //border-style: dotted;
+}
+
+table thead {
+    background-color: $header_table  !important;
+    color: $base-color;
+    border: 1px solid;
+}
+
+table thead th {
+    border-top: 1px solid $base-azulPAE;
+    border-right: 1px solid $base-azulPAE;
+    padding: 20px;
+}
+
+table thead th:first-child {
+    border-left: 1px solid $base-azulPAE;
+    border-top-left-radius: 20px !important;
+}
+
+table td:first-child {
+    border-left: 1px solid $base-azulPAE;
+}
+
+table.left-radius thead th:first-child {
+    border-top-left-radius: 20px !important;
+    border-left: 10px solid $base-azulPAE;
+}
+
+table.right-radius thead th:last-child {
+    border-top-right-radius: 20px;
+    border-left: 1px solid $base-azulPAE;
+}
+
+.textagregar {
+    color: $base-color;
+}
+
+table tbody {
+    color: $base-color;
+}
+
+table tbody td {
+    border-bottom: 1px dashed $base-color  !important;
+}
+
+table tbody tr td:first-child {
+    border-left: 1px solid $base-color;
+}
+
+table tbody tr td:last-child {
+    border-right: 1px solid $base-color;
+}
+
+table tbody tr:last-child td {
+    border-bottom: 1px solid $base-color;
+    border-bottom-style: solid !important;
+}
+
+td.mat-cell:first-of-type {
+    padding-left: 0 px !important;
+}
+
+th.mat-header-cell {
+    text-align: center !important;
+    background-color: #E2ECFD !important;
+    //color: #fff!important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    /* border: 1px solid $base-azulPAE; */
+}
+
+.white {
+    background-color: white;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.red {
+    background-color: #ff0000;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.green {
+    background-color: #008000;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.yellow {
+    background-color: #ffff00;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.mat-row:hover .mat-cell {
+    background-color: $base-color;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.mat-column-select {
+    overflow: initial;
+}
+
+
+.table-responsive {
+    padding-left: 0px;
+}
+
+.BordeBottom {
+    border-bottom: 1px dotted $base-color;
+
+}
+
+.BordeRedondo {
+    border-radius: 20px;
+    border: 1px solid $base-color;
+    max-width: 100%;
+
+}
+
+.ButtonBlue {
+    border: 1px $base-color solid;
+    border-radius: 20px;
+    background-color: $base-color;
+    color: #ffffff;
+}
+
+.CenterButton {
+    margin: auto;
+    display: block;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-color;
+    font-size: $base-fontSize;
+}
+
+mat-card-title,
+mat-card-content {
+    color: $base-color;
+    font-size: $base-fontSize !important;
+}
+
+::ng-deep .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
+    display: none !important;
+}
+
+.LeftUpCorner2 {
+    border-top-right-radius: 20px;
+
+}
+
+.tablaform {
+    width: 100%;
+    border-color: $base-azulPAE;
+    color: $base-azulPAE;
+    border: 1px solid;
+    border-radius: 12px 12px 12px 12px !important;
+    font-size: $base-fontSize;
+}
+
+.linea {
+    background-color: $base-azulPAE !important;
+    margin-left: 2rem;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+}
+
+.Scroll{
+    overflow: hidden !important;
+}

@@ -1,0 +1,70 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <span class="course-name"> <strong>{{ action }}</strong></span>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+  <div class="container">
+    <mat-card-content class="text-center">
+      <mat-dialog-content *ngIf="action != 'Eliminar'; else elseTemplate">
+        <div class="dialog-form" [formGroup]="form" (ngSubmit)="doAction()">
+          <table class="tableFormUsuarios">
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">Nombre</td>
+              <td class="col-6">
+                <input matInput id="nombre" formControlName="nombre" required placeholder="Nombre" class="cssForm" />
+                <div *ngIf="form.get('nombre')?.invalid && (form.get('nombre')?.dirty || form.get('nombre')?.touched)"
+                  class="invalid-feedback">
+                </div>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted #005ACA;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">valor</td>
+              <td class="col-6">
+                <input matInput id="valor" formControlName="valor" required placeholder="valor" class="cssForm"
+                  (keydown)="onKeyNumber($event)" />
+                <div *ngIf="form.get('valor')?.invalid && (form.get('valor')?.dirty || form.get('valor')?.touched)"
+                  class="invalid-feedback">
+                </div>
+              </td>
+            </tr>
+            <hr style="margin-top: 0rem; border: none;border-top: 1px dotted #005ACA;" colspan="12" />
+            <tr class="d-flex">
+              <td class="col-6" style="text-align:start">unidad</td>
+              <td class="col-6">
+                <input matInput id="unidad" formControlName="unidad" required placeholder="unidad" class="cssForm" />
+                <div *ngIf="form.get('unidad')?.invalid && (form.get('unidad')?.dirty || form.get('unidad')?.touched)"
+                  class="invalid-feedback">
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </mat-dialog-content>
+      <ng-template #elseTemplate>
+        <div class="ColorTextDelete"> 
+          ¿Esta seguro de eliminar el parámetro "<b>{{ local_data.nombre }}</b>"?
+        </div>
+      </ng-template>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      <div mat-dialog-actions align="center">
+        <button class="btn btn-round btn-middle" [disabled]="form.invalid && action != 'Eliminar'" mat-raised-button
+          color="primary" mat-button (click)="doAction()">
+          {{ action }}
+        </button>
+        <button class="btn btn-round btn-high" mat-raised-button color="warn" mat-button (click)="closeDialog()"
+          mat-flat-button>
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </div>
+</div>

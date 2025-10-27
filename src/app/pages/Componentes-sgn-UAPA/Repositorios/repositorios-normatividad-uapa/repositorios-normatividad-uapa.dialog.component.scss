@@ -1,0 +1,213 @@
+@import '/src/assets/styles/variable.scss';
+*{
+  color: $base-color;
+}
+//card bordes espacios
+.mat-dialog-content {
+  display: block;
+  margin: 0px!important;
+  padding: 0px!important;
+  max-height: 80vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+::ng-deep.mat-dialog-container {
+  padding: 0px !important;
+  border-radius:30px 30px 30px 30px !important;
+  border: $base-azulPAE 1px solid;
+  box-shadow: none;
+  width: 80vw;
+  margin: 0%;
+}
+mat-form-field {
+  border-radius: 20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff !important;
+  padding: 1% !important;
+  //width: 100%;
+  //height: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 55px;
+
+}
+mat-card-header{
+  padding-bottom: 20px;
+}
+.mat-card-content {
+  display: block;
+  margin-bottom: 0px;
+}
+.SizeDialog{
+  /* width: 50vw!important; */
+  width: auto;
+}
+.TituloDialog{
+  background-color: #E6EFFD;
+  /* padding: 10px 20px; */
+  text-align: center;
+  color: $base-color;
+  display: block;
+  margin: auto;
+  width: 100%;
+
+  border-bottom: $base-azulPAE 1px solid;
+
+  font-size: $base-fontSize!important;
+
+}
+.CenterButton{  
+  margin: auto;
+  display: -webkit-inline-box;
+}
+.BordeSuperior{
+  border-top: 1px solid $base-color;
+}
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  height: 0px;
+}
+.AlignRight{
+  margin-right: 20px;
+}
+td{
+  width: 50%;
+}
+table {
+  width: 100%;
+  padding: 0px 30px;
+}
+//interno
+.BordeSeparador{
+  border-bottom: $base-azulPAE 1px dotted;
+}
+.TextosBlueLeft {
+  text-align: left;
+  color: $base-color;
+  float:left;
+}
+button{
+  background-color: $base-color;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+  margin: 10px;
+}
+button:disabled {
+  background-color: gray;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+}
+
+button:hover {
+  cursor: pointer;
+}
+::ng-deep.button {
+  background-color: $base-color !important;
+  color: #fff !important;
+  border-radius: 20px;
+  border: $base-color 1px solid;
+  margin: auto;
+  display: block;
+}
+.form-control {
+  border-radius: 20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff !important;
+  height: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $base-color;
+  text-align: left;
+  font-size: 12px;
+}
+.formcontrol2 {
+  border-radius: 12px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff !important;
+  padding: 1% !important;
+  width: 100%;
+  height: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $base-color;
+  font-size: 12px;
+  /* text-align-last: start; */
+
+}
+.formcontrol2::-webkit-input-placeholder { color: $base-color; position:absolute; }
+.fechaText{
+  border-radius:20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff!important;
+  padding: 1%!important;
+  height: 25px;
+  width: 250px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  float: left;
+  text-align: left;
+  font-size: 12px;
+  color: $base-color;
+}
+.fechaText::-webkit-input-placeholder { color: $base-color; }
+.tablaform {
+  border-radius:20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff!important;
+  height: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $base-color;
+  padding: 1px 10px !important;
+  text-align: left;
+
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+.buttonAr {
+  color: #005ACA;
+  border-color: #005ACA;
+  padding: 2px 18px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 12px 12px 12px 12px !important;
+  background-color: #ffff;
+  /* width: 80%; */
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  float: left;
+ 
+}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.Oculto{
+  display: none !important;;
+}
+.container, .container-fluid, .container-xl, .container-lg, .container-md, .container-sm {
+  width: 100%;
+ padding-right: 0px; 
+  padding-left: 0px; 
+  margin-right: auto;
+  margin-left: auto;
+}

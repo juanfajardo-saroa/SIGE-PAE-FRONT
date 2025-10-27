@@ -1,0 +1,294 @@
+<div class="row search-container-asignacion" *ngIf="modo == 2">
+    <div class="col-12">
+        <div class="btn-atras">
+            <a (click)="atras()">
+                <img src="../assets/images/Iconos/back_blue.png">
+                <div>Atras</div>
+            </a>
+        </div>
+        <div class="d-flex flex-row">
+            <div class="nombre-resolucion">
+                <label>Nombre de la resoluci&oacute;n</label><br>
+                <select class="form-select" aria-label="Default select example" [(ngModel)]="idSearch" (ngModelChange)="changeIdSearch($event)">
+          <option *ngFor="let i of dataSource" [ngValue]="i.id">{{i.nombreResolucion}}</option>
+        </select>
+            </div>
+            <div class="btn-filtrar h-auto">
+                <a (click)="filtrar()">
+                    <img src="../assets/images/Iconos/search_blue.png">
+                    <div>Filtrar</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<app-titulo-tab [titulo]="'Asignación de recursos'"></app-titulo-tab>
+<div class="row mt-3 justify-content-center">
+    <div [hidden]="!gridVisible" class="row ">
+        <div class="col-12 responsive-table-pae">
+            <table class="table-default table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th *ngFor="let item of displayColumnsAsignacion">{{item.name}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of dataTabla">
+                        <tr (click)="verResolucion(item)">
+                            <td data-label="Fuente">{{item.fuente}}</td>
+                            <td data-label="Tipo">{{item.tipo}}</td>
+                            <td data-label="Nombre">{{item.nombreResolucion}}</td>
+                            <td data-label="Valor" class="text-right">{{item.valorPresupuestal | currency: '$' : 'symbol' : '1.0-2'}}</td>
+                            <td data-label="Estado" class="text-center">{{item.estadoResolucion}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+                <tfoot class="table-paginator">
+                    <tr>
+                        <td colspan="10">
+                            <div>
+                                <span>Items:</span>
+                                <span>
+                  <select [(ngModel)]="itemCant"
+                          (ngModelChange)="changeCantItems($event)">
+                    <option *ngFor="let item of itemsPerPages" [ngValue]="item">{{item}}</option>
+                  </select>
+                </span>
+                                <span>
+                  {{itemIni}} - {{itemFin}} de {{dataSource.length}}
+                </span>
+                                <span>
+                  <mat-icon class="first-last" [class]="disabledFirstPage ? 'disabled' : ''" (click)="changePage(1, -1, disabledFirstPage)">first_page</mat-icon>
+                  <mat-icon class="previous-next" [class]="disabledPreviousPage ? 'disabled' : ''" (click)="changePage(2, -1, disabledPreviousPage)">arrow_back_ios</mat-icon>
+                  <mat-icon class="previous-next" [class]="disabledNextPage ? 'disabled' : ''" (click)="changePage(2, 1, disabledNextPage)">arrow_forward_ios</mat-icon>
+                  <mat-icon class="first-last" [class]="disabledLastPage ? 'disabled' : ''" (click)="changePage(1, 1, disabledLastPage)">last_page</mat-icon>
+                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <!-- <ngx-datatable
+            class="mat-table mat-paginator"
+            [rows]="dataSource"
+            [columns]="displayColumnsAsignacion"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            rowHeight="auto"
+            [limit]="10"
+            (activate)="verResolucion($event)">
+        </ngx-datatable> -->
+        </div>
+        <div *ngIf="permisos.agregar" class="col-12 justify-content-end mt-sm" [ngClass]="{'linkdisable':!getModulePermission(98,'crear')}">
+            <a (click)="agregar()">
+                <span class="fontSize15 float-right text-basecolor mt-xs ml-1">Agregar nueva resolución</span>
+                <img class="float-right widthImg35" src="../assets/images/Iconos/add_blue.png">
+            </a>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="formVisible && modo == 2">
+      <div class="col-12" style="float: left;">
+        <div style="float: left; background-color: #f54a62; padding: 10px;">
+          <div style="height: 24px; width: 24px; background-color: #ffffff; border-radius: 50%; text-align: center; color: #f54a62; font-weight: 500; padding-top: 1px;">1</div>
+        </div>
+        <div style="display: inline-block; background-color: #f54a62; padding: 10px 15px; height: 44px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; color: #ffffff;">
+          {{ nombreResolucionTexto }}
+        </div>
+        <div class="inline-block" *ngIf="entity.iD_EstadoResolucion == 2">
+          <button *ngIf="disabled && permisos.editar" class="btn btn-blue ml-4" (click)="editarResolucion()">
+            <mat-icon>edit</mat-icon>
+            Editar
+          </button>
+          <button *ngIf="!disabled && permisos.editar" class="btn btn-white ml-4" (click)="cancelarEdicion()">
+            <mat-icon style="color: #005ACA;">cancel</mat-icon>
+            Cancelar
+          </button>
+          <button *ngIf="disabled && permisos.eliminar" class="btn btn-blue ml-2" (click)="eliminarResolucion(modalAceptar)">
+            <mat-icon>delete</mat-icon>
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="formVisible" class="row mt-lg">
+        <div class="col-12">
+            <div class="panel panel-blue">
+                <div class="panel-header text-center" *ngIf="modo == 1">
+                    <h4 class="panel-title">Registro de Resolución de asignación de recursos</h4>
+                </div>
+                <div class="panel-body" [class]="modo == 2 ? 'noborder': ''">
+                    <form class="form-default" [formGroup]="myForm">
+                        <div class="form-item">
+                            <div class="col ml-0 ml-md-3">
+                                <label for="exampleFormControlInput1" class="form-label w-down-sm-100">1. Fuente de recursos:</label>
+                                <label id="lblFuenteRecursoDisabled" *ngIf="disabled" class="form-label-input w-down-sm-100">{{entity.fuenteFinanciacion}}</label>
+                                <select id="cboFuenteRecurso" *ngIf="!disabled" class="input-text ml-lg-down-0" formControlName="idFuenteRecurso" (ngModelChange)="changeModelAsignacion('idFuenteRecurso', $event)">
+                    <option [ngValue]="itemSelect.id">{{ itemSelect.nombre }}</option>
+                    <option *ngFor="let i of listFuentesRecursos" [ngValue]="i.id">{{i.nombre}}</option>
+                  </select>
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <div class="col ml-0 ml-md-3">
+                                <label for="exampleFormControlInput1" class="form-label w-down-sm-100">2. Tipo de fuente CHIP:</label>
+                                <label id="lblTipoFuenteCHIPDisabled" *ngIf="disabled" class="form-label-input w-down-sm-100">{{entity.fuenteChip}}</label>
+                                <select id="cboFuenteIngreso" *ngIf="!disabled" class="input-text ml-lg-down-0" formControlName="iD_FuenteIngreso">
+                    <option [ngValue]="itemSelect.id">{{ itemSelect.nombre }}</option>
+                    <option *ngFor="let i of listFuenteIngresos" [ngValue]="i.iD_FuenteIngreso">{{i.nombre}}</option>
+                  </select>
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <div class="col ml-0 ml-md-3">
+                                <label for="nombreResolucion" class="form-label w-down-sm-100">3. Nombre de la Resolución:</label>
+                                <label id="lblNombreResolucionDisabled" *ngIf="disabled" class="form-label-input w-down-sm-100">{{entity.nombreResolucion}}</label>
+                                <input id="txtNombreResolucion" *ngIf="!disabled" type="text" class="input-text ml-lg-down-0" formControlName="nombreResolucion">
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <div class="col ml-0 ml-md-3">
+                                <label for="asignacionPresupuestal" class="form-label w-down-sm-100">4. Valor de la asignación presupuestal:</label>
+                                <label id="lblValorPresupuestalDisabled1" *ngIf="entity.disabledValorP && entity.valorPresupuestal" (click)="clickValorPresupuestal()" class="input-text ml-lg-down-0">
+                         {{entity.valorPresupuestal | currency: '$' : 'symbol' : '1.0-2'}}
+                  </label>
+                                <label id="lblValorPresupuestalDisabled2" *ngIf="entity.disabledValorP && !entity.valorPresupuestal" (click)="clickValorPresupuestal()" class="input-text ml-lg-down-0">
+                         {{0 | currency: '$' : 'symbol' : '1.0-2'}}
+                  </label>
+                                <input id="txtValorPresupuestal" (blur)="onBlurValorPresupuestal()" type="number" hidden="hidden" class="input-text ml-lg-down-0" formControlName="valorPresupuestal">
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <div class="col ml-0 ml-xl-3">
+                                <label for="exampleFormControlInput1" class="form-label">5.  Distribución:</label>
+                                <div class="row d-inline-flex">
+                                    <div class="col-12 col-lg-6 p-0 ml-lg-down-0 px-sm-down-0 coletc wmx-down-lg-100">
+                                        <table class="table-etc">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">ETC</th>
+                                                    <th width="50%">Valor asignado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of dataSourceETC">
+                                                    <td>
+                                                        <select aria-label="Default select example" [class]="item.repetido ? 'bg-error': ''" [ngModel]="item.iD_ETC" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeSelectModelETC('iD_ETC', $event, item)" [disabled]="disabled">
+                                  <option selected value="0">Elija ETC</option>
+                                  <option *ngFor="let i of listETC" [ngValue]="i.id">{{i.nombre}}</option>
+                                </select>
+                                                    </td>
+                                                    <td>
+                                                        <label *ngIf="item.disabled && item.valorAsignado" (click)="changeDisabledETC(item, false)" [hidden]="!item.disabled" class="width-100 no-margin text-basecolor text-center">
+                                       {{item.valorAsignado | currency: '$' : 'symbol' : '1.0-2'}}
+                                </label>
+                                                        <label *ngIf="item.disabled && !item.valorAsignado" (click)="changeDisabledETC(item, false)" class="width-100 no-margin text-placeholder text-center">
+                                       Ingrese cifra
+                                </label>
+                                                        <input type="text" class="form-control text-center" id="input{{item.indETC}}" [(ngModel)]="item.valorAsignado" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeSelectModelETC('valorAsignado', $event, item)" hidden="hidden" (blur)="changeDisabledETC(item, true)">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="row mt-4 distri ml-lg-down-0">
+                                            <div class="col-6 totalasig">TOTAL ASIGNADO</div>
+                                            <div *ngIf="sumatoriaETC > 0" class="col-6">{{ sumatoriaETC | currency: '$' : 'symbol' : '1.0-2' }}</div>
+                                            <div *ngIf="sumatoriaETC == 0" class="col-6">Cálculo autómatico</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-12 col-lg-6 mt-4">
+                                        <div class="row">
+                                            <div class="col-12 px-sm-down-0">
+                                                <a (click)="agregarETC()" *ngIf="!disabled" [class]="disabled ? 'disabled' : ''">
+                                                    <img class="float-left widthImg35" src="../assets/images/Iconos/add_blue.png">
+                                                    <span class="fontSize15 float-left text-basecolor mt-1 ml-1">Agregar ETC</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-12 mt-sm px-sm-down-0">
+                                                <a class="cursor-none">
+                                                    <img class="float-left widthImg35" src="../assets/images/Iconos/alert.png" *ngIf="!disabled">
+                                                    <span class="fontSize15 float-left text-alert ml-1 text-size-down-8" *ngIf="!disabled">
+																									Aseg&uacute;rese de que el Total asignado coincida con el Valor
+																									de la asignación presupuestal ingresado en la pregunta 4
+																								</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <div class="col ml-3 file">
+                                <label for="" class="form-label" style="width: auto; margin-right: 10px;">6. PDF de la Resolución:</label>
+                                <div style="display: inline-block; overflow: hidden;">
+                                    <div *ngIf="!disabled" class="btn-fileUpload" (click)="uploadPDF()">
+                                        <span>Archivo adjunto</span>
+                                        <img class="float-right ml-3" src="../assets/images/Iconos/input-file.png">
+                                        <img class="ml-3 btn-check" src="../assets/iconos_PAE/PNG/Iconos_PAE-12.png">
+                                        <input class="" type="file" id="fileUpload" name="fileUpload" accept="application/pdf">
+                                    </div>
+                                    <a class="visorPDF" (click)="downloadFile()" *ngIf="entity.nombreArchivoResolucion && entity.nombreArchivoResolucion != ''">
+                       {{entity.nombreArchivoResolucion}}
+                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer d-flex flex-column d-lg-block gap-row-0_8_rem" *ngIf="!disabled" [class]="modo == 2 ? 'noborder': ''">
+                    <a class="btn btn-blue" (click)="onSubmit(2)">Guardar y continuar m&aacute;s tarde</a>
+                    <a class="btn btn-blue ml-0 ml-lg-3" (click)="onSubmit(1)">Finalizar y publicar</a>
+                    <a *ngIf="modo == 1" class="btn btn-round btn-middle ml-0 ml-lg-3" (click)="atras()">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #modalPDF>
+      <div class="col-12 text-right mt-xs mb-xs">
+        <a class="btn-link" (click)="dismissAllModal()">
+          Cerrar
+          <mat-icon>clear</mat-icon>
+        </a>
+      </div>
+      <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true" [showPresentationModeButton]="true" [showDownloadButton]="true">
+      </ngx-extended-pdf-viewer>
+    </ng-template>
+
+    <ng-template #modalAceptar>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">¿Desea eliminar esta resoluci&oacute;n?</h4>
+            </div>
+            <div class="modal-body">
+                <table class="col-12">
+                    <tr>
+                        <td>Nombre de la resoluci&oacute;n:</td>
+                        <td>{{ entity.nombreResolucion }}</td>
+                    </tr>
+                    <tr>
+                        <td>Fuente de recursos:</td>
+                        <td>{{ entity.fuenteFinanciacion }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tipo de fuente CHIP:</td>
+                        <td>{{ entity.fuenteChip }}</td>
+                    </tr>
+                    <tr>
+                        <td>Valor presupuestal:</td>
+                        <td>{{ entity.valorPresupuestal | currency: '$' : 'symbol' : '1.0-2' }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-white" (click)="cancelarEliminacion()">Cancelar</button>
+                <button class="btn btn-blue" (click)="confirmarEliminacion()">Aceptar</button>
+            </div>
+        </div>
+    </ng-template>
+
+    <app-spinner *ngIf="loadingVisible"></app-spinner>

@@ -1,0 +1,168 @@
+
+  table.table-fuentefinanciacion-resumen
+    width: 100%
+    border-collapse: separate
+    border-spacing: 0
+
+  .table-fuentefinanciacion-resumen th
+    background-color: #e2e6fe
+    color: #005ACA
+    font-size: 13px
+    padding: 5px 15px
+    text-align: center
+    border-top: 1px solid #005ACA
+    border-right: 1px solid #005ACA
+    border-bottom: 1px solid #005ACA
+
+  .table-fuentefinanciacion-resumen td
+    color: #005ACA
+    font-size: 13px
+    padding: 5px 15px
+    text-align: center
+    border-right: 1px solid #005ACA
+    border-bottom: 1px solid #005ACA
+
+  .table-fuentefinanciacion-resumen th:last-child
+    padding: 0
+
+  .table-fuentefinanciacion-resumen th:last-child
+    margin: 0
+    border-top-right-radius: 13px
+
+  .table-fuentefinanciacion-resumen th.th-title
+    background-color: #005ACA
+    color: #ffffff
+    border-top-left-radius: 13px
+    text-align: left
+
+
+  .btn-consultar-resoluciones
+    font-size: 15px
+    background-color: #005ACA
+    border: none
+    color: #ffffff
+    border-radius: 30px
+    padding: 5px 15px
+    text-align: left
+    width: 170px
+
+  .btn-consultar-resoluciones div:last-child
+    color: #ffffff
+    font-size: 13px
+
+
+  table.table-fuentefinanciacion-detalle
+    border-collapse: separate
+
+  table.table-fuentefinanciacion-detalle th
+    padding: 10px 20px
+    font-size: 13px
+
+  table.table-fuentefinanciacion-detalle td
+    font-size: 13px
+
+
+  .Verde
+    background-color: green
+    width: 50px
+    height: 15px
+    border-radius: 40%
+    display: inline-block
+
+  .Amarillo
+    background-color: yellow
+    width: 50px
+    height: 15px
+    border-radius: 40%
+    display: inline-block
+
+  .Naranja
+    background-color: orange
+    width: 50px
+    height: 15px
+    border-radius: 40%
+    display: inline-block
+
+  input[type="number"]
+    -moz-appearance: textfield
+    border-radius: 10px
+    border: 1px solid #ccc
+    padding: 6px
+    box-sizing: border-box
+    background-color: #ffffff
+  $placeholder-color: #005ACA
+  input[type="number"]::placeholder
+    color: $placeholder-color
+
+  input[type="number"]:hover,
+  input[type="number"]:focus
+    -moz-appearance: number-input
+    background-color: #ffffff
+
+
+
+
+  .color-base-SiGEPAE
+    color: #E43466
+
+
+
+
+  ::ng-deep.swal2-container.swal2-center>.swal2-popup
+    grid-column: 2 !important
+    grid-row: 2 !important
+    align-self: center !important
+    justify-self: center !important
+    font-size: 13px !important
+    border-radius: 20px !important
+    background-size: cover
+    padding: 2% 0% !important
+    width: 40% !important
+    color: #005ACA !important
+    background-position: top !important
+    background-repeat: no-repeat !important
+    background-size: contain !important
+
+  .swal2-actions
+    margin: 10px auto !important
+
+  .swal2-close
+    color: #fff!important
+    margin-top: -25px !important
+    box-shadow: none!important
+    background-color: transparent!important
+    font-size: 2em!important
+
+  ::ng-deep.swal2-close
+    color: #fff !important
+    margin-top: -30px !important
+    box-shadow: none !important
+    background-color: transparent !important
+    font-size: 2em !important
+
+  .swal2-html-container
+    z-index: 1
+    justify-content: center
+    margin: 1px 1.6em 0.3em !important
+    padding: 0
+    overflow: auto
+    color: inherit
+    font-size: 1.125em
+    font-weight: 400
+    line-height: normal
+    text-align: center
+    word-wrap: break-word
+    word-break: break-word
+    padding-top: 0px !important
+
+  ::ng-deep.swal2-styled.swal2-cancel, ::ng-deep.swal2-styled.swal2-confirm, ::ng-deep.swal2-styled.swal2-deny
+    border-radius: 5em !important
+    padding: 0.2em 2em !important
+    margin-top: 0% !important
+    font-size: 12px !important
+
+  @import "~bootstrap/scss/bootstrap-grid"
+
+  @include media-breakpoint-down(lg)
+    :host .table-row-expand tbody tr td:last-child
+      border-right: none !important

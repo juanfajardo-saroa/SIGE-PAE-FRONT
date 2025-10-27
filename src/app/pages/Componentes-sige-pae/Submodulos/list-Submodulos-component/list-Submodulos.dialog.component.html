@@ -1,0 +1,81 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+               <span class="course-name">     Acción <strong>{{ action }}</strong></span>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+  <div class="container">
+    <mat-card-content class="text-center">
+      <mat-dialog-content *ngIf="action != 'Eliminar'; else elseTemplate">
+        <div class="dialog-form" [formGroup]="form" (ngSubmit)="doAction()">
+          <table class="tableFormUsuarios">
+
+                <div *ngIf = "action !='Adicionar'">
+ <tr class="d-flex">
+     <td class="col-6" style ="text-align:start">Id</td>
+     <td class="col-6">     <input  matInput  id="id" formControlName="id"  readonly="true" class=" cssForm"/>      </td>
+ </tr>
+</div>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Nombre"</td>
+     <td class="col-6" >
+        <input matInput id="nombre" formControlName="nombre"  required placeholder="Nombre" class="cssForm"/>
+        <div *ngIf = "form.get('nombre')?.invalid && (form.get('nombre')?.dirty || form.get('nombre')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Seleccione Subsistemas"...</td>
+     <td class="col-6" >
+         <select id = "id_Subsistemas" formControlName = "id_Subsistemas">
+             <option *ngFor= "let item of SubsistemasList"[value]="item.id">{{item.nombre}}
+             </option>
+         </select>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+  
+           
+          </table>
+        </div>
+      </mat-dialog-content>
+      <ng-template #elseTemplate>
+        Esta Seguro de Eliminar el Registro <b>{{ local_data.id }}</b
+        >?
+      </ng-template>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      <div mat-dialog-actions align="center">
+        <button
+          class="btn btn-round btn-middle"
+          [disabled]="form.invalid && action != 'Eliminar'"
+          mat-raised-button
+          color="primary"
+          mat-button
+          (click)="doAction()"
+        >
+          {{ action }}
+        </button>
+        <button
+          class="btn btn-round btn-high"
+          mat-raised-button
+          color="warn"
+          mat-button
+          (click)="closeDialog()"
+          mat-flat-button
+        >
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </div>
+</div>

@@ -1,0 +1,292 @@
+<section class="container px-lg-down-0" *ngIf="!editar">
+  <mat-card class="mat-card mat-focus-indicator mx-lg-down-0">
+    <h3 class="panel__texto">Sedes en la ruta</h3>
+    <mat-card-content class="mat-card-content mt-2 responsive-table">
+      <table role="table" id="tablaSedesRuta">
+        <thead role="rowgroup">
+          <tr role="row">
+            <th role="columnheader" class="mat-header-cell">Municipio</th>
+            <th role="columnheader" class="mat-header-cell" style="width: 25% !important;">
+              Institución educativa
+            </th>
+            <th role="columnheader" class="mat-header-cell" style="width: 30% !important;">Sede</th>
+            <th role="columnheader" class="mat-header-cell">
+              Orden en<br>la ruta
+            </th>
+            <th role="columnheader" class="mat-header-cell">
+              Recibe gas o <br />
+              combustible
+            </th>
+            <th role="columnheader" class="mat-header-cell">Recibe agua</th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          <tr *ngFor="let infoSede of infoSedesRuta" role="row" class="mat-row">
+            <td role="cell" class="mat-cell">
+              {{ infoSede.municipio | titlecase }}
+            </td>
+            <td role="cell" class="mat-cell">
+              {{ infoSede.institucionEdu | titlecase }}
+            </td>
+            <td role="cell" class="mat-cell">
+              {{ infoSede.sede | titlecase }}
+            </td>
+            <td role="cell" class="mat-cell">{{ infoSede.ordenRuta }}</td>
+            <td role="cell" class="mat-cell">
+              {{ infoSede.recibeGas === true ? "si" : "no" }}
+            </td>
+            <td role="cell" class="mat-cell">
+              {{ infoSede.recibeAgua === true ? "si" : "no" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mat-card mat-focus-indicator col-12 col-xl-6 px-0 mx-lg-down-0">
+    <h3 class="panel__texto py-2">Entrega de productos</h3>
+    <mat-card-content class="mt-2 mat-card-content responsive-table">
+      <table role="table" id="tablaEntregaProductos">
+        <thead role="rowgroup">
+          <tr role="row">
+            <th role="columnheader" class="mat-header-cell">Producto</th>
+            <th role="columnheader" class="mat-header-cell">
+              Periodicidad <br />
+              de entrega
+            </th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          <tr *ngFor="let producto of productosRuta" role="row" class="mat-row">
+            <td role="cell" class="text-left mat-cell tipoProducto" style="text-align: left !important;">
+              {{ producto.producto }}
+            </td>
+            <td role="cell" class="mat-cell">
+              {{ producto.iD_TipoPeriocidad | periodicidad }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<section class="container px-lg-down-0" *ngIf="editar">
+  <mat-card class="mx-lg-down-0">
+    <h3 class="panel__texto py-2">Sedes en la ruta</h3>
+    <mat-card-content class="mt-2 mat-card-content">
+      <form class="responsive-table" [formGroup]="formSedesRuta">
+        <table role="table" id="tablaEntregaProductos">
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" class="mat-header-cell">
+                Municipio
+                <input class="form-control" id="inputMunicipio" placeholder="&#xF002;" [matAutocomplete]="municipio"
+                  [formControl]="inputMunicipio" />
+                <mat-autocomplete #municipio="matAutocomplete">
+                  <mat-option *ngFor="let municipio of filtroMunicipios | async"
+                    [value]="municipio.municipio | titlecase">
+                    {{ municipio.municipio | titlecase }}
+                  </mat-option>
+                </mat-autocomplete>
+              </th>
+              <th role="columnheader" class="mat-header-cell">
+                Institución educativa
+                <input class="form-control" id="inputInstitucion" placeholder="&#xF002;" [matAutocomplete]="IE"
+                  [formControl]="inputInstitucion" />
+                <mat-autocomplete #IE="matAutocomplete">
+                  <mat-option *ngFor="let institucion of filtroInstituciones | async"
+                    [value]="institucion.institucionEducativa | titlecase">
+                    {{ institucion.institucionEducativa | titlecase }}
+                  </mat-option>
+                </mat-autocomplete>
+              </th>
+              <th role="columnheader" class="mat-header-cell">
+                Sede
+                <input class="form-control" id="inputSede" placeholder="&#xF002;" [matAutocomplete]="Sedes"
+                  [formControl]="inputInstitucion" />
+                <mat-autocomplete #Sedes="matAutocomplete">
+                  <mat-option *ngFor="let sede of filtroSedes | async" [value]="sede.sede | titlecase">
+                    {{ sede.sede | titlecase }}
+                  </mat-option>
+                </mat-autocomplete>
+              </th>
+              <th role="columnheader" class="mat-header-cell">
+                Orden en<br>la ruta
+              </th>
+              <th role="columnheader" class="mat-header-cell col-1">
+                Recibe gas o combustible
+              </th>
+              <th role="columnheader" class="mat-header-cell col-1">
+                Recibe agua
+              </th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup" formArrayName="sedes">
+            <tr *ngFor="let sede of formSedesArray.controls; index as i" [formGroupName]="i">
+              <td>
+                <select class="my-2 sedes" formControlName="municipio" (change)="getInstituciones(i)"
+                  [ngClass]=" validarSelectSedes(i, 'municipio') ? 'bordeError' : '' ">
+                  <option [ngValue]="null" disabled selected hidden>
+                    Seleccione
+                  </option>
+                  <option *ngFor="let municipio of municipios" [ngValue]="municipio">
+                    {{ municipio.municipio | titlecase }}
+                  </option>
+                </select>
+                <span class="text-danger text-nowrap" *ngIf="validarSelectSedes(i, 'municipio')">Elija una opción</span>
+              </td>
+              <td>
+                <select class="my-2 sedes" formControlName="institucionEducativa" (change)="getSedes(i)"
+                  [ngClass]=" validarSelectSedes(i, 'institucionEducativa') ? 'bordeError' : '' ">
+                  <option [ngValue]="null" disabled selected hidden>
+                    Seleccione
+                  </option>
+                  <option *ngFor="let institucion of instituciones[i]"  [ngValue]="institucion">
+                    {{ institucion.institucionEducativa | titlecase }}
+                  </option>
+                </select>
+                <span class="text-danger text-nowrap" *ngIf="validarSelectSedes(i, 'institucionEducativa')">Elija una
+                  opción</span>
+              </td>
+              <td>
+                <select class="my-3 sedes" formControlName="sede">
+                  <option [ngValue]="null" disabled selected hidden>
+                    Seleccione
+                  </option>
+                  <option *ngFor="let sede of sedes[i]" [ngValue]="sede">
+                    {{ sede.sede | titlecase }}
+                  </option>
+                </select>
+                <span class="text-danger text-nowrap" *ngIf="validarSelectSedes(i, 'sede')">Elija una opción</span>
+              </td>
+              <td>
+                <select class="my-3 sedes" formControlName="ordenRuta">
+                  <option [ngValue]="null" disabled selected hidden>
+                    -
+                  </option>
+                  <option [ngValue]="i + 1" *ngFor="let item of formSedesArray.controls; index as i">
+                    {{ i + 1 }}
+                  </option>
+                </select>
+                <span class="text-danger text-nowrap" *ngIf="validarSelectSedes(i, 'ordenRuta')">Elija una opción</span>
+              </td>
+              <td>
+                <select class="my-3 sedes" formControlName="combustible">
+                  <option [ngValue]="null" disabled selected hidden>
+                    -
+                  </option>
+                  <option value="si">Si</option>
+                  <option value="no">No</option>
+                </select>
+                <span class="text-danger text-nowrap" *ngIf="validarSelectSedes(i, 'combustible')">Elija una
+                  opción</span>
+              </td>
+              <td>
+                <select class="my-3 sedes" formControlName="agua">
+                  <option [ngValue]="null" disabled selected hidden>
+                    -
+                  </option>
+                  <option value="si">Si</option>
+                  <option value="no">No</option>
+                </select>
+                <span class="text-danger text-nowrap" *ngIf="validarSelectSedes(i, 'agua')">Elija una opción</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </mat-card-content>
+    <div (click)="agregarSedeARuta()" class="agregarSede">
+      <img class="mx-2" src="/assets/iconos_PAE/PNG/Iconos_PAE-51.png" width="30px" alt="icono agregar ruta" />
+      <span>Agregar sede a la ruta</span>
+    </div>
+  </mat-card>
+
+  <mat-card class="mat-card mat-focus-indicator col-xl-6 col-12 px-0 mt-5 mx-lg-down-0">
+    <h3 class="panel__texto py-2">Entrega de productos</h3>
+    <mat-card-content class="mt-2 mat-card-content">
+      <form [formGroup]="formEntregaProductos">
+        <table role="table" id="tablaEntregaProductos">
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" class="mat-header-cell">Producto</th>
+              <th role="columnheader" class="mat-header-cell">
+                Periodicidad <br />
+                de entrega
+              </th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row" class="mat-row">
+              <td role="cell" class="mat-cell tipoProducto" style="text-align: left !important;">Viveres</td>
+              <td role="cell" class="mat-cell notHover">
+                <select formControlName="viveres" [ngClass]="validarSelect('viveres') ? 'bordeError' : ''">
+                  <option [ngValue]="null" disabled selected hidden>
+                    Seleccione
+                  </option>
+                  <option *ngFor="let periodicidad of periodicidadEntrega" [ngValue]="periodicidad">
+                    {{ periodicidad.nombre }}
+                  </option>
+                </select>
+                <span class="text-danger ml-2 text-nowrap" *ngIf="validarSelect('viveres')">Elija una opción</span>
+              </td>
+            </tr>
+            <tr role="row" class="mat-row">
+              <td role="cell" class="mat-cell tipoProducto" style="text-align: left !important;">Insumos de aseo</td>
+              <td role="cell" class="mat-cell notHover">
+                <select formControlName="insumosAseo" [ngClass]="validarSelect('insumosAseo') ? 'bordeError' : ''">
+                  <option [ngValue]="null" disabled selected hidden>
+                    Seleccione
+                  </option>
+                  <option *ngFor="let periodicidad of periodicidadEntrega" [ngValue]="periodicidad">
+                    {{ periodicidad.nombre }}
+                  </option>
+                </select>
+                <span class="text-danger ml-2 text-nowrap" *ngIf="validarSelect('insumosAseo')">Elija una opción</span>
+              </td>
+            </tr>
+            <tr role="row" class="mat-row">
+              <td role="cell" class="mat-cell tipoProducto" style="text-align: left !important;">Gas/Combustible</td>
+              <td role="cell" class="mat-cell notHover">
+                <select formControlName="combustible" [ngClass]="validarSelect('combustible') ? 'bordeError' : ''">
+                  <option [ngValue]="null" disabled selected hidden>
+                    Seleccione
+                  </option>
+                  <option *ngFor="let periodicidad of periodicidadEntrega" [ngValue]="periodicidad">
+                    {{ periodicidad.nombre }}
+                  </option>
+                </select>
+                <span class="text-danger ml-2 text-nowrap" *ngIf="validarSelect('combustible')">Elija una opción</span>
+              </td>
+            </tr>
+            <tr role="row" class="mat-row">
+              <td role="cell" class="mat-cell tipoProducto" style="text-align: left !important;">Agua</td>
+              <td role="cell" class="mat-cell notHover">
+                <select formControlName="agua" [ngClass]="validarSelect('agua') ? 'bordeError' : ''">
+                  <option [ngValue]="null" disabled selected hidden>
+                    Seleccione
+                  </option>
+                  <option *ngFor="let periodicidad of periodicidadEntrega" [ngValue]="periodicidad">
+                    {{ periodicidad.nombre }}
+                  </option>
+                </select>
+                <span class="text-danger ml-2 text-nowrap" *ngIf="validarSelect('agua')">Elija una opción</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<footer *ngIf="editar" class="col d-flex align-items-center justify-content-center">
+  <button class="btn btn-primary m-3" (click)="cancelarEdicionRuta()">
+    Cancelar
+  </button>
+  <button class="btn btn-primary m-3" (click)="guardarRuta()">
+    Guardar cambios
+  </button>
+</footer>

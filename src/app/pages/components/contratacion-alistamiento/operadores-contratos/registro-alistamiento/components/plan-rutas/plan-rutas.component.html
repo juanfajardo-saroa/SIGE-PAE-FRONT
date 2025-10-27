@@ -1,0 +1,253 @@
+<main class="container justify-content-center my-3">
+  <section class="row d-flex justify-content-center align-items-center mb-3" *ngIf="idMOperacion1">
+    <span class="col-6 col-lg-5 seleccionModelo__texto text-center"
+      >¿Desea hacer rutas diferenciadas por modelo de operación?</span
+    >
+    <mat-button-toggle-group
+      class="col-6 col-lg-2"
+      (change)="seleccionModeloOperacion($event); obtenerInfoRutas()"
+    >
+      <mat-button-toggle value="si" id="botonSi">Si</mat-button-toggle>
+      <mat-button-toggle value="no" id="botonNo">No</mat-button-toggle>
+    </mat-button-toggle-group>
+  </section>
+
+  <section *ngIf="conModeloOperacion === 'no'">
+    <section class="d-flex row flex-column flex-xl-row align-items-center">
+      <div class="ruta col-12 col-xl-4 px-lg-down-0 flex-wrap text-nowrap justify-content-between">
+        <span>Sedes por asignar a una ruta:</span>
+        <div class="ruta__pendiente mx-3">{{ sedesPorAsignar }}</div>
+      </div>
+      <div class="ruta col-12 col-xl-3 flex-wrap px-0 text-nowrap justify-content-between">
+        <span>Sedes con ruta:</span>
+        <div
+          class="ruta__confirmada mx-3"
+          [ngClass]="sedesPorAsignar === 0 ? 'fondoVerde' : ''"
+        >
+          {{ sedesConRuta }}
+        </div>
+      </div>
+      <div class="ruta__agregar col text-nowrap" [ngClass]="{'linkdisable':!getModulePermission(73,'crear')}">
+        <div (click)="agregarRuta()">
+          <img
+            class="mx-2"
+            src="/assets/iconos_PAE/PNG/Iconos_PAE-51.png"
+            width="30px"
+            alt="icono agregar ruta"
+          />
+          <span>Agregar ruta</span>
+        </div>
+      </div>
+    </section>
+    <ng-container class="rutas" *ngFor="let ruta of rutas" >
+      <app-desplegable-ruta
+        [rutas] ="rutas"
+        [sedesPorAsignar]="sedesPorAsignar"
+        [numeroRuta]="ruta.iD_Ruta"
+        [numRuta] = "ruta.numRuta"
+        (rutaEliminar)="eliminarRuta($event)"
+        (rutaAgregada)="actualizarestadorutas($event)"
+        [inactivar] = "planAlistamiento.iD_EstadoRutas != idEstadoPendienteAprobacion && planAlistamiento.iD_EstadoRutas!=idEstadoAprobado"
+      ></app-desplegable-ruta>
+    </ng-container>
+    <div class="botonEnviarAprobacion">
+      <button
+        *ngIf="planAlistamiento.iD_EstadoRutas != idEstadoPendienteAprobacion && planAlistamiento.iD_EstadoRutas!=idEstadoAprobado"
+        [disabled]="sedesPorAsignar != 0 || sedesConRuta === 0"
+        class="btn btn-primary m-3"
+        (click)="changeItemAprobacionrutas(idEstadoPendienteAprobacion,true)"
+      >
+        Enviar Plan de Rutas para aprobación
+      </button>
+    </div>
+  </section>
+
+  <ng-container *ngIf="conModeloOperacion === 'si'">
+    <mat-tab-group
+      [selectedIndex]="modeloOperacionTab"
+      (selectedIndexChange)="cambioModeloOperacion($event)"
+    >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="estadoDiligenciamiento mx-3"></div>
+          <div class="d-flex align-items-center">
+            <img
+              src="/assets/iconos_PAE/PNG/Iconos_PAE-203.png"
+              width="30px"
+              alt="Icono MAEM"
+            />
+            <label class="form-label mx-2"> MAEM </label>
+          </div>
+        </ng-template>
+        <section class="container d-flex row align-items-center">
+          <div class="ruta col-4 flex-wrap text-nowrap">
+            <span>Sedes por asignar a una ruta:</span>
+            <div class="ruta__pendiente mx-3">{{ sedesPorAsignarMAEM }}</div>
+          </div>
+          <div class="ruta col-3 flex-wrap px-0 text-nowrap">
+            <span>Sedes con ruta:</span>
+            <div class="ruta__confirmada mx-3">{{ sedesConRutaMAEM }}</div>
+          </div>
+          <div class="ruta__agregar col text-nowrap" [ngClass]="{'linkdisable':!getModulePermission(73,'crear')}">
+            <div (click)="agregarRutaPorModeloOperacion('MAEM')">
+              <img
+                class="mx-2"
+                src="/assets/iconos_PAE/PNG/Iconos_PAE-51.png"
+                width="30px"
+                alt="icono agregar ruta"
+              />
+              <span>Agregar ruta</span>
+            </div>
+          </div>
+        </section>
+        <section class="container py-3">
+          <ng-container class="container rutas" *ngFor="let ruta of rutasMAEM">
+            <app-desplegable-ruta
+              [modeloOperacion]="'MAEM'"
+              [sedesPorAsignar]="sedesPorAsignar"
+              [numeroRuta]="ruta.iD_Ruta"
+            ></app-desplegable-ruta>
+          </ng-container>
+        </section>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="d-flex align-items-center">
+            <div class="estadoDiligenciamiento mx-3"></div>
+            <img
+              src="/assets/iconos_PAE/PNG/Iconos_PAE-205.png"
+              width="30px"
+              alt="Icono MAEM"
+            />
+            <label class="form-label mx-2"> PAEPI </label>
+          </div>
+        </ng-template>
+        <section class="container d-flex row align-items-center">
+          <div class="ruta col-4 flex-wrap text-nowrap">
+            <span>Sedes por asignar a una ruta:</span>
+            <div class="ruta__pendiente mx-3">{{ sedesPorAsignarPAEPI }}</div>
+          </div>
+          <div class="ruta col-3 flex-wrap px-0 text-nowrap">
+            <span>Sedes con ruta:</span>
+            <div class="ruta__confirmada mx-3">{{ sedesConRutaPAEPI }}</div>
+          </div>
+          <div class="ruta__agregar col text-nowrap" [ngClass]="{'linkdisable':!getModulePermission(73,'crear')}">
+            <div (click)="agregarRutaPorModeloOperacion('PAEPI')">
+              <img
+                class="mx-2"
+                src="/assets/iconos_PAE/PNG/Iconos_PAE-51.png"
+                width="30px"
+                alt="icono agregar ruta"
+              />
+              <span>Agregar ruta</span>
+            </div>
+          </div>
+        </section>
+        <section class="container py-3">
+          <ng-container class="rutas" *ngFor="let ruta of rutasPAEPI">
+            <app-desplegable-ruta
+              [modeloOperacion]="'PAEPI'"
+              [sedesPorAsignar]="sedesPorAsignar"
+              [numeroRuta]="ruta.iD_Ruta"
+            ></app-desplegable-ruta>
+          </ng-container>
+        </section>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>
+
+    <!-- SECCIÓN  18 APROBACIONES -->
+<div class="col-12 px-lg-down-0">
+  <div class="row mt-l mb-xxl" *ngIf="planAlistamiento.iD_EstadoRutas == idEstadoPendienteAprobacion">
+    <div class="col-12 mt-xl">
+      <app-chapter [numberChapter]="1" [titleChapter]="'Aprobaciones'" [numberBadge]="planAlistamiento.ID_EstadoRutas == idEstadoPendienteAprobacion ? numberBadge : ''"></app-chapter>
+      <div class="encabezado-text-underline">
+        <label>
+          <img src="../assets/images/Iconos/solicitud-aprobacion.png" />
+          Aprobaciones pendientes
+        </label>
+      </div>
+    </div>
+    <div *ngIf="(planAlistamiento.iD_EstadoRutas == idEstadoPendienteAprobacion) && getModulePermission(73, 'aprobar')" class="col-12 mt-xl">
+      <table class="table-aprovaciones">
+        <tr>
+          <th colspan="2">1. Decisi&oacute;n de aprobaci&oacute;n</th>
+        </tr>
+        <tr>
+          <td width="15%" class="text-center">
+            <div>
+              <button class="btn" [class]="
+                  itemAprobacion.iD_EstadoDocumento == idEstadoDocumentoAprobado
+                    ? 'btn-green'
+                    : 'btn-default'
+                " (click)="
+                  changeItemAprobacion('iD_EstadoDocumento', idEstadoDocumentoAprobado)
+                ">
+                Aprobar
+              </button>
+            </div>
+            <div>
+              <button class="btn mt-sm" [class]="
+                  itemAprobacion.iD_EstadoDocumento == idEstadoDocumentoRechazado
+                    ? 'btn-red'
+                    : 'btn-default'
+                " (click)="
+                  changeItemAprobacion('iD_EstadoDocumento', idEstadoDocumentoRechazado)
+                ">
+                Rechazar
+              </button>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label>Observaciones / Justificaciones</label>
+              <input type="text" class="form-control input-aprobacion" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="itemAprobacion.observaciones" (ngModelChange)="itemAprobacion.observaciones = $event" />
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="
+        (planAlistamiento.iD_EstadoRutas == idEstadoPendienteAprobacion) &&
+        getModulePermission(73, 'aprobar')
+      " class="col-12 mt-sm text-right pr-xxl">
+      <button class="btn btn-blue" (click)="enviarResultado()">
+        Enviar resultado
+      </button>
+    </div>
+  </div>
+  <ng-container *ngIf="planAlistamiento.iD_EstadoRutas == idEstadoRechazado ||
+                planAlistamiento.iD_EstadoRutas == idEstadoPendienteAprobacion ||
+                planAlistamiento.iD_EstadoRutas == idEstadoAprobado " >
+      <div class="col-12 mt-md">
+      <div class="encabezado-text-underline">
+        <label>
+          <img src="../assets/images/Iconos/solicitud-aprobacion.png" />
+          Hist&oacute;rico de aprobaciones
+        </label>
+      </div>
+    </div>
+    <div class="col-12 mt-xl pl-xxl pr-xxl responsive-table-pae">
+      <table class="table-default table-hover">
+        <thead>
+          <tr class="text-center">
+            <th *ngFor="let item of displayedColumnsHistorico" [innerHTML]="item"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" *ngFor="let item of dataHistoricoAprobaciones">
+            <td data-label="Fecha">{{ item.fechaAprobacionString }}</td>
+            <td data-label="Responsable">{{ item.responsable }}</td>
+            <td data-label="Rol responsable">{{ item.rolResponsable }}</td>
+            <td data-label="Acción">{{ item.accion }}</td>
+            <td data-label="Ob. / Justificaciones">{{ item.observaciones }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</div>
+
+
+</main>

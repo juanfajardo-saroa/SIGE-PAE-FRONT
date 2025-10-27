@@ -1,0 +1,248 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>Seleccione las ubicaciones deseadas</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography">
+                <br />
+                <table>
+                  <ng-container>
+                    <tr>
+                      <div class="BordeSeparador">
+                        <div class="container">
+                          <div class="row flex-column flex-lg-row align-items-center pb-3">
+                            <div class="flex-grow-1 flex-basis-0 w-down-100">
+                              <div class="TextosBlueLeft">1. Actor<span style="color:red;">* </span></div>
+                            </div>
+                            <div class="flex-grow-1 flex-basis-0 w-down-100">
+                              <mat-select class="control-md tablaform my-0" id="ubicacionBase" formControlName="ubicacionBase"
+                                (selectionChange)="onUbicacionBaseClick($event.value)" placeholder="Seleccione">
+                                <mat-option *ngFor="let item of UbixRol" [value]="item.id">{{item.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </tr>
+                  </ng-container>
+                  <br>
+                  <ng-container>
+                    <tr>
+
+                      <div class="container">
+                        <div *ngIf="isInstitucion==false && isET==false && isOperador==false">
+                          <div class="row flex-column flex-lg-row align-items-center">
+                            <div class="flex-grow-1 flex-basis-0 w-down-100">
+                              <div class="TextosBlueLeft">2. Ubicación<span style="color:red;">* </span></div>
+                            </div>
+                            <div class="flex-grow-1 flex-basis-0 w-down-100">
+                              <mat-select class="control-md tablaform my-0" id="id_Ubicacion"  (selectionChange)="onUbicacionClick($event.value)" placeholder="Seleccione">
+                                <mat-option value=0 selected>Ninguno</mat-option>
+                                <mat-option *ngFor="let item of UbicacionesList" [value]="item.id">{{item.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div *ngIf="isInstitucion==true && isET==false && isOperador==false">
+
+                          <div class="d-flex flex-column flex-md-row justify-content-between pt-4 pb-4">
+                            <div class="TextosBlueLeft w-75 w-down-sm-100">2. Ubicación<span style="color:red;">* </span></div>
+                          </div>
+    
+                          <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4 pb-4">
+                            <div class="TextosBlueLeft2 w-75 w-down-sm-100">Departamento</div>
+                            <div class="w-100">
+    
+                              <mat-select class="control-md tablaform" id="DepartamentoEstablecimiento" required
+                                (selectionChange)="onDepartamentoClick($event.value)" placeholder="Seleccione">
+                                <mat-option *ngFor="let item of departamentosList" [value]="item.departamentoCode">
+                                  {{item.departamentoNombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+    
+                          <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4 pb-4">
+                            <div class="TextosBlueLeft2 w-75 w-down-sm-100">Municipio</div>
+                            <div class="w-100">
+                              <mat-select class="control-md tablaform" id="CiudadEstablecimiento" required
+                                (selectionChange)="onMunicipioClick($event.value)" placeholder="Seleccione">
+                                <mat-option *ngFor="let item of DivipolasList" [value]="item.id">
+                                  {{item.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+    
+                          <div class="d-flex flex-column flex-md-row justify-content-between  pt-4 pb-4">
+                            <div class="TextosBlueLeft2 w-75 w-down-sm-100">Institución Educativa</div>
+                            <div class="w-100">
+                             <!--  <input type="text" aria-label="Number" matInput [matAutocomplete]="auto"
+                                [formControl]="myControl" class="control-md tablaform">
+                              <mat-autocomplete (optionSelected)="form.controls.id_Ubicacion.setValue($event.option.value)"
+                                autoActiveFirstOption #auto="matAutocomplete" class="control-md tablaform" id="id_Ubicacion"
+                                formControlName="id_Ubicacion" [displayWith]="displayFn.bind(this)">
+                                <mat-option *ngFor="let item of filteredOptions | async"
+                                  [value]="item.id" class="SpaceSelect">{{item.codigoDane}} - {{item.nombre}}
+                                </mat-option>
+                              </mat-autocomplete> -->
+                              <mat-select class="control-md tablaform my-0" id="id_Ubicacion" (selectionChange)="onUbicacionClick($event.value)" placeholder="Seleccione">
+                                <mat-option value=0 selected>Ninguno</mat-option>
+                                <mat-option *ngFor="let item of UbicacionesList" [value]="item.id">{{item.codigoDane}} - {{item.nombre}}
+                                </mat-option>
+                              </mat-select>
+                              <label *ngIf="mesajesalert4" class="label" style="color: red">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                  style="height: 13px; margin-right: 2px;">
+                                No hay institución educativa en ese Municipio
+                              </label>
+                            </div>
+                          </div>
+    
+                        </div>
+
+                        <div *ngIf="isET==true && isInstitucion==false && isOperador==false">
+
+                          <div class="d-flex flex-column flex-md-row justify-content-between pt-4 pb-4">
+                            <div class="TextosBlueLeft w-75 w-down-sm-100">2. Ubicación<span style="color:red;">* </span></div>
+                          </div>
+    
+                          <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4 pb-4">
+                            <div class="TextosBlueLeft2 w-75 w-down-sm-100">Departamento</div>
+                            <div class="w-100">
+    
+                              <mat-select class="control-md tablaform" id="DepartamentoEstablecimiento" required
+                                (selectionChange)="onDepartamento2Click($event.value)" placeholder="Seleccione">
+                                <mat-option *ngFor="let item of departamentosList2" [value]="item.id">
+                                  {{item.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+    
+                  
+                          <div class="d-flex flex-column flex-md-row justify-content-between  pt-4 pb-4">
+                            <div class="TextosBlueLeft2 w-75 w-down-sm-100">Entidad Territorial</div>
+                            <div class="w-100">
+                             <!--  <input type="text" aria-label="Number" matInput [matAutocomplete]="auto"
+                                [formControl]="myControl" class="control-md tablaform">
+                              <mat-autocomplete (optionSelected)="form.controls.id_Ubicacion.setValue($event.option.value)"
+                                autoActiveFirstOption #auto="matAutocomplete" class="control-md tablaform" id="id_Ubicacion"
+                                formControlName="id_Ubicacion" [displayWith]="displayFn.bind(this)">
+                                <mat-option *ngFor="let item of filteredOptions | async"
+                                  [value]="item.id" class="SpaceSelect">{{item.codigoDane}} - {{item.nombre}}
+                                </mat-option>
+                              </mat-autocomplete> -->
+                              <mat-select class="control-md tablaform my-0" id="id_Ubicacion" (selectionChange)="onUbicacionClick($event.value)" placeholder="Seleccione">
+                                <mat-option value=0 selected>Ninguno</mat-option>
+                                <mat-option *ngFor="let item of UbicacionesList" [value]="item.id">{{item.nombre}}
+                                </mat-option>
+                              </mat-select>
+                              <label *ngIf="mesajesalert4" class="label" style="color: red">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                  style="height: 13px; margin-right: 2px;">
+                                No hay Entidad territorial en ese Departamento.
+                              </label>
+                            </div>
+                          </div>
+    
+                        </div>
+
+                        <div *ngIf="isET==false && isInstitucion==false && isOperador==true">
+
+                          <div class="d-flex flex-column flex-md-row justify-content-between pt-4 pb-4">
+                            <div class="TextosBlueLeft w-75 w-down-sm-100">2. Ubicación<span style="color:red;">* </span></div>
+                          </div>
+    
+                          <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4 pb-4">
+                            <div class="TextosBlueLeft2 w-75 w-down-sm-100">ETC</div>
+                            <div class="w-100">
+    
+                              <mat-select class="control-md tablaform" id="DepartamentoEstablecimiento" required
+                                (selectionChange)="onETCClick($event.value)" placeholder="Seleccione">
+                                <mat-option *ngFor="let item of departamentosList2" [value]="item.id">
+                                  {{item.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+    
+                  
+                          <div class="d-flex flex-column flex-md-row justify-content-between  pt-4 pb-4">
+                            <div class="TextosBlueLeft2 w-75 w-down-sm-100">Operador</div>
+                            <div class="w-100">
+                             <!--  <input type="text" aria-label="Number" matInput [matAutocomplete]="auto"
+                                [formControl]="myControl" class="control-md tablaform">
+                              <mat-autocomplete (optionSelected)="form.controls.id_Ubicacion.setValue($event.option.value)"
+                                autoActiveFirstOption #auto="matAutocomplete" class="control-md tablaform" id="id_Ubicacion"
+                                formControlName="id_Ubicacion" [displayWith]="displayFn.bind(this)">
+                                <mat-option *ngFor="let item of filteredOptions | async"
+                                  [value]="item.id" class="SpaceSelect">{{item.codigoDane}} - {{item.nombre}}
+                                </mat-option>
+                              </mat-autocomplete> -->
+                              <mat-select class="control-md tablaform my-0" id="id_Ubicacion" (selectionChange)="onUbicacionClick($event.value)" placeholder="Seleccione">
+                                <mat-option value=0 selected>Ninguno</mat-option>
+                                <mat-option *ngFor="let item of UbicacionesList" [value]="item.id">{{item.nombre}}
+                                </mat-option>
+                              </mat-select>
+                              <label *ngIf="mesajesalert4" class="label" style="color: red">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                  style="height: 13px; margin-right: 2px;">
+                                No hay Operadores en esa ETC.
+                              </label>
+                            </div>
+                          </div>
+    
+                        </div>
+    
+                       
+                      </div>
+                    </tr>
+                  </ng-container>
+                </table>
+              </mat-dialog-content>
+              <br>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                        <button [disabled]="!form.valid" (click)="doAction()">Cambiar
+                        </button>
+                      </div>
+                      <div>
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

@@ -1,0 +1,215 @@
+<style>
+  .tableFiltroRol {
+    border-spacing: 0;
+    color: #005ACA;
+  }
+
+  .tableFiltroRol td {
+    text-align: center;
+    font-size: 13px !important;
+    color: #005ACA !important;
+    padding: 2.5px 10px;
+    border-top: 1px solid #005ACA;
+    border-right: 1px solid #005ACA;
+    border-bottom: 1px solid #005ACA;
+  }
+
+  .tableFiltroRol td b {
+    color: #005ACA;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroRol td div {
+    color: #005ACA;
+    font-weight: 500;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroRol td:first-child {
+    border-left: 1px solid #005ACA;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .tableFiltroRol td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .tableRoles th,
+  .tableRoles td {
+    font-size: 13px;
+  }
+
+  table.tableRoles thead th:last-child {
+    border-top-right-radius: 20px !important;
+  }
+
+
+  table.tableFormRoles tr td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #005ACA;
+    font-size: 14px;
+  }
+
+  table.tableFormRoles tr td:first-child {
+    padding-left: 35px;
+  }
+
+  table.tableFormRoles tr td:last-child {
+    padding-right: 35px;
+  }
+
+  input,
+  select {
+    border: 1px #005ACA solid;
+    padding: 3px 10px;
+    width: 100%;
+    color: #005ACA;
+  }
+
+  input:not(.noRadius),
+  select:not(.noRadius) {
+    border-radius: 5px;
+  }
+
+  .cssForm {
+    font-size: 12px;
+  }
+
+  i {
+    font-style: normal;
+  }
+
+  .tableFiltroRol i {
+    font-size: 25px;
+  }
+
+  .btn.btn-middle {
+    background-color: aliceblue;
+    border: 1px solid aliceblue;
+  }
+
+  .btn.btn-high {
+    background-color: #005ACA !important;
+    border: 1px solid #005ACA !important;
+  }
+
+  .title-busqueda-rol {
+    padding: 0;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #E23465;
+  }
+
+  .title-busqueda-rol label {
+    color: #E23465;
+    margin-bottom: 2px;
+  }
+
+  .btn-registrar {
+    color: #005ACA;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .linkdisable{
+    pointer-events: none;
+    visibility: hidden;
+}
+
+
+</style>
+
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #E23465;">Roles</div>
+    </div>
+    <div class="tab-item nothing" style="width: 69.5%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="col-12" style="margin-top: 20px; padding: 0%;">
+  <div class="col-12 pae-text-filter">
+    <div class="row pae-border-blue pt-xl-1">
+
+      <div class="col-xl-7 col-12 d-flex align-items-center justify-content-center py-2 py-xl-0">
+        <span>
+          Utilice cualquier campo de la tabla para buscar Roles. Si no aparecen, <strong>regístrelos</strong> en el sistema.
+        </span>
+      </div>
+
+      <div class="col-xl-3 col-12 pae-border-xl-up-left-blue text-center pae-border-lg-down-top-blue py-2 py-xl-0">
+        <span>Filtro</span>
+        <input (keyup)="applyFilter($any($event).target.value)" type="text" class="">
+      </div>
+
+      <div class="col-xl-2 col-12 pae-border-xl-up-left-blue text-center pae-border-lg-down-top-blue py-2 py-xl-0">
+        <a (click)="applyFilter('')">
+          <img src="../../../../../../assets/images/Iconos/eye_blue.png">
+          <div>Ver listado completo</div>
+        </a>
+      </div>
+
+    </div>
+
+  <div class="col-12 title-busqueda-rol">
+    <label><img src="../../../../../../assets/images/Iconos/user_red.png"> Resultados de la b&uacute;squeda de
+      Roles</label>
+  </div>
+
+  <div class="col-12 responsive-table-pae" style=" padding: 0%;">
+    <table mat-table [dataSource]="dataSource" class="tableRoles left-radius right-radius">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b> Nombre </b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Nombre"> {{element.name}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="sid_TipoRoles">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Tipo de roles</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="T. de roles">
+          {{element.sid_TipoRoles}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" style="text-align: center; padding: 0 5px;">
+          <a (click)="openDialog('Actualizar',element)"
+            [ngClass]="{'linkdisable':!getModulePermission(20,'editar')}">
+            <img src="../../../../../../assets/images/Iconos/edit_blue.png">
+          </a>
+          <a *ngIf="element.id_TipoRoles == 2" [ngStyle]="{'visibility' : element.id_TipoRoles == 2 ? 'visible': 'hidden'}"
+            (click)="openDialog('Eliminar',element)" style="margin-left: 3px;"
+            [ngClass]="{'linkdisable':!getModulePermission(20,'eliminar')}">
+            <img src="../../../../../../assets/images/Iconos/delete_blue.png">
+          </a>
+          <a (click)="openDialog('Ver',element)" style="margin-left: 3px;" [ngClass]="{'linkdisable':!getModulePermission(20,'editar')}">
+          <img src="../../../../../../assets/images/Iconos/eye_blue.png">
+        </a>
+          <!-- <a (click)="openMenuDialog(element)" style="margin-left: 3px;"  [ngClass]="{'linkdisable':!getModulePermission(20,'editar')}">
+            <img src="../../../../../../assets/images/Iconos/search_blue.png">
+          </a> -->
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let myRowData; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+
+  <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+    <div class="text-right ">
+      <a class="btn-registrar" [ngClass]="{'linkdisable':!getModulePermission(20,'crear')}"
+        (click)="openDialog('Adicionar',{})"><img src="../../../../../../assets/images/Iconos/add_blue.png">
+        Registrar
+        Rol</a>
+    </div>
+  </div>
+</div>

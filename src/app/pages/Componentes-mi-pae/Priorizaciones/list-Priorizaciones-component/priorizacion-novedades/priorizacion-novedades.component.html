@@ -1,0 +1,80 @@
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <table class="tablaform2">
+      <div class="bordeAtras">
+        <a class="btn-agregar " (click)="RegresarInfraestura()"><img
+            src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png " style="width:50px; height: 50px;">Atrás
+        </a>
+      </div>
+    </table>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #00A9AB;">Novedades</div>
+    </div>
+    <div class="tab-item nothing" style="width: 70%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+
+    <div fxLayout="row wrap">
+      <div fxFlex="100">
+        <mat-card>
+          <mat-card-content>
+            <table mat-table [dataSource]="dataSource">
+
+              <ng-container matColumnDef="fecha">
+                <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef> <b> fecha </b> </th>
+                <td mat-cell *matCellDef="let element"> {{element.fecha | date:'dd-MMM-yyyy' | uppercase}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="DescripcionNovedad">
+                <th mat-header-cell *matHeaderCellDef> <b> Descripción de la Novedad </b></th>
+                <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Soporte">
+                <th class="RightUpCorner" mat-header-cell *matHeaderCellDef> <b>Soporte (si aplica)</b> </th>
+                <td mat-cell *matCellDef="let element"> {{element.archivo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="acciones">
+                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Acciones</b></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                  <a (click)="openDialogNovedades( 'Actualizar',element)" class="m-r-10 cursor-pointer " [ngClass]="{'linkdisable':!getModulePermission(1,'editar')}">
+                    <img src="../../../../../../assets/images/Iconos/edit_blue.png"/>
+                  </a>
+                  <a (click)="openDialogNovedades( 'Eliminar',element)" class="m-r-10 cursor-pointer " [ngClass]="{'linkdisable':!getModulePermission(1,'eliminar')}">
+                    <img src="../../../../../../assets/images/Iconos/delete_blue.png"/>
+                  </a>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator style="color: #005ACA;" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+            </mat-paginator>
+            <div *ngIf="isLoading"
+              style="display: flex; justify-content: center; align-items: center; background: white;">
+              <mat-progress-spinner color="primary" mode="indeterminate">
+              </mat-progress-spinner>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+ 
+<div fxLayout="row wrap " style=" float: right;">
+  <button class="BordeRedondoAgregar" mat-raised-button [ngClass]="{'linkdisable':!getModulePermission(1,'crear')}" (click)="openDialogNovedades('Adicionar',{})">
+    <img src="../.././../assets/images//Iconos/add_blue.png" height="auto">
+    Agregar Novedades
+  </button>
+</div>
+<br>

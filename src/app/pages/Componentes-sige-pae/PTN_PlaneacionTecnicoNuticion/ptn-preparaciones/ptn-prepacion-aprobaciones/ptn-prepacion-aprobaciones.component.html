@@ -1,0 +1,148 @@
+<div *ngIf="viewActiva == 0">
+  <!--------------------- inicio Filtro por Mes y ETC------------------------------>
+  <br>
+  <div class="tablaform3 bordeizq2">
+    <div class="row" style="
+    margin: 0px 0px;">
+      <!-- <div class="col">
+            <mat-card class="spaceCol" style="padding-left: 5px !important;">
+                <mat-card-title>ETC</mat-card-title>
+                <mat-select class="tablaForm control-md" id=""  required placeholder="Todos">
+                    <mat-option></mat-option>
+                </mat-select>
+            </mat-card>
+        </div> -->
+      <div class="col-12 col-xl">
+        <mat-card class="spaceCol mx-lg-down-0">
+          <mat-card-title>Grupo de alimentos</mat-card-title>
+          <mat-select class="tablaForm control-md" id="" [(value)]="selGrupo"
+            (selectionChange)="selectionGrupo($event.value)" required>
+            <mat-option [value]=-1> Todos</mat-option>
+            <mat-option *ngFor="let i of GrupoAlimentoList" [value]="i.id">{{i.nombre}}</mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card class="spaceCol mx-lg-down-0">
+          <mat-card-title>Subgrupo de alimentos</mat-card-title>
+          <mat-select class="tablaForm control-md" id="" required placeholder="Todos" [(value)]="selSubGrupo">
+            <mat-option [value]=-1> Todos</mat-option>
+            <mat-option *ngFor="let i of SubGrupoAlimentoList"
+              [value]="i.iD_SubGrupoAlimento">{{i.subGrupoAlimento}}</mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl bordeDer border-right-down-none">
+        <mat-card class="mx-lg-down-0">
+          <mat-card-title class="color">Tipo </mat-card-title>
+          <mat-select class="tablaForm control-md" id="" required placeholder="Todos" [(value)]="selTipo">
+            <mat-option [value]=-1> Todos</mat-option>
+            <mat-option *ngFor=" let i of tipoPreparacion" [value]="i.estado">{{i.nombre}}</mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="w-down-100">
+        <mat-card style="padding-right: 5px !important;">
+          <div class="bordetd text-center-lg-down" fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100">
+            <a class="btn-agregar">
+              <img (click)="onchangeGrupoAlimentos(selGrupo, selSubGrupo, selTipo)" class="imgFilter"
+                src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png" height="30px" width="auto">
+            </a>
+            <div class="textF">Buscar</div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <!--------------------- Fin Filtro por Mes y ETC------------------------------>
+
+  <!-- Resultados de busqueda -->
+  <div class="sub">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-114.png " height="30px" width="auto">
+    <span style="color:#E43466 !important; margin-left: 10px; ">Resultados de la búsqueda de Preparaciones en proceso de
+      aprobación</span>
+  </div>
+  <hr class="linea">
+  <br>
+  <!-- fin Resultados de busqueda -->
+
+
+  <!------------inicio de la tabla-------------------->
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+      <mat-card class="mx-lg-down-0">
+        <mat-card-content class="responsive-table-pae">
+          <table mat-table [dataSource]="dataSource " class="left-radius" matSort>
+            <!-- Nombre del documento Column -->
+            <ng-container matColumnDef="Nombre">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; width: 120px ">Nombre
+                de la
+                <br>preparación
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; "
+                data-label="Nombre preparación">
+                {{element.nombrePreparacion}}
+              </td>
+            </ng-container>
+            <!-- Fecha de actualización Column -->
+            <ng-container matColumnDef="Fecha">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; width: 150px ">Fecha de registro<br>de la
+                preparación</th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; "
+                data-label="Fe. Reg. preparación">
+                {{element.fechaPreparacion==null?'-': (element.fechaPreparacion | date:'dd-MMM-yyyy' | uppercase |
+                withoutDots)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Tipo">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; width: 120px">Tipo de <br>preparación</th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; "
+                data-label="T. preparación">
+                {{element.tipoPreparacion==null?'-':(element.tipoPreparacion )}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Modelo">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Modelo de <br>operación</th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; "
+                data-label="M. operación">
+                {{element.modeloOperacion==null?'-':(element.modeloOperacion)}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Complementos">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Complementos<br>a los que aplica
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; "
+                data-label="Comp. que aplica">
+                {{element.complementosAplica==null?'N/A':(element.complementosAplica)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Estado">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                style="padding-left: 0px; padding-right: 0px; width: 120px">Estado<br>del
+                registro</th>
+              <td class="px-lg-down-0" mat-cell *matCellDef="let element"
+                style="padding-left: 0px; text-align: center;padding-right: 0px " data-label="Est. registro">
+                <mat-icon [ngStyle]="{'color': element.estadoPreparacion == null ? '#E2E6FE' : (element.estadoPreparacion == 'Pendiente' ? '#E2E6FE' : element.colorEstadoPreparacion)}">
+                  {{ element.estadoPreparacion ? 'circle' : 'circle'}}
+                </mat-icon>
+                {{element.estadoPreparacion}}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; " (click)="direccionar(myRowData)"></tr>
+          </table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons></mat-paginator>
+<!--           <div *ngIf="isLoading"
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div> -->
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <!------------fin de la tabla-------------------->
+
+
+</div>

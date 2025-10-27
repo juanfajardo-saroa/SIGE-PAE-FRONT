@@ -1,0 +1,34 @@
+<ng-container *ngIf="aligment == 'H'">
+  <div class="flex align-items-center">
+    <div class="flex">
+      <img [hidden]="imgSize != 'xs'" style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+      <img [hidden]="imgSize != 'sm'" style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+    </div>
+    <div class="flex ml-xs">
+      <span [hidden]="textSize != 'xs'" class="font-size-10" [class]="textColor == '' ? 'text-basecolor' : textColor" [innerHTML]="message"></span>
+      <span [hidden]="textSize != 'sm'" class="text-base-fontsize" [class]="textColor == '' ? 'text-basecolor' : textColor" [innerHTML]="message"></span>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="aligment == 'V'">
+  <div class="text-center">
+    <img [hidden]="imgSize != 'xs'" style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+    <img [hidden]="imgSize != 'sm'" style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+  </div>
+  <div style="line-height: 1;" class="text-center">
+    <span [hidden]="textSize != 'xs'" class="font-size-10" [class]="textColor == '' ? 'text-basecolor' : textColor" [innerHTML]="message"></span>
+    <span [hidden]="textSize != 'sm'" class="text-base-fontsize" [class]="textColor == '' ? 'text-basecolor' : textColor" [innerHTML]="message"></span>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="tipoMessage == '3'">
+  <div  class="flex align-items-center tipoMessage3">
+    <div class="flex">
+      <img style="width: 23px; height: 23px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-18.png">
+    </div>
+    <div class="flex ml-xs">
+      <span [innerHTML]="message"></span>
+    </div>
+  </div>
+</ng-container>

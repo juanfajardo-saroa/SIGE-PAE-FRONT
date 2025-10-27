@@ -1,0 +1,164 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            Nuevo Recurso
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div>
+      <div class="SizeDialog">
+        <div>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography SizeDialog" *ngIf="action != 'Eliminar'; else elseTemplate">
+              <br />
+
+              <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+
+                <div *ngIf="action !='Adicionar'">
+                  <div>
+                    <br />
+                    <input matInput id="id" formControlName="id" readonly="true" class=" form-control"
+                    style="display: none;" />
+                  </div>
+                </div>
+
+                <div class="px-30-px">
+
+                  <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                    <div class="TextosBlueLeft flex-basis-0 flex-grow-1 px-lg-down-1">
+                      1. Tipo de recurso:<span style="color:red;">* </span>
+                    </div>
+                    <div class="flex-basis-0 flex-grow-1 px-lg-down-1">
+                      <mat-select id="idCategoria" formControlName="idCategoria" [value]="RepositoriosObject.idCategoria" class="tablaform"placeholder="Tipo de recurso">
+                        <mat-option *ngFor="let item of CategoriasList" [value]="item.id">{{item.nombre}}
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                    <div class="TextosBlueLeft flex-basis-0 flex-grow-1 px-lg-down-1">
+                      2. Nombre del documento<span style="color:red;">* </span>
+                    </div>
+                    <div class="flex-basis-0 flex-grow-1 px-lg-down-1">
+                      <input id="nombre" formControlName="nombre" required placeholder="Nombre del documento"
+                            class="form-control" />
+                      <div
+                        *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                        class="invalid-feedback">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                    <div class="TextosBlueLeft flex-basis-0 flex-grow-1 px-lg-down-1">
+                      3. Descripción (opcional):
+                    </div>
+                    <div class="flex-basis-0 flex-grow-1 px-lg-down-1">
+                      <input id="descripcion" formControlName="descripcion"
+                            placeholder="Este documento contiene......." class="formcontrol2" />
+                      <div
+                        *ngIf="form.get('descripcion').invalid && (form.get('descripcion').dirty || form.get('descripcion').touched)"
+                        class="invalid-feedback">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                    <div class="TextosBlueLeft flex-basis-0 flex-grow-1 px-lg-down-1">
+                      4. Fecha Archivo<span style="color:red;">* </span>
+                    </div>
+                    <div class="flex-basis-0 flex-grow-1 px-lg-down-1">
+                      <div *ngIf="action =='Adicionar'">
+                        <input class="fechaText w-down-100" type="date" id="start" name="trip-start" formControlName="fechaArchivo" required>
+                      </div>
+                      <div *ngIf="action =='Actualizar'">
+                        <input value={{fechaA}}  class="fechaText" type="date" id="start" name="trip-start" (change)="onfecha($any($event).target.value)" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0 Oculto">
+                    <div class="TextosBlueLeft flex-basis-0 flex-grow-1 px-lg-down-1">
+                      Nombre Archivo<span style="color:red;">* </span>
+                    </div>
+                    <div class="flex-basis-0 flex-grow-1 px-lg-down-1">
+                      <input matInput id="Nombre Archivo Storage" formControlName="pahtArchivo" required
+                        placeholder="Nombre Archivo" class="form-control" readonly />
+                      <div
+                        class="invalid-feedback">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                    <div class="TextosBlueLeft flex-basis-0 flex-grow-1 px-lg-down-1">
+                      5. Archivo Adjunto<span style="color:red;">* </span>
+                    </div>
+                    <div class="flex-basis-0 flex-grow-1 px-lg-down-1">
+                      <div class="container">
+                        <div class="button-wrap">
+
+                          <div>
+                            <button class="buttonAr text-center btn-file CenterAll" > <p  style="float: left; margin-right: 2px;">Adjuntar archivo</p>
+                              <p  style="float: left; margin-right: 2px">{{contenidoRespuesta}}</p>
+                              <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description</mat-icon>
+                                <input name="photo" type="file" data-max-size="3064"
+                                  (change)="onFileSelected($any($event).currentTarget.files)"
+                                  accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                  'application/vnd.rar', 'application/zip', 'application/msword',
+                                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                  'application/pdf', 'application/vnd.ms-excel',
+                                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                  'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </mat-dialog-content>
+
+            <ng-template #elseTemplate>
+              <div style="text-align: center;">
+                ¿Está seguro de eliminar el registro?
+              </div>
+            </ng-template>
+            <!-- ---------------------------------Botones----------------------------- -->
+            <table class="BordeSuperior">
+              <ng-container>
+                <div>
+                  <div class="CenterButton text-center">
+                    <div class="AlignRight">
+                      <button (click)="closeDialog()">Cancelar
+                      </button>
+
+                    </div>
+                    <div>
+                      <button [disabled]="form.invalid && action !='Eliminar'" (click)="doAction()">Finalizar
+                      </button>
+
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </table>
+
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</div>

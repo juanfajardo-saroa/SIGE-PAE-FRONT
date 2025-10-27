@@ -1,0 +1,2939 @@
+<br>
+<div fxLayout="row wrap" class="AlingTitle">
+  <div class="FloatL">
+    <div class="NumeroPendienteColor">
+      <div class="NumeroPendiente">
+        1
+      </div>
+    </div>
+    <div class="FondoR">
+      Ciclos de menús
+    </div>
+    <div class="FinalRedondo"></div>
+  </div>
+  <div class="BordePendiente">
+    <!--     <mat-icon [ngClass]="getStateColor(estadoMenor)">
+      circle
+    </mat-icon>
+    {{ sestadoMenor }}  -->
+    <mat-icon
+      [ngStyle]="{'color': sestadoMenor == 'Pendiente' ?'#E2E6FE': sestadoMenor == null ?'#E2E6FE':  sestadoMenor =='Incompleto'? '#ffd400' :'green '}">
+      {{sestadoMenor == null ?'circle':'circle' }}
+    </mat-icon> {{sestadoMenor}}
+
+    <div class="FloatR"></div>
+  </div>
+</div>
+<br>
+
+<main class="container justify-content-center my-3">
+  <ng-container>
+    <!-------------maem--------------->
+    <div *ngIf="solomaem">
+      <div class="row" style="margin-top: 40px;">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="tab-control-secondary">
+
+                <div id="disponible" class="tab-item pestanaCC active" style="width: 50%;">
+                  <div><img src="/assets/iconos_PAE/PNG/Iconos_PAE-203.png" width="30px" alt="Icono MAEM" />
+                    <label class="form-label mx-2"> MAEM </label>
+                  </div>
+                </div>
+
+                <div class="tab-item nothing" style="width: 50%;padding-top: 10px;">
+                  <div>-</div>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="
+            border: 1px solid;
+            margin-left: 0px;
+            margin-right: 0px;
+            border: 1px solid #005ACA;
+            border-top: none;
+            border-radius: 0px 0px 20px 20px;">
+            <div class="col-12">
+              <br>
+              <div>
+                <span class="textmenu">Seleccione la Minuta que desea usar como referencia para asignar los ciclo de
+                  menús:</span>
+
+              </div>
+              <mat-select class="tablaform ml-lg-down-0 w-down-100" name="iD_MinutaPatronAlimento" [(value)]="selMinutas"
+                (selectionChange)=" changeItemMinuta('iD_MinutaPatronAlimento', $event.value)" required>
+                <mat-option [value]="-1">Elija una opción</mat-option>
+                <mat-option *ngFor="let i of MinutasList" [value]="i.id_Minuta">{{ i.minuta}}</mat-option>
+              </mat-select>
+              <br>
+              <div *ngIf="contenidomaem">
+                <div class="alignCenter" fxLayout="row wrap">
+                  <div class="row ubicacionTablaEstado alignCenter">
+                    <div class="col alignCenter flex-wrap">
+                      <p class="paddingLeftStates">Estado del diligenciamiento:</p>
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #E2ECFD;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Pendiente por diligenciar</p>
+                      </div>
+
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #ffd400;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Incompleto</p>
+                      </div>
+
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #009922;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Completo</p>
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <mat-card-content class="TituloDialog3">
+                  <div class="BordeTotal mx-lg-down-0 TituloDialogN2">
+                    <mat-card-content class="text-center">
+                      <mat-dialog-content class="mat-typography">
+                        <br />
+                        <div class="col2">
+                          <mat-selection-list class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+                            (selectionChange)="onNivelEducativoChange(modeloTList.selectedOptions.selected)">
+                            <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList3" [value]="element.id">
+                              <div class="center-vertically">
+                                <mat-icon
+                                  [ngStyle]="{'color': element.estado == 'Pendiente' ?'#E2E6FE': element.estado == null ?'#E2E6FE':  element.estado =='Incompleto'? '#ffd400' :'green '}">
+                                  {{element.estado == null ?'circle':'circle' }}
+                                </mat-icon> {{element.nombre}}
+                              </div>
+                            </mat-list-option>
+                          </mat-selection-list>
+                        </div>
+                        <br>
+
+                        <div class="container" *ngIf="Nutrientes">
+                          <div class="row2">
+                            <div style="overflow: auto; padding-left: 20px;
+                            padding-right: 20px;">
+                              <table mat-table [dataSource]="dataSourceSedeGeneralMAEM">
+                                <ng-container class="LeftUpCorner" matColumnDef="jornada">
+                                  <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                    [ngStyle]="{'display': 'none'}">
+                                    Jornada
+                                  </th>
+                                  <td mat-cell *matCellDef="let element; let i = index">
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-46.png" alt=""
+                                        height="14px" width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-45.png" alt=""
+                                        height="20px" width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-47.png" alt=""
+                                        height="20px" width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                    </div>
+
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="almuerzoRps">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-left: 0px!important; border-right: 1px dotted!important;">
+                                    Complemento <br>Almuerzo
+                                  </th>
+                                  <td mat-cell *matCellDef="let element;let i = index">
+
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectpsal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal1">
+                                          <mat-option *ngFor="let element2 of cicloselectpsal"
+                                            [value]="element2.id">{{element2.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectpsal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal">
+                                          <mat-option *ngFor="let element2 of cicloselectpsal"
+                                            [value]="element2.id">{{element2.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectpsal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal2">
+                                          <mat-option *ngFor="let element2 of cicloselectpsal"
+                                            [value]="element2.id">{{element2.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="complementoRps">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-right: 1px solid !important;">
+
+                                    Complemento <br>AM/PM</th>
+                                  <td mat-cell *matCellDef="let element">
+
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectpsampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selpsampm1">
+                                          <mat-option *ngFor="let element of cicloselectpsampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectpsampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selpsampm">
+                                          <mat-option *ngFor="let element of cicloselectpsampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectpsampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selpsampm2">
+                                          <mat-option *ngFor="let element of cicloselectpsampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="complementoRi">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-right: 1px solid!important;">
+                                    Complemento <br>AM/PM
+                                  </th>
+                                  <td mat-cell *matCellDef="let element">
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectind">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selindampm1">
+
+                                          <mat-option *ngFor="let element of cicloselectind"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectind1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectind1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectind">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selindampm">
+
+                                          <mat-option *ngFor="let element of cicloselectind"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectind1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectind1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectind">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selindampm2">
+
+                                          <mat-option *ngFor="let element of cicloselectind"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectind1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectind1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="almuerzoCatering">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-right: 1px dotted!important;">
+                                    Complemento<br>
+                                    Almuerzo </th>
+                                  <td mat-cell *matCellDef="let element">
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectcctal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús"  [value]="selcctal1">
+
+                                          <mat-option *ngFor="let element of cicloselectcctal"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectcctal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús"  [value]="selcctal">
+
+                                          <mat-option *ngFor="let element of cicloselectcctal"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectcctal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús"  [value]="selcctal2">
+
+                                          <mat-option *ngFor="let element of cicloselectcctal"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="complementoCatering">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-right: 1px solid !important;">
+
+                                    Complemento<br>AM/PM </th>
+                                  <td mat-cell *matCellDef="let element">
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectcctampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selcctampm1">
+
+                                          <mat-option *ngFor="let element of cicloselectcctampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==2">
+
+                                        <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectcctampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selcctampm">
+
+                                          <mat-option *ngFor="let element of cicloselectcctampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==2">
+
+                                        <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectcctampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selcctampm2">
+
+                                          <mat-option *ngFor="let element of cicloselectcctampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==2">
+
+                                        <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+
+                                  </td>
+                                </ng-container>
+
+
+
+
+                                <!-- Header row second group -->
+
+                                <ng-container matColumnDef="h_jornada">
+                                  <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">
+                                    Jornada
+                                  </th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="h_grados">
+                                  <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+                                    style="border-left: 0px!important; border-right: 1px solid !important;">Grados</th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="h_matricula">
+                                  <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Matrícula SIMAT</th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="rps">
+                                  <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"
+                                    style="border-left: 0px!important; border-right: 1px solid !important;border-bottom: 1px solid !important;">
+                                    PS <br> (Preparado
+                                    en
+                                    sitio)</th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ri">
+                                  <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid !important;">
+                                    IND <br> (Industrializado) </th>
+                                  <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="catering">
+                                  <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="LeftUpCorner2"
+                                    style="border-left: 0px!important; border-right: 1px solid  !important;border-bottom: 1px solid !important;">
+                                    CCT <br> (Comida
+                                    Caliente
+                                    Transportada)
+                                  </th>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="['h_jornada', 'rps', 'ri', 'catering']">
+                                </tr>
+                                <tr mat-header-row *matHeaderRowDef="columnAsignacionNames"></tr>
+                                <tr mat-row *matRowDef="let row; columns: columnAsignacionNames;"></tr>
+                              </table>
+                              <br>
+
+
+                            </div>
+                          </div>
+                        </div>
+                        <br>
+                      </mat-dialog-content>
+                    </mat-card-content>
+                  </div>
+                </mat-card-content>
+
+
+                <br>
+                <br>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-------------maer--------------->
+
+    <div *ngIf="solomaer">
+      <div class="row" style="margin-top: 40px;">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="tab-control-secondary">
+
+                <div id="disponible" class="tab-item pestanaCC active" style="width: 50%;">
+                  <div><img src="/assets/iconos_PAE/PNG/Iconos_PAE-204.png" width="30px" alt="Icono MAEM" />
+                    <label class="form-label mx-2"> MAER </label>
+                  </div>
+                </div>
+
+                <div class="tab-item nothing" style="width: 50%;padding-top: 10px;">
+                  <div>-</div>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="
+            border: 1px solid;
+            margin-left: 0px;
+            margin-right: 0px;
+            border: 1px solid #005ACA;
+            border-top: none;
+            border-radius: 0px 0px 20px 20px;">
+            <div class="col-12">
+              <br>
+              <span class="textmenu">Seleccione la Minuta que desea usar como referencia para asignar los ciclo de
+                menús:</span>
+                <mat-select class="tablaform" name="iD_MinutaPatronAlimento" [(value)]="selMinutas"
+                (selectionChange)=" changeItemMinuta1('iD_MinutaPatronAlimento', $event.value)" required>
+                <mat-option [value]="-1">Elija una opción</mat-option>
+                <mat-option *ngFor="let i of MinutasList" [value]="i.id_Minuta">{{ i.minuta}}</mat-option>
+              </mat-select>
+              <br>
+              <div *ngIf="contenidomaer">
+                <div class="alignCenter" fxLayout="row wrap">
+                  <div class="row ubicacionTablaEstado alignCenter">
+                    <div class="col alignCenter flex-wrap">
+                      <p class="paddingLeftStates">Estado del diligenciamiento:</p>
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #E2ECFD;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Pendiente por diligenciar</p>
+                      </div>
+
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #ffd400;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Incompleto</p>
+                      </div>
+
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #009922;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Completo</p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="container" *ngIf="Nutrientes1">
+                  <div class="row2">
+                    <div style="overflow: auto; padding-left: 20px;
+                        padding-right: 20px;">
+                      <table mat-table [dataSource]="dataSourceSedeGeneralMAER">
+
+                        <ng-container class="LeftUpCorner" matColumnDef="jornada">
+                          <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}">
+                            Jornada
+                          </th>
+                          <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="element.Jornada == 'Tarde'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-43.png" alt="" height="14px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div *ngIf="element.Jornada == 'Mañana'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-42.png" alt="" height="20px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div *ngIf="element.Jornada == 'Noche'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div *ngIf="element.Jornada == 'Única'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div *ngIf="element.Jornada == 'Completa'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div
+                              *ngIf="element.Jornada == 'Media'|| element.Jornada == 'Nocturna' || element.Jornada =='Fin de Semana' ">
+                              {{element.Jornada}}
+                            </div>
+                            <div *ngIf=" element.Jornada =='TOTAL diario'">
+                              {{element.Jornada}}
+                            </div>
+
+                          </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="almuerzoRps">
+                          <th mat-header-cell *matHeaderCellDef
+                            style="border-top: 0px!important; border-left: 0px!important; border-right: 1px dotted!important;">
+                            <b>
+                              Complemento <br> Almuerzo </b>
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            <div *ngIf="!selectpsalmaer">
+                              <mat-select class="tablaform2" required>
+
+                                <mat-option *ngFor="let element of cicloselectpsalmaer"
+                                  [value]="element.id">{{element.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                            <div *ngIf="selectpsalmaer">
+
+                              <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                            </div>
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="complementoRps">
+                          <th mat-header-cell *matHeaderCellDef
+                            style="border-top: 0px!important; border-right: 1px solid !important;">
+                            <b>
+                              Complemento <br>Almuerzo Cualificado </b>
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            <div *ngIf="!selectpsalcumaer">
+                              <mat-select class="tablaform2" required>
+
+                                <mat-option *ngFor="let element of cicloselectpsalcumaer"
+                                  [value]="element.id">{{element.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                            <div *ngIf="selectpsalcumaer">
+
+                              <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                            </div>
+
+                          </td>
+                        </ng-container>
+
+
+
+                        <ng-container matColumnDef="almuerzoCatering">
+                          <th mat-header-cell *matHeaderCellDef
+                            style="border-top: 0px!important; border-right: 1px dotted!important;">
+                            <b>
+                              Complemento <br> Almuerzo </b>
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            <div *ngIf="!selectcctalmaer">
+                              <mat-select class="tablaform2" required>
+
+                                <mat-option *ngFor="let element of cicloselectcctalmaer"
+                                  [value]="element.id">{{element.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                            <div *ngIf="selectcctalmaer">
+
+                              <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                            </div>
+
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="complementoCatering">
+                          <th mat-header-cell *matHeaderCellDef
+                            style="border-top: 0px!important; border-right: 1px solid !important;">
+                            <b>
+                              Complemento <br>Almuerzo Cualificado </b>
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            <div *ngIf="!selectcctalcumaer">
+                              <mat-select class="tablaform2" required>
+
+                                <mat-option *ngFor="let element of cicloselectcctalcumaer"
+                                  [value]="element.id">{{element.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                            <div *ngIf="selectcctalcumaer">
+
+                              <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                            </div>
+
+                          </td>
+                        </ng-container>
+
+
+
+
+
+                        <!-- Header row second group -->
+
+                        <ng-container matColumnDef="h_jornada">
+                          <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+                            style=" min-width: 180px; ">
+                            <b>Jornada</b>
+                          </th>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="rps">
+                          <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"
+                            style="border-left: 0px!important; border-right: 1px solid !important;"><b> PS </b> <br>
+                            <b>(Preparado
+                              en
+                              sitio)</b>
+                          </th>
+                        </ng-container>
+
+
+
+                        <ng-container matColumnDef="catering">
+                          <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="LeftUpCorner2"
+                            style="border-left: 0px!important; border-right: 1px solid  !important;"> <b>CCT</b> <br>
+                            <b>(Comida
+                              caliente
+                              transportada)</b>
+                          </th>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="['h_jornada', 'rps','catering']">
+                        </tr>
+                        <tr mat-header-row *matHeaderRowDef="columnAsignacionNamesMAER"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnAsignacionNamesMAER;"></tr>
+                      </table>
+                      <br>
+
+
+                    </div>
+                  </div>
+                </div>
+                <br>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-------------paepi--------------->
+
+    <div *ngIf="solopaepi">
+      <div class="row" style="margin-top: 40px;">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="tab-control-secondary">
+
+                <div id="disponible" class="tab-item pestanaCC active" style="width: 50%;">
+                  <div><img src="/assets/iconos_PAE/PNG/Iconos_PAE-205.png" width="30px" alt="Icono MAEM" />
+                    <label class="form-label mx-2"> PAEPI </label>
+                  </div>
+                </div>
+
+                <div class="tab-item nothing" style="width: 50%;padding-top: 10px;">
+                  <div>-</div>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="
+            border: 1px solid;
+            margin-left: 0px;
+            margin-right: 0px;
+            border: 1px solid #005ACA;
+            border-top: none;
+            border-radius: 0px 0px 20px 20px;">
+            <div class="col-12">
+              <br>
+              <span class="textmenu">Seleccione la Minuta que desea usar como referencia para asignar los ciclo de
+                menús:</span>
+                <mat-select class="tablaform" name="iD_MinutaPatronAlimento2" [(value)]="selMinutaspaepi"
+                (selectionChange)=" changeItemMinuta6('iD_MinutaPatronAlimento', $event.value)" required>
+                <mat-option [value]="-1">Elija una opción</mat-option>
+                <mat-option *ngFor="let i of MinutasList3" [value]="i.id_Minuta">{{ i.minuta}}</mat-option>
+              </mat-select>
+              <br>
+
+              <br>
+
+              <!-----------maem------------>
+              <div *ngIf="contenidopaepimaem">
+                <div class="alignCenter" fxLayout="row wrap">
+                  <div class="row ubicacionTablaEstado alignCenter">
+                    <div class="col alignCenter flex-wrap">
+                      <p class="paddingLeftStates">Estado del diligenciamiento:</p>
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #E2ECFD;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Pendiente por diligenciar</p>
+                      </div>
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #ffd400;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Incompleto</p>
+                      </div>
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #009922;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Completo</p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <mat-card-content class="TituloDialog3">
+                  <div class="BordeTotal mx-lg-down-0 TituloDialogN2">
+                    <mat-card-content class="text-center">
+                      <mat-dialog-content class="mat-typography">
+                        <br />
+                        <div class="col2">
+                          <mat-selection-list class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+                            (selectionChange)="onNivelEducativoChange(modeloTList.selectedOptions.selected)">
+                            <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList3" [value]="element.id">
+                              <div class="center-vertically">
+                                <mat-icon
+                                  [ngStyle]="{'color': element.estado == 'Pendiente' ?'#E2E6FE': element.estado == null ?'#E2E6FE':  element.estado =='Incompleto'? '#ffd400' :'green '}">
+                                  {{element.estado == null ?'circle':'circle' }}
+                                </mat-icon> {{element.nombre}}
+                              </div>
+                            </mat-list-option>
+                          </mat-selection-list>
+                        </div>
+                        <br>
+
+                        <div class="container" *ngIf="Nutrientes">
+                          <div class="row2">
+                            <div style="overflow: auto; padding-left: 20px;
+                            padding-right: 20px;">
+                              <table mat-table [dataSource]="dataSourceSedeGeneralMAEM">
+                                <ng-container class="LeftUpCorner" matColumnDef="jornada">
+                                  <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                    [ngStyle]="{'display': 'none'}">
+                                    Jornada
+                                  </th>
+                                  <td mat-cell *matCellDef="let element; let i = index">
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-46.png" alt=""
+                                        height="14px" width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-45.png" alt=""
+                                        height="20px" width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Noche'">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-47.png" alt=""
+                                        height="20px" width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-47.png" alt=""
+                                        height="20px" width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Completa'">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-47.png" alt=""
+                                        height="20px" width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                    </div>
+                                    <div
+                                      *ngIf="element.Jornada == 'Media'|| element.Jornada == 'Nocturna' || element.Jornada =='Fin de Semana' ">
+                                      {{element.Jornada}}
+                                    </div>
+                                    <div *ngIf=" element.Jornada =='TOTAL diario'">
+                                      {{element.Jornada}}
+                                    </div>
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="almuerzoRps">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-left: 0px!important; border-right: 1px dotted!important;">
+                                    Complemento <br>Almuerzo
+                                  </th>
+                                  <td mat-cell *matCellDef="let element;let i = index">
+
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectpsal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal1">
+                                          <mat-option *ngFor="let element2 of cicloselectpsal"
+                                            [value]="element2.id">{{element2.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectpsal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal">
+                                          <mat-option *ngFor="let element2 of cicloselectpsal"
+                                            [value]="element2.id">{{element2.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectpsal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal2">
+                                          <mat-option *ngFor="let element2 of cicloselectpsal"
+                                            [value]="element2.id">{{element2.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="complementoRps">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-right: 1px solid !important;">
+
+                                    Complemento <br>AM/PM</th>
+                                  <td mat-cell *matCellDef="let element">
+
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectpsampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selpsampm1">
+                                          <mat-option *ngFor="let element of cicloselectpsampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectpsampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selpsampm">
+                                          <mat-option *ngFor="let element of cicloselectpsampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectpsampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selpsampm2">
+                                          <mat-option *ngFor="let element of cicloselectpsampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectpsampm1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="complementoRi">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-right: 1px solid!important;">
+                                    Complemento <br>AM/PM
+                                  </th>
+                                  <td mat-cell *matCellDef="let element">
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectind">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selindampm1">
+
+                                          <mat-option *ngFor="let element of cicloselectind"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectind1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectind1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectind">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selindampm">
+
+                                          <mat-option *ngFor="let element of cicloselectind"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectind1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectind1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectind">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selindampm2">
+
+                                          <mat-option *ngFor="let element of cicloselectind"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectind1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectind1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="almuerzoCatering">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-right: 1px dotted!important;">
+                                    Complemento<br>
+                                    Almuerzo </th>
+                                  <td mat-cell *matCellDef="let element">
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectcctal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús"  [value]="selcctal1">
+
+                                          <mat-option *ngFor="let element of cicloselectcctal"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectcctal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús"  [value]="selcctal">
+
+                                          <mat-option *ngFor="let element of cicloselectcctal"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectcctal">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús"  [value]="selcctal2">
+
+                                          <mat-option *ngFor="let element of cicloselectcctal"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctal1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctal1==2">
+
+                                        <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                  </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="complementoCatering">
+                                  <th mat-header-cell *matHeaderCellDef
+                                    style="border-top: 0px!important; border-right: 1px solid !important;">
+
+                                    Complemento<br>AM/PM </th>
+                                  <td mat-cell *matCellDef="let element">
+                                    <div *ngIf="element.Jornada == 'Tarde'">
+                                      <div *ngIf="selectcctampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selcctampm1">
+
+                                          <mat-option *ngFor="let element of cicloselectcctampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==2">
+
+                                        <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="element.Jornada == 'Mañana'">
+                                      <div *ngIf="selectcctampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selcctampm">
+
+                                          <mat-option *ngFor="let element of cicloselectcctampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==2">
+
+                                        <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+                                    <div *ngIf="element.Jornada == 'Única'">
+                                      <div *ngIf="selectcctampm">
+                                        <mat-select class="tablaform2"
+                                          (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                          required placeholder="Seleccione un ciclo de menús" [value]="selcctampm2">
+
+                                          <mat-option *ngFor="let element of cicloselectcctampm"
+                                            [value]="element.id">{{element.nombre}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==1">
+
+                                        <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                      </div>
+                                      <div *ngIf="selectcctampm1==2">
+
+                                        <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                          height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                      </div>
+                                    </div>
+
+
+                                  </td>
+                                </ng-container>
+
+
+
+
+
+
+                                <!-- Header row second group -->
+
+                                <ng-container matColumnDef="h_jornada">
+                                  <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">
+                                    Jornada
+                                  </th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="h_grados">
+                                  <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+                                    style="border-left: 0px!important; border-right: 1px solid !important;">Grados</th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="h_matricula">
+                                  <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Matrícula SIMAT</th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="rps">
+                                  <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"
+                                    style="border-left: 0px!important; border-right: 1px solid !important;border-bottom: 1px solid !important;">
+                                    PS <br> (Preparado
+                                    en
+                                    sitio)</th>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ri">
+                                  <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid !important;">
+                                    IND <br> (Industrializado) </th>
+                                  <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="catering">
+                                  <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="LeftUpCorner2"
+                                    style="border-left: 0px!important; border-right: 1px solid  !important;border-bottom: 1px solid !important;">
+                                    CCT <br> (Comida
+                                    Caliente
+                                    Transportada)
+                                  </th>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="['h_jornada', 'rps', 'ri', 'catering']">
+                                </tr>
+                                <tr mat-header-row *matHeaderRowDef="columnAsignacionNames"></tr>
+                                <tr mat-row *matRowDef="let row; columns: columnAsignacionNames;"></tr>
+                              </table>
+                              <br>
+
+
+                            </div>
+                          </div>
+                        </div>
+                        <br>
+                      </mat-dialog-content>
+                    </mat-card-content>
+                  </div>
+                </mat-card-content>
+
+
+                <br>
+                <br>
+              </div>
+              <!-----------maer------------>
+              <div *ngIf="contenidopaepimaer">
+                <div class="alignCenter" fxLayout="row wrap">
+                  <div class="row ubicacionTablaEstado alignCenter">
+                    <div class="col alignCenter flex-wrap">
+                      <p class="paddingLeftStates">Estado del diligenciamiento:</p>
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #E2ECFD;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Pendiente por diligenciar</p>
+                      </div>
+
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #ffd400;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Incompleto</p>
+                      </div>
+
+                      <div class="d-flex">
+                        <mat-icon class="sizeIcon" style="color: #009922;">
+                          circle
+                        </mat-icon>
+                        <p class="paddingLeftStates">Completo</p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="container" *ngIf="Nutrientes1">
+                  <div class="row2">
+                    <div style="overflow: auto; padding-left: 20px;
+                        padding-right: 20px;">
+                      <table mat-table [dataSource]="dataSourceSedeGeneralMAER">
+
+                        <ng-container class="LeftUpCorner" matColumnDef="jornada">
+                          <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}">
+                            Jornada
+                          </th>
+                          <td mat-cell *matCellDef="let element; let i = index">
+                            <div *ngIf="element.Jornada == 'Tarde'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-43.png" alt="" height="14px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div *ngIf="element.Jornada == 'Mañana'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-42.png" alt="" height="20px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div *ngIf="element.Jornada == 'Noche'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div *ngIf="element.Jornada == 'Única'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div *ngIf="element.Jornada == 'Completa'">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px"
+                                width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                            </div>
+                            <div
+                              *ngIf="element.Jornada == 'Media'|| element.Jornada == 'Nocturna' || element.Jornada =='Fin de Semana' ">
+                              {{element.Jornada}}
+                            </div>
+                            <div *ngIf=" element.Jornada =='TOTAL diario'">
+                              {{element.Jornada}}
+                            </div>
+
+                          </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="almuerzoRps">
+                          <th mat-header-cell *matHeaderCellDef
+                            style="border-top: 0px!important; border-left: 0px!important; border-right: 1px dotted!important;">
+                            <b>
+                              Complemento <br> Almuerzo </b>
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            <div *ngIf="!selectpsalmaer">
+                              <mat-select class="tablaform2" required>
+
+                                <mat-option *ngFor="let element of cicloselectpsalmaer"
+                                  [value]="element.id">{{element.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                            <div *ngIf="selectpsalmaer">
+
+                              <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                            </div>
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="complementoRps">
+                          <th mat-header-cell *matHeaderCellDef
+                            style="border-top: 0px!important; border-right: 1px solid !important;">
+                            <b>
+                              Complemento <br>Almuerzo Cualificado </b>
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            <div *ngIf="!selectpsalcumaer">
+                              <mat-select class="tablaform2" required>
+
+                                <mat-option *ngFor="let element of cicloselectpsalcumaer"
+                                  [value]="element.id">{{element.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                            <div *ngIf="selectpsalcumaer">
+
+                              <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                            </div>
+
+                          </td>
+                        </ng-container>
+
+
+
+                        <ng-container matColumnDef="almuerzoCatering">
+                          <th mat-header-cell *matHeaderCellDef
+                            style="border-top: 0px!important; border-right: 1px dotted!important;">
+                            <b>
+                              Complemento <br> Almuerzo </b>
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            <div *ngIf="!selectcctalmaer">
+                              <mat-select class="tablaform2" required>
+
+                                <mat-option *ngFor="let element of cicloselectcctalmaer"
+                                  [value]="element.id">{{element.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                            <div *ngIf="selectcctalmaer">
+
+                              <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                            </div>
+
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="complementoCatering">
+                          <th mat-header-cell *matHeaderCellDef
+                            style="border-top: 0px!important; border-right: 1px solid !important;">
+                            <b>
+                              Complemento <br>Almuerzo Cualificado </b>
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            <div *ngIf="!selectcctalcumaer">
+                              <mat-select class="tablaform2" n required>
+
+                                <mat-option *ngFor="let element of cicloselectcctalcumaer"
+                                  [value]="element.id">{{element.nombre}}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                            <div *ngIf="selectcctalcumaer">
+
+                              <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                            </div>
+
+                          </td>
+                        </ng-container>
+
+
+
+
+
+                        <!-- Header row second group -->
+
+                        <ng-container matColumnDef="h_jornada">
+                          <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+                            style=" min-width: 180px; ">
+                            <b>Jornada</b>
+                          </th>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="rps">
+                          <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"
+                            style="border-left: 0px!important; border-right: 1px solid !important;"><b> PS </b> <br>
+                            <b>(Preparado
+                              en
+                              sitio)</b>
+                          </th>
+                        </ng-container>
+
+
+
+                        <ng-container matColumnDef="catering">
+                          <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="LeftUpCorner2"
+                            style="border-left: 0px!important; border-right: 1px solid  !important;"> <b>CCT</b> <br>
+                            <b>(Comida
+                              caliente
+                              transportada)</b>
+                          </th>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="['h_jornada', 'rps','catering']">
+                        </tr>
+                        <tr mat-header-row *matHeaderRowDef="columnAsignacionNamesMAER"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnAsignacionNamesMAER;"></tr>
+                      </table>
+                      <br>
+
+
+                    </div>
+                  </div>
+                </div>
+                <br>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-------------maem - paepi--------------->
+    <div *ngIf="maempaepi">
+      <mat-tab-group [selectedIndex]="modeloOperacionTab" (selectedIndexChange)="cambioModeloOperacion($event)">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="estadoDiligenciamiento mx-3"></div>
+            <div class="d-flex align-items-center">
+              <img src="/assets/iconos_PAE/PNG/Iconos_PAE-203.png" width="30px" alt="Icono MAEM" />
+              <label class="form-label mx-2"> MAEM </label>
+            </div>
+          </ng-template>
+          <br>
+          <span class="textmenu">Seleccione la Minuta que desea usar como referencia para asignar los ciclo de
+            menús:</span>
+          <mat-select class="tablaform" name="iD_MinutaPatronAlimento" [(value)]="selMinutas"
+            (selectionChange)=" changeItemMinuta('iD_MinutaPatronAlimento', $event.value)" required>
+            <mat-option [value]="-1">Elija una opción</mat-option>
+            <mat-option *ngFor="let i of MinutasList" [value]="i.id_Minuta">{{ i.minuta}}</mat-option>
+          </mat-select>
+          <br>
+          <div *ngIf="contenidomaem">
+            <div class="alignCenter" fxLayout="row wrap">
+              <div class="row ubicacionTablaEstado alignCenter">
+                <div class="col alignCenter flex-wrap">
+                  <p class="paddingLeftStates">Estado del diligenciamiento:</p>
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #E2ECFD;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Pendiente por diligenciar</p>
+                  </div>
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #ffd400;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Incompleto</p>
+                  </div>
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #009922;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Completo</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <br>
+            <mat-card-content class="TituloDialog3">
+              <div class="BordeTotal mx-lg-down-0 TituloDialogN2">
+                <mat-card-content class="text-center">
+                  <mat-dialog-content class="mat-typography">
+                    <br />
+                    <div class="col2">
+                      <mat-selection-list class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+                        (selectionChange)="onNivelEducativoChange(modeloTList.selectedOptions.selected)">
+                        <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList3" [value]="element.id">
+                          <div class="center-vertically">
+                            <mat-icon
+                              [ngStyle]="{'color': element.estado == 'Pendiente' ?'#E2E6FE': element.estado == null ?'#E2E6FE':  element.estado =='Incompleto'? '#ffd400' :'green '}">
+                              {{element.estado == null ?'circle':'circle' }}
+                            </mat-icon> {{element.nombre}}
+                          </div>
+                        </mat-list-option>
+                      </mat-selection-list>
+                    </div>
+                    <br>
+
+                    <div class="container" *ngIf="Nutrientes">
+                      <div class="row2">
+                        <div style="overflow: auto; padding-left: 20px;
+                        padding-right: 20px;">
+                          <table mat-table [dataSource]="dataSourceSedeGeneralMAEM">
+                            <ng-container class="LeftUpCorner" matColumnDef="jornada">
+                              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                [ngStyle]="{'display': 'none'}">
+                                Jornada
+                              </th>
+                              <td mat-cell *matCellDef="let element; let i = index">
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-46.png" alt="" height="14px"
+                                    width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-45.png" alt="" height="20px"
+                                    width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-47.png" alt="" height="20px"
+                                    width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                </div>
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="almuerzoRps">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-left: 0px!important; border-right: 1px dotted!important;">
+                                Complemento <br>Almuerzo
+                              </th>
+                              <td mat-cell *matCellDef="let element;let i = index">
+
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="selectpsal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal1">
+                                      <mat-option *ngFor="let element2 of cicloselectpsal"
+                                        [value]="element2.id">{{element2.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectpsal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectpsal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="selectpsal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal">
+                                      <mat-option *ngFor="let element2 of cicloselectpsal"
+                                        [value]="element2.id">{{element2.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectpsal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectpsal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="selectpsal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required required placeholder="Seleccione un ciclo de menús"  [value]="selpsal2">
+                                      <mat-option *ngFor="let element2 of cicloselectpsal"
+                                        [value]="element2.id">{{element2.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectpsal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectpsal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="complementoRps">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-right: 1px solid !important;">
+
+                                Complemento <br>AM/PM</th>
+                              <td mat-cell *matCellDef="let element">
+
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="selectpsampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selpsampm1">
+                                      <mat-option *ngFor="let element of cicloselectpsampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectpsampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectpsampm1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="selectpsampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selpsampm">
+                                      <mat-option *ngFor="let element of cicloselectpsampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectpsampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectpsampm1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="selectpsampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selpsampm2">
+                                      <mat-option *ngFor="let element of cicloselectpsampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectpsampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectpsampm1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="complementoRi">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-right: 1px solid!important;">
+                                Complemento <br>AM/PM
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="selectind">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selindampm1">
+
+                                      <mat-option *ngFor="let element of cicloselectind"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectind1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectind1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="selectind">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selindampm">
+
+                                      <mat-option *ngFor="let element of cicloselectind"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectind1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectind1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="selectind">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selindampm2">
+
+                                      <mat-option *ngFor="let element of cicloselectind"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectind1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectind1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="almuerzoCatering">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-right: 1px dotted!important;">
+                                Complemento<br>
+                                Almuerzo </th>
+                              <td mat-cell *matCellDef="let element">
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="selectcctal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús"  [value]="selcctal1">
+
+                                      <mat-option *ngFor="let element of cicloselectcctal"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectcctal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectcctal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="selectcctal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús"  [value]="selcctal">
+
+                                      <mat-option *ngFor="let element of cicloselectcctal"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectcctal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectcctal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="selectcctal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús"  [value]="selcctal2">
+
+                                      <mat-option *ngFor="let element of cicloselectcctal"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectcctal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectcctal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="complementoCatering">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-right: 1px solid !important;">
+
+                                Complemento<br>AM/PM </th>
+                              <td mat-cell *matCellDef="let element">
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="selectcctampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selcctampm1">
+
+                                      <mat-option *ngFor="let element of cicloselectcctampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectcctampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectcctampm1==2">
+
+                                    <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="selectcctampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selcctampm">
+
+                                      <mat-option *ngFor="let element of cicloselectcctampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectcctampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectcctampm1==2">
+
+                                    <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="selectcctampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="changeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="selcctampm2">
+
+                                      <mat-option *ngFor="let element of cicloselectcctampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="selectcctampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="selectcctampm1==2">
+
+                                    <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+
+                              </td>
+                            </ng-container>
+
+
+
+
+
+                            <!-- Header row second group -->
+
+                            <ng-container matColumnDef="h_jornada">
+                              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">
+                                Jornada
+                              </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="h_grados">
+                              <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+                                style="border-left: 0px!important; border-right: 1px solid !important;">Grados</th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="h_matricula">
+                              <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Matrícula SIMAT</th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="rps">
+                              <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"
+                                style="border-left: 0px!important; border-right: 1px solid !important;border-bottom: 1px solid !important;">
+                                PS <br> (Preparado
+                                en
+                                sitio)</th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="ri">
+                              <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid !important;">
+                                IND <br> (Industrializado) </th>
+                              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="catering">
+                              <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="LeftUpCorner2"
+                                style="border-left: 0px!important; border-right: 1px solid  !important;border-bottom: 1px solid !important;">
+                                CCT <br> (Comida
+                                Caliente
+                                Transportada)
+                              </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['h_jornada', 'rps', 'ri', 'catering']">
+                            </tr>
+                            <tr mat-header-row *matHeaderRowDef="columnAsignacionNames"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnAsignacionNames;"></tr>
+                          </table>
+                          <br>
+
+
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                  </mat-dialog-content>
+                </mat-card-content>
+              </div>
+            </mat-card-content>
+
+
+            <br>
+            <br>
+          </div>
+          <br>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="d-flex align-items-center">
+              <div class="estadoDiligenciamiento mx-3"></div>
+              <img src="/assets/iconos_PAE/PNG/Iconos_PAE-205.png" width="30px" alt="Icono MAEM" />
+              <label class="form-label mx-2"> PAEPI </label>
+            </div>
+          </ng-template>
+          <br>
+          <span class="textmenu">Seleccione la Minuta que desea usar como referencia para asignar los ciclo de
+            menús:</span>
+          <mat-select class="tablaform" name="iD_MinutaPatronAlimento2" [(value)]="selMinutaspaepi"
+            (selectionChange)=" changeItemMinuta6('iD_MinutaPatronAlimento', $event.value)" required>
+            <mat-option [value]="-1">Elija una opción</mat-option>
+            <mat-option *ngFor="let i of MinutasList3" [value]="i.id_Minuta">{{ i.minuta}}</mat-option>
+          </mat-select>
+          <br>
+
+          <!-----------maem ------------>
+          <div *ngIf="contenidopaepimaem">
+            <div class="alignCenter" fxLayout="row wrap">
+              <div class="row ubicacionTablaEstado alignCenter">
+                <div class="col alignCenter flex-wrap">
+                  <p class="paddingLeftStates">Estado del diligenciamiento:</p>
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #E2ECFD;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Pendiente por diligenciar</p>
+                  </div>
+
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #ffd400;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Incompleto</p>
+                  </div>
+
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #009922;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Completo</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <br>
+            <mat-card-content class="TituloDialog3">
+              <div class="BordeTotal mx-lg-down-0 TituloDialogN2">
+                <mat-card-content class="text-center">
+                  <mat-dialog-content class="mat-typography">
+                    <br />
+                    <div class="col2">
+                      <mat-selection-list class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+                        (selectionChange)="onNivelEducativoChange(modeloTList.selectedOptions.selected)">
+                        <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList4" [value]="element.id">
+                          <div class="center-vertically">
+                            <mat-icon
+                              [ngStyle]="{'color': element.estado == 'Pendiente' ?'#E2E6FE': element.estado == null ?'#E2E6FE':  element.estado =='Incompleto'? '#ffd400' :'green '}">
+                              {{element.estado == null ?'circle':'circle' }}
+                            </mat-icon> {{element.nombre}}
+                          </div>
+                        </mat-list-option>
+                      </mat-selection-list>
+                    </div>
+                    <br>
+
+                    <div class="container" *ngIf="Nutrientes">
+                      <div class="row2">
+                        <div style="overflow: auto; padding-left: 20px;
+                        padding-right: 20px;">
+                          <table mat-table [dataSource]="dataSourceSedeGeneralMAEM">
+                            <ng-container class="LeftUpCorner" matColumnDef="jornada">
+                              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                [ngStyle]="{'display': 'none'}">
+                                Jornada
+                              </th>
+                              <td mat-cell *matCellDef="let element; let i = index">
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-46.png" alt="" height="14px"
+                                    width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-45.png" alt="" height="20px"
+                                    width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-47.png" alt="" height="20px"
+                                    width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                                </div>
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="almuerzoRps">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-left: 0px!important; border-right: 1px dotted!important;">
+                                Complemento <br>Almuerzo
+                              </th>
+                              <td mat-cell *matCellDef="let element;let i = index">
+
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="Pselectpsal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required required placeholder="Seleccione un ciclo de menús"  [value]="Pselpsal1">
+                                      <mat-option *ngFor="let element2 of Pcicloselectpsal"
+                                        [value]="element2.id">{{element2.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectpsal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectpsal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="Pselectpsal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required required placeholder="Seleccione un ciclo de menús"  [value]="Pselpsal">
+                                      <mat-option *ngFor="let element2 of Pcicloselectpsal"
+                                        [value]="element2.id">{{element2.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectpsal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectpsal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="Pselectpsal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required required placeholder="Seleccione un ciclo de menús"  [value]="Pselpsal2">
+                                      <mat-option *ngFor="let element2 of Pcicloselectpsal"
+                                        [value]="element2.id">{{element2.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectpsal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectpsal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="complementoRps">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-right: 1px solid !important;">
+
+                                Complemento <br>AM/PM</th>
+                              <td mat-cell *matCellDef="let element">
+
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="Pselectpsampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselpsampm1">
+                                      <mat-option *ngFor="let element of Pcicloselectpsampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectpsampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectpsampm1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="Pselectpsampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselpsampm">
+                                      <mat-option *ngFor="let element of Pcicloselectpsampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectpsampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectpsampm1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="Pselectpsampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemPSComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselpsampm2">
+                                      <mat-option *ngFor="let element of Pcicloselectpsampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectpsampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectpsampm1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="complementoRi">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-right: 1px solid!important;">
+                                Complemento <br>AM/PM
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="Pselectind">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselindampm1">
+
+                                      <mat-option *ngFor="let element of Pcicloselectind"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectind1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectind1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="Pselectind">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselindampm">
+
+                                      <mat-option *ngFor="let element of Pcicloselectind"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectind1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectind1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="Pselectind">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemINDComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselindampm2">
+
+                                      <mat-option *ngFor="let element of Pcicloselectind"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectind1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectind1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="almuerzoCatering">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-right: 1px dotted!important;">
+                                Complemento<br>
+                                Almuerzo </th>
+                              <td mat-cell *matCellDef="let element">
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="Pselectcctal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús"  [value]="Pselcctal1">
+
+                                      <mat-option *ngFor="let element of Pcicloselectcctal"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectcctal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectcctal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="Pselectcctal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús"  [value]="Pselcctal">
+
+                                      <mat-option *ngFor="let element of Pcicloselectcctal"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectcctal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectcctal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="Pselectcctal">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús"  [value]="Pselcctal2">
+
+                                      <mat-option *ngFor="let element of Pcicloselectcctal"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectcctal1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectcctal1==2">
+
+                                    <label class="nohayciclo1"disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="complementoCatering">
+                              <th mat-header-cell *matHeaderCellDef
+                                style="border-top: 0px!important; border-right: 1px solid !important;">
+
+                                Complemento<br>AM/PM </th>
+                              <td mat-cell *matCellDef="let element">
+                                <div *ngIf="element.Jornada == 'Tarde'">
+                                  <div *ngIf="Pselectcctampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselcctampm1">
+
+                                      <mat-option *ngFor="let element of Pcicloselectcctampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectcctampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectcctampm1==2">
+
+                                    <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+                                <div *ngIf="element.Jornada == 'Mañana'">
+                                  <div *ngIf="Pselectcctampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselcctampm">
+
+                                      <mat-option *ngFor="let element of Pcicloselectcctampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectcctampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectcctampm1==2">
+
+                                    <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+                                <div *ngIf="element.Jornada == 'Única'">
+                                  <div *ngIf="Pselectcctampm">
+                                    <mat-select class="tablaform2"
+                                      (selectionChange)="PchangeItemCCTComAmPm('iD_CiclosMenuReferencia', $event.value ,element)"
+                                      required placeholder="Seleccione un ciclo de menús" [value]="Pselcctampm2">
+
+                                      <mat-option *ngFor="let element of Pcicloselectcctampm"
+                                        [value]="element.id">{{element.nombre}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <div *ngIf="Pselectcctampm1==1">
+
+                                    <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                                  </div>
+                                  <div *ngIf="Pselectcctampm1==2">
+
+                                    <label class="nohayciclo1" disabled>No aplica<img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" alt=""
+                                      height="20px" width="auto" style="border-right: 10px; float:right"></label>
+                                  </div>
+                                </div>
+
+
+                              </td>
+                            </ng-container>
+
+
+
+
+
+
+                            <!-- Header row second group -->
+
+                            <ng-container matColumnDef="h_jornada">
+                              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">
+                                Jornada
+                              </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="h_grados">
+                              <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+                                style="border-left: 0px!important; border-right: 1px solid !important;">Grados</th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="h_matricula">
+                              <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Matrícula SIMAT</th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="rps">
+                              <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"
+                                style="border-left: 0px!important; border-right: 1px solid !important;border-bottom: 1px solid !important;">
+                                PS <br> (Preparado
+                                en
+                                sitio)</th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="ri">
+                              <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid !important;">
+                                IND <br> (Industrializado) </th>
+                              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="catering">
+                              <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="LeftUpCorner2"
+                                style="border-left: 0px!important; border-right: 1px solid  !important;border-bottom: 1px solid !important;">
+                                CCT <br> (Comida
+                                Caliente
+                                Transportada)
+                              </th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['h_jornada', 'rps', 'ri', 'catering']">
+                            </tr>
+                            <tr mat-header-row *matHeaderRowDef="columnAsignacionNames"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnAsignacionNames;"></tr>
+                          </table>
+                          <br>
+
+
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                  </mat-dialog-content>
+                </mat-card-content>
+              </div>
+            </mat-card-content>
+
+
+            <br>
+            <br>
+          </div>
+          <!-----------maer------------>
+          <div *ngIf="contenidopaepimaer">
+            <div class="alignCenter" fxLayout="row wrap">
+              <div class="row ubicacionTablaEstado alignCenter">
+                <div class="col alignCenter flex-wrap">
+                  <p class="paddingLeftStates">Estado del diligenciamiento:</p>
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #E2ECFD;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Pendiente por diligenciar</p>
+                  </div>
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #ffd400;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Incompleto</p>
+                  </div>
+                  <div class="d-flex">
+                    <mat-icon class="sizeIcon" style="color: #009922;">
+                      circle
+                    </mat-icon>
+                    <p class="paddingLeftStates">Completo</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="container" *ngIf="Nutrientes1">
+              <div class="row2">
+                <div style="overflow: auto; padding-left: 20px;
+                    padding-right: 20px;">
+                  <table mat-table [dataSource]="dataSourceSedeGeneralMAER">
+
+                    <ng-container class="LeftUpCorner" matColumnDef="jornada">
+                      <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}">
+                        Jornada
+                      </th>
+                      <td mat-cell *matCellDef="let element; let i = index">
+                        <div *ngIf="element.Jornada == 'Tarde'">
+                          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-46.png" alt="" height="14px"
+                            width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                        </div>
+                        <div *ngIf="element.Jornada == 'Mañana'">
+                          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-45.png" alt="" height="20px"
+                            width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                        </div>
+
+                        <div *ngIf="element.Jornada == 'Única'">
+                          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-47.png" alt="" height="20px"
+                            width="auto" style="border-right: 10px;"> {{element.Jornada}}
+                        </div>
+
+
+                      </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="almuerzoRps">
+                      <th mat-header-cell *matHeaderCellDef
+                        style="border-top: 0px!important; border-left: 0px!important; border-right: 1px dotted!important;">
+                        <b>
+                          Complemento <br> Almuerzo </b>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        <div *ngIf="!selectpsalmaer">
+                          <mat-select class="tablaform2"
+                            (selectionChange)="changeItemPSComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                            required placeholder="Seleccione un ciclo de menús" [value]="selpsal">
+
+                            <mat-option *ngFor="let element of cicloselectpsalmaer"
+                              [value]="element.id">{{element.nombre}}
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                        <div *ngIf="selectpsalmaer">
+
+                          <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                        </div>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="complementoRps">
+                      <th mat-header-cell *matHeaderCellDef
+                        style="border-top: 0px!important; border-right: 1px solid !important;">
+                        <b>
+                          Complemento <br>Almuerzo Cualificado </b>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        <div *ngIf="!selectpsalcumaer">
+                          <mat-select class="tablaform2"
+                            (selectionChange)="changeItemPSComAlCu('iD_CiclosMenuReferencia', $event.value ,element)"
+                            required placeholder="Seleccione un ciclo de menús" [value]="selpsalcu">
+                            <mat-option *ngFor="let element of cicloselectpsalcumaer"
+                              [value]="element.id">{{element.nombre}}
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                        <div *ngIf="selectpsalcumaer">
+
+                          <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                        </div>
+
+                      </td>
+                    </ng-container>
+
+
+
+                    <ng-container matColumnDef="almuerzoCatering">
+                      <th mat-header-cell *matHeaderCellDef
+                        style="border-top: 0px!important; border-right: 1px dotted!important;">
+                        <b>
+                          Complemento <br> Almuerzo </b>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        <div *ngIf="!selectcctalmaer">
+                          <mat-select class="tablaform2"
+                            (selectionChange)="changeItemCCTComAl('iD_CiclosMenuReferencia', $event.value ,element)"
+                            required placeholder="Seleccione un ciclo de menús" [value]="selcctal">
+
+                            <mat-option *ngFor="let element of cicloselectcctalmaer"
+                              [value]="element.id">{{element.nombre}}
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                        <div *ngIf="selectcctalmaer">
+
+                          <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                        </div>
+
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="complementoCatering">
+                      <th mat-header-cell *matHeaderCellDef
+                        style="border-top: 0px!important; border-right: 1px solid !important;">
+                        <b>
+                          Complemento <br>Almuerzo Cualificado </b>
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        <div *ngIf="!selectcctalcumaer">
+                          <mat-select class="tablaform2"
+                            (selectionChange)="changeItemCCTComAlCu('iD_CiclosMenuReferencia', $event.value ,element)"
+                            required placeholder="Seleccione un ciclo de menús" [value]="selcctalcu">
+
+                            <mat-option *ngFor="let element of cicloselectcctalcumaer"
+                              [value]="element.id">{{element.nombre}}
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                        <div *ngIf="selectcctalcumaer">
+
+                          <label class="nohayciclo">No hay ciclos de <br> menús disponibles</label>
+                        </div>
+
+                      </td>
+                    </ng-container>
+
+
+
+
+
+                    <!-- Header row second group -->
+
+                    <ng-container matColumnDef="h_jornada">
+                      <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+                        style=" min-width: 180px; ">
+                        <b>Jornada</b>
+                      </th>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="rps">
+                      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"
+                        style="border-left: 0px!important; border-right: 1px solid !important;"><b> PS </b> <br>
+                        <b>(Preparado
+                          en
+                          sitio)</b>
+                      </th>
+                    </ng-container>
+
+
+
+                    <ng-container matColumnDef="catering">
+                      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="LeftUpCorner2"
+                        style="border-left: 0px!important; border-right: 1px solid  !important;"> <b>CCT</b> <br>
+                        <b>(Comida
+                          caliente
+                          transportada)</b>
+                      </th>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="['h_jornada', 'rps','catering']">
+                    </tr>
+                    <tr mat-header-row *matHeaderRowDef="columnAsignacionNamesMAER"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnAsignacionNamesMAER;"></tr>
+                  </table>
+                  <br>
+
+
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+
+
+  </ng-container>
+</main>
+<br>
+<hr class="lineaPre">
+<br>
+
+<br>
+<div style="width: 100%; float: center;" class="align-items-center textagregar ">
+  <div class="text-right ">
+
+  </div>
+</div>
+<ng-container>
+  <div>
+    <div class="CenterButton text-center" [ngClass]="{'linkdisable':!getModulePermission(73,'editar')}">
+      <button style="margin-bottom: 20px;" (click)="guardar()" class="buttonAr4">
+        Guardar cambios
+      </button>
+
+    </div>
+  </div>
+</ng-container>

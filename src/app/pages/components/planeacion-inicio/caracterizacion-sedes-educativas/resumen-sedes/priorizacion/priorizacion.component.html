@@ -1,0 +1,56 @@
+<div class="row mt-4">
+  <div class="col-12">
+    <span style="color: #f54a62;">Para ver dertalles sobre la priorizaci&oacute;n de las sedes de la ETC, ingresa al Sistema MiPAE</span>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <app-chapter-img
+      [chapterIcon]="'../assets/iconos_PAE/PNG/Iconos_PAE-195.png'"
+      [chapterText]="'MAEM: Modelo de Alimentación Escolar Mayoritario'">
+    </app-chapter-img>
+  </div>
+  <div class="col-12 mt-3">
+    <!-- TABLA MAEM    -->
+    <app-priorizacion-pae *ngIf="dataSourceMAEM"
+      [textRight]="'Complementos asignados por Modalidad'"
+      [modeloOperacion]="'MAEM'"
+      [dataSource]="dataSourceMAEM">
+    </app-priorizacion-pae>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <app-chapter-img
+      [chapterIcon]="'../assets/iconos_PAE/PNG/Iconos_PAE-196.png'"
+      [chapterText]="'MAER: Modelo de Alimentación Escolar Rural'">
+    </app-chapter-img>
+  </div>
+  <div class="col-12 mt-3">
+    <!-- TABLA MAER -->
+    <app-priorizacion-pae *ngIf="dataSourceMAER"
+      [textRight]="'Complementos asignados por Modalidad'"
+      [modeloOperacion]="'MAER'"
+      [dataSource]="dataSourceMAER">
+    </app-priorizacion-pae>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <app-chapter-img
+      [chapterIcon]="'../assets/iconos_PAE/PNG/Iconos_PAE-197.png'"
+      [chapterText]="'PAEPI: PAE para Pueblos indígenas'">
+    </app-chapter-img>
+  </div>
+  <div class="col-12 mt-3">
+    <!-- TABLA MAIP  -->
+    <app-priorizacion-pae *ngIf="dataSourceMAIP"
+      [textRight]="'Complementos asignados por Modalidad'"
+      [modeloOperacion]="'MAIP'"
+      [dataSource]="dataSourceMAIP">
+    </app-priorizacion-pae>
+  </div>
+</div>

@@ -1,0 +1,144 @@
+@import '/src/assets/styles/variable.scss';
+
+.SizeDialog {
+  width: 50vw !important;
+}
+::ng-deep.mat-dialog-container {
+  padding: 0px !important;
+  border-radius: 30px 30px 30px 30px !important;
+  border: $base-azulPAE 1px solid;
+  box-shadow: none;
+  min-width: 50%;
+}
+.TituloDialog {
+  background-color: #E6EFFD;
+  /* padding: 10px 20px; */
+  text-align: center;
+  color: $base-color;
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+.CenterButton {
+  margin: auto;
+  display: -webkit-inline-box;
+
+}
+.mat-select-value{
+  color: $base-azulPAE;
+}
+
+mat-form-field {
+  border-radius: 20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff !important;
+  padding: 1% !important;
+  //width: 100%;
+  //height: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 55px;
+
+}
+
+.AlignRight {
+  margin-right: 20px;
+}
+
+mat-card-header {
+  padding-bottom: 20px;
+}
+
+.TituloDialog {
+  background-color: #E6EFFD;
+  /* padding: 10px 20px; */
+  text-align: center;
+  color: $base-color;
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+
+.mat-dialog-content {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  max-height: 65vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.BordeSuperior {
+  border-top: 1px solid $base-color;
+}
+::ng-deep.button {
+  background-color: $base-color !important;
+  color: #fff !important;
+  border-radius: 20px;
+  border: $base-color 1px solid;
+  margin: auto;
+  display: block;
+}
+button {
+  background-color: $base-color;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+}
+.BordeSeparador {
+  border-bottom: $base-azulPAE 1px dotted;
+  margin: 10%;
+}
+
+button:disabled {
+  background-color: gray;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  padding: 0px 30px;
+}
+
+.TextosBlueLeft {
+  text-align: left;
+  color: $base-color;
+  float:left;
+}
+
+td{
+  width: 50%;
+  font-weight: bold !important;
+}
+
+.tablaform {
+  border-radius:20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff!important;
+  padding: 1%!important;
+  height: 20.6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+ text-align: center;
+ color: $base-azulPAE;
+}
+.tablaform2 {
+  border-radius:20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff!important;
+  padding: 1%!important;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: $base-azulPAE;
+ 
+}

@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-info-llenado">
+        <thead>
+          <tr class="text-center">
+            <th>Tipo de p&oacute;liza</th>
+            <th>Fecha de p&oacute;liza</th>
+            <th>Fecha de aprobaci&oacute;n</th>
+            <th>N° de p&oacute;liza</th>
+            <th>Valor total asegurado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dataSourcePolizas; let i = index">
+            <td class="text-center">
+              <label *ngIf="item.readonly">{{item.tipoPoliza}}</label>
+              <select *ngIf="!item.readonly"
+                      class="form-control"
+                      name="TipoPoliza_{{i}}"
+                      [ngModel]="item.iD_TipoPoliza"
+                      (ngModelChange)="changePoliza(item, 'iD_TipoPoliza', $event)">
+                <option value>Elija una opci&oacute;n</option>
+                <option *ngFor="let i of dataTipoPoliza" [ngValue]="i.id">{{i.nombre}}</option>
+              </select>
+            </td>
+            <td class="text-center">
+              <label *ngIf="item.readonly">{{item.fechaPoliza|date:'dd/MM/yyyy'}}</label>
+              <input *ngIf="!item.readonly"
+                     class="form-control text-center"
+                     type="date"
+                     name="fechaPoliza_{{i}}"
+                     [ngModel]="item.fechaPoliza|date:'yyyy-MM-dd'"
+                     (ngModelChange)="item.fechaPoliza=$event"
+                     placeholder="Elije fecha" />
+            </td>
+            <td class="text-center">
+              <label *ngIf="item.readonly">{{item.fechaAprobacion|date:'dd/MM/yyyy'}}</label>
+              <input *ngIf="!item.readonly"
+                     class="form-control text-center"
+                     type="date"
+                     name="fechaAprobacion_{{i}}"
+                     [ngModel]="item.fechaAprobacion | date:'yyyy-MM-dd'"
+                     (ngModelChange)="item.fechaAprobacion=$event"
+                     placeholder="Elije fecha" />
+            </td>
+            <td class="text-center">
+              <label *ngIf="item.readonly">{{item.numero|uppercase}}</label>
+              <input *ngIf="!item.readonly"
+                     class="form-control text-center"
+                     type="text"
+                     name="numero_{{i}}"
+                     [ngModel]="item.numero|uppercase"
+                     (ngModelChange)="item.numero=$event"
+                     placeholder="Ingrese N°" />
+            </td>
+
+            <td class="text-center">
+              <label *ngIf="item.readonly" class="">{{item.valorTotal|currency:'$':'symbol':'1.0-2'}}</label>
+              <input *ngIf="!item.readonly" 
+                      class="form-control text-center" 
+                      type="number" 
+                      name="valorTotal_{{i}}"
+                      [ngModel]="item.valorTotal"
+                      (ngModelChange)="item.valorTotal=$event"
+                      placeholder="Ingrese cifra" />
+            </td>
+
+            <td class="pl-2 text-center" 
+                style="min-width: 150px;
+                       padding-top: 2px;
+                       padding-bottom: 2px;">
+
+              <a (click)="validacionPolizaContrato(item)" *ngIf="!item.readonly">
+                <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-54.svg" />
+              </a>
+
+              <a (click)="item.readonly=!item.readonly" *ngIf="item.id!=0 && item.readonly">
+                <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-52.svg" />
+              </a>
+
+              <a class="card-link" (click)="deletePolizaContrato(item.id, i)" *ngIf="item.id!=0 && item.readonly">
+                <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+              </a>
+
+              <!--<a class="ml-sm" (click)="item.readonly=!item.readonly" *ngIf="!item.readonly && item.id!=0">
+                <img style="width: 20px; height: 20px" src="../assets/images/Iconos/cancel_mini.png" />
+              </a>-->
+
+              <a class="card-link" (click)="removerPoliza(i)" *ngIf="item.id==0">
+                <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-12 text-right">
+    <a class="btn-link" (click)="addItemPoliza()"><img src="../assets/images/Iconos/add_blue.png"> Agregar p&oacute;liza</a>
+  </div>
+</div>
+<!--<pre>{{ dataSourcePolizas | json }}</pre>-->

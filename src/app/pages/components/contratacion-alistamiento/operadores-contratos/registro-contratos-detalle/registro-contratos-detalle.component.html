@@ -1,0 +1,2172 @@
+<!-- INIT-BRYAN-VERA -->
+
+<ng-template #modalPDF>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>
+
+<!-- SECCIÓN 1 DATOS OPERADOR-->
+
+<div *ngIf="seccion1" class="col-12 px-lg-down-0">
+  <div class="row mb-xxl">
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="numseccion1" [titleChapter]="'Datos del Operador'">
+    </app-chapter>
+
+    <div class="col-12">
+      <div class="panel">
+        <!-- <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">Datos del Operador</h4>
+                </div> -->
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div class="form-item">
+              <label class="form-label">
+                1. Nombre o Razón Social del Operador (tal y como aparece en el
+                RUT):
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].nomOperador" (ngModelChange)="
+                  changeItemContratosHojaContrato('nomOperador', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label">
+                2. NIT del Operador incluyendo código de verificación (tal y
+                como aparece en el RUT):
+              </label>
+              <input type="text" class="form-control" id="txtNit" style="width: 110px"
+                [ngModelOptions]="{ standalone: true }" [(ngModel)]="this.itemContrato[0].nitOperador" (ngModelChange)="
+                  changeItemContratosHojaContrato('nitOperador', $event)
+                " [disabled]="disabledOperador" />
+              <label class="ml-xs">-</label>
+              <input type="text" class="form-control" id="txtDigVerfi" style="width: 30px"
+                [ngModelOptions]="{ standalone: true }" [(ngModel)]="this.itemContrato[0].digitoVerificacion"
+                (ngModelChange)="
+                  changeItemContratosHojaContrato('digitoVerificacion', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label float-left">
+                3. RUT del Operador:
+              </label>
+              <div style="display: inline-block; overflow: hidden">
+                <div *ngIf="!disabledOperador" class="btn-fileUpload" (click)="uploadPDF('rutPath')">
+                  <span>Adjunte el archivo</span>
+                  <img class="float-right ml-3" src="../../../../../../assets/images/Iconos/input-file.png" />
+                  <input class="" type="file" id="fileUpload_rutPath" name="fileUpload_rutPath"
+                    accept="application/pdf" />
+                </div>
+                <a class="visorPDF" (click)="abrirPDF(modalPDF, 'rutPath')" *ngIf="
+                    this.itemContrato[0].rutOperador &&
+                    this.itemContrato[0].rutOperador != ''
+                  ">
+                  {{ this.itemContrato[0].rutOperador }}
+                </a>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <label class="form-label">
+                4. Tipo y subtipo de Registro Mercantil del Operador:
+              </label>
+              <div class="mt-sm ml-md">
+                <label style="width: 60px" class="form-label w-down-100">Tipo:</label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtTipo"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="this.itemContrato[0].tipoOperador"
+                  (ngModelChange)="changeItemContratosHojaContrato('tipoOperador', $event)"
+                  [disabled]="disabledOperador">
+              </div>
+              <div class="mt-sm ml-md">
+                <label style="width: 60px" class="form-label w-down-100">Subtipo:</label>
+                <input id="cboSubTipo" class="form-control w-down-100 ml-lg-down-0" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.itemContrato[0].subTipoOperador" (ngModelChange)="
+                    changeItemContratosHojaContrato('subTipoOperador', $event)
+                  " [disabled]="disabledOperador">
+              </div>
+            </div>
+
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label">
+                  4.1. Cantidad de empresas que conforman la Unión o el
+                  Consorcio:
+                </label>
+                <input id="txtCantidadEmpresas" type="number" class="form-control w-down-100 ml-lg-down-0" style="width: 50px"
+                  [ngModelOptions]="{ standalone: true }" [(ngModel)]="this.itemContrato[0].cantidadConsorcio"
+                  (ngModelChange)="
+                    changeItemContratosHojaContrato('cantidadConsorcio', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+            </div>
+
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label">
+                  4.2. Listado de empresas que conforman la Unión o el
+                  Consorcio:
+                </label>
+                <div class="row align-items-center">
+                  <div class="col-12 col-md-8">
+                    <table class="table-info-llenado">
+                      <thead>
+                        <tr class="text-center">
+                          <th>Nombre o raz&oacute;n social</th>
+                          <th>
+                            NIT, incluyendo c&oacute;digo de verificaci&oacute;n
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of listConsorcios">
+                          <td>
+                            <label class="form-label float-left">1. {{ item.nombreRazonSocial }}</label>
+                          </td>
+                          <td>
+                            <label class="form-label float-left">{{ item.nit }}-{{ item.dv }}</label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <label style="width: 442px" class="form-label w-down-100">
+                5. Nombre del Representante Legal del Operador:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRepresentante"
+                [ngModelOptions]="{ standalone: true }" [(ngModel)]="this.itemContrato[0].nombreRepresentanteLegal"
+                (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'nombreRepresentanteLegal',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label style="width: 442px" class="form-label w-down-100">
+                6. Tipo de Identificación del Representante Legal del Operador:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="
+                  this.itemContrato[0].tipoIdentificacionRepresentante
+                " (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'tipoIdentificacionRepresentante',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label style="width: 442px" class="form-label w-down-100">
+                7. Número de identificación del Representante Legal del
+                Operador:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].numIdentificacionOperador" (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'numIdentificacionOperador',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label style="width: 442px" class="form-label w-down-100">
+                8. Correo electrónico del Operador:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].correoOperador" (ngModelChange)="
+                  changeItemContratosHojaContrato('correoOperador', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label style="width: 443px" class="form-label w-down-100">
+                9. Teléfono de contacto del Operador:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtTelefono" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].telefonoOperador" (ngModelChange)="
+                  changeItemContratosHojaContrato('telefonoOperador', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+            <div class="form-item">
+              <label style="width: 443px" class="form-label w-down-100">
+                10. Ciudad de domicilio principal del Operador:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtTelefono" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].ciudadOperador" (ngModelChange)="
+                  changeItemContratosHojaContrato('ciudadOperador', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+            <div class="form-item">
+              <label style="width: 443px" class="form-label w-down-100">
+                11. Dirección de domicilio principal del Operador:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtTelefono" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].direccionOperador" (ngModelChange)="
+                  changeItemContratosHojaContrato('direccionOperador', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 2 DATOS CONVENIO-->
+<div *ngIf="seccion11" class="col-12 px-lg-down-0"><!--*ngIf="seccion2"-->
+  <div class="row mb-xxl">
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="1" [titleChapter]="'Datos Convenio'">
+    </app-chapter>
+
+    <div class="col-12" >
+      <div class="panel">
+
+        <!-- SOLO APLICA PARA CONTRATOS RURALES-->
+        <div class="panel-body" >
+          <form class="form-default-inline">
+            <div class="form-item">
+              <label class="form-label"> 1. Número del convenio: </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].numeroContrato" (ngModelChange)="
+                  changeItemContratosHojaContrato('nomOperador', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+           
+            <div class="form-item">
+              <label class="form-label">
+                2. Asociación de Padres o juntas de Acción comunal:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].nomOperador" (ngModelChange)="
+                  changeItemContratosHojaContrato('nomOperador', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+         
+            <div class="form-item">
+              <label class="form-label">
+                3. Objeto del convenio (Tal y como aparece en la versión
+                firmada):
+              </label>
+              <div class="mt-sm ml-md">
+                <textarea type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.itemContrato[0].objetoContrato" (ngModelChange)="
+                    changeItemContratosHojaContrato('objetoContrato', $event)
+                  " [disabled]="disabledOperador">
+                </textarea>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                4. Tipo de contrato CHIP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].tipoContratoChip" (ngModelChange)="
+                  changeItemContratosHojaContrato('tipoContratoChip', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                5. Concepto de gasto CHIP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].conceptoGastoChip" (ngModelChange)="
+                  changeItemContratosHojaContrato('conceptoGastoChip', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+
+          </form>
+        </div>
+
+
+         <!-- Se habilita con proceso de convenios-->
+        <div class="panel-body" *ngIf="subTipoContratoId != 14">
+          <form class="form-default-inline">
+            <div class="form-item">
+              <label class="form-label"> 1. Número del convenio: </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].numeroContrato" (ngModelChange)="
+                  changeItemContratosHojaContrato('nomOperador', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+            <div class="form-item">
+              <label class="form-label"> 2. Tipo de convenio: </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].tipoCategoria" (ngModelChange)="
+                  changeItemContratosHojaContrato('tipoCategoria', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+            <div class="form-item">
+              <label class="form-label float-left w-down-100">
+                3. ET/ETC(s) con las que hace el convenio:
+              </label>
+              <div class="row align-items-center">
+                <div class="col-4 col-md-4">
+                  <table class="table-info-llenado">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Municipio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of this.dataEts">
+                        <td class="text-center">
+                          <label> {{ item.nombre }}</label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <label class="form-label">
+                4. Objeto del convenio (Tal y como aparece en la versión
+                firmada):
+              </label>
+              <div class="mt-sm ml-md">
+                <textarea type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.itemContrato[0].objetoContrato" (ngModelChange)="
+                    changeItemContratosHojaContrato('objetoContrato', $event)
+                  " [disabled]="disabledOperador">
+                </textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 3 DETALLES PROCESO CONTRACTUAL-->
+
+<div *ngIf="seccion3 && seccion2" class="col-12 mt-sm px-lg-down-0">
+  <div class="row mb-xxl">
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="numseccion3"
+      [titleChapter]="'Detalles del proceso contractual'">
+    </app-chapter>
+
+    <div class="col-12">
+      <div class="panel">
+        <!-- <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">Detalles del proceso contractual</h4>
+                </div> -->
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                1. Modalidad de contratación CHIP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].modalidadContratacionChip" (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'modalidadContratacionChip',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                2.1 No del proceso registrado en SECOP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].nroProceso" (ngModelChange)="
+                  changeItemContratosHojaContrato('nroProceso', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                2.1 Link del contrato en SECOP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].linkContrato" (ngModelChange)="
+                  changeItemContratosHojaContrato('linkContrato', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                3. Fecha de suscripción del contrato:
+              </label>
+              <input type="text" class="form-control campofecha w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }" [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaSuscripcion)" (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'fechaSuscripcion',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                4. Fecha de adjudicación del contrato:
+              </label>
+              <input type="text" class="form-control campofecha w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }" [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaAdjudicacionContrato)" (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'fechaAdjudicacionContrato',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="seccion3 && !seccion2" class="col-12 mt-sm px-lg-down-0">
+  <div class="row mb-xxl">
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="numseccion3"
+      [titleChapter]="'Detalles del proceso contractual'">
+    </app-chapter>
+
+    <div class="col-12">
+      <div class="panel">
+        <!-- <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">Detalles del proceso contractual</h4>
+                </div> -->
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div class="form-item d-flex flex-column flex-xl-row">
+              <label class="form-label w-down-100" style="width: 442px">
+                1. Objeto del contrato:
+              </label>
+              <textarea type="text" class="form-control textarea-objeto-contrato w-down-100 ml-lg-down-0" id="txtNombreRazon" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].objetoContrato" (ngModelChange)="
+                  changeItemContratosHojaContrato('objetoContrato', $event)
+                " [disabled]="disabledOperador">
+              </textarea>
+            </div>
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                2. Categoría:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].tipoCategoria" (ngModelChange)="
+                  changeItemContratosHojaContrato('tipoCategoria', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                3. Tipo de contrato CHIP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].tipoContratoChip" (ngModelChange)="
+                  changeItemContratosHojaContrato('tipoContratoChip', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                4. Concepto de gasto CHIP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].conceptoGastoChip" (ngModelChange)="
+                  changeItemContratosHojaContrato('conceptoGastoChip', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item" >
+              <label class="form-label w-down-100" style="width: 442px">
+                5. Modalidad de contratación CHIP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].modalidadContratacionChip" (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'modalidadContratacionChip',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item" >
+              <label class="form-label w-down-100" style="width: 442px">
+                6. N° del proceso registrado en SECOP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].nroProceso" (ngModelChange)="
+                  changeItemContratosHojaContrato('nroProceso', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item" >
+              <label class="form-label w-down-100" style="width: 442px">
+                7. Link del contrato en SECOP:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="this.itemContrato[0].linkContrato" (ngModelChange)="
+                  changeItemContratosHojaContrato('linkContrato', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item" >
+              <label class="form-label w-down-100" style="width: 442px">
+                8. Fecha de suscripción del contrato:
+              </label>
+              <input type="text" class="form-control campofecha w-down-100 ml-lg-down-0" [ngModelOptions]="{ standalone: true }" [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaSuscripcion)" (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'fechaSuscripcion',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+
+            <div class="form-item" >
+              <label class="form-label w-down-100" style="width: 442px">
+                9. Fecha de adjudicación del contrato:
+              </label>
+              <input type="text" class="form-control campofecha w-down-100 ml-lg-down-0" [ngModelOptions]="{ standalone: true }" [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaAdjudicacionContrato)" (ngModelChange)="
+                  changeItemContratosHojaContrato(
+                    'fechaAdjudicacionContrato',
+                    $event
+                  )
+                " [disabled]="disabledOperador" />
+            </div>
+            <div class="form-item" *ngIf="itemContrato[0].tipoContratoId == 5">
+              <label class="form-label w-down-100" style="width: 442px">
+                10. Fecha de inicio del contrato:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechalnicioContrato)" (ngModelChange)="
+                  changeItemContratosHojaContrato('fechalnicioContrato', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+            <div class="form-item" *ngIf="itemContrato[0].tipoContratoId == 5">
+              <label class="form-label w-down-100" style="width: 442px">
+                11. Fecha estimada de terminación del contrato:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaFinalContrato)" (ngModelChange)="
+                  changeItemContratosHojaContrato('fechaFinalContrato', $event)
+                " [disabled]="disabledOperador" />
+            </div>
+            <div class="form-item" *ngIf="itemContrato[0].tipoContratoId == 5">
+              <label class="form-label w-down-100" style="width: 442px">
+                12. Valor total del contrato:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="this.itemContrato[0].valorTotalContrato | currency:'$':'symbol':'1.0-2'"                 
+                (ngModelChange)="changeItemContratosHojaContrato('valorTotalContrato', $event)" [disabled]="disabledOperador" />
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 12 CONTRATOS ASOCIADOS-->
+<div *ngIf="seccion12" class="col-12 mt-sm px-lg-down-0">
+  <div class="row mb-xxl">
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="numseccion12" [titleChapter]="'Asociación de contratos'">
+    </app-chapter>
+
+    <div class="col-12">
+      <div class="panel">
+        <!-- <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">Asociación de contratos</h4>
+                </div> -->
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label"> </label>
+                <div class="row align-items-center">
+                  <div class="col-12">
+                    <table class="table-info-llenado">
+                      <thead>
+                        <tr class="text-center">
+                          <th>Número de contrato</th>
+                          <th>Nombre del operador</th>
+                          <th>Tipo de contrato</th>
+                          <th>Valor total contrato</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of dataAsociacionContratos">
+                          <td>
+                            <label class="form-label float-left">1. {{ item.numeroContrato }}</label>
+                          </td>
+                          <td>
+                            <label class="form-label float-left">{{
+                              item.nomOperador
+                              }}</label>
+                          </td>
+                          <td>
+                            <label class="form-label float-left">{{
+                              item.tipoContrato
+                              }}</label>
+                          </td>
+                          <td>
+                            <label class="form-label float-left">{{
+                              item.valorTotalContrato
+                              }}</label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 4 DETALLES DEL SUMINISTRO -->
+
+<div  class="col-12 mt-sm px-lg-down-0">
+  <div *ngIf="seccion4" class="row mb-xxl">
+    <app-chapter *ngIf="seccion4 && subTipoContratoId != 14 " class="mb-xl" [numberChapter]="numseccion4" [titleChapter]="'Detalles del suministro'">
+    </app-chapter>
+    <app-chapter *ngIf="seccion4 && subTipoContratoId == 14 " class="mb-xl" [numberChapter]="numseccion4" [titleChapter]="'Detalles del proceso contractual'">
+    </app-chapter>
+
+    <div class="col-12">
+      <div class="panel">
+        <!-- <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">Detalles del suministro</h4>
+                </div> -->
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+
+            <div *ngIf="itemContrato[0].tipoContratoId == 2 || itemContrato[0].tipoContratoId == 3" >
+              <div class="form-item" *ngIf="itemContrato[0].subTipoContratoId!=5">
+                <label class="form-label w-down-100" style="width: 442px">
+                  1. Valor total del contrato:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                   [ngModel]="this.itemContrato[0].valorTotalContrato | currency:'$':'symbol':'1.0-2'"  
+                    (ngModelChange)="changeItemContratosHojaContrato('valorTotalContrato', $event)" [disabled]="disabledOperador" />
+              </div>
+              <div class="form-item" *ngIf="itemContrato[0].subTipoContratoId!=5">
+                <label class="form-label w-down-100" style="width: 442px">
+                  2. Fecha de inicio del contrato:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechalnicioContrato)" (ngModelChange)="
+                    changeItemContratosHojaContrato('fechalnicioContrato', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+              <div class="form-item" *ngIf="itemContrato[0].subTipoContratoId!=5">
+                <label class="form-label w-down-100" style="width: 442px" >
+                  3. Fecha estimada de terminación del contrato:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaFinalContrato)" (ngModelChange)="
+                    changeItemContratosHojaContrato('fechaFinalContrato', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+              <div class="form-item"  *ngIf="seccion5">
+                <label class="form-label w-down-100" style="width: 442px">
+                  4. Número de días de suminsitro contratados:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.itemContrato[0].nroDiasSuministro" (ngModelChange)="
+                    changeItemContratosHojaContrato('nroDiasSuministro', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+            </div>
+
+            <div *ngIf="itemContrato[0].subTipoContratoId!=4">
+              <div *ngIf="formVisibleDSMAEM" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  1. Modelo de operación:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.itemContrato[0].modeloOperacion" (ngModelChange)="
+                    changeItemContratosHojaContrato('modeloOperacion', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+
+              <div *ngIf="formVisibleDSMAEM" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  2. Fecha de incio del calendario escolar:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaInicioCalendar)" (ngModelChange)="
+                    changeItemContratosHojaContrato('fechaInicioCalendar', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+
+              <div *ngIf="formVisibleDSMAEM" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  3. Fecha de finalización del calendario escolar:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaFinalCalendar)"
+                  (ngModelChange)="
+                    changeItemContratosHojaContrato('tipoContratoChip', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+
+              <div *ngIf="formVisibleDSMAEM" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  4. Fecha de inicio de la operación:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaInicioOperacion)"
+                  (ngModelChange)="
+                    changeItemContratosHojaContrato(
+                      'fechaInicioOperacion',
+                      $event
+                    )
+                  " [disabled]="disabledOperador" />
+              </div>
+
+              <div *ngIf="formVisibleDSMAEM" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  5. Fecha estimada de finalización de la operación:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaFinalOperacion)"
+                  (ngModelChange)="
+                    changeItemContratosHojaContrato('fechaFinalOperacion', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+
+              <div *ngIf="formVisibleDSMAEM" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  6. Total días de operación en calendario escolar:
+                </label>
+                <input type="text" class="form-control col-xl-1 col-3 text-center" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.itemContrato[0].totalDiasOperacion" (ngModelChange)="
+                    changeItemContratosHojaContrato('totalDiasOperacion', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+
+              <div *ngIf="formVisibleDSMAEM" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  7. Número de días de suministro contratados:
+                </label>
+                <input type="text" class="form-control col-xl-1 col-3 text-center" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.itemContrato[0].nroDiasSuministro" (ngModelChange)="
+                    changeItemContratosHojaContrato('nroDiasSuministro', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+              <div *ngIf="formVisibleDSMAEM && itemContrato[0].subTipoContratoId==5" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  8. Número de complementos diarios contratados:
+                </label>
+                <input type="text" class="form-control col-xl-1 col-3 text-center" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.dataSuministroDetalle[0].totalComplementosContratadas" 
+                  [disabled]="disabledOperador" />
+              </div>
+              <div *ngIf="formVisibleDSMAEM && itemContrato[0].subTipoContratoId!=5" class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  8. Número de complementos diarios contratados:
+                </label>
+                <div >
+                  <label class="form-label title-style mt-2 mb-2 w-down-100" style="width: 83%"><img width="18"  src="../assets/iconos_PAE/PNG/Iconos_PAE-203.png">{{hojaContrato.modeloOperacion}}</label>
+                  <div class="mt-xs">
+                    <app-raciones-contratadas *ngIf="detallesSumRacionesMAE"
+                      [dataSource]="detallesSumRacionesMAE"
+                      [idTipoModeloOperacion]="1"
+                      [width]="'50%'">
+                    </app-raciones-contratadas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="formVisibleDSMAER" class="form-item">
+
+              <div class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  1. Fecha de inicio del suministro:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechalnicioContrato)" (ngModelChange)="
+                    changeItemContratosHojaContrato('fechalnicioContrato', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+              <div class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  2. Fecha estimada de terminación del suministro:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [ngModel]="dateUtil.formatearFecha(this.itemContrato[0].fechaFinalContrato)" (ngModelChange)="
+                    changeItemContratosHojaContrato('fechaFinalContrato', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+              <div class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  3. Número de días de suminsitro contratados:
+                </label>
+                <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="this.itemContrato[0].nroDiasSuministro" (ngModelChange)="
+                    changeItemContratosHojaContrato('nroDiasSuministro', $event)
+                  " [disabled]="disabledOperador" />
+              </div>
+              <div class="form-item">
+                <label class="form-label w-down-100" style="width: 442px">
+                  4. complementos díarios contratados:
+                </label>
+              </div>
+              <label class="form-label title-style mt-2 mb-2 w-down-100" style="width: 83%"><img width="18"  src="../assets/iconos_PAE/PNG/Iconos_PAE-204.png">{{hojaContrato.modeloOperacion}}</label>
+              <div class="mt-xs">
+                <app-raciones-contratadas *ngIf="dataDetallesSumRacionesMAER"
+                  [dataSource]="dataDetallesSumRacionesMAER"
+                  [idTipoModeloOperacion]="2"
+                  [width]="'50%'">
+                </app-raciones-contratadas>
+              </div>
+
+            </div>
+
+
+            <div *ngIf="formVisibleDSMAIP" class="form-item">
+              <div>
+                <label class="form-label" style="width: 442px">
+                  5.1 Número de complementos diarios contratados:
+                </label>
+                <label class="form-label title-style mt-2 mb-2" style="width: 83%"><img width="18"  src="../assets/iconos_PAE/PNG/Iconos_PAE-205.png">PAEPI</label>
+                <div class="mt-xs">
+                  <app-raciones-contratadas *ngIf="dataDetallesSumRacionesMAIP"
+                    [dataSource]="dataDetallesSumRacionesMAIP"
+                    [idTipoModeloOperacion]="3"
+                    [width]="'50%'">
+                  </app-raciones-contratadas>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="seccion5" class="form-item">
+              <label class="form-label" style="width: 442px">
+                Información sobre la materia prima contratada:
+              </label>
+              <table class="table-info-llenado">
+                <thead>
+                  <tr class="text-center">
+                    <th>Nombre del producto</th>
+                    <th>Unidades compradas</th>
+                    <th>Valor unitario</th>
+                    <th>Valor total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataAllMateriPrima" class="text-center">
+                    <td>
+                      <label>{{ item.nombreAlimento | uppercase}}</label>
+                    </td>
+                    <td>
+                      <label>{{ item.unidadesContratadas }}</label>
+                    </td>
+                    <td>
+                      <label>{{ item.valorUnitario }}</label>
+                    </td>
+                    <td>
+                      <label>{{ item.valorTotal }}</label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="formVisibleDSPRDTLogistica" class="form-item">
+              <label class="form-label" style="width: 442px">
+                Productos Logística
+              </label>
+              <table class="table-info-llenado">
+                <thead>
+                  <tr class="text-center">
+                    <th>Número de suministros</th>
+                    <th>Total raciones encontradas</th>
+                    <th>Costo unitario ensamble operación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataSuministroDetalle" class="text-center">
+                    <td>
+                      <label>{{ item.numeroDiasSuministro }}</label>
+                    </td>
+                    <td>
+                      <label>{{ item.totalComplementosContratadas }}</label>
+                    </td>
+                    <td>
+                      <label>{{ item.costoUnitarioEnsambleOperacion }}</label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="seccion6" class="form-item">
+              <label class="form-label" style="width: 442px">
+                Productos Dotación, Equipos y Servicios
+              </label>
+              <table class="table-info-llenado">
+                <thead>
+                  <tr class="text-center">
+                    <th>Nombre</th>
+                    <th>Concepto</th>
+                    <th>Valor total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataServicios" class="text-center">
+                    <td>
+                      <label class="float-left">{{
+                        item.nombreServicio
+                        }}</label>
+                    </td>
+                    <td>
+                      <label>{{
+                        item.concepto
+                        }}</label>
+                    </td>
+                    <td>
+                      <label>{{
+                        item.valorTotal | currency: "$":"symbol":"1.0-2"
+                        }}</label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div *ngIf="seccion7" class="form-item">
+              <label class="form-label" style="width: 442px">
+                Productos o Servicios
+              </label>
+              <table class="table-info-llenado">
+                <thead>
+                  <tr class="text-center">
+                    <th>Nombre servicio</th>
+                    <th>Valor total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataServicios" class="text-center">
+                    <td>
+                      <label class="float-left">{{
+                        item.nombreServicio
+                        }}</label>
+                    </td>
+                    <td class="text-center">
+                      <label>{{
+                        item.valorTotal | currency: "$":"symbol":"1.0-2"
+                        }}</label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 8  SEDES BENEFICIARIAS-->
+
+<div class="col-12 mt-sm px-lg-down-0">
+  <div *ngIf="seccion8" class="row mb-xxl">
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="numseccion8" [titleChapter]="'Sedes beneficiarias'">
+    </app-chapter>
+
+    <div class="col-12">
+      <div class="panel">
+        <!-- <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">Sedes beneficiarias</h4>
+                </div> -->
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div class="form-item">
+              <label class="form-labelw-down-100" style="width: 83%">
+                <img style="width: 30px; height: 30px;" src="./assets/images/Iconos/icon_modelo_operacion.png"> {{hojaContrato.modeloOperacion}}
+              </label>
+              <label class="form-label my-2 w-100">
+                Total sedes beneficiarias: {{ dataSedesBeneficiariasMAE.length }}
+              </label>
+              <table class="table-sort table-arrows table-info-llenado">
+                <thead>
+                  <tr class="text-center">
+                    <th>Municipio</th>
+                    <th>Institución Educativa</th>
+                    <th>Sede Educativa</th>
+                    <th>Jornada</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataSedesBeneficiariasMAE">
+                    <td class="text-center">
+                      <label class="form-label">{{
+                        item.municipio
+                        }}</label>
+                    </td>
+                    <td class="text-center">
+                      <label class="form-label">{{
+                        item.institucionEducativa
+                        }}</label>
+                    </td>
+                    <td class="text-center">
+                      <label class="form-label">{{
+                        item.sede
+                        }}</label>
+                    </td>
+                    <td class="text-center">
+                      <label class="form-label">{{
+                        item.jornada
+                        }}</label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="mt-4">
+                <label class="form-label" style="width: 83%">
+                  <img style="width: 20px; height: 20px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-205.png"> PAEPI
+                </label>
+                <label class="form-label my-2 w-100">
+                  Total sedes beneficiarias: {{ dataSedesBeneficiariasMAIP.length }}
+                </label>
+                <table class="table-sort table-arrows table-info-llenado">
+                  <thead>
+                    <tr class="text-center">
+                      <th>Municipio</th>
+                      <th>Institución Educativa</th>
+                      <th>Sede Educativa</th>
+                      <th>Jornada</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of dataSedesBeneficiariasMAIP">
+                      <td class="text-center">
+                        <label class="form-label">{{
+                          item.municipio
+                          }}</label>
+                      </td>
+                      <td class="text-center">
+                        <label class="form-label">{{
+                          item.institucionEducativa
+                          }}</label>
+                      </td>
+                      <td class="text-center">
+                        <label class="form-label">{{
+                          item.sede
+                          }}</label>
+                      </td>
+                      <td class="text-center">
+                        <label class="form-label">{{
+                          item.jornada
+                          }}</label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div *ngIf="seccion88" class="row mb-4 mt-4">
+                <div class="col-6">
+                  <table class="table-info-llenado">
+                    <thead>
+                      <tr class="text-center">
+                        <th style="
+                            background-color: #f54a62;
+                            color: azure;
+                            border: #f54a62;
+                          ">
+                          Jornada
+                        </th>
+                        <th style="
+                            background-color: #f54a62;
+                            color: azure;
+                            border: #f54a62;
+                          ">
+                          Almuerzo
+                        </th>
+                        <th style="
+                            background-color: #f54a62;
+                            color: azure;
+                            border: #f54a62;
+                          ">
+                          Complemento
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of dataSumRacionesSedesBeneficiarias" class="text-center">
+                        <td style="border-color: #f54a62 !important">
+                          <label style="color: #f54a62">{{
+                            item.jornada
+                            }}</label>
+                        </td>
+                        <td style="border-color: #f54a62 !important">
+                          <label style="color: #f54a62">{{
+                            item.almuerzo
+                            }}</label>
+                        </td>
+                        <td style="border-color: #f54a62 !important">
+                          <label style="color: #f54a62">{{
+                            item.complemento
+                            }}</label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-6">
+                  <table class="table-info-llenado">
+                    <thead>
+                      <tr class="text-center">
+                        <th>Jornada</th>
+                        <th>Almuerzo</th>
+                        <th>Complemento</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of dataSumRacionesContratadasDiarias" class="text-center">
+                        <td>
+                          <label>{{ item.jornada }}</label>
+                        </td>
+                        <td>
+                          <label>{{ item.almuerzo }}</label>
+                        </td>
+                        <td>
+                          <label>{{ item.complemento }}</label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 9 CARACTERISTICAS FINANCIERAS -->
+
+<div class="col-12 mt-sm px-lg-down-0">
+  <div *ngIf="seccion9" class="row mb-xxl">
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="numseccion9"
+      [titleChapter]="'Características financieras'">
+    </app-chapter>
+
+    <div *ngIf="!seccion12" class="col-12">
+      <div class="panel">
+        <!-- <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">Características financieras</h4>
+                </div> -->
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+
+            <div class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                1. Valor total del contrato:
+              </label>
+              <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="this.itemContrato[0].valorTotalContrato | currency:'$':'symbol':'1.0-2'" [disabled]="disabledOperador" />
+            </div>
+            <div *ngIf="formVisibleCFMAEM" class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                2. Precios diferenciados por zona (rural o urbana):
+              </label>
+              <input type="text" class="form-control text-center input-size w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="manejaPreciosporzona" [disabled]="disabledOperador" />
+            </div>
+            <div *ngIf="formVisibleCFMAEM" class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                3. Precios diferenciados por nivel educativo:
+              </label>
+              <input type="text" class="form-control text-center input-size w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="manejaPreciosporNivelEducativo" [disabled]="disabledOperador" />
+            </div>
+
+            <div *ngIf="formVisibleCFMAEM" class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                4. Precios acordados por tipo de complemento y modalidad:
+              </label>
+              <label class="form-label title-style mt-2" style="width: 83%"><img width="18"  src="../assets/iconos_PAE/PNG/Iconos_PAE-203.png">     {{hojaContrato.modeloOperacion}}</label>
+              <div class="mt-3">
+                <app-precios-acordados *ngIf="dataSourceRaciones"
+                  [idTipoModeloOperacion]="1"
+                  [dataSource]="dataSourceRaciones"
+                  [width]="'50%'">
+                </app-precios-acordados>
+              </div>
+            </div>
+
+            <div *ngIf="formVisibleCFMAER" class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                2. Precios acordados por tipo de complemento y modalidad:
+              </label>
+              <label class="form-label w-down-100 title-style mt-2" style="width: 83%"><img width="18"  src="../assets/iconos_PAE/PNG/Iconos_PAE-204.png">     {{hojaContrato.modeloOperacion}}</label>
+              <div class="mt-3">
+                <app-precios-acordados *ngIf="dataSourceRaciones"
+                  [idTipoModeloOperacion]="2"
+                  [dataSource]="dataSourceRaciones"
+                  [width]="'50%'">
+                </app-precios-acordados>
+              </div>
+
+            </div>
+
+            <div *ngIf="formVisibleCFMAIP" class="form-item">
+              <label class="form-label w-down-100" style="width: 442px">
+                4. Precios acordados por tipo de complemento y modalidad:
+              </label>
+              <label class="form-label w-down-100 title-style mt-2" style="width: 83%"><img width="18"  src="../assets/iconos_PAE/PNG/Iconos_PAE-205.png">PAEPI</label>
+              <div class="mt-3">
+                <app-precios-acordados *ngIf="dataSourceRacionesMAIP"
+                  [idTipoModeloOperacion]="3"
+                  [dataSource]="dataSourceRacionesMAIP"
+                  [width]="'50%'">
+                </app-precios-acordados>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="seccion12" class="col-12">
+    <form class="form-default-inline">
+      <div class="form-item col 4">
+        <label class="form-label w-down-100" style="width: 442px">
+          1. Valor total del contrato:
+        </label>
+        <input type="text" class="form-control w-down-100 ml-lg-down-0" id="txtNit" [ngModelOptions]="{ standalone: true }"
+          [ngModel]="this.itemContrato[0].valorTotalContrato | currency:'$':'symbol':'1.0-2'" [disabled]="disabledOperador" />
+      </div>
+      <div class="panel">
+        <!-- <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">Asociación de contratos</h4>
+                </div> -->
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label"> </label>
+                <div class="row align-items-center">
+                  <div class="col-12">
+                    <table class="table-info-llenado">
+                      <thead>
+                        <tr class="text-center">
+                          <th>Número de contrato</th>
+                          <th>Nombre del operador</th>
+                          <th>Tipo de contrato</th>
+                          <th>Valor total contrato</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of dataAsociacionContratos">
+                          <td>
+                            <label class="form-label float-left">1. {{ item.numeroContrato }}</label>
+                          </td>
+                          <td>
+                            <label class="form-label float-left">{{
+                              item.nomOperador
+                              }}</label>
+                          </td>
+                          <td>
+                            <label class="form-label float-left">{{
+                              item.tipoContrato
+                              }}</label>
+                          </td>
+                          <td>
+                            <label class="form-label float-left">{{
+                              item.valorTotalContrato
+                              }}</label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </form>
+    </div>
+
+
+  </div>
+</div>
+
+<div class="col-12 mt-sm px-lg-down-0">
+  <div div *ngIf="seccion11 && subTipoContratoId != 14" class="row mb-xxl">
+    <app-chapter *ngIf="seccion11" class="mb-xl" [numberChapter]="numseccion11" [titleChapter]="'Características financieras'">
+    </app-chapter>
+    <div class="table-responsive">
+      <table class="table table-sm table-info-llenado">
+        <thead>
+          <tr class="text-center">
+            <th>Municipio</th>
+            <th *ngIf="subTipoContratoId == 7">
+              Aporte del gobierno a la municipalidad
+            </th>
+            <th *ngIf="subTipoContratoId == 7">Cofinanciación del municipio</th>
+            <th *ngIf="subTipoContratoId == 8">
+              Aporte del municipio a la Gobernación
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" *ngFor="let item of dataMunicipios; let i = index">
+            <td>
+              <label class="form-label"> {{ item.municipio }}</label>
+            </td>
+            <td *ngIf="subTipoContratoId == 7">
+              <label *ngIf="item.id != 0" class="form-label">
+                {{
+                item.aporteGobiernoMunicipio | currency: "$":"symbol":"1.0-2"
+                }}
+              </label>
+              <input *ngIf="item.id == 0" class="form-control text-center" type="number"
+                name="aporteGobiernoMunicipio_{{ i }}" [(ngModel)]="item.aporteGobiernoMunicipio"
+                placeholder="Ingrese la cifra" />
+            </td>
+            <td *ngIf="subTipoContratoId == 7">
+              <label *ngIf="item.id != 0" class="form-label">
+                {{
+                item.cofinanciacionMunicipio | currency: "$":"symbol":"1.0-2"
+                }}
+              </label>
+              <input *ngIf="item.id == 0" class="form-control text-center" type="number"
+                name="cofinanciacionMunicipio_{{ i }}" [(ngModel)]="item.cofinanciacionMunicipio"
+                placeholder="Ingrese la cifra" />
+            </td>
+            <td *ngIf="subTipoContratoId == 8">
+              <label *ngIf="item.id != 0" class="form-label">
+                {{
+                item.aporteMunicipioGobernacion
+                | currency: "$":"symbol":"1.0-2"
+                }}
+              </label>
+              <input *ngIf="item.id == 0" class="form-control text-center" type="number"
+                name="aporteMunicipioGobernacion_{{ i }}" [(ngModel)]="item.aporteMunicipioGobernacion"
+                placeholder="Ingrese la cifra" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN 15 INFORMACION PRESUPUUESTAL -->
+
+<div class="col-12 mt-sm px-lg-down-0">
+  <div *ngIf="seccion15" class="row mb-xxl">
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="numseccion15" [titleChapter]="'Información presupuestal'">
+    </app-chapter>
+
+    <div *ngIf="!seccion12" class="col-12">
+      <app-informacion-presupuestal-consulta [iD_Contrato]="idContrato" [TipoFuncionalida]="1"></app-informacion-presupuestal-consulta>
+    </div>
+
+ 
+      <div *ngIf="seccion12"  class="col-12">
+        <label class="form-label">1. Fuentes de financiación presupuestal destinada a cubrir el costo
+          del contrato:</label>
+        <table class="table-default">
+          <thead class="row-span">
+            <tr class="text-center">
+              <th>Fuente</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+          </thead>
+          <tbody>
+            <tr class="text-center" *ngFor="let item of dataTotalFinanciero">
+              <td>{{item.fuenteFinanciacion}}</td>
+              <td>{{item.fuenteIngreso}}</td>
+              <td>{{item.valorFuente|currency:'$':'symbol':'1.0-2'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    <!-- <div class="col-12">
+      <div class="panel">
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div class="form-item mt-2 mb-2">
+              <div class="form-item">
+                <label class="form-label mb-3">
+                  Fuentes de financiación asociadas a la Adición/Reducción No. 1:
+                </label>
+                <table class="width-60 mb-2 w-down-100" style="border-spacing: 0;
+                    border-top: 1px solid #005ACA;
+                    border-right: 1px solid #005ACA;
+                    border-left: 1px solid #005ACA;
+                    border-bottom: 1px solid #005ACA;
+                    border-radius: 19px 19px 19px 19px;">
+                  
+                  <tr>
+                    <th style="width: 100px;
+                          padding: 5px 15px;
+                          text-align: center;
+                          border-radius: 19px 0 0 19px;
+                          border-right: 1px solid #005ACA;
+                          background-color: aliceblue !important;
+                          font-weight: bold !important;
+                          color: #005ACA !important;
+                          border-right: 1px solid #005ACA;" rowspan="6">
+                      Fuente<br />No 1.
+                    </th>
+                    <td>
+                      <label style="width: 35px !important; color: #005ACA !important">
+                        Fuente:
+                      </label>
+                    </td>
+                    <td style="width: 84%;
+                          padding: 5px 15px;
+                          text-align: center;
+                          color: aliceblue !important;">
+                      <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }"
+                        [(ngModel)]="allFuentePresupuestalPoliz[0].fuenteFinanciacion" style="width: 100%"
+                        class="form-control" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label style="width: 35px !important; color: #005ACA !important">
+                        Tipo:
+                      </label>
+                    </td>
+                    <td style="width: 84%;
+                          padding: 5px 15px;
+                          text-align: center;
+                          color: aliceblue !important;">
+                      <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }"
+                        [(ngModel)]="allFuentePresupuestalPoliz[0].fuenteIngreso" style="width: 100%"
+                        class="form-control" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label style="width: 35px !important; color: #005ACA !important">
+                        Valor:
+                      </label>
+                    </td>
+                    <td style="width: 84%;
+                          padding: 5px 15px;
+                          text-align: center;
+                          color: aliceblue !important;">
+                      <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }" [ngModel]="allFuentePresupuestalPoliz[0].valor|currency:'$':'symbol':'1.0-2'
+                          " style="width: 25%; margin-left: -74%" class="form-control w-down-100 ml-lg-down-0" />
+                    </td>
+                  </tr>
+                  
+                </table>
+
+                <label class="form-label my-4 w-down-100" style="width: 83%">
+                  Certificados de Disponibilidad Presupuestal (CDP) y
+                  Certificados de Registro Presupuestal (CRP) asociados a la
+                  Fuente No 1:
+                </label>
+                <input input type="hidden" name="totalItems" [disabled]="disabledOperador" class="form-control"
+                  style="width: 8%" />
+                <div class="responsive-table-pae">
+                  <table class="table-info-llenado">
+                    <thead>
+                      <tr class="text-center">
+                        <th>No CDP</th>
+                        <th>Fecha CDP</th>
+                        <th>Valor CDP</th>
+                        <th>Archivo CDP</th>
+                        <th>CRPs asociados</th>
+                        <th>No CRP</th>
+                        <th>Fecha CRP</th>
+                        <th>Valor CRP</th>
+                        <th>Archivo CRP</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="text-center" *ngFor="let item of dataInformacionPresupuestal">
+                        <td data-label="No CDP">
+                          <label class="form-label">{{ item.numeroCDP }}</label>
+                        </td>
+                        <td data-label="F. CDP">
+                          <label class="form-label">{{ dateUtil.formatearFecha(item.fechaCDP) }}</label>
+                        </td>
+                        <td data-label="V. CDP">
+                          <label class="form-label">{{
+                            item.valorCDP | currency: "$":"symbol":"1.0-2"
+                            }}</label>
+                        </td>
+                        <td data-label="Arch. CDP">
+                          <div style="display: inline-block; overflow: hidden">
+                            <a class="visorPDF" (click)="downloadFileRuta(item.pahtArchivoCDP)"
+                              *ngIf="item.PAHTArchivoCDP != ''">
+                              {{ item.pahtArchivoCDP }}
+                            </a>
+                          </div>
+                        </td>
+                        <td data-label="CRPs asociados">
+                          <label class="form-label">{{
+                            item.crpsAsociado
+                            }}</label>
+                        </td>
+                        <td data-label="No CRP">
+                          <label class="form-label">{{ item.numeroCRP }}</label>
+                        </td>
+                        <td data-label="F. CRP">
+                          <label class="form-label">{{ dateUtil.formatearFecha(item.fechaCRP) }}</label>
+                        </td>
+                        <td data-label="V. CRP">
+                          <label class="form-label">{{
+                            item.valorCRP | currency: "$":"symbol":"1.0-2"
+                            }}</label>
+                        </td>
+                        <td data-label="Arch. CRP">
+                          <div style="display: inline-block; overflow: hidden">
+                            <a class="visorPDF" (click)="downloadFileRuta(item.pathArchivoCRP)"
+                              *ngIf="item.PAHTArchivoCDP != ''">
+                              {{ item.pathArchivoCRP }}
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>  -->
+  </div>
+</div>
+
+<!-- SECCIÓN 17  MODIFICACIONES -->
+
+<div class="col-12 mt-sm px-lg-down-0">
+  <div class="row mb-xxl">
+    <!--*ngIf="contratosConfiguracion[0].seccion17"-->
+    <app-chapter *ngIf="disabledOperador" class="mb-xl" [numberChapter]="numseccion16"
+      [titleChapter]="'Modificaciones contractuales'">
+    </app-chapter>
+    <div class="col-12 mb-3" *ngIf="dataContratosModificacionProroga.length > 0">
+      <div class="encabezado-text-underline">
+        <label>Prórrogas:</label>
+        <form class="form-default-inline">
+          <div class="form-item">
+            <table class="table-info-llenado">
+              <thead>
+                <tr class="text-center">
+                  <th>No. Prórroga</th>
+                  <th>Número de días calendario de prórroga</th>
+                  <th>Nueva fecha estimada de finalización de contrato</th>
+                  <th>Soporte de la modificación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center" *ngFor="let item of dataContratosModificacionProroga">
+                  <td>
+                    <label class="form-label">{{
+                      item.numeroProrroga
+                      }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{
+                      item.numeroDiasProrroga | number
+                      }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{dateUtil.formatearFecha(item.fechaTerminacionProrroga)}}</label>
+                  </td>
+                  <td>
+                    <div style="display: inline-block; overflow: hidden">
+                      <a class="visorPDF" (click)="downloadFileRuta(item.soporteModificacionPath)"
+                        *ngIf="item.soporteModificacionPath != ''">
+                        {{ item.soporteModificacionPath }}
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 mb-3" *ngIf="dataContratosModificacionAdicion">
+        <label class="label-title"> Adiciones:</label>
+        <form class="form-default-inline encabezado-text-underline" *ngFor="let item of dataContratosModificacionAdicion">
+          <div class="form-item">
+            <table class="table-info-llenado">
+              <thead>
+                <tr class="text-center">
+                  <th>No. Adición</th>
+                  <th>Valor de la adición</th>
+                  <th>Días de suministro adicionados</th>
+                  <th>Nuevo valor del Contrato</th>
+                  <th>Nueva cantidad de días de suministro</th>
+                  <th>Soporte de la modificación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center">
+                  <td>
+                    <label class="form-label">{{
+                      item.numeroProrroga
+                      }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{
+                      item.valorAdicionReduccion
+                      | currency: "$":"symbol":"1.0-2"
+                      }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{
+                      item.numeroDiasProrroga | number
+                      }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{
+                      item.valorTotalContrato | currency: "$":"symbol":"1.0-2"
+                      }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">
+                      {{  item.numeroDiasTotales | number }}
+                    </label>
+                  </td>
+                  <td>
+                    <div style="display: inline-block; overflow: hidden">
+                      <a class="visorPDF" (click)="downloadFileRuta(item.soporteModificacionPath)"
+                        *ngIf="item.soporteModificacionPath != ''">
+                        {{ item.soporteModificacionPath }}
+                      </a>
+                      <img *ngIf="item.soporteModificacionPath != ''"
+                        class="icono-documento-adjunto"
+                        src="../assets/images/Iconos/input-file.png">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="form-item" *ngFor="let informacionPresupuestalUnico of listaInformacionPresupuestalModificaciones[obtenerPosicionInformacionPresupuestalPorIdModificacion(item.id)].informacionPresupuestalesUnicos;index as i">
+           <!--  <label class="form-label mb-3">
+              Fuentes de financiación asociadas a la Adición/Reducción No. {{item.numeroProrroga}}:
+            </label>
+            <table class="width-60 mb-2"
+              style="border-spacing: 0;
+                border-top: 1px solid #005ACA;
+                border-right: 1px solid #005ACA;
+                border-left: 1px solid #005ACA;
+                border-bottom: 1px solid #005ACA;
+                border-radius: 19px 19px 19px 19px;">
+              <tr>
+                <th style="width: 100px;
+                      padding: 5px 15px;
+                      text-align: center;
+                      border-radius: 19px 0 0 19px;
+                      border-right: 1px solid #005ACA;
+                      background-color: aliceblue !important;
+                      font-weight: bold !important;
+                      color: #005ACA !important;
+                      border-right: 1px solid #005ACA;" rowspan="6">
+                  Fuente<br />No {{i + 1}}.
+                </th>
+                <td>
+                  <label style="width: 35px !important; color: #005ACA !important">
+                    Fuente:
+                  </label>
+                </td>
+                <td style="width: 84%;
+                      padding: 5px 15px;
+                      text-align: center;
+                      color: aliceblue !important;">
+                  <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }"
+                    [(ngModel)]="informacionPresupuestalUnico.fuenteFinanciacion" style="width: 100%"
+                    class="form-control" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label style="width: 35px !important; color: #005ACA !important">
+                    Tipo:
+                  </label>
+                </td>
+                <td style="width: 84%;
+                      padding: 5px 15px;
+                      text-align: center;
+                      color: aliceblue !important;">
+                  <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }"
+                    [(ngModel)]="informacionPresupuestalUnico.fuenteIngreso" style="width: 100%"
+                    class="form-control" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label style="width: 35px !important; color: #005ACA !important">
+                    Valor:
+                  </label>
+                </td>
+                <td style="width: 84%;
+                      padding: 5px 15px;
+                      text-align: center;
+                      color: aliceblue !important;">
+                  <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }" [ngModel]="informacionPresupuestalUnico.valorFuente | currency:'$':'symbol':'1.0-2'
+                      " style="width: 25%; margin-left: -74%" class="form-control" />
+                </td>
+              </tr>
+            </table>
+
+            <label class="form-label my-4" style="width: 83%">
+              Certificados de Disponibilidad Presupuestal (CDP) y
+              Certificados de Registro Presupuestal (CRP) asociados a la
+              Fuente No {{i + 1}}:
+            </label>
+            <input input type="hidden" name="totalItems" [disabled]="disabledOperador" class="form-control"
+              style="width: 8%" />
+            <table class="table-info-llenado">
+              <thead>
+                <tr class="text-center">
+                  <th>N° CDP</th>
+                  <th>Fecha CDP</th>
+                  <th>Valor CDP</th>
+                  <th>Archivo CDP</th>
+                  <th>CRPs asociados</th>
+                  <th>N° CRP</th>
+                  <th>Fecha CRP</th>
+                  <th>Valor CRP</th>
+                  <th>Archivo CRP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center"
+                  *ngFor="let item of listaInformacionPresupuestalModificaciones[obtenerPosicionInformacionPresupuestalPorIdModificacion(item.id)].informacionPresupuestal">
+                  <ng-container *ngIf="informacionPresupuestalUnico.id == item.id" >
+                    <td>
+                      <label class="form-label">{{ item.numeroCDP }}</label>
+                    </td>
+                    <td>
+                      <label class="form-label">{{dateUtil.formatearFecha(item.fechaCDP)}}</label>
+                    </td>
+                    <td>
+                      <label class="form-label">{{
+                        item.valorCDP | currency: "$":"symbol":"1.0-2"
+                        }}</label>
+                    </td>
+                    <td>
+                      <div style="display: inline-block; overflow: hidden">
+                        <a class="visorPDF" (click)="downloadFileRuta(item.pahtArchivoCDP)"
+                          *ngIf="item.pahtArchivoCDP != ''">
+                          {{ item.pahtArchivoCDP }}
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <label class="form-label">{{
+                        item.crpsAsociado
+                        }}</label>
+                    </td>
+                    <td>
+                      <label class="form-label">{{ item.numeroCRP }}</label>
+                    </td>
+                    <td>
+                      <label class="form-label">{{dateUtil.formatearFecha(item.fechaCRP)}}</label>
+                    </td>
+                    <td>
+                      <label class="form-label">{{
+                        item.valorCRP | currency: "$":"symbol":"1.0-2"
+                        }}</label>
+                    </td>
+                    <td>
+                      <div style="display: inline-block; overflow: hidden">
+                        <a class="visorPDF" (click)="downloadFileRuta(item.pathArchivoCRP)"
+                          *ngIf="item.PAHTArchivoCDP != ''">
+                          {{ item.pathArchivoCRP }}
+                        </a>
+                        <img *ngIf="item.pathArchivoCRP != ''"
+                          class="icono-documento-adjunto"
+                          src="../assets/images/Iconos/input-file.png">
+                      </div>
+                    </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table> -->
+            <app-informacion-presupuestal-consulta [iD_Contrato]="idContrato" [TipoFuncionalida]="2" [iD_Modificacion]="item.id"></app-informacion-presupuestal-consulta>
+          </div>
+
+           
+
+        </form>
+    </div>
+    <div class="col-12 mb-3" *ngIf="dataContratosModificacionReduccion">
+      <label class="label-title"> Reducciones:</label>
+      <form class="form-default-inline encabezado-text-underline" *ngFor="let item of dataContratosModificacionReduccion">
+        <div class="form-item">
+          <table class="table-info-llenado">
+            <thead>
+              <tr class="text-center">
+                <th>No. Reducción</th>
+                <th>Valor de la reducción</th>
+                <th>Días de suministro  (des)cubiertos con la reducción</th>
+                <th>Nuevo valor del Contrato</th>
+                <th>Nueva cantidad de días de suministro</th>
+                <th>Soporte de la modificación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center">
+                <td>
+                  <label class="form-label">{{
+                    item.numeroProrroga
+                    }}</label>
+                </td>
+                <td>
+                  <label class="form-label">{{
+                    item.valorAdicionReduccion
+                    | currency: "$":"symbol":"1.0-2"
+                    }}</label>
+                </td>
+                <td>
+                  <label class="form-label">{{
+                    item.numeroDiasProrroga | number
+                    }}</label>
+                </td>
+                <td>
+                  <label class="form-label">{{
+                    item.valorTotalContrato | currency: "$":"symbol":"1.0-2"
+                    }}</label>
+                </td>
+                <td>
+                  <label class="form-label">
+                    {{  item.numeroDiasTotales | number }}
+                  </label>
+                </td>
+                <td>
+                  <div style="display: inline-block; overflow: hidden">
+                    <a class="visorPDF" (click)="downloadFileRuta(item.soporteModificacionPath)"
+                      *ngIf="item.soporteModificacionPath != ''">
+                      {{ item.soporteModificacionPath }}
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-item" *ngFor="let informacionPresupuestalUnico of listaInformacionPresupuestalModificaciones[obtenerPosicionInformacionPresupuestalPorIdModificacion(item.id)].informacionPresupuestalesUnicos;index as i">
+<!--           <label class="form-label mb-3">
+            Fuentes de financiación asociadas a la Adición/Reducción No. {{item.numeroProrroga}}:
+          </label>
+          <table class="width-60 mb-2"
+            style="border-spacing: 0;
+              border-top: 1px solid #005ACA;
+              border-right: 1px solid #005ACA;
+              border-left: 1px solid #005ACA;
+              border-bottom: 1px solid #005ACA;
+              border-radius: 19px 19px 19px 19px;">
+            <tr>
+              <th style="width: 100px;
+                    padding: 5px 15px;
+                    text-align: center;
+                    border-radius: 19px 0 0 19px;
+                    border-right: 1px solid #005ACA;
+                    background-color: aliceblue !important;
+                    font-weight: bold !important;
+                    color: #005ACA !important;
+                    border-right: 1px solid #005ACA;" rowspan="6">
+                Fuente<br />No {{i + 1}}.
+              </th>
+              <td>
+                <label style="width: 35px !important; color: #005ACA !important">
+                  Fuente:
+                </label>
+              </td>
+              <td style="width: 84%;
+                    padding: 5px 15px;
+                    text-align: center;
+                    color: aliceblue !important;">
+                <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="informacionPresupuestalUnico.fuenteFinanciacion" style="width: 100%"
+                  class="form-control" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label style="width: 35px !important; color: #005ACA !important">
+                  Tipo:
+                </label>
+              </td>
+              <td style="width: 84%;
+                    padding: 5px 15px;
+                    text-align: center;
+                    color: aliceblue !important;">
+                <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="informacionPresupuestalUnico.fuenteIngreso" style="width: 100%"
+                  class="form-control" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label style="width: 35px !important; color: #005ACA !important">
+                  Valor:
+                </label>
+              </td>
+              <td style="width: 84%;
+                    padding: 5px 15px;
+                    text-align: center;
+                    color: aliceblue !important;">
+                <input type="text" [disabled]="true" [ngModelOptions]="{ standalone: true }" [ngModel]="informacionPresupuestalUnico.valorFuente | currency:'$':'symbol':'1.0-2'
+                    " style="width: 25%; margin-left: -74%" class="form-control" />
+              </td>
+            </tr>
+          </table>
+
+          <label class="form-label my-4" style="width: 83%">
+            Certificados de Disponibilidad Presupuestal (CDP) y
+            Certificados de Registro Presupuestal (CRP) asociados a la
+            Fuente No {{i + 1}}:
+          </label>
+          <input input type="hidden" name="totalItems" [disabled]="disabledOperador" class="form-control"
+            style="width: 8%" />
+          <table class="table-info-llenado">
+            <thead>
+              <tr class="text-center">
+                <th>No CDP</th>
+                <th>Fecha CDP</th>
+                <th>Valor CDP</th>
+                <th>Archivo CDP</th>
+                <th>CRPs asociados</th>
+                <th>No CRP</th>
+                <th>Fecha CRP</th>
+                <th>Valor CRP</th>
+                <th>Archivo CRP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center"
+                *ngFor="let item of listaInformacionPresupuestalModificaciones[obtenerPosicionInformacionPresupuestalPorIdModificacion(item.id)].informacionPresupuestal">
+                <ng-container *ngIf="informacionPresupuestalUnico.id == item.id" >
+                  <td>
+                    <label class="form-label">{{ item.numeroCDP }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{dateUtil.formatearFecha(item.fechaCDP)}}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{
+                      item.valorCDP | currency: "$":"symbol":"1.0-2"
+                      }}</label>
+                  </td>
+                  <td>
+                    <div style="display: inline-block; overflow: hidden">
+                      <a class="visorPDF" (click)="downloadFileRuta(item.pahtArchivoCDP)"
+                        *ngIf="item.pahtArchivoCDP != ''">
+                        {{ item.pahtArchivoCDP }}
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <label class="form-label">{{
+                      item.crpsAsociado
+                      }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{ item.numeroCRP }}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{dateUtil.formatearFecha(item.fechaCRP)}}</label>
+                  </td>
+                  <td>
+                    <label class="form-label">{{
+                      item.valorCRP | currency: "$":"symbol":"1.0-2"
+                      }}</label>
+                  </td>
+                  <td>
+                    <div style="display: inline-block; overflow: hidden">
+                      <a class="visorPDF" (click)="downloadFileRuta(item.pathArchivoCRP)"
+                        *ngIf="item.PAHTArchivoCDP != ''">
+                        {{ item.pathArchivoCRP }}
+                      </a>
+                    </div>
+                  </td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table> -->          
+          <app-informacion-presupuestal-consulta [iD_Contrato]="idContrato" [TipoFuncionalida]="2" [iD_Modificacion]="item.id"></app-informacion-presupuestal-consulta>
+        </div>
+      </form>
+  </div>
+    <div class="col-12" *ngIf="dataContratosOtrasCondiciones">
+      <label class="label-title">Otras condiciones:</label>
+      <div class="form-default-inline encabezado-text-underline" *ngFor="let item of dataContratosOtrasCondiciones">
+        <div class="form-item responsive-table-pae">
+          <table class="table-info-llenado">
+            <thead class="text-center">
+              <th class="w-75">Descripción</th>
+              <th>Soporte de la modificación</th>
+            </thead>
+            <tbody>
+              <tr class="text-center">
+                <td data-label="Descripción">
+                  <label class="form-label">{{item.descripcion}}</label>
+                </td>
+                <td data-label="Sop. modificación">
+                  <div style="display: inline-block; overflow: hidden">
+                    <a class="visorPDF" (click)="downloadFileRuta(item.soporteModificacionPath)"
+                      *ngIf="item.soporteModificacionPath != ''">
+                      {{ item.soporteModificacionPath }}
+                    </a>
+                    <img _ngcontent-fbh-c559="" src="../assets/images/Iconos/input-file.png" alt="icono documento" class="icono-documento-adjunto">
+                  </div>
+                </td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECCIÓN  18 APROBACIONES -->
+<div class="col-12 px-lg-down-0">
+  <div class="row mt-xxl mb-xxl">
+    <app-chapter [numberChapter]="numseccion16 + 1" [titleChapter]="'Aprobaciones'" [numberBadge]="itemDeContrato?.fichaEstado?.toLowerCase() == 'por aprobar' ? numberBadge : ''"></app-chapter>
+    <div *ngIf="itemContrato[0].iD_EstadoContrato == idEstadoRechazado ||
+                itemContrato[0].iD_EstadoContrato == idEstadoPendienteAprobacion ||
+                itemContrato[0].iD_EstadoContrato == idEstadoAprobado" class="col-12 mt-xl">
+      <div class="encabezado-text-underline">
+        <label>
+          <img src="../assets/images/Iconos/solicitud-aprobacion.png" />
+          Aprobaciones pendientes
+        </label>
+      </div>
+    </div>
+    <div *ngIf="itemContrato[0].iD_EstadoContrato != idEstadoPendienteAprobacion" class="col-12 mt-xl ml-4">
+      <p class="text-color-primary">No hay aprobaciones pendientes</p>
+    </div>
+    <div *ngIf="(itemContrato[0].iD_EstadoContrato == idEstadoRechazado ||
+          itemContrato[0].iD_EstadoContrato == idEstadoPendienteAprobacion) && getModulePermission(13, 'aprobar')" class="col-12 mt-xl">
+      <table class="table-aprovaciones">
+        <tr>
+          <th colspan="2">1. Decisi&oacute;n de aprobaci&oacute;n</th>
+        </tr>
+        <tr>
+          <td width="15%" class="text-center">
+            <div>
+              <button class="btn" [class]="
+                  itemAprobacion.iD_TipoEstadoContrato == idEstadoAprobado
+                    ? 'btn-green'
+                    : 'btn-default'
+                " (click)="
+                  changeItemAprobacion('iD_TipoEstadoContrato', idEstadoAprobado)
+                ">
+                Aprobar
+              </button>
+            </div>
+            <div>
+              <button class="btn mt-sm" [class]="
+                  itemAprobacion.iD_TipoEstadoContrato == idEstadoRechazado
+                    ? 'btn-red'
+                    : 'btn-default'
+                " (click)="
+                  changeItemAprobacion('iD_TipoEstadoContrato', idEstadoRechazado)
+                ">
+                Rechazar
+              </button>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label>Observaciones / Justificaciones</label>
+              <input type="text" class="form-control input-aprobacion" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="itemAprobacion.observaciones" (ngModelChange)="itemAprobacion.observaciones = $event" />
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="
+        (itemContrato[0].iD_EstadoContrato == idEstadoRechazado ||
+          itemContrato[0].iD_EstadoContrato == idEstadoPendienteAprobacion) &&
+        getModulePermission(13, 'aprobar')
+      " class="col-12 mt-sm text-right pr-xxl">
+      <button class="btn btn-blue" (click)="enviarResultado()">
+        Enviar resultado
+      </button>
+    </div>
+
+    <div class="col-12 mt-md">
+      <div class="encabezado-text-underline">
+        <label>
+          <img src="../assets/images/Iconos/solicitud-aprobacion.png" />
+          Hist&oacute;rico de aprobaciones
+        </label>
+      </div>
+    </div>
+    <div class="col-12 mt-xl pl-xxl pr-xxl responsive-table-pae">
+      <table class="table-default table-hover">
+        <thead>
+          <tr class="text-center">
+            <th *ngFor="let item of displayedColumnsHistorico" [innerHTML]="item"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" *ngFor="let item of dataHistoricoAprobaciones">
+            <td data-label="Fecha">{{ item.fechaAprobacionString }}</td>
+            <td data-label="Responsable">{{ item.responsable }}</td>
+            <td data-label="Rol responsable">{{ item.rolResponsable }}</td>
+            <td data-label="Acción">{{ item.accion }}</td>
+            <td data-label="Ob. / Justificaciones">{{ item.observaciones }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- END-SECCIÓNES -->
+
+<div class="panel-footer text-center" *ngIf="!itemFichaContrato">
+  <button class="btn btn-primary ml-sm mt-5 mb-5" (click)="onCancelar()">
+    Regresar
+  </button>
+</div>
+
+<!-- END-BRYAN-VERA -->

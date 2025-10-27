@@ -1,0 +1,242 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            Reporte de complementos
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+  <div class="course-app">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Borrar'; else elseTemplate">
+                <br />
+                <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+                  <div *ngIf="action !='Enviar para aprobación del rector'" style="display: none;">
+                    <div class="example-full-width">
+                      <br />
+                      <input matInput id="id" formControlName="id" readonly="true" class=" form-control" />
+                    </div>
+                  </div>
+
+                  <div class="px-5">
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pr-1">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">1. Fecha del reporte<span style="color:red;">* </span> </div>
+                      <div class="w-100">
+                        <input matInput id="fechaReporte" formControlName="fechaReporte" required [readonly]=true
+                            class="tablaform2" />
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        2. Institución educativa que tiene el excedente<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform" id="institucionEducativa" formControlName="institucionEducativa"
+                          (selectionChange)="onInstitucionClick($event.value)" required placeholder="Elija una opción">
+                          <mat-option *ngFor="let item of InstitucionEducativaList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        3. Sede educativa que tiene el excedente<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform" id="sedeEducativa" formControlName="sedeEducativa"
+                          (selectionChange)="onSedeClick($event.value)" required placeholder="Elija una opción">
+                          <mat-option *ngFor="let item of SelectSedesList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        4. Jornada educativa que tiene el excedente<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform" id="jornadaEducativa" formControlName="jornadaEducativa"
+                          (selectionChange)="onJornadaClick($event.value)">
+                          <mat-option *ngFor="let item of SelectSedesJornadaList" [value]="item.id">
+                            {{item.sID_Jornada}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        5. Grado escolar en el que se presenta el excedente<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform" id="gradoEscolar" formControlName="gradoEscolar"
+                          (selectionChange)="onGradoClick($event.value)">
+                          <mat-option *ngFor="let item of SelectGradosSedesJornadasList" [value]="item.id">
+                            {{item.sID_Grado}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pr-1">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        6. Complementos diarios asignados a ese grado<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <input matInput id="racionesDiarias" formControlName="racionesDiarias" required
+                            [readonly]=true class="tablaform2" />
+                        <div
+                          *ngIf="form.get('racionesDiarias').invalid && (form.get('racionesDiarias').dirty || form.get('racionesDiarias').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pr-1">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        7. Estudiantes matriculados en ese grado<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <input matInput id="estudiantesMatriculados" formControlName="estudiantesMatriculados"
+                            required [readonly]=true class="tablaform2 control-md" required />
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pr-1">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        8. Excedente de complementos en ese grado<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <input matInput id="cantidadRaciones" formControlName="cantidadRaciones" (keyup)="keyRaciones($any($event).target.value)" required type="number"
+                            class="tablaform2" />
+                        <div
+                          *ngIf="form.get('cantidadRaciones').invalid && (form.get('cantidadRaciones').dirty || form.get('cantidadRaciones').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        9. Destino de los complementos excedentes<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md" id="destinoRaciones"
+                          formControlName="destinoRaciones">
+                          <mat-option *ngFor="let item of DestinoRacionList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pr-1">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        10. Justificación de la decisión<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <textarea matInput id="justificacion" formControlName="justificacion" required
+                            class="tablaform3 control-md"></textarea>
+                        <div
+                          *ngIf="form.get('justificacion').invalid && (form.get('justificacion').dirty || form.get('justificacion').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pr-1">
+                      <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                        11. Nueva cantidad de complementos diarios<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <input matInput id="nuevaCantidadRaciones" formControlName="nuevaCantidadRaciones" required
+                            [readonly]=true class="tablaform2 control-md" />
+                        <div
+                          *ngIf="form.get('nuevaCantidadRaciones').invalid && (form.get('nuevaCantidadRaciones').dirty || form.get('nuevaCantidadRaciones').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </div>
+                    </div>
+
+                    <ng-container *ngIf="action == 'Enviar solicitud'">
+                      <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0">
+                        <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                          12. Acción<span style="color:red;">* </span>
+                        </div>
+                        <div class="w-100">
+                          <mat-select class="tablaform" id="accionAprobacion" formControlName="accionAprobacion" required>
+                            <mat-option *ngFor="let item of AccionesAprobacionesList" [value]="item.id">
+                              {{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="action == 'Enviar solicitud'">
+                      <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pr-1">
+                        <div class="TextosBlueLeft w-100 w-down-sm-100 align-self-center">
+                          13. Observaciones / Justificaciones<span style="color:red;">* </span>
+                        </div>
+                        <div class="w-100">
+                          <input matInput id="observaciones" formControlName="observaciones" class="tablaform2" required />
+                          <div
+                            *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+                            class="invalid-feedback">
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                  </div>
+
+                </div>
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <div style="text-align: center;color: #005ACA;">
+                  <br>
+                  ¿Está seguro de eliminar el registro?
+
+                </div><br>
+              </ng-template>
+
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center d-flex flex-column-reverse flex-xl-row justify-content-center">
+                      <div class="AlignRight">
+                        <button class="w-down-100" (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                      <div>
+                        <button [disabled]="form.invalid && action !='Borrar'" (click)="doAction()">{{action}}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+              </table>
+            </mat-card-content>
+
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

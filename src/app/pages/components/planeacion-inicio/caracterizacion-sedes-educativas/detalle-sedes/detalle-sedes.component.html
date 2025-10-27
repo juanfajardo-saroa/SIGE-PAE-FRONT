@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="flex align-items-center">
+    <app-chapter [numberChapter]="1" [titleChapter]="'Municipio con centro de acopio (o bodega principal)'"></app-chapter>
+    <div class="flex">
+      <button class="btn btn-blue"
+        [disabled]="!disableZona"
+        (click)="editarZonasDivipolas()">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-md">
+  <div class="col-12">
+    <p class="style-base ml-md">Para cada zona o provincia de su ETC, elija el municipio con centro de acopio (o bodega principal) que le corresponde.</p>
+  </div>
+  <div *ngIf="dataZonasDivipolas && dataZonasDivipolas.length > 0" class="col-12 mt-sm">
+    <div style="width: 50%;" class="panel panel-blue ml-md w-down-100 ml-lg-down-0">
+      <div class="panel-body border-radius border-top">
+        <form class="form-default-inline">
+          <div class="form-item" *ngFor="let data of dataZonasDivipolas">
+            <label class="form-label w-200px">{{data.zona}}</label>
+            <select class="form-control w-250px"
+              [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="data.idMunicipioAcopio"
+              [disabled]="disableZona"
+              (ngModelChange)="changeItem(data, 'idMunicipioAcopio', $event)">
+              <option [ngValue]="optionSelect.iD_Divipola">{{optionSelect.municipio}}</option>
+              <option *ngFor="let item of dataMunicipiosETC" [ngValue]="item.iD_Divipola">{{item.municipio}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 text-center mt-sm">
+    <div *ngIf="!disableZona" class="ml-md">
+      <button class="btn btn-blue" (click)="guardarZonasDivipolas()">Guardar</button>
+      <button class="btn btn-default ml-sm" (click)="cancelarZonasDivipolas()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-xl">
+  <app-chapter [numberChapter]="2" [titleChapter]="'Resumen de acceso'"></app-chapter>
+
+  <div class="col-12">
+    <div class="table-responsive">
+      <div style="width: 50.05%; float: right;">
+        <div class="LeftUpCorner paddingCell titletable py-4 text-center"
+          style="width: 100% !important; padding: 5px !important;">Transporte de los complementos del PAE</div>
+      </div>
+      <table mat-table [dataSource]="dataSource" class="left-radius">
+        <!-- <ng-container matColumnDef="centro">
+                      <th class="LeftUpCorner paddingCell titletable" style="background-color:#005ACA!important;" mat-header-cell *matHeaderCellDef [attr.colspan]="3">
+                          <b style="color:#FFF!important">
+                      Transporte de las raciones del PAE</b>
+                      </th>
+                  </ng-container> -->
+        <ng-container matColumnDef="municipio">
+          <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;">Municipio</th>
+          <td mat-cell *matCellDef="let element" (click)="setRuta(element)"
+            [class]="element.id == idRowSelect ? 'bg-selectItem' : ''"
+            style="padding-left: 0px; text-align: center;">{{ element.municipioNombre }}</td>
+        </ng-container>
+
+        <!-- Institucion Column -->
+        <ng-container matColumnDef="institucion">
+          <th mat-header-cell *matHeaderCellDef> Institución Educativa </th>
+          <td mat-cell *matCellDef="let element" (click)="setRuta(element)"
+            [class]="element.id == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center;"> {{element.instiEducativa }}</td>
+        </ng-container>
+
+        <!-- Sede Column -->
+        <ng-container matColumnDef="sede">
+          <th mat-header-cell *matHeaderCellDef> Sede </th>
+          <td mat-cell *matCellDef="let element" (click)="setRuta(element)"
+            [class]="element.id == idRowSelect ? 'bg-selectItem' : ''">{{element.sede}}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="zona">
+          <th mat-header-cell *matHeaderCellDef> Zona / Provincia </th>
+          <td mat-cell *matCellDef="let element" (click)="setRuta(element)"
+            [class]="element.id == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center;">{{element.zonaProvincia}}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="centro">
+          <th mat-header-cell *matHeaderCellDef style="width: 20%;">Municipio con centro de acopio (CO)</th>
+          <td mat-cell *matCellDef="let element" (click)="setRuta(element)"
+            [class]="element.id == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center;">{{element.centroAcopio}}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="trayectos">
+          <th mat-header-cell *matHeaderCellDef style="width: 15%;">Trayectos CO-Sede</th>
+          <td mat-cell *matCellDef="let element" (click)="setRuta(element)"
+            [class]="element.id == idRowSelect ? 'bg-selectItem' : ''"
+            style="text-align: center;">{{element.trayectosAccesotext}}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="clasificacion">
+          <th mat-header-cell *matHeaderCellDef style="width: 15%; padding-right: 0px;"> Clasificación del Acceso </th>
+          <td mat-cell *matCellDef="let element" (click)="setRuta(element)"
+            [class]="element.id == idRowSelect ? 'bg-selectItem' : ''"
+            style="padding-right: 0px; text-align: center;">
+            <div [outerHTML]="element.tipoAccesotext | semaforo"></div>{{element.tipoAccesotext}}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+
+      <mat-paginator [pageSize]="paginador.pageSize" [pageSizeOptions]="paginador.pageSizeOptions" showFirstLastButtons
+        aria-label="Select page of periodic elements">
+      </mat-paginator>
+
+    </div>
+  </div>
+</div>

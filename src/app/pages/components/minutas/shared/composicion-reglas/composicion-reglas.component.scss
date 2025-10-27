@@ -1,0 +1,77 @@
+$base-color: #005ACA;
+
+::ng-deep .modal-sin-padding {
+    mat-dialog-container {
+        padding: 0;
+    }
+}
+
+.opacity-50 {
+    opacity: 0.50;
+}
+
+.padding-leche-entera {
+    padding: 55px;
+}
+
+.padding-carnes-magras-crudas {
+    padding: 71px !important;
+}
+
+.padding-productos-lacteos {
+    padding: 37px;
+}
+
+@media(max-width: 1546px) {
+    .padding-productos-lacteos {
+        padding: 47px;
+    }
+
+    .padding-leche-polvo-liquida {
+        padding: 40px !important;
+    }
+}
+
+@media(max-width: 1366px) {
+    .padding-productos-lacteos {
+        padding: 50px;
+    }
+
+    .padding-leche-polvo-liquida {
+        padding: 40px !important;
+    }
+}
+
+@media(max-width: 1920px) {
+    .padding-productos-lacteos {
+        padding: 47px;
+    }
+
+    .padding-carnes-magras-crudas {
+        padding: 25px !important;
+    }
+}
+
+.bgAliceBlue{
+    background-color: aliceblue;
+}
+
+.vAlignBaseline{
+    vertical-align: baseline;
+}
+
+.mt-35-porcent{
+    margin-top: 35%;
+}
+
+td:last-child.dinamic-table-noborder-right{
+    border-right: none !important;
+}
+
+.quitarBorde{
+    border-right: none !important;
+}
+
+.dinamic-table-border-left-dashed{
+    border-left: 1px dashed $base-color !important;
+}

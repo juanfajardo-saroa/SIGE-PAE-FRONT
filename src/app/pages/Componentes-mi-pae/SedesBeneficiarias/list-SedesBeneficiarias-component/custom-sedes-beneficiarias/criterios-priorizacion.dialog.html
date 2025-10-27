@@ -1,0 +1,68 @@
+<div class="SizeDialog">
+
+  <!-- <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-22.png" alt="" height="30px" width="auto"  style="margin-right: 10px;"><strong>Criterios de priorización</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header> -->
+</div>
+<div class="course-app">
+  <div class="example-form">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" >
+                <table mat-table [dataSource]="criterios$">
+
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let item"> {{item.id}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="nombre">
+                    <th class="LeftUpCorner2 Noborder"  mat-header-cell *matHeaderCellDef style="color: #E2ECFD;background-color:  #005ACA;"> <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-22.png" alt="" height="30px" width="auto"  style="margin-right: 10px; float: left;">
+                      <b style="color:white;"> Criterios de priorización <mat-icon (click)="closeDialog()" style="cursor: pointer; color: white; position: absolute; top: 10px; right: 40px; ">minimize</mat-icon></b>
+                    </th>
+                    <td mat-cell *matCellDef="let item" style="color: #005ACA; border-left: 0;border-right: 0;"> {{item.prioridad}}. {{item.nombre}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
+                  <tr mat-row *matRowDef="let row; columns: columnNames;"></tr>
+
+
+                </table>
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <div style="text-align: center;color: #005ACA;">
+                  <br>
+                  ¿Está seguro de eliminar el registro?
+
+                </div><br>
+              </ng-template>
+              <!-- <br>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div>
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table> -->
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

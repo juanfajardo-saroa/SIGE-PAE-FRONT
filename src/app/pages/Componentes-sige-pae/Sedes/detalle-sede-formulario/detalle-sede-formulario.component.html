@@ -1,0 +1,1917 @@
+<style>
+  .card {
+    border: none;
+  }
+
+  .table-responsive {
+    padding-left: 30px;
+  }
+</style>
+<!--Regreso y informacion Del Sede-->
+
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <table class="tablaform2">
+      <div class="bordeAtras">
+        <a class="btn-agregar " (click)="RegresarInfraestura()"><img
+            src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png " style="width:50px; height: 50px;">Atrás
+        </a>
+      </div>
+    </table>
+    <table style="width: 87%;">
+      <ng-container>
+        <tr>
+          <div class="Redondeado">
+            <td class="EspacioField">
+              <div class="BordeBottom">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Municipio</mat-card-title>
+                  <div>
+                    <mat-select class="control-md tablaform" id="municipio" placeholder="seleccione"
+                      (selectionChange)="onMunicipioClick($event.value)" [(value)]="selMunicipio">
+                      <mat-option [value]="-1">Todos
+                      </mat-option>
+                      <mat-option *ngFor="let item of selectDivipolaList" [value]="item.id">
+                        {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </mat-card>
+              </div>
+            </td>
+            <td class="EspacioField">
+              <div class="BordeBottom">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Institución</mat-card-title>
+                  <div>
+                    <mat-select class="control-md tablaform" id="institucionEducativa" placeholder="seleccione"
+                      [(value)]="selInst" (selectionChange)="onInstitucionClick($event.value)">
+                      <mat-option [value]="-1">Todos
+                      </mat-option>
+                      <mat-option *ngFor="let item of selectInstitucionList" [value]="item.id">
+                        {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </mat-card>
+              </div>
+            </td>
+            <td class="EspacioField ">
+              <div class="BordeBottom">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Sede</mat-card-title>
+                  <div>
+                    <mat-select class="control-md tablaform" id="sede" placeholder="seleccione" [(value)]="selsede"
+                      (selectionChange)="onSedeClick($event.value)">
+                      <mat-option [value]="-1">Todos
+                      </mat-option>
+                      <mat-option *ngFor="let item of selectSedesList" [value]="item.id">
+                        {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </mat-card>
+              </div>
+            </td>
+            <td class="EspacioField lineaAzulX  " style="width: 150px;">
+              <div class="BordeBottom">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Priorizada PAE</mat-card-title>
+                  <div>
+                    <mat-select class="control-md tablaform" id="sede" placeholder="seleccione" [(value)]="selprioriza">
+                      <mat-option [value]="-1">Todos
+                      </mat-option>
+                      <mat-option *ngFor="let item of priorizaList" [value]="item.id">
+                        {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </mat-card>
+              </div>
+            </td>
+            <td class="alinearIcon lineaAzulX" style="width: 80px;">
+              <div class="bordeAtras2 centerIcon">
+                <a>
+                  <img (click)="buscarInfo(selMunicipio,selInst,selsede)"
+                    src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " style="width:50px; height: 50px;"><br>
+                  Filtrar
+                </a>
+              </div>
+            </td>
+          </div>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</div>
+<br>
+<!--titulo año actualizacion-->
+
+<div class="container-fluid content-wrapper">
+  <div class="row">
+    <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 banner-breadcrumbs">
+      <div class="flex-wrap flex-md-nowrap mt-3">
+        <app-menadminuautorizado>
+          <ng-container autorizado>
+            <div class="row">
+              <div class="col-md-10">
+                <label class="banner-text">
+
+                  <strong class="strongheader" style="font-size: 18px !important;">{{nombreUbicacion}} |
+                    {{nombreMunicipio}} | {{nombreInstitucion}} |
+
+                    {{nombreSede}}</strong>
+                </label>
+              </div>
+              <div class="col-md-2 text-right">
+
+                <label class="anio-text" style="font-size: 18px !important;"><strong class="strongheader"></strong>{{
+                  currentVigNom }}</label>
+
+              </div>
+            </div>
+            <!-- <hr style="margin: 0; color: red!important;" /> -->
+            <div class="row LineaAzul">
+              <div class="col-12 text-right">
+                <label class="last-update-text">Ultima actualizaci&oacute;n
+                  <span> {{ dateToday | date: "longDate" }}</span></label>
+              </div>
+            </div>
+          </ng-container>
+        </app-menadminuautorizado>
+      </div>
+      <div class="mt-2">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--meat-->
+<app-maem-detalle-formulario></app-maem-detalle-formulario>
+
+<br>
+
+<!--Tab Sede-->
+<app-tabsedesinterno></app-tabsedesinterno>
+<!--Inicio de Nivel 1-->
+
+
+
+<form [formGroup]="form" (ngSubmit)="onGuardar('definitiva')">
+  <div class="container" id="componentID">
+    <div *ngFor=" let car of caracterizacionNivelList;let i = index" [attr.data-index]="i">
+      <div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2">
+        <div style="float: left;">
+          <div style="float: left; background-color: #ed0057; padding: 9px;">
+            <div style="height: 24px; width: 24px; background-color: #ffffff;
+                        border-radius: 50%; text-align: center; color: #ed0057; font-weight: 500; padding-top: 3px; font-size:16px;
+                        ">{{i+1}}
+            </div>
+          </div>
+          <div
+            style="display: inline-block; background-color: #ed0057; padding: 12px 0px 10px 0px; color: #ffffff;  font-size:16px;">
+            {{car.categoria1erNivel}}
+          </div>
+          <div style="background-color: #ed0057; height: 42px; width: 44px; border-radius: 0% 50% 50% 0;
+                          margin-left: -26px;float: right;">
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+
+      <!--Inicio Nivel 2-->
+      <div *ngFor="let nivel_2 of  nivel2(car.id)">
+        <!--<div>{{nivel2.categoria2doNivel}}-{{nivel2.pregunta}}</div>-->
+        <br>
+        <div class="text-left">
+          <a class="btn-agregar " style="color: #ed0057;  font-size: 16px; margin-left: 37px;">
+            <img class="icono" src="../.././../../assets/iconos_PAE/PNG/{{nivel_2.iconoCategoria}} ">
+            {{nivel_2.categoria2doNivel}}
+          </a>
+        </div>
+        <div *ngIf="nivel_2.idCategoria2doNivel==21" class="text-left">
+          <p class="btn-agregar " style="color: #ed0057;  font-size: 12px; margin-left: 37px;">
+            *Esta sección solo se habilitará si la sede dispone de área para Almacenamiento.
+          </p>
+        </div>
+        <div *ngIf="nivel_2.idCategoria2doNivel==22" class="text-left">
+          <p class="btn-agregar " style="color: #ed0057;  font-size: 12px; margin-left: 37px;">
+            *Esta sección solo se habilitará si la sede dispone de área para Preparación.
+          </p>
+        </div>
+        <div *ngIf="nivel_2.idCategoria2doNivel==23" class="text-left">
+          <p class="btn-agregar " style="color: #ed0057;  font-size: 12px; margin-left: 37px;">
+            *Esta pregunta solo se habilitará si la sede dispone de un espacio cerrado para el comedor.
+          </p>
+        </div>
+        <div *ngIf="nivel_2.idCategoria2doNivel==24" class="text-left">
+          <p class="btn-agregar " style="color: #ed0057;  font-size: 12px; margin-left: 37px;">
+            *Esta pregunta solo se habilitará si la sede dispone de área para la Disposición de Residuos.
+          </p>
+        </div>
+        <div *ngIf="nivel_2.idCategoria2doNivel==25" class="text-left">
+          <p class="btn-agregar " style="color: #ed0057;  font-size: 12px; margin-left: 37px;">
+            *Esta pregunta solo se habilitará si la sede dispone de Área sanitaria.
+          </p>
+        </div>
+
+        <br>
+        <div *ngFor="let preg of nivel2_1(nivel_2.idCategoria2doNivel)">
+          <div fxLayout="row">
+            <div fxFlex="100">
+              <mat-card
+                style="background-color: transparent;background:#fff;margin-top: 0%; margin-bottom: 0px; margin-left: 35px;">
+                <mat-card-content style="background-color: transparent;background: #fff;">
+                  <table style="border-collapse: collapse !important;width: 100%;">
+                    <!--  borde superior -->
+                    <table *ngIf="preg.tipoPregunta==1" class="bordeSuperior" style="width: 100%;display: flex; ">
+                      <ng-container>
+                        <!--Inico de preguntas-->
+                        <td class="bordeadentro ">
+                          <!--  borde superior -->
+                          <div class="text-left" style="width: 100%;display: flex; align-items:center">
+                            <div *ngIf="preg.mostrarIcono==true">
+                              <a>
+                                <img class="icono2"
+                                  src="../.././../../assets/iconos_PAE/PNG/{{preg.iconoPregunta2doNivel}} ">
+                              </a>
+                            </div>
+                            <div *ngIf="preg.mostrarIcono==false">
+                              <div *ngIf="preg.idPreguntaPadre==null">
+                                <p style="margin-left: 15px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </div>
+                              <div *ngIf="preg.idPreguntaPadre!=null">
+                                <p style="margin-left: 50px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </div>
+                            </div>
+                            <div *ngIf="preg.mostrarIcono==true">
+                              <span style="font-size: 13px; margin-bottom: 0;margin-top: 0;">
+                                <p style="margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </span>
+                            </div>
+
+                          </div>
+
+
+                        </td>
+                        <!--Fin de preguntas-->
+                        <!--Inico de las respuestas-->
+                        <td style="padding-left: 0px;  max-width: 260px; min-width: 260px;">
+                          <div [ngSwitch]="preg.idEscala">
+                            <!--increment number-->
+                            <div *ngSwitchCase="44">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="43">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="42">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="41">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="40">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="39">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="37">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="36">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="35">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="29">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="28">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="27">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="26">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="24">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="14">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="13">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+
+                            <!--sino-->
+                            <div *ngSwitchCase="1">
+                              <ng-container *ngTemplateOutlet="sino"></ng-container>
+                            </div>
+
+                            <!--Si-NO- almacenamiento-->
+                            <div *ngSwitchCase="4">
+                              <ng-container *ngTemplateOutlet="SiNOalmacenamiento"></ng-container>
+                            </div>
+
+                            <!--Si/No 50-->
+                            <div *ngSwitchCase="34">
+                              <ng-container *ngTemplateOutlet="SiNo50"></ng-container>
+                            </div>
+
+                            <!--NO-SI-->
+                            <div *ngSwitchCase="31">
+                              <ng-container *ngTemplateOutlet="NOSI"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="45">
+                              <ng-container *ngTemplateOutlet="NOSI"></ng-container>
+                            </div>
+
+                            <!--select-->
+                            <div *ngSwitchCase="33">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="32">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="25">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="23">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="22">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="20">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="18">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="17">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="15">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="12">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="11">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="10">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="9">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="8">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="3">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="2">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+
+                            <!--Fecha-->
+                            <div *ngSwitchCase="38">
+                              <ng-container *ngTemplateOutlet="fecha"></ng-container>
+                            </div>
+
+                            <!--archivo-->
+                            <div *ngSwitchCase="5">
+                              <ng-container *ngTemplateOutlet="archivo"></ng-container>
+                            </div>
+
+                            <!--si-interminante-no-->
+                            <div *ngSwitchCase="7">
+                              <ng-container *ngTemplateOutlet="siintermitennteno"></ng-container>
+                            </div>
+
+                            <!--ninguno-->
+                            <div *ngSwitchDefault>No tiene Respuestas</div>
+                            <ng-template #incrementnumber>
+                              <!--increment number-->
+                              <div *ngFor="let cant of obtenerEscala(preg.idEscala) ">
+                                <div
+                                  style="margin-left: 10px; margin-bottom: 10px; margin-top: 7px; width: 90%;float: left; font-size: 13px;">
+
+                                  <input [readonly]="preg.tercerNivel == 0 || !esEdicion" required
+                                    id="{{preg.idPregunta}}" value={{preg.valorRespuesta}} (keydown)="onKeyCnt($event)"
+                                    [disabled]="preg.tercerNivel == 0 || !esEdicion"
+                                    (change)="cantidadinput(cant.id,preg.idEscala,preg.idPregunta,$any($event).target.value,preg.idPreguntaPadre,cant.maximo )"
+                                    style="text-align: center; margin: auto; width: 100%; font-size: 13px;border: 1px solid #536dfe;"
+                                    type="number" placeholder="{{cant.respuesta}}" min="{{cant.minimo}}"
+                                    max="{{cant.maximo}}" />
+
+                                </div>
+
+                              </div>
+
+                            </ng-template>
+
+                            <ng-template #sino>
+                              <!--Si - No-->
+
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group disabled [id]="preg.idPregunta" class="buttontog "
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle [value]="escala.id"
+                                      (click)="activarhijos(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+
+
+
+
+
+                            </ng-template>
+
+                            <ng-template #NOSI>
+                              <!--No - Si-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos4(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #SiNOalmacenamiento>
+                              <!--Si-NO-almacenamiento-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos3(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #SiNo50>
+                              <!--Si/No 50-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos5(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #select>
+                              <!--select-->
+
+                              <div>
+                                <select [disabled]="preg.tercerNivel==0  || !esEdicion" required
+                                  (change)="selectionSelect($any($event).target.value,preg.idEscala,preg.idPregunta)"
+                                  style="font-size: 13px; width: 95%; margin-left: 10px;    margin-top: 7px;"
+                                  class="control-md tablaform" id="{{preg.idPregunta}}" value={{preg.valorRespuesta}}>
+                                  <option [value]=0 [selected]="preg.valorRespuesta==0">Elija una opción</option>|
+                                  <option *ngFor="let item of obtenerEscala(preg.idEscala)" [value]="item.id"
+                                    [selected]="preg.valorRespuesta==item.id" for>
+                                    {{item.respuesta}}
+                                  </option>
+                                </select>
+
+                              </div>
+                            </ng-template>
+
+
+                            <ng-template #fecha>
+
+                              <mat-form-field appearance="outline"
+                                style="display:contents; margin-left: 10px; width: 80%; margin-top: 1px; font-size: 13px; color:#005ACA;"
+                                class="date">
+                                <mat-label style="color:#97b3ec;">Seleccione la Fecha </mat-label>
+                                <br />
+                                <input id="{{preg.idPregunta}}" [value]="fechadocument"
+                                  [disabled]="preg.tercerNivel == 0 || !esEdicion" matInput #ref required
+                                  (dateChange)=handleDOBChange($event,preg.idEscala,preg.idPregunta,329)
+                                  [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                  <mat-icon class="noprint" id="id2701" style="color: rgb(14, 92, 235);"
+                                    matDatepickerToggleIcon>calendar_month
+                                  </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                            </ng-template>
+
+                            <ng-template #archivo>
+                              <!--archivo-->
+
+                              <button class="buttonAr3 btn-file  " [disabled]="preg.tercerNivel == 0 || !esEdicion ">
+                                <p style="float: left;">Archivo adjunto</p>
+                                <p style="width: 95px;float: left;">{{preg.contenidoRespuesta}}</p>
+                                <mat-icon class="noprint no-print espaciobutton" id="id2702"
+                                  style="color: #005ACA;font-size: 30px;">check</mat-icon>
+
+                                <input id="{{preg.idPregunta}}" [disabled]="preg.tercerNivel == 0 || !esEdicion  "
+                                  required type="file" ng2FileSelect
+                                  (change)="onFileSelected($any($event).currentTarget.files,preg.idEscala,preg.idPregunta,13)"
+                                  required (click)="mensajeOut()"
+                                  accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                           'application/vnd.rar', 'application/zip', 'application/msword',
+                                           'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                           'application/pdf', 'application/vnd.ms-excel',
+                                           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                            'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                              </button>
+
+
+                            </ng-template>
+
+                            <ng-template #siintermitennteno>
+
+                              <!--si-interminante-no-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog2" disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="color: #005ACA; font-size: 13px;" [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog2" required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="color: #005ACA; font-size: 13px;" [value]="escala.id"
+                                      (click)="activarhijos2(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+
+                            </ng-template>
+
+                          </div>
+                        </td>
+                        <!--Fin de las respuestas-->
+                      </ng-container>
+                    </table>
+                    <!--  borde intermedio -->
+                    <table *ngIf="preg.tipoPregunta==2" class="bordeIntermedio" style="width: 100%;display: flex; ">
+                      <ng-container>
+                        <!--Inico de preguntas-->
+                        <td class="bordeadentro ">
+
+                          <div class="text-left" style="width: 100%;display: flex; align-items:center">
+                            <div *ngIf="preg.mostrarIcono==true">
+                              <a>
+                                <img class="icono2"
+                                  src="../.././../../assets/iconos_PAE/PNG/{{preg.iconoPregunta2doNivel}} ">
+                              </a>
+                            </div>
+                            <div *ngIf="preg.mostrarIcono==false">
+                              <span style="font-size: 13px; ">
+                                <div *ngIf="preg.idPreguntaPadre==null">
+                                  <p style="margin-left: 15px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                                </div>
+                                <div *ngIf="preg.idPreguntaPadre!=null">
+                                  <p style="margin-left: 50px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                                </div>
+
+                              </span>
+                            </div>
+                            <div *ngIf="preg.mostrarIcono==true">
+                              <span style="font-size: 13px; ">
+                                <p style="margin-left: 1px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </span>
+                            </div>
+
+                          </div>
+                        </td>
+                        <!--Fin de preguntas-->
+                        <!--Inico de las respuestas-->
+                        <td style="padding-left: 0px;  max-width: 260px; min-width: 260px;">
+                          <div [ngSwitch]="preg.idEscala">
+                            <!--increment number-->
+                            <div *ngSwitchCase="44">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="43">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="42">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="41">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="40">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="39">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="37">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="36">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="35">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="29">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="28">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="27">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="26">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="24">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="14">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="13">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+
+                            <!--sino-->
+                            <div *ngSwitchCase="1">
+                              <ng-container *ngTemplateOutlet="sino"></ng-container>
+                            </div>
+
+                            <!--Si-NO- almacenamiento-->
+                            <div *ngSwitchCase="4">
+                              <ng-container *ngTemplateOutlet="SiNOalmacenamiento"></ng-container>
+                            </div>
+
+                            <!--Si/No 50-->
+                            <div *ngSwitchCase="34">
+                              <ng-container *ngTemplateOutlet="SiNo50"></ng-container>
+                            </div>
+
+                            <!--NO-SI-->
+                            <div *ngSwitchCase="31">
+                              <ng-container *ngTemplateOutlet="NOSI"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="45">
+                              <ng-container *ngTemplateOutlet="NOSI"></ng-container>
+                            </div>
+
+                            <!--select-->
+                            <div *ngSwitchCase="33">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="32">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="25">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="23">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="22">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="20">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="18">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="17">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="15">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="12">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="11">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="10">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="9">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="8">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="3">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="2">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+
+                            <!--Fecha-->
+                            <div *ngSwitchCase="38">
+                              <ng-container *ngTemplateOutlet="fecha"></ng-container>
+                            </div>
+
+                            <!--archivo-->
+                            <div *ngSwitchCase="5">
+                              <ng-container *ngTemplateOutlet="archivo"></ng-container>
+                            </div>
+
+                            <!--si-interminante-no-->
+                            <div *ngSwitchCase="7">
+                              <ng-container *ngTemplateOutlet="siintermitennteno"></ng-container>
+                            </div>
+
+                            <!--ninguno-->
+                            <div *ngSwitchDefault>No tiene Respuestas</div>
+                            <ng-template #incrementnumber>
+                              <!--increment number-->
+                              <div *ngFor="let cant of obtenerEscala(preg.idEscala) ">
+                                <div
+                                  style="margin-left: 10px; margin-bottom: 10px; margin-top: 7px; width: 90%;float: left; font-size: 13px;">
+
+                                  <input [readonly]="preg.tercerNivel == 0 || !esEdicion" required
+                                    id="{{preg.idPregunta}}" value={{preg.valorRespuesta}} (keydown)="onKeyCnt($event)"
+                                    [disabled]="preg.tercerNivel == 0 || !esEdicion"
+                                    (change)="cantidadinput(cant.id,preg.idEscala,preg.idPregunta,$any($event).target.value,preg.idPreguntaPadre,cant.maximo)"
+                                    style="text-align: center; margin: auto; width: 100%; font-size: 13px; border: 1px solid #536dfe;"
+                                    type="number" placeholder="{{cant.respuesta}}" min="{{cant.minimo}}"
+                                    max="{{cant.maximo}}" />
+
+                                </div>
+                              </div>
+
+                            </ng-template>
+
+                            <ng-template #sino>
+                              <!--Si - No-->
+
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group disabled [id]="preg.idPregunta" class="buttontog "
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle [value]="escala.id"
+                                      (click)="activarhijos(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+
+
+
+
+
+                            </ng-template>
+
+                            <ng-template #NOSI>
+                              <!--No - Si-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos4(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #SiNOalmacenamiento>
+                              <!--Si-NO-almacenamiento-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos3(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #SiNo50>
+                              <!--Si/No 50-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos5(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #select>
+                              <!--select-->
+
+                              <div>
+                                <select [disabled]="preg.tercerNivel==0  || !esEdicion" required
+                                  (change)="selectionSelect($any($event).target.value,preg.idEscala,preg.idPregunta)"
+                                  style="font-size: 13px; width: 95%; margin-left: 10px;    margin-top: 7px;"
+                                  class="control-md tablaform" id="{{preg.idPregunta}}" value={{preg.valorRespuesta}}>
+                                  <option [value]=0 [selected]="preg.valorRespuesta==0">Elija una opción</option>|
+                                  <option *ngFor="let item of obtenerEscala(preg.idEscala)" [value]="item.id"
+                                    [selected]="preg.valorRespuesta==item.id" for>
+                                    {{item.respuesta}}
+                                  </option>
+                                </select>
+
+                              </div>
+                            </ng-template>
+
+
+                            <ng-template #fecha>
+                              <!--Fecha-->
+
+                              <mat-form-field appearance="outline"
+                                style="display:contents; margin-left: 10px; width: 80%; margin-top: 1px; font-size: 13px; color:#005ACA;"
+                                class="date">
+                                <mat-label style="color:#97b3ec;">Seleccione. la Fecha </mat-label>
+                                <br />
+                                <input id="{{preg.idPregunta}}" [value]="fechadocument"
+                                  [disabled]="preg.tercerNivel == 0 || !esEdicion" matInput #ref required
+                                  (dateChange)=handleDOBChange($event,preg.idEscala,preg.idPregunta,329)
+                                  [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                  <mat-icon class="noprint" id="id2701" style="color: rgb(14, 92, 235);"
+                                    matDatepickerToggleIcon>calendar_month
+                                  </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                            </ng-template>
+
+                            <ng-template #archivo>
+                              <!--archivo-->
+
+                              <button class="buttonAr3 btn-file  " [disabled]="preg.tercerNivel == 0 || !esEdicion ">
+                                <p style="float: left;">Archivo adjunto</p>
+                                <p style="width: 95px;float: left;">{{preg.contenidoRespuesta}}</p>
+                                <mat-icon class="noprint no-print espaciobutton" id="id2702"
+                                  style="color: #005ACA;font-size: 30px;">check</mat-icon>
+
+                                <input id="{{preg.idPregunta}}" [disabled]="preg.tercerNivel == 0 || !esEdicion  "
+                                  required type="file" ng2FileSelect
+                                  (change)="onFileSelected($any($event).currentTarget.files,preg.idEscala,preg.idPregunta,13)"
+                                  required (click)="mensajeOut()"
+                                  accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                         'application/vnd.rar', 'application/zip', 'application/msword',
+                                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                         'application/pdf', 'application/vnd.ms-excel',
+                                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                          'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                              </button>
+
+
+                            </ng-template>
+
+                            <ng-template #siintermitennteno>
+
+                              <!--si-interminante-no-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog2" disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="color: #005ACA; font-size: 13px;" [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog2" required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="color: #005ACA; font-size: 13px;" [value]="escala.id"
+                                      (click)="activarhijos2(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+
+
+
+                            </ng-template>
+
+                          </div>
+                        </td>
+                        <!--Fin de las respuestas-->
+                      </ng-container>
+                    </table>
+                    <!--  borde inferior -->
+                    <table *ngIf="preg.tipoPregunta==3" class="bordeInferior" style="width: 100%;display: flex; ">
+                      <ng-container>
+                        <!--Inico de preguntas-->
+                        <td class="bordeadentro ">
+
+                          <div class="text-left" style="width: 100%; display: flex; align-items:center">
+                            <div *ngIf="preg.mostrarIcono==true">
+                              <a>
+                                <img class="icono2"
+                                  src="../.././../../assets/iconos_PAE/PNG/{{preg.iconoPregunta2doNivel}} ">
+                              </a>
+                            </div>
+                            <div *ngIf="preg.mostrarIcono==false">
+                              <div *ngIf="preg.idPreguntaPadre==null">
+                                <p style="margin-left: 15px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </div>
+                              <div *ngIf="preg.idPreguntaPadre!=null">
+                                <p style="margin-left: 50px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </div>
+                            </div>
+                            <div *ngIf="preg.mostrarIcono==true">
+                              <span style="font-size: 13px; ">
+                                <p style="margin-left: 1px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                        <!--Fin de preguntas-->
+                        <!--Inico de las respuestas-->
+                        <td style="padding-left: 0px;  max-width: 260px; min-width: 260px;">
+                          <div [ngSwitch]="preg.idEscala">
+                            <!--increment number-->
+                            <div *ngSwitchCase="44">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="43">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="42">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="41">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="40">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="39">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="37">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="36">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="35">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="29">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="28">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="27">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="26">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="24">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="14">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="13">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+
+                            <!--sino-->
+                            <div *ngSwitchCase="1">
+                              <ng-container *ngTemplateOutlet="sino"></ng-container>
+                            </div>
+
+                            <!--Si-NO- almacenamiento-->
+                            <div *ngSwitchCase="4">
+                              <ng-container *ngTemplateOutlet="SiNOalmacenamiento"></ng-container>
+                            </div>
+
+                            <!--Si/No 50-->
+                            <div *ngSwitchCase="34">
+                              <ng-container *ngTemplateOutlet="SiNo50"></ng-container>
+                            </div>
+
+                            <!--NO-SI-->
+                            <div *ngSwitchCase="31">
+                              <ng-container *ngTemplateOutlet="NOSI"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="45">
+                              <ng-container *ngTemplateOutlet="NOSI"></ng-container>
+                            </div>
+
+                            <!--select-->
+                            <div *ngSwitchCase="33">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="32">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="25">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="23">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="22">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="20">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="18">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="17">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="15">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="12">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="11">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="10">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="9">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="8">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="3">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="2">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+
+                            <!--Fecha-->
+                            <div *ngSwitchCase="38">
+                              <ng-container *ngTemplateOutlet="fecha"></ng-container>
+                            </div>
+
+                            <!--archivo-->
+                            <div *ngSwitchCase="5">
+                              <ng-container *ngTemplateOutlet="archivo"></ng-container>
+                            </div>
+
+                            <!--si-interminante-no-->
+                            <div *ngSwitchCase="7">
+                              <ng-container *ngTemplateOutlet="siintermitennteno"></ng-container>
+                            </div>
+
+                            <!--ninguno-->
+                            <div *ngSwitchDefault>No tiene Respuestas</div>
+                            <ng-template #incrementnumber>
+                              <!--increment number-->
+                              <div *ngFor="let cant of obtenerEscala(preg.idEscala) ">
+                                <div
+                                  style="margin-left: 10px; margin-bottom: 10px; margin-top: 7px; width: 90%;float: left; font-size: 13px;">
+
+                                  <input [readonly]="preg.tercerNivel == 0 || !esEdicion" required
+                                    id="{{preg.idPregunta}}" value={{preg.valorRespuesta}} (keydown)="onKeyCnt($event)"
+                                    [disabled]="preg.tercerNivel == 0 || !esEdicion"
+                                    (change)="cantidadinput(cant.id,preg.idEscala,preg.idPregunta,$any($event).target.value,preg.idPreguntaPadre,cant.maximo )"
+                                    style="text-align: center; margin: auto; width: 100%; font-size: 13px; border: 1px solid #536dfe;"
+                                    type="number" placeholder="{{cant.respuesta}}" min="{{cant.minimo}}"
+                                    max="{{cant.maximo}}" />
+
+                                </div>
+                              </div>
+
+                            </ng-template>
+
+                            <ng-template #sino>
+                              <!--Si - No-->
+
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group disabled [id]="preg.idPregunta" class="buttontog "
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle [value]="escala.id"
+                                      (click)="activarhijos(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+
+
+
+
+
+                            </ng-template>
+
+                            <ng-template #NOSI>
+                              <!--No - Si-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos4(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #SiNOalmacenamiento>
+                              <!--Si-NO-almacenamiento-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos3(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #SiNo50>
+                              <!--Si/No 50-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos5(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #select>
+                              <!--select-->
+
+                              <div>
+                                <select [disabled]="preg.tercerNivel==0  || !esEdicion" required
+                                  (change)="selectionSelect($any($event).target.value,preg.idEscala,preg.idPregunta)"
+                                  style="font-size: 13px; width: 95%; margin-left: 10px;    margin-top: 7px;"
+                                  class="control-md tablaform" id="{{preg.idPregunta}}" value={{preg.valorRespuesta}}>
+                                  <option [value]=0 [selected]="preg.valorRespuesta==0">Elija una opción</option>|
+                                  <option *ngFor="let item of obtenerEscala(preg.idEscala)" [value]="item.id"
+                                    [selected]="preg.valorRespuesta==item.id" for>
+                                    {{item.respuesta}}
+                                  </option>
+                                </select>
+
+                              </div>
+                            </ng-template>
+
+
+                            <ng-template #fecha>
+                              <!--Fecha-->
+
+                              <mat-form-field appearance="outline"
+                                style="display:contents; margin-left: 10px; width: 80%; margin-top: 1px; font-size: 13px; color:#005ACA;"
+                                class="date">
+                                <mat-label style="color:#97b3ec;">Seleccione la Fecha </mat-label>
+                                <br />
+                                <input id="{{preg.idPregunta}}" [value]="fechadocument"
+                                  [disabled]="preg.tercerNivel == 0 || !esEdicion" matInput #ref required
+                                  (dateChange)=handleDOBChange($event,preg.idEscala,preg.idPregunta,329)
+                                  [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                  <mat-icon class="noprint" id="id2701" style="color: rgb(14, 92, 235);"
+                                    matDatepickerToggleIcon>calendar_month
+                                  </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                            </ng-template>
+
+                            <ng-template #archivo>
+                              <!--archivo-->
+
+                              <button class="buttonAr3 btn-file  " [disabled]="preg.tercerNivel == 0 || !esEdicion ">
+                                <p style="float: left;">Archivo adjunto</p>
+                                <p style="width: 95px;float: left;">{{preg.contenidoRespuesta}}</p>
+                                <mat-icon class="noprint no-print espaciobutton" id="id2702"
+                                  style="color: #005ACA;font-size: 30px;">check</mat-icon>
+
+                                <input id="{{preg.idPregunta}}" [disabled]="preg.tercerNivel == 0 || !esEdicion  "
+                                  required type="file" ng2FileSelect
+                                  (change)="onFileSelected($any($event).currentTarget.files,preg.idEscala,preg.idPregunta,13)"
+                                  required (click)="mensajeOut()"
+                                  accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                         'application/vnd.rar', 'application/zip', 'application/msword',
+                                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                         'application/pdf', 'application/vnd.ms-excel',
+                                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                          'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                              </button>
+
+
+                            </ng-template>
+
+                            <ng-template #siintermitennteno>
+
+                              <!--si-interminante-no-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog2" disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="color: #005ACA; font-size: 13px;" [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog2" required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="color: #005ACA; font-size: 13px;" [value]="escala.id"
+                                      (click)="activarhijos2(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+
+                            </ng-template>
+
+                          </div>
+                        </td>
+                        <!--Fin de las respuestas-->
+                      </ng-container>
+                    </table>
+                    <!--  borde unico -->
+                    <table *ngIf="preg.tipoPregunta==4" class="bordeUnico" style="width: 100%;display: flex; ">
+                      <ng-container>
+                        <!--Inico de preguntas-->
+                        <td class="bordeadentro ">
+
+                          <div class="text-left" style="width: 100%; display: flex; align-items:center">
+                            <div *ngIf="preg.mostrarIcono==true">
+                              <a>
+                                <img class="icono2"
+                                  src="../.././../../assets/iconos_PAE/PNG/{{preg.iconoPregunta2doNivel}} ">
+                              </a>
+                            </div>
+                            <div *ngIf="preg.mostrarIcono==false">
+                              <div *ngIf="preg.idPreguntaPadre==null">
+                                <p style="margin-left: 15px; margin-bottom: 0;margin-top: 0;width: 100%;">
+                                  {{preg.pregunta}}</p>
+                              </div>
+                              <div *ngIf="preg.idPreguntaPadre!=null">
+                                <p style="margin-left: 50px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </div>
+                            </div>
+                            <div *ngIf="preg.mostrarIcono==true">
+                              <span style="font-size: 13px; ">
+                                <p style="margin-left: 1px; margin-bottom: 0;margin-top: 0;">{{preg.pregunta}}</p>
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                        <!--Fin de preguntas-->
+                        <!--Inico de las respuestas-->
+                        <td style="padding-left: 0px;  max-width: 260px; min-width: 260px;">
+                          <div [ngSwitch]="preg.idEscala">
+                            <!--increment number-->
+                            <div *ngSwitchCase="44">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="43">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="42">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="41">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="40">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="39">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="37">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="36">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="35">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="29">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="28">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="27">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="26">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="24">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="14">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="13">
+                              <ng-container *ngTemplateOutlet="incrementnumber"></ng-container>
+                            </div>
+
+                            <!--sino-->
+                            <div *ngSwitchCase="1">
+                              <ng-container *ngTemplateOutlet="sino"></ng-container>
+                            </div>
+
+                            <!--Si-NO- almacenamiento-->
+                            <div *ngSwitchCase="4">
+                              <ng-container *ngTemplateOutlet="SiNOalmacenamiento"></ng-container>
+                            </div>
+
+                            <!--Si/No 50-->
+                            <div *ngSwitchCase="34">
+                              <ng-container *ngTemplateOutlet="SiNo50"></ng-container>
+                            </div>
+
+                            <!--NO-SI-->
+                            <div *ngSwitchCase="31">
+                              <ng-container *ngTemplateOutlet="NOSI"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="45">
+                              <ng-container *ngTemplateOutlet="NOSI"></ng-container>
+                            </div>
+
+                            <!--select-->
+                            <div *ngSwitchCase="33">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="32">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="25">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="23">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="22">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="20">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="18">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="17">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="15">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="12">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="11">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="10">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="9">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="8">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="3">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+                            <div *ngSwitchCase="2">
+                              <ng-container *ngTemplateOutlet="select"></ng-container>
+                            </div>
+
+                            <!--Fecha-->
+                            <div *ngSwitchCase="38">
+                              <ng-container *ngTemplateOutlet="fecha"></ng-container>
+                            </div>
+
+                            <!--archivo-->
+                            <div *ngSwitchCase="5">
+                              <ng-container *ngTemplateOutlet="archivo"></ng-container>
+                            </div>
+
+                            <!--si-interminante-no-->
+                            <div *ngSwitchCase="7">
+                              <ng-container *ngTemplateOutlet="siintermitennteno"></ng-container>
+                            </div>
+
+                            <!--ninguno-->
+                            <div *ngSwitchDefault>No tiene Respuestas</div>
+                            <ng-template #incrementnumber>
+                              <!--increment number-->
+                              <div *ngFor="let cant of obtenerEscala(preg.idEscala) ">
+                                <div
+                                  style="margin-left: 10px; margin-bottom: 10px; margin-top: 7px; width: 90%;float: left; font-size: 13px;">
+
+                                  <input [readonly]="preg.tercerNivel == 0 || !esEdicion" required
+                                    [disabled]="preg.tercerNivel == 0 || !esEdicion" id="{{preg.idPregunta}}"
+                                    value={{preg.valorRespuesta}} (keydown)="onKeyCnt($event)"
+                                    (change)="cantidadinput(cant.id,preg.idEscala,preg.idPregunta,$any($event).target.value,preg.idPreguntaPadre,cant.maximo )"
+                                    style="text-align: center; margin: auto; width: 100%; font-size: 13px;border: 1px solid #536dfe;"
+                                    type="number" placeholder="{{cant.respuesta}}" min="{{cant.minimo}}"
+                                    max="{{cant.maximo}}" />
+
+                                </div>
+                              </div>
+
+                            </ng-template>
+
+                            <ng-template #sino>
+                              <!--Si - No-->
+
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group disabled [id]="preg.idPregunta" class="buttontog "
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle [value]="escala.id"
+                                      (click)="activarhijos(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+
+
+
+
+
+                            </ng-template>
+
+                            <ng-template #NOSI>
+                              <!--No - Si-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos4(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #SiNOalmacenamiento>
+                              <!--Si-NO-almacenamiento-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos3(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #SiNo50>
+                              <!--Si/No 50-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog " disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog " required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="width: 50%; color: #005ACA; font-size: 13px;"
+                                      [value]="escala.id"
+                                      (click)="activarhijos5(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                            </ng-template>
+
+                            <ng-template #select>
+                              <!--select-->
+
+                              <div>
+                                <select [disabled]="preg.tercerNivel==0  || !esEdicion" required
+                                  (change)="selectionSelect($any($event).target.value,preg.idEscala,preg.idPregunta)"
+                                  style="font-size: 13px; width: 95%; margin-left: 10px;    margin-top: 7px;"
+                                  class="control-md tablaform" id="{{preg.idPregunta}}" value={{preg.valorRespuesta}}>
+                                  <option [value]=0 [selected]="preg.valorRespuesta==0">Elija una opción</option>|
+                                  <option *ngFor="let item of obtenerEscala(preg.idEscala)" [value]="item.id"
+                                    [selected]="preg.valorRespuesta==item.id" for>
+                                    {{item.respuesta}}
+                                  </option>
+                                </select>
+
+                              </div>
+                            </ng-template>
+
+
+                            <ng-template #fecha>
+                              <!--Fecha-->
+
+                              <mat-form-field appearance="outline"
+                                style="display:contents; margin-left: 10px; width: 80%; margin-top: 1px; font-size: 13px; color:#005ACA;"
+                                class="date">
+                                <mat-label style="color:#97b3ec;">Seleccione la Fecha </mat-label>
+                                <br />
+                                <input id="{{preg.idPregunta}}" [value]="fechadocument"
+                                  [disabled]="preg.tercerNivel == 0 || !esEdicion" matInput #ref required
+                                  (dateChange)=handleDOBChange($event,preg.idEscala,preg.idPregunta,329)
+                                  [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                  <mat-icon class="noprint" id="id2701" style="color: rgb(14, 92, 235);"
+                                    matDatepickerToggleIcon>calendar_month
+                                  </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                            </ng-template>
+
+                            <ng-template #archivo>
+                              <!--archivo-->
+
+                              <button class="buttonAr3 btn-file  " [disabled]="preg.tercerNivel == 0 || !esEdicion ">
+                                <p style="float: left;">Archivo adjunto</p>
+                                <p style="width: 95px;float: left;">{{preg.contenidoRespuesta}}</p>
+                                <mat-icon class="noprint no-print espaciobutton" id="id2702"
+                                  style="color: #005ACA;font-size: 30px;">check</mat-icon>
+
+                                <input id="{{preg.idPregunta}}" [disabled]="preg.tercerNivel == 0 || !esEdicion  "
+                                  required type="file" ng2FileSelect
+                                  (change)="onFileSelected($any($event).currentTarget.files,preg.idEscala,preg.idPregunta,13)"
+                                  required (click)="mensajeOut()"
+                                  accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                         'application/vnd.rar', 'application/zip', 'application/msword',
+                                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                         'application/pdf', 'application/vnd.ms-excel',
+                                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                          'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                              </button>
+
+
+                            </ng-template>
+
+                            <ng-template #siintermitennteno>
+
+                              <!--si-interminante-no-->
+                              <div *ngIf="preg.tercerNivel == 0 || esEdicion==false">
+                                <mat-button-toggle-group class="buttontog2" disabled [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="color: #005ACA; font-size: 13px;" [value]="escala.id">
+                                      {{escala.respuesta}}</mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+                              <div *ngIf="preg.tercerNivel == 1 && esEdicion==true ">
+                                <mat-button-toggle-group class="buttontog2" required [id]="preg.idPregunta"
+                                  aria-label="seleccion" [value]="preg.valorRespuesta">
+                                  <div *ngFor="let escala of obtenerEscala(preg.idEscala)"
+                                    style="border-left: 1px solid">
+                                    <mat-button-toggle style="color: #005ACA; font-size: 13px;" [value]="escala.id"
+                                      (click)="activarhijos2(escala.id,preg.idEscala,preg.idPregunta)">
+                                      {{escala.respuesta}}
+                                    </mat-button-toggle>
+                                  </div>
+                                </mat-button-toggle-group>
+                              </div>
+
+                            </ng-template>
+
+                          </div>
+                        </td>
+                        <!--Fin de las respuestas-->
+                      </ng-container>
+                    </table>
+                  </table>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <!--Fin Nivel 2-->
+    </div>
+  </div>
+
+
+  <button [ngClass]="{'linkdisable':!getModulePermission(32,'editar')}" style="margin-left: 20px;" class="BotonVolador"
+    *ngIf="!esEdicion && EsETC==true" disabled (click)="cambiarModoEdicion()">
+    <span class="espaciobutton">
+      <mat-icon style="margin-right: 10px;color:#ffffff;font-size: 20px; height: 20px;
+      width: 20px;    margin-top: 4px;">edit</mat-icon>
+    </span>Editar
+  </button>
+  <button [ngClass]="{'linkdisable':!getModulePermission(32,'editar')}" style="margin-left: 20px;" class="BotonVolador"
+    *ngIf="!esEdicion && EsETC==true " (click)="cambiarModoEdicion()">
+    <span class="espaciobutton">
+      <mat-icon style="margin-right: 10px;color:#ffffff;font-size: 20px; height: 20px;
+      width: 20px;    margin-top: 4px;">edit</mat-icon>
+    </span>Editar
+  </button>
+  <button [ngClass]="{'linkdisable':!getModulePermission(32,'crear')}" style="margin-left: 20px;" class="BotonVolador"
+    *ngIf="esEdicion " type="submit">
+    <mat-icon style="margin-right: 10px;color:#ffffff;font-size: 20px;height: 20px;
+    width: 20px;    margin-top: 4px;">save</mat-icon>Guardar y <mat-icon style="margin-right: 10px;color:#ffffff;height: 20px;
+      width: 20px;    margin-top: 4px;">send</mat-icon> Enviar
+  </button>
+
+
+
+</form>
+
+
+
+<br>
+<button style="margin-left: 20px;" class="buttonAr4" (click)="makepdfci6()">
+  <mat-icon style="margin-right: 10px;color:#ffffff;font-size: 20px; height: 20px;
+  width: 20px;    margin-top: 4px;">picture_as_pdf</mat-icon>
+  Generar PDF
+</button>
+
+
+
+
+<!--Fin de Nivel 1-->
+<br>
+<br>
+
+<!--inicio de aprobaciones-->
+<app-diagnostico-aprobaciones-formulario></app-diagnostico-aprobaciones-formulario>
+<!--fin de aprobaciones-->

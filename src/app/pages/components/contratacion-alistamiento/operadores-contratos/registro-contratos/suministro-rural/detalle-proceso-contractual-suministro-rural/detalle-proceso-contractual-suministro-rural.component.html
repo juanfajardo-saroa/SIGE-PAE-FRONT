@@ -1,0 +1,193 @@
+<form class="form-default-inline" [formGroup]="myForm" (ngSubmit)="onSubmit($event)" autocomplete="off">
+    <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+            <h4 class="panel-title">
+                Registro único de Contratos - Suministro Rural
+            </h4>
+        </div>
+        <div class="panel-body nb-r">
+            <div style="padding: 20px 0 15px 0;">
+                <app-chapter-azul-bg [numberChapter]="1" [titleChapter]="'Detalles del proceso contractual'">
+                </app-chapter-azul-bg>
+            </div>
+
+            <div class="form-item" style="padding-left: 15px">
+                <label class="form-label" style="margin-left: 6px">
+                    1. Fecha de inicio del suministro:
+                </label>
+                <div class="inline-block">
+                    <div class="form-date">
+                        <input class="input-text" name="dpi" type="date" placeholder="dd/mm/yyyy"
+                            style="width: 100% !important;" formControlName="fechalnicioContrato">
+                        <div class="color-invalid" *ngIf="!getValid('fechalnicioContrato')">Seleccione una opción</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-item" style="padding-left: 15px">
+                <label class="form-label" style="margin-left: 6px">
+                    2. Fecha estimada de terminación del suministro:
+                </label>
+                <div class="inline-block">
+                    <div class="form-date">
+                        <input class="input-text" name="dpf" type="date" placeholder="dd/mm/yyyy"
+                            style="width: 100% !important;" formControlName="fechaFinalContrato">
+                        <div class="color-invalid" *ngIf="!getValid('fechaFinalContrato')">Seleccione una opción</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="form-label mr-2">
+                    3. Sede que recibe el Suminstra Rural:
+                </label>
+                <div class="mt-md ml-md">
+                    <label style="width: 150px">Municipio:</label>
+                    <div class="inline-block">
+                        <select class="input-text" formControlName="iD_Divipola" name="municipio"
+                            (ngModelChange)="get_InstitucionByMunicipioETC(false)" style="width: 320px !important;">
+                            <option value="0">Elija una opción</option>
+                            <option *ngFor="let item of listMunicipios" [ngValue]="item.iD_Divipola">{{item.municipio}}
+                            </option>
+                        </select>
+                        <div class="color-invalid" *ngIf="!getValid('iD_Divipola')">Elija una opci&oacute;n</div>
+                    </div>
+                </div>
+                <div class="mt-xs ml-md">
+                    <label style="width: 150px">Institución Educativa:</label>
+                    <div class="inline-block">
+                        <select class="input-text" formControlName="iD_lE" name="institucionEducativa"
+                            (ngModelChange)="get_SedesByInstitucion(false)" style="width: 320px !important;">
+                            <option value="0">Elija una opción</option>
+                            <option *ngFor="let item of listInstitucion" [ngValue]="item.iD_lE">
+                                {{item.institucionEducativa}}
+                            </option>
+                        </select>
+                        <div class="color-invalid" *ngIf="!getValid('iD_lE')">Elija una opci&oacute;n
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-xs ml-md">
+                    <label style="width: 150px">Sede:</label>
+                    <div class="inline-block">
+                        <select class="input-text" formControlName="iD_Sede" name="sede"
+                            style="width: 320px !important;">
+                            <option value="0">Elija una opción</option>
+                            <option *ngFor="let item of listSedes" [ngValue]="item.iD_Sede">{{item.sede}}</option>
+                        </select>
+                        <div class="color-invalid" *ngIf="!getValid('iD_Sede')">Elija una opci&oacute;n
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="form-label mr-2">
+                    4. Complementos contratados:
+                </label>
+                <div class="text-center mt-sm">
+                    <div class="flex-h border-dashed">
+                        <div class="flex-h-item">
+                            Estado del diligenciamiento:
+                        </div>
+                        <div class="flex-h-item">
+                            <span class="bg-circle bg-grey-light"></span>
+                            Pendiente por diligenciar
+                        </div>
+                        <div class="flex-h-item">
+                            <span class="bg-circle bg-yellow"></span>
+                            Incompleto
+                        </div>
+                        <div class="flex-h-item">
+                            <span class="bg-circle bg-green"></span>
+                            Completo
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-control-3 mt-md">
+                    <div class="tab-control-header">
+                        <div class="tab-item selected" style="width: 45%">
+                            <div class="flex align-items-center justify-content-center">
+                                <div>
+                                    <span *ngIf="myForm.get('iD_EstadoContrato').value == 0"
+                                        class="bg-circle bg-grey-light"></span>
+                                    <span *ngIf="myForm.get('iD_EstadoContrato').value == 1"
+                                        class="bg-circle bg-yellow"></span>
+                                    <span *ngIf="myForm.get('iD_EstadoContrato').value == 2"
+                                        class="bg-circle bg-green"></span>
+                                </div>
+                                <div></div>
+                                <label class="form-label mx-2">
+                                    <img style="width: 20px; height: 20px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-204.png">
+                                    MAER
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="tab-item" style="width: 55%"></div>
+                    </div>
+                    <div class="tab-control-body">
+                        <div class="form-item">
+                            <div class="mb-sm">
+                                <label class="mb-xs">4.1. Complementos diarios contratados:</label>
+                                <span class="ml-sm">
+                                    <button class="btn btn-blue" (click)="editarSumRacionesMAER()"
+                                        [disabled]="editarRacionesDiarias">Editar</button>
+                                </span>
+                            </div>
+                            <app-table-jornada-ps-cct-cualificado [dataSource]="dataComplementosDiariosContratados"
+                                [editar]="editarRacionesDiarias" [signoPrecio]="false">
+                            </app-table-jornada-ps-cct-cualificado>
+                            <label class="mt-xs">* Si el contrato NO incluye complementos para alguna modalidad, ingrese
+                                el valor “cero” 0.</label>
+
+                        </div>
+                        <div class="form-item">
+                            <label>4.2. Número de días de suministro contratados:</label>
+                            <div class="inline-block" *ngIf="editarRacionesDiarias">
+                                <input class="input-text" name="txtNumeroDias" style="width: 80px !important;"
+                                    formControlName="numeroDias" required (blur)="blurNumeroDias()" />
+                                <div class="color-invalid" *ngIf="!getValid('numeroDias')">Seleccione una opción</div>
+                            </div>
+                            <div class="inline-block" *ngIf="!editarRacionesDiarias">
+                                <input class="input-text"  name="txtNumeroDias" formControlName="numeroDias" style="width: 80px !important;"  />
+                            </div>
+                            <div *ngIf="editarRacionesDiarias" class="mt-xs mb-xs text-right">
+                                <button class="btn btn-white"
+                                    (click)="cancel_UpdateContratosDetallesSumRacionesMAER()">Cancelar</button>
+                                <button class="btn btn-blue ml-sm"
+                                    (click)="put_UpdateContratosDetallesSumRacionesMAER()">Guardar</button>
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <label class="mb-xs">4.3. Total de complementos contratados:</label>
+                            <app-table-jornada-ps-cct-cualificado [dataSource]="dataTotalComplementosContratados"
+                                [signoPrecio]="false">
+                            </app-table-jornada-ps-cct-cualificado>
+                            <label class="mt-xs">* Si el contrato NO incluye complementos para alguna modalidad, ingrese
+                                el valor “cero” 0.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col clearfix">
+                    <button class="btn btn-blue" (click)="finalizar()">
+                        Guardar y continuar m&aacute;s tarde
+                    </button>
+                </div>
+                <div class="col clearfix">
+                    <button class="btn btn-blue" (click)="regresar()">
+                        Anterior
+                    </button>
+                    <button class="btn btn-blue ml-sm"  (click)="siguiente()">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

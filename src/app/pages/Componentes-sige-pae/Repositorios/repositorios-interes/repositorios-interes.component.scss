@@ -1,0 +1,204 @@
+@import '/src/assets/styles/variable.scss';
+
+//Filtros
+.ubicaciontabla {
+  border-left: #ffffff;
+  float: left;
+  margin-right: 20px;
+  width: 40%;
+}
+
+.ubicaciontabla2 {
+  border-left: #ffffff;
+  float: left;
+  margin-right: 20px;
+  width: 14%;
+}
+
+.tablaform3 {
+  width: 100%;
+  border-color: $base-color;
+  color: $base-color;
+  border: 1px solid;
+  border-radius: 12px 12px 12px 12px !important;
+  font-size: 17px;
+  border-left: hidden !important;
+  border-spacing: 0px 0px;
+}
+
+.tablaform4 {
+  border-radius: 12px 12px 12px 12px !important;
+  border: $base-azulPAEGov solid 1px;
+  background-color: #fff !important;
+  padding: 1% !important;
+ // height: 30px !important;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $base-color;
+  width: 95%;
+    float: left;
+}
+
+.bordeizq2 {
+  border-left: 1px solid $base-azulPAEGov !important;
+  border-radius: 20px !important;
+}
+
+.tablaform2 {
+  color: $base-azulPAEGov;
+  text-align: center;
+  font-size: 17px;
+}
+
+//lineas
+.sub {
+  font-size: 20px;
+  color: #E23465
+}
+
+.linea {
+  background-color: #E23465 !important;
+
+}
+
+//tabla de repositorios
+.acomodarAll {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  align-content: center;
+}
+
+.CenterImg {
+  margin: auto;
+  display: block;
+}
+
+.LeftPart {
+  padding: 2% 0% 0% 1%;
+  width: 30%;
+}
+
+.PaddingIcon {
+  padding: 5% 1% 4.5% 1%;
+  width: 80px;
+  height: 80%;
+  margin: auto;
+  display: block;
+}
+
+.TextBlue {
+  color: $base-color;
+}
+
+.IconDescarga {
+  font-size: 18px;
+  height: auto;
+  width: auto;
+  border-radius: 20px;
+  color: #fff;
+}
+
+.RightPart {
+  padding: 2% 1% 1% 0%;
+  width: 70%;
+}
+
+.LetraSpacing {
+  line-height: 5px;
+}
+.LetraSpacing2 {
+  text-align: justify;
+}
+
+.EspacioAction {
+  padding: 0px  !important;
+}
+
+mat-card {
+  border-bottom: 1px dotted $base-color;
+  box-shadow: none !important;
+}
+.linkdisable{
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.container-filter {
+  border: 1px solid $base-color;
+  color: $base-color;
+  border-radius: 20px;
+
+  .border-left-separator {
+    border-left: 1px solid $base-color;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1367px) and (max-width:1920px) {
+  .ubicaciontabla2{
+    width: 14%;;
+
+}
+}
+
+/* min desktop */
+@media (min-width: 980px ) and (max-width:1366px) {
+  .ubicaciontabla2{
+    width: 14%;;
+
+}
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+  .ubicaciontabla2{
+    width: 14%;;
+
+}
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  .ubicaciontabla2{
+    width: 14%;;
+
+}
+ }
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  .ubicaciontabla2{
+  width: 14%;;
+
+}}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) { }
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) { }
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) { }
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) { }
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) { }
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) { }
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width : 1224px) { }
+
+/* Large screens ----------- */
+@media only screen and (min-width : 1824px) { }
+
+/* iPhone 4 and high pixel ratio devices ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) { }

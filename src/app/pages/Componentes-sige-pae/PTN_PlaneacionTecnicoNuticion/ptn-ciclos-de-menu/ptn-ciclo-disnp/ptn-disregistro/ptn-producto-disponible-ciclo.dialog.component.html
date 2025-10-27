@@ -1,0 +1,160 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <span>Agregar productos</span>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                <br />
+                <div *ngIf="action !='Adicionar'">
+                  <div class="example-full-width">
+                    <br />
+                    <input matInput id="id" readonly="true" class=" form-control"
+                      style="display: none;" />
+                  </div>
+                </div>
+                <table>
+                  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Componente:
+                        </div>
+                      </td>
+                      <td style="width:60% !important;">
+          
+                          <mat-select class="tablaForm control-md" id="" required [(value)]="selcompo"
+                          (selectionChange)="selectionComponete($event.value)" placeholder=" Componente...">
+                          <mat-option *ngFor="let i of TiposComponentesList" [value]="i.id">{{i.nombre}}</mat-option>
+                        </mat-select>
+                        
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Grupo de alimentos:
+                        </div>
+                      </td>
+                      <td style="width:60% !important;">
+          
+                          <mat-select class="tablaForm control-md" id="" required [(value)]="selGrupo"
+                          (selectionChange)="selectionGrupo($event.value)" placeholder=" Grupo...">
+                          <mat-option *ngFor="let i of GrupoAlimentoList" [value]="i.iD_GrupoAlimento">{{i.grupoAlimento}}</mat-option>
+                        </mat-select>
+                        
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Subgrupo de alimentos:</div>
+                      </td>
+                      <td style="width:60% !important;">
+                        <mat-select class="tablaForm control-md" id="" required [(value)]="selSubGrupo" placeholder="Subgrupo...">
+                          <mat-option *ngFor="let i of SubGrupoAlimentoList" [value]="i.iD_SubGrupoAlimento">{{i.subGrupoAlimento}}</mat-option>
+                        </mat-select>
+                        
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Productos:</div>
+                      </td>
+                      <td style="width:60% !important;" >
+                        <!-- <input matInput id="descripcionDiagnostico" #BusqAlimento required style="height: 25px !important; padding-left: 10px !important;"
+                          placeholder="Productos tal....." class="form-control2 control-md" /> -->
+                          <input id="nombre" type="text" name="nombre" #BusqAlimento required placeholder="Productos tal....."
+                          class="form-control " />
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                </table>
+                <div style="width: 100%; float: right; color: #005ACA;" class="align-items-center textagregar ">
+                  <div class="text-right ">
+                    <button (click)="Buscarp(selcompo,selGrupo,selSubGrupo,BusqAlimento.value)">Buscar
+                    </button>
+                  </div>
+                </div>
+                <!-- Resultados de busqueda -->
+                <div class="sub">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-285.png " height="30px" width="auto">
+                  <span style="color:#E43466 !important; margin-left: 10px; ">Productos: {{cantIngredientes}} resultados disponibles
+                  </span>
+                </div>
+                <hr class="linea">
+                <br>
+                <!-- fin Resultados de busqueda -->
+                <div *ngIf="!mensaje">
+                  <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"   formControlName="iD_Producto" (change)="aler($event.value)" >
+                    <mat-radio-button class="example-radio-button"  *ngFor="let season of tipoRacionList"  [value]="season.id" >
+                      {{season.nombre}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div *ngIf="mensaje" class="aletainput" >
+                  <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group2"   formControlName="iD_Producto" (change)="aler($event.value)" >
+                    <mat-radio-button class="example-radio-button"  *ngFor="let season of tipoRacionList"  [value]="season.id" >
+                      {{season.nombre}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <label *ngIf="mensaje" class="label" style="color: red">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                    style="height: 13px; margin-right: 2px;">
+                  Complete este campo
+                </label>
+
+                
+
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <div style="text-align: center;">
+                  ¿Está seguro de eliminar el registro?
+                </div>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+
+                      </div>
+                      <button (click)="doAction()">Agregar
+                      </button>
+                      <div>
+
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

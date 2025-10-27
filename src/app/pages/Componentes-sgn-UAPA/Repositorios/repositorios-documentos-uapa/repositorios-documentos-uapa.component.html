@@ -1,0 +1,125 @@
+
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;  margin-left: 10px;">
+      <div style="color: #005ACA; font-weight: 500 !important;">Repositorio </div>
+    </div>
+    <div class="tab-item nothing" style="width: 68%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+
+<!-- Filtros  -->
+<div class="d-flex flex-column flex-xl-row w-100 gap-20-px">
+
+  <div class="container-filter w-40 w-down-100 d-flex">
+    <div class="d-flex flex-column flex-grow-1 pl-4 align-self-end">
+      <span class="ml-2">Buscar recurso</span>
+      <div class="text-center ">
+        <input id="idBusqueda" class="tablaform4" matInput #BusqTitulo [(ngModel)]="searchValue" />
+      </div>
+    </div>
+    <div class="px-5 py-2 border-left-separator">
+      <a class="btn-agregar "><img (click)="BuscarRecurso(BusqTitulo.value)"
+        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png "
+        style="width:50px; height: 50px; margin-top: 10px;cursor: pointer;">
+      <div><a class="font-weight-bold">Buscar</a></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="container-filter w-40 w-down-100 d-flex">
+    <div class="d-flex flex-column flex-grow-1 pl-4 align-self-end">
+      <span class="ml-2">Ordenar por</span>
+      <div class="text-center ">
+        <mat-select class="tablaform4" [(value)]="selectedCategory" >
+          <mat-option value="0" selected>Seleccione una opción</mat-option>
+          <mat-option value="1" selected>Fecha de expedición</mat-option>
+          <mat-option value="2" selected>Publicación</mat-option>
+           <!-- <mat-option value="3" selected>Vigencia</mat-option> -->
+        </mat-select>
+      </div>
+    </div>
+    <div class="px-5 py-2 border-left-separator">
+      <a class="btn-agregar "><img (click)="onOrdenarpor(selectedCategory)"
+        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png "
+        style="width:50px; height: 50px; margin-top: 10px;cursor: pointer;">
+      <div><a class="font-weight-bold">Ordenar</a></div>
+    </a>
+    </div>
+  </div>
+
+  <div class="container-filter w-14 d-flex flex-column justify-content-center pl-3 py-3 w-down-100" [ngClass]="{'linkdisable':!getModulePermission(17,'crear')}">
+    <div (click)="openDialog('Adicionar',{})" [ngClass]="{'linkdisable':!getModulePermission(17,'crear')}">
+      <div style="float: left; margin-right: 5px;"><img src="../.././../assets/images//Iconos/add_blue.png"
+          height="40px"></div>
+      <div><a class="font-weight-bold">Agregar <br> recurso</a></div>
+    </div>
+  </div>
+
+</div>
+
+  <br>
+
+  <!-- Fin Filtros -->
+  <div class="sub">
+    <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-88.png" height="25px">
+    <span style=" color: #005ACA !important;"> Resultados de la búsqueda de recursos</span>
+  </div>
+  <hr class="linea">
+  <br>
+
+  <!-- Inicio Tabla Repositorios -->
+  <div fxLayout="row wrap">
+    <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100" *ngFor='let repo of RepositoriosListFilt' >
+      <mat-card fxLayout="row wrap" class="acomodarAll flex-column flex-xl-row">
+        <!-- <mat-card-header class="course-header {{repo.extension}}">
+            </mat-card-header> -->
+        <div class="text-center CenterImg LeftPart">
+          <div class="PaddingIcon">
+            <img src="../../../../../assets/iconos_PAE/PNG/{{repo.imagen}} " height="80px" width="auto">
+          </div>
+          <strong class="TextBlue">{{repo.tamanoArchivo | uppercase}}</strong>
+          <mat-card-actions class=" text-center">
+
+            <a class="TextBlue btn-registrar" (click)="downloadFile(repo.pahtArchivo)" >
+              <!-- <mat-icon class="TextBlue IconDescarga">archive</mat-icon> -->
+              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4b.png "  width="auto" style="height: 13px; margin-right: 2px;">
+              <strong class="TextBlue">DESCARGAR</strong>
+            </a>
+          </mat-card-actions>
+        </div>
+        <div class="RightPart w-down-100">
+          <div class="d-flex flex-row w-down-100 justify-content-center" style="float: right;">
+            <button  class="BordeRedondoAgregar" style="margin-left: 10px; margin-top:9px;"
+           (click)="openDialog('Actualizar',repo) "  [ngClass]="{'linkdisable':!getModulePermission(17,'editar')}" mat-raised-button>
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-3.png" alt="" height="14px" width="auto" style="margin-right: 10px;">Editar
+          </button >
+          <button  class="BordeRedondoAgregar" style="margin-left: 10px; margin-top:9px;"
+          (click)="openDialog('Eliminar',repo) "  [ngClass]="{'linkdisable':!getModulePermission(17,'eliminar')}" mat-raised-button>
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" alt="" height="20px" width="auto" style="margin-right: 10px;">Eliminar
+          </button >
+  
+          </div>
+  
+          <br>
+          <br>
+            <mat-card-content class="TextBlue">
+              <p> {{repo.sidCategoria}}</p>
+              <br class="d-none d-xl-inline">
+              <p class="LetraSpacing"><strong> Nombre: {{repo.nombre}}</strong></p>
+              <p class="LetraSpacing2"><strong>{{repo.descripcion}}</strong> </p>
+            </mat-card-content>
+            <mat-card-actions class="EspacioAction">
+              <!-- <mat-card-actions class="EspacioAction LetraBlanca course-header {{repo.extension}}"> -->
+                <p style="color: #005ACA;">Publicación: hace {{repo.publicacion}} horas |
+                  Expedición:{{repo.fechaArchivo | date:'dd-MMM-yyyy' | uppercase | withoutDots}}</p>
+            </mat-card-actions>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Fin Tabla Repositorios -->

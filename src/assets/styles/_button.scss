@@ -1,0 +1,20 @@
+.btn{
+  padding: 3px 15px;
+  border-radius: 15px;
+  border: 1px solid;
+  font-size: 15px;
+}
+.btn:hover{
+  text-decoration: none;
+}
+
+.btn-blue{
+  border-color: $base-color;
+  background-color: $base-color;
+  color: #fff;
+}
+.btn-blue:hover{
+  border-color: $base-color;
+  background-color: $base-color;
+  color: #fff;
+}

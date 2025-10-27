@@ -1,0 +1,370 @@
+<!--Regreso inicio-->
+
+<div class="d-flex flex-xl-row flex-column">
+
+  <div class="d-flex btnBack ml-3 py-3 w-down-100">
+    <div class="d-flex flex-column justify-content-center bordeAtras" (click)="RegresarGestion()" role="button">
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png" style="width:50px; height: 50px;">
+      <span class="text-center">Atrás</span>
+    </div>
+  </div>
+
+  <div class="tablaform align-self-center" [formGroup]="filterForm">
+
+    <div class="d-flex flex-column flex-xl-row">
+      <div class="d-flex flex-column flex-xl-row w-100">
+
+        <mat-card class="spaceCol w-100 mx-lg-down-0 my-lg-down-05-rem">
+          <mat-card-title>Municipio</mat-card-title>
+          <mat-select class="tablaForm3 control-md" id="municipio" formControlName="municipio"
+            (selectionChange)="onMunicipioClick($event.value)">
+            <mat-option *ngFor="let item of selectDivipolaList" [value]="item.iD_DiviPola"> {{item.sID_DiviPola}}
+            </mat-option>
+          </mat-select>
+        </mat-card>
+
+        <mat-card class="spaceCol w-100 mx-lg-down-0 my-lg-down-05-rem">
+          <mat-card-title>Institución Educativa</mat-card-title>
+          <mat-select class="tablaForm3 control-md" id="institucionEducativa" formControlName="institucionEducativa"
+            (selectionChange)="onInstitucionClick($event.value)">
+            <mat-option *ngFor="let item of selectInstitucionList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+
+        <mat-card class="spaceCol w-100 mx-lg-down-0 my-lg-down-05-rem">
+          <mat-card-title>Sede educativa</mat-card-title>
+          <mat-select class="tablaForm3 control-md" id="sede" formControlName="sede">
+            <mat-option *ngFor="let item of selectSedesList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="d-flex justify-content-center p-0 bordetd border-down-none">
+        <mat-card>
+          <div fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100" (click)="onFilterClick()">
+            <a class="btn-agregar">
+              <img class="imgFilter" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png" height="30px"
+                width="auto">
+            </a>
+            <div class="textF">Filtrar</div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!--Regreso fin-->
+<!--titulo año actualizacion-->
+
+<div class="container-fluid content-wrapper">
+  <div class="row">
+    <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 banner-breadcrumbs">
+      <div class="flex-wrap flex-md-nowrap mt-3">
+        <app-menadminuautorizado>
+          <ng-container autorizado>
+            <div class="row">
+              <div class="col-md-10">
+                <label class="banner-text">
+                  <strong class="strongheader"> {{nombreInstituc}}
+                  </strong>
+                </label>
+              </div>
+              <div class="col-md-2 text-right">
+                <label class="anio-text">Año | <strong class="strongheader"></strong>{{ currentYear }}</label>
+              </div>
+            </div>
+            <!-- <hr style="margin: 0; color: red!important;" /> -->
+            <div class="row LineaAzul">
+              <div class="col-12 text-right">
+                <label class="last-update-text">Ultima actualizaci&oacute;n
+                  <span> {{ dateToday | date: "longDate" }}</span></label>
+              </div>
+            </div>
+          </ng-container>
+        </app-menadminuautorizado>
+      </div>
+      <div class="mt-2">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<!--fin año actualizacion-->
+<!-- numero del reporte -->
+<div class="sub">
+  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-169.png " height="30px" width="auto">
+  <span style="color:#00A9AB; font-weight: bold;">Reporte N° {{numeroReporte}} </span>
+</div>
+<hr class="linea">
+<br>
+<!-- fin del reporte -->
+
+<!--Inicio del reporte-->
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+
+        <div class="d-flex flex-column">
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">1. Fecha del reporte:</label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{fechaReporte}}
+                class="tablaform w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">2. Sede educativa que tiene el excedente:</label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{sedeEducativa}}
+                class="tablaform5 w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">3. Grado escolar en el que se presenta el excedente: </label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{gradoEscolar}}
+                class="tablaform w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">4. Excedentes diarios asignados a ese grado:</label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{racionesDiarias}}
+                class="tablaform w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">5. Estudiantes matriculados en ese grado:</label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{EstudiantesMatriculados}}
+                class="tablaform w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">6. Excedente de complementos diarios en ese grado:</label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{excedentesRaciones}}
+                class="tablaform w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">7. Destino de los complementos excedentes:</label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{destinoComplemento}}
+                class="tablaform3 w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">8. Justificación de la decisión:</label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{justificacion}}
+                class="tablaform4 w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100">
+              <label class="mb-lg-down-0 align-self-center">9. Nueva cantidad de complementos diarios:</label>
+            </div>
+            <div class="tamanoInput w-down-100">
+              <input matInput id="pathDocumentoContrato" [readonly]=true value={{nuevaCantidad}}
+                class="tablaform w-down-lg-90 mt-lg-down-5-px" />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row BordeSeparador mt-2">
+            <div class="tamaño w-down-100 align-self-center">
+              <label class="mb-lg-down-0">10. Estado del reporte:</label>
+            </div>
+            <div class="tamanoInput w-down-lg-90 mt-lg-down-5-px">
+              <div class="grupo_input">
+                <mat-icon
+                  [ngStyle]="{'color': estadoReporte == null ? '#E2E6FE' : estadoReporte== 'Aprobado'?'green': estadoReporte=='Por aprobar'? 'yellow':estadoReporte=='En tramite'? 'yellow':'red'}">
+                  {{estadoReporte == null ? 'minimize' :'circle' }}</mat-icon>
+                <input matInput id="pathDocumentoContrato" [readonly]=true value={{estadoReporte}}
+                  class="tablaform w-down-lg-90" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<br>
+<br>
+<!--fin del reporte-->
+
+<!--Inicio de aprobaciones -->
+<div fxLayout="row wrap">
+  <div style="float: left;">
+    <div style="display: inline-block; background-color: #00A9AB; padding: 12px; color: #ffffff;">
+      Aprobaciones
+    </div>
+    <div class="FinalRedondo"></div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<div class="sub">
+  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-168.png " height="30px" width="auto">
+  <span style="color:#00A9AB; font-weight: bold;">Aprobaciones pendientes</span>
+</div>
+<hr class="linea2">
+<br>
+<div *ngIf="!yaCargoAprobaciones">
+  <div style="display: flex;">
+    <div style="padding-left:10px;">
+      <span class="textoinformativo">No hay aprobaciones pendientes </span>
+    </div>
+  </div>
+</div>
+
+<br>
+<div *ngIf="yaCargoAprobaciones">
+  <div [formGroup]="form" fxLayout="row wrap">
+
+    <div class="bordeado">
+      <div class="BordeadoSup">
+        <span>Decisión de aprobación</span>
+      </div>
+      <div class="d-flex flex-lg-row flex-column-reverse">
+        <div class="bordeDer border-down-md-none d-flex flex-column justify-content-center">
+          <div *ngFor="let item of AccionesAprobacionesList" style="text-align: center;">
+            <button id="accionAprobacion{{item.id}}" value="{{item.id}}"
+              [class]="idaccion === 0  ? 'buttonAprobar' : idaccion ===1 ? (idaccion === item.id  ? 'btverde':'buttonAprobar') :idaccion ===7 ? (idaccion === item.id   ? 'btrojo' :'buttonAprobar'):'buttonAprobar' "
+              (click)="joinRoom(item)">{{item.nombre}}</button>
+          </div>
+        </div>
+        <div class="w-100 mt-3 ml-xl-1 ml-0">
+          <div class="form-group m-0 px-lg-down-10-px">
+            <label class="TextosBlueLeft" for="formControlObservaciones">Observaciones / Justificaciones*</label>
+            <input id="observaciones" formControlName="observaciones" class="inputFull2 mx-sm-down-0 w-down-sm-100"
+              type="text" required />
+            <div
+              *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+              class="invalid-feedback">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div fxFlex="100">
+      <br>
+
+      <div fxLayout="row wrap ">
+
+        <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+          <div class="text-right ">
+            <button [ngClass]="{'linkdisable':!getModulePermission(93,'aprobar')}" [disabled]="!form.valid "
+              style="margin-left: 20px; height: 40px;" (click)="mensaje()">
+              <span>Enviar resultado</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="sub">
+
+  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-168.png " height="30px" width="auto">
+
+  <span style="color: #00A9AB; font-weight: bold;">Histórico de aprobaciones</span>
+</div>
+<hr class="linea2">
+<br>
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card class="m-down-0">
+      <mat-card-content>
+        <div class="table-responsive responsive-table-pae p-down-0">
+
+          <table mat-table [dataSource]="dataSourceAprobaciones" class="left-radius" matSort>
+            <ng-container matColumnDef="fecha">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; ">
+                <b> Fecha </b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Fecha">
+                {{element.fecha==null?'-': (element.fecha) }} </td>
+            </ng-container>
+            <ng-container matColumnDef="responsable">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; ">
+                <b>Responsable </b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Responsable">
+                {{element.responsable==null?'-': (element.responsable)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="rol">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "><b> Rol del
+                  responsable</b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Rol. responsable">
+                {{element.rol==null?'-': (element.rol)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="accion">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "><b> Acción </b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Acción">
+                {{element.accion==null?'-': (element.accion)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="observaciones">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; ">
+                <b>Observaciones / Justificaciones</b>
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="O. / Justificaciones">
+                {{element.observaciones==null?'-': (element.observaciones)}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsAprobaciones"></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsAprobaciones;"></tr>
+
+          </table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+          </mat-paginator>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<!--fin de aprobaciones -->

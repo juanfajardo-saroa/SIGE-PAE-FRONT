@@ -1,0 +1,89 @@
+/**
+ * <Derechos_Reservados>
+ * 
+ * Aplicacion		:SISPAE 
+ * 
+ * Autor			:TiGlobal SAS y SoftManagement
+ * 
+ * Generacion		:Este archivo es generado automaticamente mediante generador GeneraApp.
+ * 
+ * Ano			    :2022
+ * 
+ * Arquitectura	    :Modelo Base de Angular para Arquitectura Microservicios de la Entidad GradosSedesJornadas
+ * 
+ * Capa			    :SISPAE-Front 
+ * 
+ * </Derechos_Reservados>
+ */
+
+
+/**
+ * Definicion de Interface  con los atributos del objeto, desprovistas de inicialización y funcionalidad,
+ *
+ *  La interfaz es el contrato entre el mundo exterior y la clase
+ */
+ export interface GradosSedesJornadasInterface {
+
+  id: number;
+  iD_SedeJornada: number;
+  siD_SedeJornada: string;
+  iD_Grado: number;
+  sID_Grado: string;
+  matricula: number;
+  cantlndigVicDis: number;
+  cantSisbenAB: number;
+  cantDiscapacitados: number;
+  cantIndigenasDiscapacidad: number;
+  auditoria: string;
+
+  // atributos para gestión de auditoria del objeto
+  _ippublica: string;
+  _nombremaquina: string;
+  _usuario: string;
+  _ipdetrasproxy: string;
+  _browser: string;
+  _accion: string;
+  _sessionid: string;
+  _XMLAuditoria: string;
+  // atributos adicionales genericos para gestión del objeto
+  isValid: boolean;
+  isSelected: boolean;
+  completed: boolean;
+
+}
+
+//Modelo constructor que implementa interface
+export class GradosSedesJornadasModel implements GradosSedesJornadasInterface {
+  constructor(
+
+    public id: number,
+    public iD_SedeJornada: number,
+    public siD_SedeJornada: string,
+    public iD_Grado: number,
+    public sID_Grado: string,
+    public matricula: number,
+    public cantlndigVicDis: number,
+    public cantSisbenAB: number,
+    public cantDiscapacitados: number,
+    public cantIndigenasDiscapacidad: number,
+    public auditoria: string,
+
+    // atributos para gestión de auditoria del objeto
+    public _ippublica: string,
+    public _nombremaquina: string,
+    public _usuario: string,
+    public _ipdetrasproxy: string,
+    public _browser: string,
+    public _accion: string,
+    public _sessionid: string,
+    public _XMLAuditoria: string,
+    // atributos adicionales genericos para gestión del objeto
+    public isValid: boolean = true,
+    public isSelected: boolean = false,
+    public completed: boolean = false
+
+  ) { }
+}
+
+
+

@@ -1,0 +1,62 @@
+@import '/src/assets/styles/variable.scss'
+@import '../../../../../../../../assets/sass/theme/table-sigepae'
+
+.link-crp
+    background: #005ACA
+    border-radius: 9px
+    color: white
+    height: 20px
+    padding-top: 2px
+
+.tabla-fuente-financiacion
+  border: 1px solid $base-azulPAE
+  border-radius: 15px
+  .tabla-border-left
+    border-left: 1px solid $base-azulPAE
+  .header-section
+    background-color: $base-azulClaroPAE
+    flex-basis: 0
+    padding: 0 6px
+    label
+      font-weight: 600
+  .form-section
+    flex-grow: 2
+    .info
+      font-size: 13px
+      color: #005ACA
+      border: 1px solid #005ACA
+      border-radius: 8px
+      padding: 0px 8px
+      margin: 0
+      width: 100%
+  .buttons-section
+    padding: 0 12px
+  .label-width-section
+    width: 64px
+  .info-width-section
+    width: min-content
+  label.info,
+  input.text,
+  select.dropdow
+    font-family: "Montserrat", sans-serif
+    font-size: $base-fontsize
+    color: $base-color
+    border: 1px solid $base-color !important
+    border-radius: 8px !important
+    padding: 0px 8px !important
+    margin: 0px 0px !important
+    width: 100% !important
+
+@import "~bootstrap/scss/bootstrap-grid"
+
+@include media-breakpoint-down(lg)
+  .table
+    th, td
+      border-top: none !important
+
+  table:not(.table-row-expand):not(.table-default-red) tbody tr:last-child td
+    border-bottom-style: dashed !important
+
+  .border-none-table-td
+    border-left: none !important
+

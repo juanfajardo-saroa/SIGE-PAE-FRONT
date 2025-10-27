@@ -1,0 +1,52 @@
+.input-radio,
+.input-radio-inline{
+  margin: 0;
+  border: 1px solid $base-color;
+  border-radius: 3px;
+
+
+
+  label{
+    margin: 0;
+    font-size: 13px;
+    color: $base-color;
+  }
+
+  input{
+    width: 25px !important;
+    height: 15px !important;
+  }
+
+  input, label{
+    cursor: pointer;
+    margin: 0 !important;
+  }
+
+  > div{
+    padding: 2px;
+    align-items: center;
+  }
+}
+
+.input-radio{
+  div, input, label{
+    display: flex;
+  }
+
+  > div:not(:last-child){
+    border-bottom: 1px dashed $base-color;
+  }
+}
+
+.input-radio-inline{
+  display: inline-flex !important;
+
+  & > div{
+    display: flex;
+    padding-right: 9px;
+  }
+
+  & > div:not(:last-child){
+    border-right: 1px solid $base-color;
+  }
+}

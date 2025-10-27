@@ -1,0 +1,434 @@
+@import '/src/assets/styles/variable.scss';
+
+* {
+  font-size: $base-fontSize !important;
+}
+
+::ng-deep th.mat-header-cell div {
+  font-weight: 600;
+  display: block;
+  margin: auto;
+}
+
+mat-expansion-panel-header {
+  padding-left: 0;
+}
+
+mat-expansion-panel {
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-select-placeholder {
+  color: $base-azulPAE;
+}
+.priomol:hover{
+  color: #ffff !important;
+}
+::ng-deep table.TablasSinBorde tbody tr:last-child td {
+  border-bottom: 0px $base-borderStyle $base-azulPAE !important;
+}
+
+mat-card,
+mat-card-title,
+mat-card-content,
+mat-list-option,
+td,
+input {
+  color: #005ACA;
+  font-size: 13px !important;
+  box-shadow: none !important;
+}
+
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text {
+  color: #005ACA !important;
+  font-size: 13px !important;
+}
+
+mat-list-option:first-child {
+  border-radius: $base-borderRadius 0 0 $base-borderRadius;
+}
+
+mat-list-option:last-child {
+  border-radius: 0 $base-borderRadius $base-borderRadius 0;
+}
+
+.bordesRedondos {
+  border-radius: $base-borderRadius !important;
+  border: 1.5px $base-borderStyle $base-azulPAE;
+}
+
+.ButtonBlue {
+  border: 1px $base-azulPAE $base-borderStyle;
+  border-radius: $base-borderRadius;
+  background-color: $base-azulPAE;
+  color: $gov-white;
+
+  padding: 2px 10px;
+
+}
+
+.ButtonBlue2 {
+  border: 1px $base-azulPAE $base-borderStyle;
+  border-radius: $base-borderRadius $base-borderRadius 0px 0px;
+  background-color: $base-azulPAE;
+  color: $gov-white;
+  width: 255px;
+}
+
+.linkdisable {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  border-bottom: $base-azulPAE 1px dashed;
+}
+
+.mat-expansion-panel-header-title {
+  display: flex;
+  flex-grow: 0;
+  /* margin-right: 16px; */
+}
+
+
+.sinLinea {
+  border-bottom: $base-azulPAE 1px hidden !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content-reverse,
+.mat-list-base .mat-list-option .mat-list-item-content-reverse {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  border: 1px $base-borderStyle;
+}
+
+.ButtonRed {
+  border: 1px $gov-white $base-borderStyle;
+  border-radius: $base-borderRadius;
+  background-color: $base-azulPAE;
+  color: $gov-white;
+}
+
+.mat-select-value {
+  color: $base-azulPAE;
+}
+
+.LeftUpCorner {
+  border: 1px $base-azulPAE $base-borderStyle;
+  border-radius: $base-borderRadius 1px 1px 1px;
+}
+
+.RightUpCorner {
+  border: 1px $base-azulPAE $base-borderStyle;
+  border-radius: 1px $base-borderRadius 1px 1px;
+}
+
+.CenterButton {
+  margin: auto;
+  display: block;
+}
+
+.BordeBottom {
+  border-bottom: 1px dotted $base-azulPAE;
+}
+
+.card {
+  border: none;
+}
+
+mat-card {
+  box-shadow: none !important;
+}
+
+.table-responsive {
+  padding-left: 0px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-bottom: 0px !important;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  color: $base-azulPAE;
+  font-size: $base-fontSize !important;
+}
+
+mat-card-title,
+mat-card-content {
+  color: $base-azulPAE;
+  font-size: $base-fontSize !important;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: $base-borderRadius !important;
+// }
+
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+  border-top-left-radius: $base-borderRadius !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 24px;
+  border-right: 1px $base-borderStyle;
+}
+
+::ng-deep.mat-expansion-panel-body {
+  padding: 0% !important;
+}
+
+td.mat-cell {
+  padding: 16px 0 16px 0;
+  border-bottom: 1px dotted $base-azulPAE;
+  //border-style: dotted;
+}
+
+::ng-deep td .mat-cell .BordeNone :last-of-type {
+  padding: 16px 0 16px 0;
+  border-bottom: 0px dotted $base-azulPAE !important;
+  //border-style: dotted;
+}
+
+table thead {
+  background-color: $header_table !important;
+  color: $base-azulPAE;
+  border: 1px $base-borderStyle;
+}
+
+table thead th {
+  border-top: 1px $base-borderStyle $base-azulPAE;
+  border-right: 1px $base-borderStyle $base-azulPAE;
+  padding: 20px;
+}
+
+table thead th:first-child {
+  border-left: 1px $base-borderStyle $base-azulPAE;
+  border-top-left-radius: $base-borderRadius !important;
+}
+
+table td:first-child {
+  border-left: 1px $base-borderStyle $base-azulPAE;
+
+}
+
+table.left-radius thead th:first-child {
+  border-top-left-radius: $base-borderRadius !important;
+  border-left: 1px $base-borderStyle $base-azulPAE;
+
+}
+
+table.right-radius thead th:last-child {
+  border-top-right-radius: $base-borderRadius;
+  border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+table tbody {
+  color: $base-azulPAE;
+}
+
+table tbody td {
+  border-bottom: 1px dashed $base-azulPAE !important;
+}
+
+table tbody tr td:first-child {
+  border-top: 1px $base-borderStyle $base-azulPAE;
+  border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+table tbody tr td:last-child {
+  border-right: 1px $base-borderStyle $base-azulPAE;
+}
+
+table tbody tr:last-child td {
+  border-bottom: 1px $base-borderStyle $base-azulPAE;
+  border-bottom-style: $base-borderStyle !important;
+}
+
+td.mat-cell:first-of-type {
+  padding-left: 0px !important
+}
+
+.BordeRedondo {
+  border-radius: $base-borderRadius;
+  border: 1px $base-borderStyle $base-azulPAE;
+}
+
+.titletable {
+  text-align: center !important;
+  background-color: $base-azulClaroPAE !important;
+  color: $base-azulPAE !important;
+  width: 100%;
+  padding: 4px 15px !important;
+  margin-bottom: -1px !important;
+  border-radius: $base-borderRadius $base-borderRadius 0px 0px !important;
+  border: 0px $base-borderStyle $base-azulPAE;
+  border-bottom: 1.5px $base-borderStyle ;
+}
+
+// .mat-table::ng-deep {
+//   border: 1px $base-borderStyle $base-azulPAE;
+// }
+th.mat-header-cell {
+  text-align: center !important;
+  background-color: $base-azulClaroPAE !important;
+  //color: $gov-white!important;
+  width: fit-content;
+  padding: 4px 75px !important;
+  margin-bottom: -1px !important;
+  padding: 20px !important;
+  border-bottom: 1px solid $base-azulPAE;
+}
+
+.mat-row:hover .mat-cell {
+  background-color: $base-azulPAE;
+  color: $gov-white;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+
+.mat-column-nombre {
+  flex: none;
+  width: 1000px;
+}
+
+.fixed-button {
+  position: fixed;
+  bottom: 10px;
+  right: 25px;
+  z-index: 1000;
+}
+
+::ng-deep .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
+  display: none !important;
+}
+
+mat-form-field {
+  border-radius: 10px;
+  border: 1px $base-borderStyle $base-azulPAE;
+}
+
+mat-panel-title:hover {
+  cursor: pointer;
+}
+
+.blue-title {
+  color: $base-azulPAE;
+}
+
+mat-selection-list {
+  padding: 0;
+
+  .mat-list-option {
+    display: inline-block;
+    height: auto;
+    width: auto;
+    color: $base-azulPAE;
+  }
+}
+
+mat-list-option[aria-selected="true"] {
+
+  color: $gov-white !important;
+  background-color: $base-azulPAE !important;
+}
+
+mat-card-subtitle {
+  font-size: 15px !important;
+  color: $base-MiPAE !important;
+
+}
+
+.centerText {
+  align-items: center;
+  color: $base-azulPAE;
+}
+
+.tablaforms {
+  width: 100%;
+  border-color: $base-azulPAE;
+  color: $base-azulPAE;
+  border: 1px $base-borderStyle;
+  font-size: $base-fontSize;
+}
+
+.tablaform {
+  width: 100%;
+  border-color: $base-azulPAE;
+  color: $base-azulPAE;
+  border: 1px $base-borderStyle;
+  border-radius: $base-borderRadius !important;
+
+  font-size: $base-fontSize;
+}
+
+.linea {
+  background-color: $base-azulPAE !important;
+  margin-left: 2rem;
+  margin-right: 1rem;
+  margin-top: -2rem;
+}
+
+.TamañoSelect {
+  width: 47%;
+  color: $base-azulPAE;
+}
+
+.TamañoSelect2 {
+  width: 60%;
+  color: $base-azulPAE;
+}
+
+.TamañoSelect3 {
+  width: 28%;
+  color: $base-azulPAE;
+}
+
+.TableCP {
+  background-color: $base-azulPAE;
+  border-color: $base-azulPAE;
+  color: $gov-white;
+  width: 100%;
+  border: 1px $base-borderStyle;
+  font-size: $base-fontSize;
+}
+
+.BordeRedondoAgregar {
+  border-radius: 20px;
+  border: $base-azulPAE $base-borderStyle 1px;
+  background-color: $base-azulPAE;
+  color: $gov-white;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  padding: 2px 10px;
+}
+
+.ItemSelect {
+  background-color: $base-azulClaroPAE;
+}
+
+.BordeBottom-dashed {
+  border-bottom: #005ACA 1px dashed;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  .BordeBottom-down-dashed {
+    border-bottom: #005ACA 1px dashed;
+  }
+}

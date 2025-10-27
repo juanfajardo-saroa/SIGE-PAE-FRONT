@@ -1,0 +1,95 @@
+@import '/src/assets/styles/variable.scss';
+$base-color: $base-azulPAE;
+$header_table: aliceblue;
+$base-colorred: #f54a62;
+@import 'theme/table';
+@import 'theme/button';
+@import 'theme/card';
+@import 'theme/modal';
+@import 'theme/panel';
+@import 'theme/form';
+@import 'theme/tab';
+@import 'contratacion/asignacionrecursos';
+* {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.banner-body {
+    padding: 0 20px 20px 20px;
+    margin-bottom: 50px;
+}
+
+.banner-body hr {
+    border-color: $base-color !important;
+    margin: 0;
+}
+
+.strongheader {
+    font-size: 1em;
+}
+
+.container-fluid a span {
+    font-size: 12px;
+}
+
+.container-fluid a {
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+}
+
+.sidebar {
+    position: inherit;
+    left: 0;
+    right: 0;
+}
+
+.ms-sm-auto {
+    margin-left: auto!important;
+}
+
+.min-vh-pae {
+    min-height: calc(100vh - 211px);
+}
+
+.pae-modal {
+    max-width: 77%;
+    margin-left: 20%;
+}
+
+.banner-breadcrumbs {
+    .banner-text {
+        margin: 0;
+        color: $base-azulPAE;
+        font-size: 18px;
+        strong {
+            color: $base-azulPAE;
+        }
+    }
+    .anio-text {
+        margin: 0;
+        color: $base-azulPAE;
+        font-size: 18px;
+        strong {
+            color: $base-azulPAE;
+            font-size: 18px;
+        }
+    }
+    .last-update-text {
+        color: $base-azulPAE;
+        font-size: 11px;
+        span {
+            font-size: 11px;
+            color: $base-azulPAE;
+            font-weight: bold;
+        }
+    }
+}
+
+.minutatype:last-child {
+    border-radius: 0px 10px 0px 0px;
+}
+
+.minutatype:first-child {
+    border-radius: 0px 0px 0px 10px;
+}

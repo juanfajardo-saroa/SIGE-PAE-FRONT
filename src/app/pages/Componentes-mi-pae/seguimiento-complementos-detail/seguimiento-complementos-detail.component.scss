@@ -1,0 +1,1332 @@
+@import '/src/assets/styles/variable.scss';
+
+b {
+    font-weight: 500 !important;
+    justify-content: center !important;
+}
+
+mat-expansion-panel {
+    margin: 15px -10px 15px -10px;
+    // border: 1px solid $base-azulPAE;
+}
+
+mat-expansion-panel-header {
+    padding: 0px 0px 0px 0px !important;
+}
+
+.iconExpansionMore {
+    color: $base-azulPAE ;
+    padding-left: 96%;
+    margin-bottom: 10px !important;
+}
+
+.iconExpansionLess {
+    color: #ffffff;
+    padding-left: 96%;
+}
+
+.panelExpansion {
+    width: 100%;
+    font-size: 15px;
+}
+
+.panelExpansionMore {
+    background-color: #ffffff;
+    color: $base-azulPAE;
+    padding-left: 10px;
+}
+
+.panelExpansionLess {
+    background-color: $base-azulPAE;
+    color: #ffffff;
+    padding-left: 10px;
+    border: 1px solid $base-azulPAE;
+}
+
+.lineaB {
+    border: 0.1px solid $base-azulPAE;
+    margin-top: -15px !important;
+    height: 0%;
+}
+
+.tab-control-secondary .tab-item.active div {
+    background-color: #ffffff;
+    border: 1px solid $base-azulPAE;
+    border-bottom: none;
+}
+
+.tab-control-secondary .tab-item div {
+    width: 100%;
+    text-align: center;
+    padding: 8px 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+::ng-deep.BordeRedondoCalendar {
+    border-radius: $base-borderRadius $base-borderRadius 1px;
+    border: $base-azulPAE $base-borderStyle 1px;
+    padding: 0px;
+    max-width: 450px;
+    color: $base-azulPAE;
+    background-color: $gov-lightBlue;
+    text-align: center;
+}
+
+.calendarSize {
+    max-width: 243px !important;
+    padding-left: 27px;
+}
+
+::ng-deep .cal-month-view .cal-header .cal-cell:nth-child(1):before {
+    content: "D";
+    position: absolute;
+    background-color: $base-azulPAE;
+    padding: 0 14px 0 10px;
+    font-family: "Montserrat", sans-serif;
+    color: $gov-white;
+    font-size: 12px;
+    text-align: center;
+    min-width: 0px;
+    max-width: 0px;
+    font-weight: 600;
+}
+
+::ng-deep .cal-month-view .cal-header .cal-cell:nth-child(2):before {
+    content: "L";
+    position: absolute;
+    background-color: $base-azulPAE;
+    padding: 0 14px 0 10px;
+    font-family: "Montserrat", sans-serif;
+    color: $gov-white;
+    font-size: 12px;
+    text-align: center;
+    min-width: 0px;
+    max-width: 0px;
+    font-weight: 600;
+}
+
+::ng-deep .cal-month-view .cal-header .cal-cell:nth-child(3):before {
+    content: "M";
+    position: absolute;
+    background-color: $base-azulPAE;
+    padding: 0 14px 0 10px;
+    font-family: "Montserrat", sans-serif;
+    color: $gov-white;
+    font-size: 12px;
+    text-align: center;
+    min-width: 0px;
+    max-width: 0px;
+    font-weight: 600;
+}
+
+::ng-deep .cal-month-view .cal-header .cal-cell:nth-child(4):before {
+    content: "M";
+    position: absolute;
+    background-color: $base-azulPAE;
+    padding: 0 14px 0 10px;
+    font-family: "Montserrat", sans-serif;
+    color: $gov-white;
+    font-size: 12px;
+    text-align: center;
+    min-width: 0px;
+    max-width: 0px;
+    font-weight: 600;
+}
+
+::ng-deep .cal-month-view .cal-header .cal-cell:nth-child(5):before {
+    content: "J";
+    position: absolute;
+    background-color: $base-azulPAE;
+    padding: 0 14px 0 10px;
+    font-family: "Montserrat", sans-serif;
+    color: $gov-white;
+    font-size: 12px;
+    text-align: center;
+    min-width: 0px;
+    max-width: 0px;
+    font-weight: 600;
+}
+
+::ng-deep .cal-month-view .cal-header .cal-cell:nth-child(6):before {
+    content: "V";
+    position: absolute;
+    background-color: $base-azulPAE;
+    padding: 0 14px 0 10px;
+    font-family: "Montserrat", sans-serif;
+    color: $gov-white;
+    font-size: 12px;
+    text-align: center;
+    min-width: 0px;
+    max-width: 0px;
+    font-weight: 600;
+}
+
+::ng-deep .cal-month-view .cal-header .cal-cell:nth-child(7):before {
+    content: "S";
+    position: absolute;
+    background-color: $base-azulPAE;
+    padding: 0 14px 0 10px;
+    font-family: "Montserrat", sans-serif;
+    color: $gov-white;
+    font-size: 12px;
+    text-align: center;
+    min-width: 0px;
+    max-width: 0px;
+    font-weight: 600;
+}
+
+::ng-deep.cal-month-view .cal-header .cal-cell:hover {
+    background-color: $base-azulPAE;
+}
+
+/* ::ng-deep.cal-month-view .cal-cell-row .cal-cell:hover, .cal-month-view .cal-cell.cal-has-events.cal-open {
+    background-color: $base-azulPAE!important;
+} */
+
+span.mat-button-toggle-label-content {
+    color: $base-azulPAE;
+}
+
+::ng-deep.mat-select-placeholder {
+    color: $base-azulPAE !important;
+}
+
+::ng-deep.swal2-close {
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0;
+    margin-right: 0;
+    position: absolute !important;
+    margin-bottom: -1.2em;
+    padding: 0;
+    overflow: hidden;
+    transition: none !important;
+    border: none;
+    border-radius: 5px;
+    background: 0 0;
+    color: $gov-white !important;
+    font-family: serif;
+    font-family: monospace;
+    font-size: 1.5em !important;
+    cursor: pointer;
+    justify-self: end;
+    transition: box-shadow none !important;
+    box-shadow: none !important;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+    font-size: 20px;
+    border-radius: $base-borderRadius;
+    padding: 2% 0%;
+    color: $base-azulPAE !important;
+    width: 50% !important;
+    background-position: top !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+.Acomodar {
+    display: flex;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: $gov-white;
+    cursor: inherit;
+    display: block;
+}
+
+.buttonAr3 {
+    border-radius: 50px;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 320px;
+    padding: 2px 1px;
+}
+
+.imgroter {
+    transform: rotate(180deg);
+}
+
+/* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label {
+    border-radius: $base-borderRadius $base-borderRadius 0px 0px !important;
+    color: $base-azulPAE !important;
+    font-size: 15px;
+    background-color: $base-azulClaroPAE !important;
+    width: 30%;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+    font-size: 15px;
+    border-width: 2px;
+    border-color: $base-azulPAE;
+    border-bottom-color: $gov-white;
+    border-style: $base-borderStyle $base-borderStyle hidden $base-borderStyle;
+    border-radius: 20px 20px 0px 0px !important;
+    color: $base-MiPAE !important;
+    background-color: $gov-white !important;
+    //width: 25%;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none !important;
+    display: none !important;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none !important;
+    display: none !important;
+    /* background-color: #1e88e5; */
+}
+
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar,
+.blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none !important;
+    display: none !important;
+    /* background-color: #1e88e5; */
+
+}
+
+/* --------------------------- FIN TABS */
+
+.TituloResults {
+    color: $base-azulPAE;
+    font-weight: bold;
+}
+
+mat-card {
+    box-shadow: none !important;
+    margin: 0;
+}
+
+mat-label {
+    color: $base-azulPAE;
+}
+
+mat-form-field {
+    border-radius: $base-borderRadius !important;
+    border: $base-azulPAE $base-borderStyle 1px;
+    background-color: $gov-white !important;
+    padding: 0%;
+}
+
+.centerIcon {
+    padding-left: 1rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    inline-size: min-content;
+}
+
+.FinalRedondo {
+    background-color: $base-MiPAE;
+    height: 44px;
+    width: 44px;
+    border-radius: 0% 50% 50% 0;
+    margin-left: -26px;
+    float: right;
+}
+
+.BordePendiente {
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 1px 50px 50px 1px;
+    border: 1px $base-borderStyle $base-azulPAE;
+    border-left: 0px !important;
+    color: $base-azulPAE;
+    padding: 10px;
+    margin-left: -10px;
+}
+
+.TituloPendientes {
+    display: inline-block;
+    background-color: $base-MiPAE;
+    padding: 10px 0px 13px 0px;
+    color: $gov-white;
+}
+
+.BordePendienteInvisible {
+    background-color: rgba(255, 255, 255, 0);
+    height: 44px;
+    width: 44px;
+    border-radius: 0% 50% 50% 0;
+    margin-left: -26px;
+    float: right;
+}
+
+.NumeroPendiente {
+    height: 24px;
+    width: 24px;
+    background-color: $gov-white;
+    border-radius: 50%;
+    text-align: center;
+    color: $base-MiPAE;
+    font-weight: 500;
+    padding-top: 3px;
+}
+
+.LeftUpCorner2 {
+    border-top-right-radius: $base-borderRadius;
+
+}
+
+.tablaform2 {
+    color: $base-azulPAE;
+    text-align: left;
+    font-size: 17px;
+    width: 0%;
+}
+
+.TituloRacionesVerde {
+    float: left;
+    background-color: $base-MiPAE;
+    padding: 9px;
+    border-radius: $base-borderRadius;
+    border: 1px $base-borderStyle $base-azulPAE;
+    height: 24px;
+    width: 24px;
+    background-color: $gov-white;
+    text-align: center;
+    color: $base-MiPAE;
+    font-weight: 500;
+    padding-top: 3px;
+}
+
+.TextButton {
+    font-size: 18px;
+    color: $base-azulPAE;
+}
+
+.BotonBlue {
+    background-color: $base-azulPAE;
+    color: $gov-white;
+    border-radius: 50px;
+    border: 1px $base-borderStyle $base-azulPAE;
+    padding: 1%;
+}
+
+.BorderDatos {
+    border-radius: 10px;
+    border: 1px $base-azulPAE $base-borderStyle;
+    padding: 10% 1px;
+    background-color: $gov-lightBlue;
+    text-align: center;
+    color: $base-azulPAE;
+}
+
+.BordeBlueColumnas {
+    color: $base-azulPAE;
+    border-right: 2px dashed $base-azulPAE;
+}
+
+.EspacioColumnas {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.EspacioDatos {
+    padding: 2% 0%;
+}
+
+.MarginSepara {
+    margin: 0px 10px;
+    margin-left: 1px $base-azulPAE $base-borderStyle;
+}
+
+.CenterAll {
+    margin: auto;
+    display: block;
+    text-align: center;
+}
+
+.BordeRedondo {
+    border-radius: $base-borderRadius;
+    border: $base-azulPAE $base-borderStyle 1px;
+    padding: 20px 0px;
+}
+
+.BordeRedondoLeft {
+    border: 1px $base-borderStyle $base-azulPAE;
+    border-radius: $base-borderRadius !important;
+    padding: 0px !important;
+    width: 100%;
+}
+
+.BordeRedondoRight {
+    border-radius: 0px $base-borderRadius $base-borderRadius 1px;
+    border: $base-azulPAE $base-borderStyle 1px;
+    padding: 18px 0px;
+}
+
+::ng-deep.BordeRedondoCalendar {
+    border-radius: $base-borderRadius $base-borderRadius 1px 1px;
+    border: $base-azulPAE $base-borderStyle 1px;
+    padding: 0px;
+    max-width: 450px;
+    color: $base-azulPAE;
+    background-color: $gov-lightBlue;
+}
+
+.SizeFilter {
+    width: 300px;
+    margin-left: 1%;
+    padding: 20px 10px;
+}
+
+.LeftTextBlue {
+    text-align: left !important;
+    color: $base-azulPAE;
+}
+
+.SizeFilter2 {
+    width: 520px;
+    margin-left: 1%;
+    padding: 20px 10px;
+}
+
+/*
+cal-cell-top  ---------Todo
+cal-weekend -----------FDS
+cal-past --------------Dias pasados
+cal-cell-row ----------Todas las filas
+cal-header ------------Header Dias de la semana
+*/
+
+::ng-deep.cal-month-view .cal-cell:last-child {
+    border-right: 0;
+}
+
+::ng-deep.cal-month-view .cal-cell:first-child {
+    border-left: 0;
+}
+
+::ng-deep.cal-day-number {
+    color: $base-azulPAE;
+}
+
+::ng-deep.mwl-calendar-month-cell {
+    max-height: 1px !important;
+    width: 40px !important;
+}
+
+::ng-deep.cal-month-view .cal-days .cal-cell-row {
+    /* border-bottom-color: #e1e1e1; */
+    height: 25px !important;
+    width: 30px !important;
+}
+
+::ng-deep.cal-month-view .cal-day-cell {
+    max-height: 25px !important;
+    min-height: 25px !important;
+    min-width: 30px !important;
+    max-width: 30px !important;
+}
+
+::ng-deep.cal-header {
+    color: $base-azulPAE !important;
+    background-color: $base-azulPAE !important;
+}
+
+::ng-deep.cal-header:hover {
+    color: $base-azulPAE !important;
+    background-color: $base-azulPAE !important;
+}
+
+::ng-deep.cal-cell {
+    border: 1px $base-borderStyle $base-azulPAE;
+    border-style: $base-borderStyle $base-borderStyle hidden $base-borderStyle;
+}
+
+::ng-deep.cal-month-view .cal-day-badge {
+    background-color: #1eff0000;
+    /*background-image: url(https://storagesispae.blob.core.windows.net/bsrepositorioarchivos/Iconos_PAE-13.png);
+    background-image: src("../.././../../assets/iconos_PAE/PNG/Iconos_PAE-13.png"); */
+    background-image: url(../../../../assets/iconos_PAE/PNG/Iconos_PAE-13.png);
+    opacity: 0.6;
+    color: rgba(255, 255, 255, 0);
+    /* min-height: 20px !important;
+    min-width: 30px !important; */
+    max-height: 13px !important;
+    max-width: 10px !important;
+    object-fit: cover !important;
+    margin: 3px 1px 10px 1px;
+    display: block;
+    position: absolute;
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    background-size: cover;
+    border-radius: 0;
+}
+
+::ng-deep.cal-month-view .cal-day-number {
+    font-size: $base-fontSize !important;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-top: 0px;
+    margin-right: 0;
+    float: right;
+    margin-bottom: 0;
+}
+
+::ng-deep.cal-month-view .cal-event {
+    display: none;
+}
+
+::ng-deep.cal-month-view .cal-day-cell {
+    min-height: 40px;
+    min-width: 40px;
+}
+
+::ng-deep.cal-month-view .cal-days .cal-cell-row {
+    border-bottom-color: #e1e1e1;
+    height: 40px;
+    width: auto;
+    /* font-size: 5px; */
+}
+
+::ng-deep.cal-day-number {
+    font-size: 20px !important;
+    color: $base-azulPAE !important;
+}
+
+::ng-deep.cal-month-view .cal-cell-top {
+    min-height: 0px;
+    flex: 1;
+}
+
+::ng-deep.cal-month-view .cal-cell-top:hover {
+    min-height: 0px;
+    flex: 1;
+    background-color: $base-azulClaroPAE !important;
+}
+
+.TextBlue {
+    text-align: left;
+    color: $base-azulPAE !important;
+}
+
+.TextoAzul {
+    color: $base-azulPAE;
+}
+
+.BordeIconoFiltro {
+    border: 0px 0px 0px 1px $base-borderStyle $base-azulPAE;
+    width: 5%;
+}
+
+.mat-toolbar.mat-primary {
+    background: $base-azulClaroPAE;
+    color: $base-azulPAE;
+}
+
+.smallLetter {
+    font-size: 10px;
+    margin: 0px;
+    letter-spacing: 0px;
+}
+
+.LeftUpCorner {
+    border-top-left-radius: $base-borderRadius;
+}
+
+.RightUpCorner {
+    border-top-right-radius: $base-borderRadius;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-azulPAE;
+    font-size: $base-fontSize;
+}
+
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+    border-top-left-radius: $base-borderRadius !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 24px;
+    border-right: 1px $base-borderStyle;
+}
+
+td.mat-cell {
+    padding: auto;
+    border-bottom: 1px dotted $base-azulPAE;
+    //border-style: dotted;
+}
+
+.espaciobutton {
+    margin-left: 5px !important;
+}
+
+/* ---------------------------------TABLE------------------------------------------------ */
+
+/* .itemPorcentaje{
+    margin-right: auto;
+    display: block;
+} */
+
+.LeftUpCorner {
+    border-top-left-radius: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-azulPAE;
+    font-size: $base-fontSize;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 24px;
+    border-right: 1px $base-borderStyle;
+}
+
+table thead {
+    background-color: $header_table !important;
+    color: $base-azulPAE;
+    border: 1px $base-borderStyle;
+}
+
+table thead th {
+    border-top: 1px $base-borderStyle $base-azulPAE;
+    border-right: 1px $base-borderStyle $base-azulPAE;
+    padding: 20px;
+}
+
+table thead th:first-child {
+    border-left: 1px $base-borderStyle $base-azulPAE;
+    border-top-left-radius: 20px !important;
+}
+
+.left-radius {
+    border-collapse: separate;
+    border-spacing: 10;
+    border-radius: $base-borderRadius;
+    -moz-border-radius: $base-borderRadius;
+    padding: 2px;
+    -webkit-border-radius: 5px;
+}
+
+table.left-radius thead th:first-child {
+    border-top-left-radius: $base-borderRadius !important;
+    border-left: 10px $base-borderStyle $base-azulPAE;
+}
+
+table.right-radius thead th:last-child {
+    border-top-right-radius: $base-borderRadius;
+    border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+.textagregar {
+    color: $base-azulPAE;
+}
+
+.mat-table:not(.nohover) .mat-row:hover .mat-cell {
+    background-color: $base-azulPAE;
+    color: #ffff !important;
+}
+
+table tbody {
+    color: $base-azulPAE;
+}
+
+table tbody td {
+    border-bottom: 1px dashed $base-azulPAE !important;
+}
+
+table tbody tr td:first-child {
+    border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+table tbody tr td:last-child {
+    border-right: 1px $base-borderStyle $base-azulPAE;
+}
+
+table tbody tr:last-child td {
+    border-bottom: 1px $base-borderStyle $base-azulPAE;
+    border-bottom-style: $base-borderStyle !important;
+}
+
+td.mat-cell:first-of-type {
+    padding-left: 0px !important;
+}
+
+.titletable {
+    float: right;
+    background-color: $base-azulPAE !important;
+    color: $gov-white !important;
+    width: fit-content;
+    // padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border-radius: $base-borderRadius $base-borderRadius 0px 0px !important;
+}
+
+.buttonAr {
+    color: $base-azulPAE;
+    border-color: $base-azulPAE;
+    padding: 14px 18px;
+    font-size: $base-fontSize;
+    cursor: pointer;
+    border-radius: $base-borderRadius !important;
+}
+
+.espaciobutton {
+    margin-left: 5px !important;
+}
+
+// .mat-table::ng-deep {
+//   border: 1px $base-borderStyle $base-azulPAE;
+// }
+
+th.mat-header-cell {
+    text-align: center !important;
+    background-color: $base-azulClaroPAE !important;
+    //color: $gov-white!important;
+    width: fit-content;
+    // padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border: 1px $base-borderStyle $base-azulPAE;
+}
+
+.btn-agregar:hover {
+    cursor: pointer;
+}
+.btrojo {
+    background-color: red;
+    color: #fff;
+    border: red;
+    padding: auto;
+    margin-bottom: 10px;
+  }
+  
+  .btverde {
+    background-color: green;
+    color: #fff;
+    border: green;
+    margin-bottom: 10px;
+  }
+
+//filtros de grado y reporte
+.ubicaciontabla {
+    float: left;
+    margin-right: 20px;
+    width: 55%;
+    padding: 20px 10px;
+}
+
+.ubicaciontabla2 {
+    float: left;
+    margin-right: 20px;
+    width: 70%;
+    //margin-left: 1%;
+    //padding: 20px 10px;
+    padding: 5px 10px;
+}
+
+.tablaform3 {
+    width: 100%;
+    border-color: $base-azulPAE;
+    color: $base-azulPAE;
+    border: 1px $base-borderStyle;
+    border-radius: $base-borderRadius !important;
+    font-size: $base-fontSize;
+    border-left: hidden !important;
+}
+
+.bordeizq2 {
+    border-left: 1px $base-borderStyle $base-azulPAE !important;
+    border-radius: $base-borderRadius !important;
+}
+
+.tablaform {
+    width: 100%;
+    border-color: $base-azulPAE;
+    color: $base-azulPAE;
+    border: 1px $base-borderStyle;
+    border-radius: $base-borderRadius !important;
+    font-size: $base-fontSize;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.mat-select-value {
+    color: $base-azulPAE;
+}
+
+.imgFilter {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+}
+
+.textF {
+    text-align: center;
+    font-weight: 500;
+    color: $base-azulPAE;
+    cursor: pointer;
+}
+
+.BordeRedondoAgregar {
+    border-radius: 20px;
+    border: $base-azulPAE $base-borderStyle 1px;
+    background-color: $base-azulPAE;
+    color: $gov-white;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    padding: 2px 10px;
+}
+
+.tablaform4 {
+    border-radius: 5px !important;
+    border: $base-azulPAE $base-borderStyle 1px;
+    background-color: $gov-white !important;
+    // padding: 1% !important;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: $base-azulPAE;
+    text-align: left;
+}
+
+/* aprobaciones  */
+
+.sub {
+    font-size: $base-fontSize;
+    color: $base-MiPAE
+}
+
+.linea {
+    background-color: $base-MiPAE !important;
+    margin-top: -5px;
+}
+
+.CenterButton {
+    margin-top: 50px;
+    margin-left: 50px;
+    display: block;
+}
+
+.CenterButtonQ {
+    margin-left: 18px;
+}
+
+.CenterButton2 {
+    margin-top: 3px;
+    margin-left: 10px;
+    display: block;
+    float: left;
+}
+
+.bordeado {
+    border-radius: $base-borderRadius;
+    border: 1px $base-borderStyle $base-azulPAE;
+}
+
+.BordeadoSup {
+    border: 1px $base-borderStyle $gov-lightBlue;
+    border-left: 1px $base-borderStyle $gov-lightBlue !important;
+    border-bottom: 1px $base-borderStyle $base-azulPAE;
+    border-radius: $base-borderRadius $base-borderRadius 1px 1px;
+    background-color: $gov-lightBlue;
+    color: $base-azulPAE;
+    padding: 2%;
+}
+
+.BordeadoInf {
+    border: 1px $base-borderStyle $gov-white;
+    border-radius: 1px 1px $base-borderRadius $base-borderRadius;
+    //background-color: $gov-white;
+    color: $base-azulPAE;
+    padding: 0%;
+}
+
+.BordeNone {
+    border-right: $base-azulPAE 1px $base-borderStyle;
+    border-style: hidden $base-borderStyle hidden hidden !important;
+}
+
+.inputFull {
+    width: 100%;
+}
+
+.buttontog {
+    border-color: $base-azulPAE;
+    border-radius: 10px 10px 10px 10px !important;
+    font-size: $base-fontSize;
+    text-align: center;
+}
+
+:host ::ng-deep .mat-button-toggle-checked {
+    color: $gov-white !important;
+    background-color: $base-azulPAE !important;
+    padding: 1px !important;
+}
+
+button:disabled {
+    background-color: $gov-black;
+    color: $gov-white;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: $base-azulPAE 1px $base-borderStyle;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button {
+    background-color: $base-azulPAE;
+    color: $gov-white;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: $base-azulPAE 1px $base-borderStyle;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+    font-size: 20px;
+    border-radius: 20px;
+    background-image: url(../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+    background-size: cover;
+    padding: 2% 0% !important;
+    width: 50% !important;
+    background-position: center;
+    color: $base-azulPAE !important;
+}
+
+.swal2-html-container {
+    text-align: center !important;
+}
+
+.swal-button--cancel:active {
+    border-radius: 20px !important;
+}
+
+.LeftUpCorner2 {
+    border-top-right-radius: 20px;
+}
+
+.textoinformativo {
+    color: $base-azulPAE !important;
+    font-size: $base-fontSize;
+}
+
+.linkdisable {
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.bordetd {
+    padding: 0 5px;
+    display: block;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.bordeAtras {
+    text-align: center !important;
+    border: 1px $base-borderStyle $base-azulPAE;
+    border-radius: 13px;
+    padding: 5px;
+}
+
+.lineaR {
+    background-color: $base-azulPAE !important;
+    margin-top: 0.5rem;
+}
+
+//titulo actualizado
+
+.LineaAzul {
+    border-top: $base-azulPAE $base-borderStyle 1px;
+}
+
+.row {
+    margin: 0 -30px;
+}
+
+.formcontrol {
+    width: 50%;
+    text-align: center;
+    height: 28px;
+    border-radius: 12px;
+    border: 1px solid;
+}
+
+.tablaform5:hover {
+    color: #e1e1e1;
+}
+
+.tablaform5 {
+    width: 70%;
+    border-radius: 12px;
+    border: 1px solid;
+}
+
+.formcontrol2 {
+    width: 90%;
+    text-align: center;
+    height: 28px;
+    /* transform: translateX(50%); */
+    border-radius: 12px;
+    border: 1px solid;
+}
+
+.formcontrol3 {
+    width: 90%;
+    text-align: center;
+    height: 30px;
+    /* transform: translateX(50%); */
+    border-radius: 12px;
+    border: 1px solid;
+    background-color: #ffff;
+    color: $base-azulPAE;
+    text-decoration: underline;
+}
+
+.formcontrol5 {
+    width: 90%;
+    text-align: center;
+    height: 30px;
+    border-radius: 12px;
+    border: 1px solid;
+    background-color: $base-azulPAE;
+    color: #ffffff;
+}
+
+.formcontrol4 {
+    width: 90%;
+    text-align: center;
+    height: 30px;
+    /* transform: translateX(50%); */
+    background-color: #ffff;
+    color: $base-azulPAE;
+    border-radius: 12px;
+    border: 0px solid;
+    text-decoration: underline;
+}
+
+.buttonAprobar {
+    background-color: #E6EFFD;
+    border: #E6EFFD;
+    color: $base-color;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 80%;
+}
+
+.buttonAprobar:active {
+    background-color: $base-color;
+    border: $base-color;
+    color: #fff;
+}
+
+.inputFull2 {
+    width: 97%;
+    /* margin: 10px; */
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    font-size: $base-fontSize;
+    height: 50px;
+    border: 1px solid $base-color;
+    border-radius: 12px;
+    text-align: center;
+    color: $base-color;
+}
+
+.TextosBlueLeft {
+    margin: 10px;
+    color: $base-azulPAE;
+}
+
+.grupo_input mat-select {
+    outline: none;
+    padding-left: 30px;
+}
+
+.grupo_input mat-icon {
+    position: absolute;
+    margin-left: 8px;
+    margin-top: 1px;
+}
+
+::ng-deep.cal-month-view .cal-open-day-events {
+    padding: 0px !important;
+}
+
+.icon-display {
+    transform: scale(0.5);
+}
+
+.LeftUpCorner {
+    border: 1px $base-color solid;
+    border-radius: 20px 1px 1px 1px;
+}
+
+.RightUpCorner {
+    padding-right: 0px;
+    border: 1px $base-color solid;
+    border-radius: 1px 20px 1px 1px;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    padding: 20px;
+    color: $base-color;
+    font-size: 12px;
+    text-align: center;
+}
+
+.alignCenter {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.underLine {
+    text-decoration: underline;
+}
+
+.underLine:hover {
+    cursor: pointer;
+}
+
+/* .sizeCols{
+    padding-left: 20px;
+    padding-right: 20px;
+} */
+
+//aprobaciones
+
+#accionAprobacion7:hover {
+    background-color: red;
+    color: #fff;
+    border: red;
+}
+
+#accionAprobacion1:hover {
+    background-color: green;
+    color: #fff;
+    border: green;
+}
+
+//globo de aprobaciones
+
+.mat-badge-content {
+    background: #FF0000;
+    color: #fff;
+    border: 1px #fff solid
+}
+
+.gap-5-px {
+    gap: 5px;
+}
+
+.gap-col-10-px {
+    column-gap: 10px;
+}
+
+.gap-row-2 {
+    row-gap: 2rem;
+}
+
+.borderLeftSep {
+    border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+.inputText {
+    color: $base-azulPAE;
+    font-size: $base-fontSize;
+}
+
+.borderRight {
+    border-right: 1px solid $base-azulPAE;
+}
+
+.borderRightSection {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.redColor {
+    background-color: red;
+}
+
+.greenColor {
+    background-color: green;
+}
+
+.grayColor {
+    background-color: #E2ECFD;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  .mat-table:not(.nohover) .mat-row:hover {
+    background-color: $base-azulPAE !important;
+    color: #ffff !important;
+    .mat-cell {
+      background-color: unset !important;
+      color: unset !important;
+      border-bottom: 1px dashed #ffffff !important;
+    }
+  }
+
+  td.mat-cell:first-of-type {
+    padding-left: 20px !important;
+  }
+}

@@ -1,0 +1,210 @@
+
+<style>
+    .tableFiltroUsuario{
+      border-spacing: 0;
+      color: #005ACA;
+    }
+  
+    .tableFiltroUsuario td{
+      text-align: center;
+      font-size: 13px !important;
+      color: #005ACA !important;
+      padding: 2.5px 10px;
+      border-top: 1px solid #005ACA;
+      border-right: 1px solid #005ACA;
+      border-bottom: 1px solid #005ACA;
+    }
+    .tableFiltroUsuario td b{
+      color: #005ACA;
+      font-size: 13px !important;
+    }
+    .tableFiltroUsuario td div{
+      color: #005ACA;
+      font-weight: 500;
+      font-size: 13px !important;
+    }
+  
+    .tableFiltroUsuario td:first-child{
+      border-left: 1px solid #005ACA;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  
+    .tableFiltroUsuario td:last-child{
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  
+    .tableUsuarios th,
+    .tableUsuarios td{
+      font-size: 13px;
+    }
+    table.tableUsuarios thead th:last-child{
+      border-top-right-radius: 20px !important;
+    }
+  
+  
+    table.tableFormUsuarios tr td{
+      padding-top: 12px;
+      padding-bottom: 12px;
+      color: #005ACA;
+      font-size: 14px;
+    }
+  
+    table.tableFormUsuarios tr td:first-child{
+      padding-left: 35px;
+    }
+    table.tableFormUsuarios tr td:last-child{
+      padding-right: 35px;
+    }
+  
+    input,
+    select{
+      border: 1px #005ACA solid;
+      padding: 3px 10px;
+      width: 100%;
+      color: #005ACA;
+    }
+  
+    input:not(.noRadius),
+    select:not(.noRadius){
+      border-radius: 5px;
+    }
+  
+    .cssForm{
+      font-size: 12px;
+    }
+  
+    i{
+      font-style: normal;
+    }
+  
+    .tableFiltroUsuario i{
+      font-size: 25px;
+    }
+  
+    .btn.btn-middle{
+      background-color: aliceblue;
+      border: 1px solid aliceblue;
+    }
+    .btn.btn-high{
+      background-color: #005ACA !important;
+      border: 1px solid #005ACA !important;
+    }
+  </style>
+  
+  <div class="container row">
+    <div class="col-12">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+            <h4 class="panel-title">Registro &uacute;nico de Contratos - Supervisi&oacute;n</h4>
+        </div>
+        <div class="panel-body">
+          <form class="form-default-inline">  
+            <div class="form-item">
+                <div class="row">
+                    <div class="col clearfix">
+                        <app-chapterblue [numberChapter]="1" [titleChapter]="'Detalles del proceso contractual'"></app-chapterblue><br/>       
+                    </div>
+                    <div class="col clearfix text-right" style="padding: 20px;">                        
+                        <button class="msg-alerta" >
+                            <div>
+                              <img src="../../../../../../assets/images/Iconos/item1Supervision.png">
+                            </div>                    
+                        </button>
+                    </div>
+                </div>     
+                  
+
+              <label for="exampleFormControlInput1" class="form-label">
+                1. Fecha de inicio del contrato:
+              </label>
+              <input type="text" class="form-control" id="txtNombreRazon">
+            </div>
+  
+            <div class="form-item">
+              <label for="exampleFormControlInput1" class="form-label">
+                2. Fecha de terminaci&oacute;n del contrato:
+              </label>
+              <input type="text" class="form-control" id="txtNit">              
+            </div>
+  
+            <div class="form-item">
+                <label class="form-label">
+                    3. Modalidad de contrataci&oacute;n CHIP:
+                    <select id="cboTipo" class="form-control">
+                        <option value="0">Elija una opci&oacute;n</option>                  
+                      </select>
+                  </label>
+            </div>
+  
+            <div class="form-item">
+              <label class="form-label">
+                4. Contrato publicado en el SECOP o la TVEC: 
+              </label>
+              <input type="text" class="form-control" id="txtNit">              
+            </div>
+  
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label">
+                  4.1. Plataforma:
+                </label>                
+                <table class="tableFiltroUsuario col-6">
+                    <tr>            
+                      <td>                      
+                          <input type="checkbox" class="check" name="java">SECOP I   
+                      </td>
+                      <td>         
+                          <input type="checkbox" name="java">SECOP II
+                      </td> 
+                      <td>         
+                          <input type="checkbox" name="java">TVEC 
+                      </td>                    
+                    </tr>
+                  </table>                          
+              </div>
+            </div>
+  
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label">
+                  4.2. N° del proceso registrado en SECOP:
+                </label>
+                <input type="text" class="form-control" id="txtNit">    
+              </div>
+            </div>
+            <div class="form-item">
+                <div class="ml-md">
+                  <label class="form-label">
+                    4.3. Link del contrato en SECOP:
+                  </label>
+                  <input type="text" class="form-control" id="txtNit">    
+                </div>
+              </div>
+  
+            <div class="form-item">
+              <label class="form-label">
+                5. Fecha de adjudicaci&oacute;n:
+              </label>
+              <input type="text" class="form-control" id="txtNombreRepresentante">
+            </div>            
+          </form>
+        </div>
+  
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col clearfix">
+                    <button class="btn btn-blue">Guardar y continuar m&aacute;s tarde</button>        
+                </div>
+                <div class="col clearfix">
+                    <button class="btn btn-blue" (click)="Anterior()">Anterior</button>&nbsp;&nbsp;
+                    <button class="btn btn-blue" (click)="Siguiente()">Siguiente</button>
+                </div>
+            </div>     
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <br/>

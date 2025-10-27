@@ -1,0 +1,143 @@
+<div class="table-responsive no-padding">
+  <table *ngIf="idTipoModeloOperacion == 1" class="table-priorizacion" [ngStyle]="{'width': width}">
+    <thead>
+      <tr>
+        <th width="150px" rowspan="2" class="b-t-l-r">Jornada</th>
+        <th colspan="2" class="n-b-b">PS<br>(Preparado en Sitio)</th>
+        <th class="n-b-b">IND<br>(Industrializada)</th>
+        <th colspan="2" class="n-b-b" [class]="costoTotal ? '' : 'b-t-r-r'">CCT<br>(Comida Caliente Transportada)</th>
+        <th *ngIf="costoTotal" rowspan="2" class="b-t-r-r">Total Jornada</th>
+      </tr>
+      <tr>
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>Almuerzo</th>
+        <th [class]="costoTotal ? '' : 'b-r'">Complemento<br>AM/PM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSource; index as i">
+        <tr [class]="i == dataSource.length - 1 ? 'b-b' : ''">
+          <th class="bg-title d-flex align-items-center">
+            <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+            <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+            <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+            {{ item.jornada }}
+          </th>
+          <td class="b-l">{{ item.rpS_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.rpS_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.rI_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.cA_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.cA_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td *ngIf="costoTotal">{{ item.totalJornada | currency: '$' : 'symbol' : '1.0-2' }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <table *ngIf="idTipoModeloOperacion == 2" class="table-priorizacion" [ngStyle]="{'width': width}">
+    <thead>
+      <tr>
+        <th width="150px" rowspan="2" class="b-t-l-r">Jornada</th>
+        <th colspan="2" class="n-b-b">PS<br>(Preparado en Sitio)</th>
+        <th colspan="2" class="n-b-b" [class]="costoTotal ? '' : 'b-t-r-r'">CCT<br>(Comida Caliente Transportada)</th>
+        <th *ngIf="costoTotal" rowspan="2" class="b-t-r-r">Total Jornada</th>
+      </tr>
+      <tr>
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>Almuerzo</th>
+        <th [class]="costoTotal ? '' : 'b-r'">Complemento<br>AM/PM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSource; index as i">
+        <tr [class]="i == dataSource.length - 1 ? 'b-b' : ''">
+          <th class="bg-title d-flex align-items-center">
+            <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+            <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+            <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+            {{ item.jornada }}
+          </th>
+          <td class="b-l">{{ item.rpS_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.rpS_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.cA_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.cA_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td *ngIf="costoTotal">{{ item.totalJornada | currency: '$' : 'symbol' : '1.0-2' }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <table *ngIf="idTipoModeloOperacion == 3" class="table-priorizacion" [ngStyle]="{'width': width}">
+    <thead>
+      <tr>
+        <th width="150px" rowspan="2" class="b-t-l-r">Jornada</th>
+        <th colspan="2" class="n-b-b">PS<br>(Preparado en Sitio)</th>
+        <th colspan="2" class="n-b-b" [class]="costoTotal ? '' : 'b-t-r-r'">CCT<br>(Comida Caliente Transportada)</th>
+        <th *ngIf="costoTotal" rowspan="2" class="b-t-r-r">Total Jornada</th>
+      </tr>
+      <tr>
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>Almuerzo</th>
+        <th [class]="costoTotal ? '' : 'b-r'">Complemento<br>AM/PM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSource; index as i">
+        <tr [class]="i == dataSource.length - 1 ? 'b-b' : ''">
+          <th class="bg-title d-flex align-items-center">
+            <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+            <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+            <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+            {{ item.jornada }}
+          </th>
+          <td class="b-l">{{ item.rpS_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.rpS_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.cA_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.cA_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td *ngIf="costoTotal">{{ item.totalJornada | currency: '$' : 'symbol' : '1.0-2' }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <table *ngIf="idTipoModeloOperacion == 4" class="table-priorizacion" [ngStyle]="{'width': width}">
+    <thead>
+      <tr>
+        <th width="150px" rowspan="2" class="b-t-l-r">Jornada</th>
+        <th>PRS<br>(Preparado en sitio)</th>
+        <th>RI<br>(Industrializada)</th>
+        <th [class]="costoTotal ? '' : 'b-r b-t-r-r'">Bono</th>
+        <th *ngIf="costoTotal" class="b-r b-t-r-r">Total Jornada</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSource; index as i">
+        <tr [class]="i == dataSource.length - 1 ? 'b-b' : ''">
+          <th class="bg-title">
+            <img *ngIf="item.icono == 1" style="width: 30px; height: 30px;" src="../assets/images/Iconos/manana.png">
+            <img *ngIf="item.icono == 2" style="width: 30px; height: 30px;" src="../assets/images/Iconos/tarde.png">
+            <img *ngIf="item.icono == 3" style="width: 30px; height: 30px;" src="../assets/images/Iconos/unica.png">
+            {{ item.jornada }}
+          </th>
+          <td class="b-l">{{ item.rpS_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.rI_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td>{{ item.bono | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          <td *ngIf="costoTotal">{{ item.totalJornada | currency: '$' : 'symbol' : '1.0-2' }}</td>
+        </tr>
+      </ng-container>
+      <tr *ngIf="costoTotal" class="no-column text-center">
+        <td [colSpan]="costoTotal ? '4' : '3'"></td>
+        <th>{{ costoTotal | currency: '$' : 'symbol' : '1.0-2'}}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,393 @@
+@import '/src/assets/styles/variable.scss';
+*{
+    font-size: $base-fontSize!important;
+}
+::ng-deep.mat-sort-header-container {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    letter-spacing: normal;
+    outline: 0;
+    justify-content: center!important;
+}
+.TablaObservacion{
+    display: block;
+}
+.inputFull{
+    width: 100%;
+    font-size: $base-fontSize;
+}
+.sub {
+    font-size: $base-fontSize;
+    color: #ed0057 !important;
+    display: flex;
+    align-items: center;
+}
+
+.linkdisable{
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.linea{
+    background-color: #ed0057 !important;
+}
+img {
+    height: 30px;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-bottom: 0%;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+}
+.bordeado{
+    border-radius: 20px;
+    border: 1px solid $base-azulPAE;
+    border-spacing: 0px 0px;
+}
+.BordeadoSup{
+    border: 1px solid #E6EFFD;
+    border-left: 1px solid #E6EFFD!important;
+    border-bottom: 1px solid $base-color;
+    border-radius: 20px 20px 1px 1px;
+    background-color: #E6EFFD;
+    color: $base-azulPAE;
+    padding: 2%;
+}
+.BordeadoInf{
+    border: 1px solid #FFF;
+    border-radius: 1px 1px 20px 20px;
+    background-color: #FFF;
+    color: $base-azulPAE;
+    padding: 0%;
+}
+.BordeNone{
+    border-right: $base-azulPAE 1px solid;
+    border-style: hidden solid hidden hidden!important;
+
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-color;
+    font-size: $base-fontSize;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+    border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 24px;
+    border-right: 1px solid;
+}
+
+td.mat-cell {
+    padding: 16px 0 16px 0;
+    border-bottom: 1px dotted $base-azulPAE;
+    //border-style: dotted;
+}
+
+table thead {
+    background-color: $header_table !important;
+    color: $base-color;
+    border: 1px solid;
+}
+
+table thead th {
+    border-top: 1px solid $base-azulPAE;
+    border-right: 1px solid $base-azulPAE;
+    padding: 20px;
+}
+
+table thead th:first-child {
+    border-left: 1px solid $base-azulPAE;
+    border-top-left-radius: 20px !important;
+}
+
+table td:first-child {
+    border-left: 1px solid $base-azulPAE;
+}
+
+table.left-radius thead th:first-child {
+    border-top-left-radius: 20px !important;
+    border-left: 10px solid $base-azulPAE;
+}
+
+table.right-radius thead th:last-child {
+    border-top-right-radius: 20px;
+    border-left: 1px solid $base-azulPAE;
+}
+
+.textagregar {
+    color: $base-color;
+}
+
+table tbody {
+    color: $base-color;
+}
+
+table tbody td {
+    border-bottom: 1px dashed $base-color !important;
+}
+
+table tbody tr td:first-child {
+    border-left: 1px solid $base-color;
+}
+
+table tbody tr td:last-child {
+    border-right: 1px solid $base-color;
+}
+
+table tbody tr:last-child td {
+    border-bottom: 1px solid $base-color;
+    border-bottom-style: solid !important;
+}
+
+td.mat-cell:first-of-type {
+    padding-left: 0 px !important;
+}
+
+.titletable {
+    float: right;
+    background-color: $base-color !important;
+    color: #fff !important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border-radius: 12px 12px 0px 0px !important;
+}
+
+.buttonAr {
+    color: $base-color;
+    border-color: $base-color;
+    padding: 14px 18px;
+    font-size: $base-fontSize;
+    cursor: pointer;
+    border-radius: 12px 12px 12px 12px !important;
+}
+
+.espaciobutton {
+    margin-left: 5px !important;
+}
+
+// .mat-table::ng-deep {
+//   border: 1px solid $base-azulPAE;
+// }
+th.mat-header-cell {
+    text-align: center !important;
+    background-color: #E2ECFD !important;
+    //color: #fff!important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border: 1px solid $base-azulPAE;
+    padding: 20px !important;
+}
+
+.red {
+    background-color: red;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.green {
+    background-color: green;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.yellow {
+    background-color: yellow;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.mat-row:hover .mat-cell {
+    background-color: $base-color;
+    color: #ffffff;
+}
+
+.mat-column-select {
+    overflow: initial;
+}
+
+.LeftUpCorner {
+    border-top-left-radius: 20px;
+
+}
+
+.LeftUpCorner2 {
+    border-top-right-radius: 20px;
+
+}
+
+.buttontog {
+   
+    border-color: $base-color;
+    border-radius: 10px 10px 10px 10px !important;
+    font-size: $base-fontSize;
+    text-align: center;
+  
+}
+
+:host ::ng-deep .mat-button-toggle-checked {
+    color: white !important;
+    background-color: $base-color !important;
+    padding: 1px!important;
+}
+.botonaprobar{
+    border-color: $base-color !important;
+    border-radius: 10px 10px 10px 10px !important;
+    border: 1px solid;
+    color: #ffffff;
+    background-color: $base-color !important;
+}
+input[type="text"] {
+   
+    padding: auto;
+    border-color: $base-color !important;
+    border-radius: 10px 10px 10px 10px !important;
+    height: 50px;
+    text-align: center;
+    color: $base-azulPAE !important;
+  
+  }
+
+  button:disabled{
+    background-color: gray;
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: $base-color 1px solid;
+  }
+  button:active{
+    background-color: $base-color;
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: $base-color 1px solid;
+  }
+  button:hover {
+    cursor: pointer;
+  }
+  button{
+    background-color: $base-color;
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: $base-color 1px solid;
+  }
+
+  ::ng-deep.swal2-container.swal2-center > .swal2-popup {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: center !important;
+    justify-self: center !important;
+    font-size: 13px !important;
+    border-radius: 20px !important; 
+   background-image: url(../../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+    padding: 2% 0% !important;
+    width: 90% !important;    
+    background-position: top;
+    color:  $base-color !important;
+
+    background-size: contain !important;
+    background-position: top !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  display: inline-block;
+  object-fit: contain !important;
+
+
+  }
+
+  .swal2-actions{
+    margin: 10px auto !important;
+  }
+  
+  ::ng-deep.swal2-close{
+    color: #fff !important;
+    margin-top: -15px !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    font-size: 2em !important;
+  }
+  
+  .swal2-html-container {
+    text-align: center!important;
+  }
+  .swal2-styled.swal2-confirm {
+    border: 1px solid $base-azulPAE;
+    border-radius: 0px !important; 
+    background: initial;
+    background-color: $base-azulPAE;
+    color: #fff !important;
+    font-size: 1em;
+    box-shadow: none;
+}
+
+
+.textoinformativo{
+    color: $base-color;
+}
+
+.buttonAprobar{
+    background-color: #E6EFFD;
+    border: #E6EFFD;
+    color: $base-color;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 80%;
+}
+
+.btrojo {
+    background-color: red;
+    color: #fff;
+    border: red;
+    padding: auto;
+    margin-bottom: 10px;
+  }
+  .btverde {
+    background-color: green;
+    color: #fff;
+    border: green;
+    margin-bottom: 10px;
+  }
+.inputFull2{
+    width: 97%;
+    /* margin: 10px; */
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    font-size: $base-fontSize;
+}
+.TextosBlueLeft{
+    margin: 10px;
+}
+
+//globo de aprobaciones 
+
+.mat-badge-content{
+    background : #FF0000;
+    color: #fff;
+    border: 1px #fff solid
+  }

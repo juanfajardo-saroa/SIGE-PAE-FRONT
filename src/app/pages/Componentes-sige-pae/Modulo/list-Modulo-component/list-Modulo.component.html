@@ -1,0 +1,207 @@
+<style>
+  .tableFiltroModulo {
+    border-spacing: 0;
+    color: #005ACA;
+  }
+
+  .tableFiltroModulo td {
+    text-align: center;
+    font-size: 13px !important;
+    color: #005ACA !important;
+    padding: 2.5px 10px;
+    border-top: 1px solid #005ACA;
+    border-right: 1px solid #005ACA;
+    border-bottom: 1px solid #005ACA;
+  }
+
+  .tableFiltroModulo td b {
+    color: #005ACA;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroModulo td div {
+    color: #005ACA;
+    font-weight: 500;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroModulo td:first-child {
+    border-left: 1px solid #005ACA;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .tableFiltroModulo td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .tableModulos th,
+  .tableModulos td {
+    font-size: 13px;
+  }
+
+  table.tableModulos thead th:last-child {
+    border-top-right-radius: 20px !important;
+  }
+
+
+  table.tableFormModulos tr td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #005ACA;
+    font-size: 14px;
+  }
+
+  table.tableFormModulos tr td:first-child {
+    padding-left: 35px;
+  }
+
+  table.tableFormModulos tr td:last-child {
+    padding-right: 35px;
+  }
+
+  input,
+  select {
+    border: 1px #005ACA solid;
+    padding: 3px 10px;
+    width: 100%;
+    color: #005ACA;
+  }
+
+  input:not(.noRadius),
+  select:not(.noRadius) {
+    border-radius: 5px;
+  }
+
+  .cssForm {
+    font-size: 12px;
+  }
+
+  i {
+    font-style: normal;
+  }
+
+  .tableFiltroModulo i {
+    font-size: 25px;
+  }
+
+  .btn.btn-middle {
+    background-color: aliceblue;
+    border: 1px solid aliceblue;
+  }
+
+  .btn.btn-high {
+    background-color: #005ACA !important;
+    border: 1px solid #005ACA !important;
+  }
+
+  .title-busqueda-modulo {
+    padding: 0;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f54a62;
+  }
+
+  .title-busqueda-modulo label {
+    color: #f54a62;
+    margin-bottom: 2px;
+  }
+
+  .btn-registrar {
+    color: #005ACA;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .linkdisable{
+    pointer-events: none;
+    visibility: hidden;
+}
+
+</style>
+
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #E23465;">Módulos</div>
+    </div>
+    <div class="tab-item nothing" style="width: 69.5%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="col-12" style="margin-top: 20px;  padding: 0%;">
+  <div class="col-12 pae-text-filter">
+    <div class="row pae-border-blue pt-xl-1">
+
+      <div class="col-xl-7 col-12 d-flex align-items-center justify-content-center py-2 py-xl-0">
+        <span>
+          Utilice cualquier campo de la tabla para buscar Módulos. Si no aparecen, <strong>regístrelos</strong> en el sistema.
+        </span>
+      </div>
+
+      <div class="col-xl-3 col-12 pae-border-xl-up-left-blue text-center pae-border-lg-down-top-blue py-2 py-xl-0">
+        <span>Filtro</span>
+        <input (keyup)="applyFilter($any($event).target.value)" type="text" class="">
+      </div>
+
+      <div class="col-xl-2 col-12 pae-border-xl-up-left-blue text-center pae-border-lg-down-top-blue py-2 py-xl-0">
+        <a (click)="applyFilter('')">
+          <img src="../../../../../../assets/images/Iconos/eye_blue.png">
+          <div>Ver listado completo</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-12 title-busqueda-modulo">
+    <label><img src="../../../../../../assets/images/Iconos/user_red.png"> Resultados de la b&uacute;squeda de
+      Módulos</label>
+  </div>
+
+  <div class="col-12 responsive-table-pae" style=" padding: 0%;">
+    <table mat-table [dataSource]="dataSource" class="tableModulos left-radius right-radius">
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Nombre</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Nombre">
+          {{element.nombre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="sid_Sistema">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b> Sistema</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Sistema">
+          {{element.sid_Sistema}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" style="text-align: center; padding: 0 5px;">
+          <a (click)="openDialog('Actualizar',element)"
+            [ngClass]="{'linkdisable':!getModulePermission(27,'editar')}">
+            <img src="../../../../../../assets/images/Iconos/edit_blue.png">
+          </a>
+          <a (click)="openDialog('Eliminar',element)" style="margin-left: 3px;"
+            [ngClass]="{'linkdisable':!getModulePermission(27,'eliminar')}">
+            <img src="../../../../../../assets/images/Iconos/delete_blue.png">
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let myRowData; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+
+  <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+    <div class="text-right ">
+      <a class="btn-registrar" (click)="openDialog('Adicionar',{})"
+        [ngClass]="{'linkdisable':!getModulePermission(27,'crear')}"><img
+          src="../../../../../../assets/images/Iconos/add_blue.png"> Registrar Módulo</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="chapter-rojo">
+    <div *ngIf="numberChapter != 0" class="container-tab-enum align-items-center">
+        <div class="text-enum">{{ numberChapter }}</div>
+    </div>
+    <div class="container-tab-text ml-minus-1-px">
+        {{ titleChapter }}
+    </div>
+    <div *ngIf="numberBadge" class="container-badge">
+        {{ numberBadge }}
+    </div>
+</div>

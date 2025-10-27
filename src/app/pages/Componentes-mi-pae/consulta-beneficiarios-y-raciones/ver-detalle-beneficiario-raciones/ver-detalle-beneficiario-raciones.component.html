@@ -1,0 +1,295 @@
+<div>
+  <table class="CenterButton">
+    <td>
+      <div fxLayout="row wrap" class="align-items-center ClickCursor" (click)="IrATablaBenficiarios()">
+        <div>
+          <table class="tablaform2">
+            <div class="bordeAtras ClickCursor">
+              <a class="btn-agregar ">
+                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png "
+                  style="width:50px; height: 50px; margin-top: 10px;"><br>
+                Atrás
+              </a>
+            </div>
+          </table>
+        </div>
+      </div>
+    </td>
+  </table>
+  <table style="width: 55%;">
+    <ng-container>
+      <tr>
+        <div class="Redondeado">
+          <td class="EspacioField">
+            <div class="BordeBottom">
+              <mat-card>
+                <mat-card-title style="color: #005ACA; font-size: 13px;">Contrato</mat-card-title>
+                <div>
+                  <!--  <mat-select class="control-md tablaform" id="municipio" placeholder="seleccione" (selectionChange)="onMunicipioClick($event.value)"[(value)]="selMunicipio">
+                    <mat-option [value]="-1">Todos
+                    </mat-option>
+                    <mat-option *ngFor="let item of selectDivipolaList" [value]="item.id">
+                      {{item.nombre}}
+                    </mat-option>
+                  </mat-select> -->
+                  <mat-select class="control-md tablaform" name="idContrato" [(ngModel)]="idContrato2"
+                    [(value)]="selContrato" #idContrato="ngModel" (selectionChange)="onMunicipioClick($event.value)">
+                    <mat-option *ngFor="let i of TablaContratos" [value]="i.id_contrato">{{ i.numeroContrato }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </mat-card>
+            </div>
+          </td>
+
+          <td class="EspacioField ">
+            <div class="BordeBottom">
+              <mat-card>
+                <mat-card-title style="color: #005ACA; font-size: 13px;">Sede educativa</mat-card-title>
+                <div>
+                  <mat-select class="control-md tablaform" id="sede" placeholder="seleccione" [(value)]="selsede"
+                    (selectionChange)="onSedeClick($event.value)">
+                    <mat-option [value]="-1">Todos
+                    </mat-option>
+                    <mat-option *ngFor="let item of selectSedesList" [value]="item.id">
+                      {{item.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </mat-card>
+            </div>
+          </td>
+          <td class="alinearIcon lineaAzulX" style="width: 80px;">
+            <div class="bordeAtras2 centerIcon">
+              <a class="btn-agregar ">
+                <img (click)="buscarInfo(selContrato,selsede)"
+                  src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " style="width:50px; height: 50px;"><br>
+                Filtrar
+              </a>
+            </div>
+          </td>
+        </div>
+      </tr>
+    </ng-container>
+  </table>
+</div>
+
+<br><br>
+
+
+<!-- <div class="container-fluid content-wrapper">
+  <div class="row">
+    <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 banner-breadcrumbs" style="padding: 0!important;">
+      <div class="flex-wrap flex-md-nowrap mt-3">
+        <app-menadminuautorizado>
+          <ng-container autorizado>
+            <div class="row">
+              <div class="col-md-10">
+                <label class="banner-text">
+                 
+                </label>
+              </div>
+              <div class="col-md-2 text-right">
+                <label class="anio-text">Año | <strong class="strongheader"></strong>{{ currentYear }}</label>
+              </div>
+            </div>
+          
+            <div class="row LineaAzul">
+              <div class="col-12 text-right">
+                <label class="last-update-text">Ultima actualizaci&oacute;n
+                  <span> {{ dateToday | date: "longDate" }}</span></label>
+              </div>
+            </div>
+          </ng-container>
+        </app-menadminuautorizado>
+      </div>
+      <div class="mt-2">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!--titulo año actualizacion-->
+<label class="strongheader" style="font-size: 20px; margin-bottom: 20px;">Contrato N° {{nombreMunicipio}} | Sede
+  {{nombreSede}} </label>
+<br>
+
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #00A9AB;">Complementos y beneficiarios</div>
+    </div>
+    <div class="tab-item nothing" style="width: 70%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br><br>
+<table class="TituloOperador">
+  <td>
+    <div fxLayout="row wrap" class="align-items-center ClickCursor" (click)="IrATablaBenficiarios()">
+      <div>
+        <div class="tablaform2">
+          <div class="text-center ClickCursor">
+            <a class="btn-agregar ">
+              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-241.png"
+                style="width:auto; height: 25px; margin-right: 10px;">
+              <label><strong style="color:#00A9AB;"> Operador: {{nombreOperador}}</strong></label>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </td>
+</table>
+
+<br>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="jornada">
+    <th mat-header-cell *matHeaderCellDef class="Invisible " [ngStyle]="{'display': 'none'}"> Jornada </th>
+    <td mat-cell *matCellDef="let element; let i = index" [attr.rowspan]="getRowSpan('jornada', i)"
+      [style.display]="getRowSpan('jornada', i) ? '' : 'none'" class="CeldaVerde">
+
+      <div *ngIf="element.jornada == 'Tarde'">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-43.png" alt="" height="14px" width="auto"
+          style="border-right: 10px;"> {{element.jornada}}
+      </div>
+      <div *ngIf="element.jornada == 'Mañana'">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-42.png" alt="" height="20px" width="auto"
+          style="border-right: 10px;"> {{element.jornada}}
+      </div>
+      <div *ngIf="element.jornada == 'Noche'">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px" width="auto"
+          style="border-right: 10px;"> {{element.jornada}}
+      </div>
+      <div *ngIf="element.jornada == 'Única'">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px" width="auto"
+          style="border-right: 10px;"> {{element.jornada}}
+      </div>
+      <div *ngIf="element.jornada == 'Completa'">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px" width="auto"
+          style="border-right: 10px;"> {{element.jornada}}
+      </div>
+      <div *ngIf="element.jornada == 'Media'">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px" width="auto"
+          style="border-right: 10px;"> {{element.jornada}}
+      </div>
+      <div *ngIf=" element.jornada =='TOTAL diario'">
+        {{element.jornada}}
+      </div>
+
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="h_Jor">
+    <th class="LeftUpCorner paddingCell" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Jornada</th>
+  </ng-container>
+
+  <ng-container matColumnDef="grado">
+    <th mat-header-cell *matHeaderCellDef class="Invisible "> Grado </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.grado == null ? '-' :(element.grado)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="h_Gra">
+    <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="paddingCell">Grados </th>
+  </ng-container>
+
+  <ng-container matColumnDef="matricula">
+    <th mat-header-cell *matHeaderCellDef class="Invisible ">Matricula </th>
+    <td mat-cell *matCellDef="let element" style="border-right: solid 1px #005ACA;">
+      {{element.matricula == null ? '-' :(element.matricula)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="h_Mat">
+    <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="paddingCell">Matrícula <br> SIMAT</th>
+  </ng-container>
+  <!-- ------------------RPS----------------------------------------------------- -->
+  <ng-container matColumnDef="h_RPS">
+    <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="paddingCell ">PS <br> (Preparada en
+      sitio)</th>
+  </ng-container>
+
+  <ng-container matColumnDef="almuerzoRPS">
+    <th mat-header-cell *matHeaderCellDef style="border-right: dotted 1px #005ACA;"> Complemento <br> Almuerzo </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.almuerzoRPS == null ? '-' :(element.almuerzoRPS)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="compleRPS">
+    <th mat-header-cell *matHeaderCellDef class=""> Complemento <br> AM/PM </th>
+    <td mat-cell *matCellDef="let element" style="border-right: solid 1px #005ACA;">
+      {{element.compleRPS == null ? '-' :(element.compleRPS)}} </td>
+  </ng-container>
+
+  <!-- ------------------FIN RPS----------------------------------------------------- -->
+
+  <ng-container matColumnDef="totalRacionesDia">
+    <th mat-header-cell *matHeaderCellDef class="Invisible ">>Complementos <br> Diaria </th>
+    <td mat-cell *matCellDef="let element" style="border-right: solid 1px #005ACA;">
+      {{element.totalRacionesDia == null ? '-' :(element.totalRacionesDia)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="h_Rac">
+    <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="paddingCell">Complementos <br> diarios</th>
+  </ng-container>
+
+  <ng-container matColumnDef="totalBeneficiarios">
+    <th mat-header-cell *matHeaderCellDef class="Invisible "> Total <br> beneficiarios </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.totalBeneficiarios == null ? '-' :(element.totalBeneficiarios)}}
+    </td>
+    <td mat-footer-cell *matFooterCellDef> {{ TotalMatriculas }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="h_Tota">
+    <th class="RightUpCorner paddingCell" mat-header-cell *matHeaderCellDef [attr.rowspan]="5"> Total <br>
+      Beneficiarios
+    </th>
+  </ng-container>
+
+  <!--  -->
+  <ng-container matColumnDef="h_PRINCIPAL2">
+    <th class="header3" mat-footer-cell *matFooterCellDef [attr.colspan]="10"></th>
+  </ng-container>
+  <tr mat-footer-row *matFooterRowDef="['h_PRINCIPAL2']" style="height: 20px;"></tr>
+  <!--  -->
+  <ng-container matColumnDef="h_PRINCIPAL">
+    <td class="CeldaAzulOscuro " mat-footer-cell *matFooterCellDef>TOTAL diario</td>
+  </ng-container>
+  <ng-container matColumnDef="h_SERVICIOS">
+    <th class="CeldaAzul" mat-footer-cell *matFooterCellDef>Todos los <br> grados
+    </th>
+  </ng-container>
+  <ng-container matColumnDef="h_AREA">
+    <th class="CeldaAzul" mat-footer-cell *matFooterCellDef>{{TotalMatriculas}}
+    </th>
+  </ng-container>
+  <ng-container matColumnDef="h_FINAL">
+    <th class="CeldaAzul" mat-footer-cell *matFooterCellDef>{{TotalAlmuerzoRPS}}</th>
+  </ng-container>
+  <ng-container matColumnDef="h_FINAL1">
+    <th class="CeldaAzul" mat-footer-cell *matFooterCellDef>{{TotalComplemento}}
+    </th>
+  </ng-container>
+  <ng-container matColumnDef="h_FINAL2">
+    <th class="CeldaAzulOscuro" mat-footer-cell *matFooterCellDef>{{TotalRaciondiaria}}</th>
+  </ng-container>
+  <ng-container matColumnDef="h_FINAL3">
+    <th class="CeldaAzulOscuro" mat-footer-cell *matFooterCellDef>{{TotalBeneficiarios}}</th>
+  </ng-container>
+
+  <tr mat-footer-row
+    *matFooterRowDef="['h_PRINCIPAL', 'h_SERVICIOS', 'h_AREA', 'h_FINAL','h_FINAL1','h_FINAL2','h_FINAL3']">
+  </tr>
+  <!--  -->
+  <tr mat-header-row *matHeaderRowDef="['h_Jor', 'h_Gra', 'h_Mat', 'h_RPS', 'h_Rac', 'h_Tota']"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+<br>
+<br>
+<app-tabla-nombres-detalle></app-tabla-nombres-detalle>

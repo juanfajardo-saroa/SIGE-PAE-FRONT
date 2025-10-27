@@ -1,0 +1,75 @@
+<mat-card class="course-app">
+  <mat-card-content>
+    <div fxLayout="row wrap" class="course-app">
+      <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+        <mat-card>
+          <mat-card-header class="course-header">
+            <mat-card-title>
+              <span class="course-name">
+                Acción Registro :: <strong>{{ action }}</strong></span>
+              <span class="course-duration">
+                <mat-icon class="m-r-10">verified_user</mat-icon>
+              </span>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography" *ngIf="action != 'Delete'; else elseTemplate">
+            <br/>
+
+              <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+
+              <div *ngIf = "action !='Add'">
+ <mat-form-field class="example-full-width">
+     <br/>
+     <input  matInput  id="id" formControlName="id"  readonly="true" class=" form-control"/>
+ </mat-form-field>
+</div>
+<mat-form-field class="example-full-width" appearance="fill">
+<mat-label> Seleccione Estado Quincena...</mat-label>
+<mat-select id = "iD_EstadoQuincena" formControlName = "iD_EstadoQuincena">
+    <mat-option *ngFor= "let item of EstadoQuincenaList"[value]="item.id">{{item.nombre}}
+    </mat-option>
+</mat-select>
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+<mat-label> Seleccione Contrato...</mat-label>
+<mat-select id = "iD_Contrato" formControlName = "iD_Contrato">
+    <mat-option *ngFor= "let item of ContratosList"[value]="item.id">{{item.id}}
+    </mat-option>
+</mat-select>
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+<mat-label> Seleccione Operador...</mat-label>
+<mat-select id = "iD_Operador" formControlName = "iD_Operador">
+    <mat-option *ngFor= "let item of OperadoresList"[value]="item.id">{{item.id}}
+    </mat-option>
+</mat-select>
+</mat-form-field>
+<mat-form-field class="example-full-width" appearance="fill">
+<mat-label> Seleccione Grado Sede Jornada...</mat-label>
+<mat-select id = "iD_GradoSedeJornada" formControlName = "iD_GradoSedeJornada">
+    <mat-option *ngFor= "let item of GradosSedesJornadasList"[value]="item.id">{{item.id}}
+    </mat-option>
+</mat-select>
+</mat-form-field>
+  
+
+              </div>
+            </mat-dialog-content>
+            <ng-template #elseTemplate>
+              Esta Seguro de Eliminar el Registro  <b>{{local_data.id}}</b>?
+            </ng-template>
+        
+            <div mat-dialog-actions align="end">
+              <button  [disabled]="form.invalid && action !='Delete'" mat-raised-button color="primary" mat-button (click)="doAction()">{{action}} </button>
+              <button  mat-raised-button color="warn" mat-button (click)="closeDialog()" mat-flat-button >Cancelar</button>
+            </div>
+          </mat-card-content>
+          <mat-card-actions class="text-center">
+                <!-- <button mat-button>Start</button> -->
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

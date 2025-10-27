@@ -1,0 +1,41 @@
+<div *ngIf="data">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3 class="font-weight-bold m-0 py-2">{{dataComponente.nombreComponente}}</h3>
+        </div>
+        <div class="card-body">
+            <div class="text-center separador-bottom-botted">
+                <h4>Grupos y subgrupos de alimentos dentro del componente "{{ dataComponente.nombreComponente }}"</h4>
+            </div>
+            <ng-container *ngFor="let grupo of dataComponente.listAlimentoComponente">
+                <div class="separador-bottom-botted">
+                    <app-grupo-modal-editar-component [grupo]="grupo" 
+                        [listGrupos]="listaGruposAlimentos" [listSubGrupos]="listaSubgruposAlimentos"
+                        (emitNewGrupo)="emitNewGrupo($event)">
+                    </app-grupo-modal-editar-component>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let newGrupo of listNewGroup">
+                <div class="separador-bottom-botted py-3" *ngIf="listNewGroup.length > 0">
+                    <app-grupo-modal-editar-component [grupo]="newGrupo" 
+                        [listGrupos]="listaGruposAlimentos" [listSubGrupos]="listaSubgruposAlimentos" [isNewGroup]="true"
+                        (emitNewGrupo)="emitNewGrupo($event)">
+                    </app-grupo-modal-editar-component>
+                </div>
+            </ng-container>
+            <div class="text-center mt-3">
+                <button class="btn border-0" (click)="addNewGroup()">
+                    <img alt="agregar"
+                        class="ml-n3"
+                        style="width: 20px; height: 20px"
+                        src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png"/>
+                        Agregar grupo
+                </button>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <button mat-button mat-dialog-close class="btn btn-blue mx-2">Cancelar</button>
+            <button mat-button [mat-dialog-close]="true" class="btn btn-blue mx-2" (click)="modificarComponente()">Guardar</button>
+        </div>
+    </div>
+</div>

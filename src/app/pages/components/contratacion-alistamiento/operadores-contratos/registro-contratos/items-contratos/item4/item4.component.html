@@ -1,0 +1,89 @@
+
+  <div class="container row">
+    <div class="col-12">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+            <h4 class="panel-title">Registro &uacute;nico de Contratos - Supervisi&oacute;n</h4>
+        </div>
+        <div class="panel-body">
+          <form class="form-default-inline">  
+            <div class="form-item">
+                <div class="row">
+                    <div class="col clearfix">
+                        <app-chapterblue [numberChapter]="3" [titleChapter]="'Información de pólizas'"></app-chapterblue><br/>       
+                    </div>
+                    <div class="col clearfix text-right" style="padding: 20px;">                        
+                        <button class="msg-alerta" >
+                            <div>
+                              <img src="../../../../../../assets/images/Iconos/item3Supervision.png">
+                            </div>                    
+                        </button>
+                    </div>
+                </div>   
+            </div> 
+            <div class="form-item"> 
+                <div class="row"> 
+                    <div class="ml-md">                           
+                        <table class="table table-etc table-responsive" style="width:1000px !important">
+                            <thead>
+                                <tr>
+                                    <th>Tipo de p&oacute;liza</th>
+                                    <th>Fecha de p&oacute;liza</th>
+                                    <th>Fecha de aprobaci&oacute;n</th>
+                                    <th>N° de p&oacute;liza</th>
+                                    <th>Valor total asegurado</th>                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <select id="cboTipo" class="form-control">
+                                        <option value="0">Elija una opci&oacute;n</option>                  
+                                    </select> 
+                                </td>
+                                <td>
+                                <input type="text" placeholder="Elije fecha" class="form-control text-center">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Elije fech" class="form-control text-center">
+                                </td>
+                                <td>
+                                <input type="text" placeholder="Ingrese N°" class="form-control text-center">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Ingrese cifra" class="form-control text-center">
+                                </td>
+                                
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-12">
+                            <div>
+                              <div class="float-right mt-2">Agregar p&oacute;liza</div>
+                              <img class="float-right mr-2" src="../../../../../../assets/images/Iconos/add_blue.png">
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>    
+
+          </form>
+        </div>
+  
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col clearfix">
+                    <button class="btn btn-blue">Guardar y continuar m&aacute;s tarde</button>        
+                </div>
+                <div class="col clearfix">
+                    <button class="btn btn-blue" (click)="Anterior()">Anterior</button>&nbsp;&nbsp;
+                    <button class="btn btn-blue" (click)="Siguiente()">Siguiente</button>
+                </div>
+            </div>     
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <br/>
+  

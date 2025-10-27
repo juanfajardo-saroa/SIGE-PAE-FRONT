@@ -1,0 +1,750 @@
+<style>
+    .tableFiltroUsuario {
+        border-spacing: 0;
+        color: #005ACA;
+    }
+
+    .tableFiltroUsuario td {
+        text-align: center;
+        font-size: 13px !important;
+        color: #005ACA !important;
+        padding: 2.5px 10px;
+        border-top: 1px solid #005ACA;
+        border-right: 1px solid #005ACA;
+        border-bottom: 1px solid #005ACA;
+    }
+
+    .tableFiltroUsuario td b {
+        color: #005ACA;
+        font-size: 13px !important;
+    }
+
+    .tableFiltroUsuario td div {
+        color: #005ACA;
+        font-weight: 500;
+        font-size: 13px !important;
+    }
+
+    .tableFiltroUsuario td:first-child {
+        border-left: 1px solid #005ACA;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .tableFiltroUsuario td:last-child {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .tableUsuarios th,
+    .tableUsuarios td {
+        font-size: 13px;
+    }
+
+    table.tableUsuarios thead th:last-child {
+        border-top-right-radius: 20px !important;
+    }
+
+    table.tableFormUsuarios tr td {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        color: #005ACA;
+        font-size: 14px;
+    }
+
+    table.tableFormUsuarios tr td:first-child {
+        padding-left: 35px;
+    }
+
+    table.tableFormUsuarios tr td:last-child {
+        padding-right: 35px;
+    }
+
+    input,
+    select {
+        border: 1px #005ACA solid;
+        padding: 3px 10px;
+        width: 100%;
+        color: #005ACA;
+    }
+
+    input:not(.noRadius),
+    select:not(.noRadius) {
+        border-radius: 5px;
+    }
+
+    .cssForm {
+        font-size: 12px;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    .tableFiltroUsuario i {
+        font-size: 25px;
+    }
+
+    .btn.btn-middle {
+        background-color: aliceblue;
+        border: 1px solid aliceblue;
+    }
+
+    .btn.btn-high {
+        background-color: #005ACA !important;
+        border: 1px solid #005ACA !important;
+    }
+
+    .custom-input-text {
+        border: 1px solid #005ACA !important;
+        border-top-color: rgb(0, 90, 202);
+        border-right-color: rgb(0, 90, 202);
+        border-bottom-color: rgb(0, 90, 202);
+        border-left-color: rgb(0, 90, 202);
+        border-radius: 8px !important;
+        font-family: "Montserrat", sans-serif;
+        font-size: 13px;
+        color: #005ACA;
+        padding: 0px 8px !important;
+        margin: 0px 0px 0px 8px !important;
+        background-color: #ffffff;
+    }
+
+    .input-text-2-3 {
+        width: 39%;
+    }
+
+    .input-text-2-2 {
+        width: 33%;
+    }
+
+    .table-row-expand tbody tr td {
+        border-right: none !important;
+    }
+
+    .table-row-expand tbody tr td:last-child {
+        border-right: 1px solid #005ACA !important;
+    }
+</style>
+
+<body>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="tab-control-items d-flex">
+                <div class="tab-item">
+                    <h3> Contratos </h3>
+                </div>
+                <div class="flex-grow-1 tab-item-blank"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--          ITEM 1            -->
+    <div *ngIf="itemActivo == 1">
+        <form class="form-default-inline" (ngSubmit)="onSubmit(contrato, 1)" #contrato="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <div class="panel panel-blue">
+                        <div class="panel-header no-border-bottom text-center">
+                            <h4 class="panel-title">Registro &uacute;nico de Contratos - Supervisi&oacute;n</h4>
+                        </div>
+                        <div class="panel-body nb-r" >
+                            <div class="form-item col-12">
+                                <div class="col ml-3 row">
+                                    <label for="exampleFormControlInput1" class="form-label">
+                                        1. N&uacute;mero del contrato:
+                                    </label>
+                                    <div class="col-8">
+                                        <input type="text" class="input-text" id="numeroContrato" name="numeroContrato"
+                                            [(ngModel)]="item1.numeroContrato" maxlength="100" required
+                                            #numeroContrato="ngModel">
+                                        <br>
+                                        <label [hidden]="numeroContrato.valid || numeroContrato.pristine" class="label"
+                                            style="color:red">El número de contrato es requerido</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-item col-12">
+                                <div class="col ml-3 ng-autocomplete row">
+                                    <label for="exampleFormControlInput1" class="form-label">
+                                        2. Empresa interventora u Operador:
+                                    </label>
+                                    <select id="empresaInterventora" name="empresaInterventora" type="text"
+                                        class="form-control" [(ngModel)]="item1.idEmpresaInterventora" required
+                                        (ngModelChange)="empresaInterventoraChangeFn($event)"
+                                        #empresaInterventora="ngModel">
+                                        <option value="" selected>Buscar por nombre</option>
+                                        <option *ngFor="let operador of dataOperadores" [ngValue]="operador.id">
+                                            {{operador.nombreRazonSocial}}</option>
+                                    </select>
+                                    <select type="text" class="form-control" id="nitEmpresaInterventora"
+                                        name="nitEmpresaInterventora" style="width: 160px;"
+                                        [(ngModel)]="item1.idEmpresaInterventora" required
+                                        (ngModelChange)="empresaInterventoraChangeFn($event)"
+                                        #nitEmpresaInterventora="ngModel">
+                                        <option value="" selected>Buscar por NIT</option>
+                                        <option *ngFor="let operador of dataOperadores" [ngValue]="operador.id">
+                                            {{operador.nit}}</option>
+                                    </select>
+                                    <label> &nbsp;- </label>
+                                    <input type="text" class="form-control" id="digitoVerificacion"
+                                        name="digitoVerificacion" style="width: 30px;" readonly [(ngModel)]="item1.dv"
+                                        #digitoVerificacion="ngModel">
+                                    <label [hidden]="empresaInterventora.valid || empresaInterventora.pristine"
+                                        class="label" style="color:red">El campo empresa interventora es
+                                        requerido</label>
+
+                                </div>
+                            </div>
+
+                            <div class="form-item col-12">
+                                <div class="col ml-3 row">
+                                    <label for="exampleFormControlInput1" class="form-label float-left">
+                                        3. Objeto del contrato:<br /> (Tal y como aparece <br /> en la versión
+                                        firmada)
+                                    </label>
+                                    <div class="col-10" style="padding-top:8px;">
+                                        <textarea id="objetoContrato" name="objetoContrato"
+                                            [(ngModel)]="item1.objetoContrato" class="input-textarea" rows="2" cols="60"
+                                            required #objetoContrato="ngModel">
+                                        </textarea>
+                                        <br>
+                                        <label [hidden]="objetoContrato.valid || objetoContrato.pristine" class="label"
+                                            style="color:red">El campo objeto de contrato es
+                                            requerido</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item col-12">
+                                <div class="col ml-3 row">
+                                    <label class="form-label">
+                                        4. Tipo de contrato CHIP:
+                                    </label>
+                                    <div class="col-8">
+                                        <select id="tipoContratoChip" class="input-text" name="tipoContratoChip"
+                                            [(ngModel)]="item1.tipoContratoChip" required #tipoContratoChip="ngModel">
+                                            <option value="" selected>Elija una opci&oacute;n</option>
+                                            <option *ngFor="let i of dataContratoChip" [ngValue]="i.id">{{i.nombre}}
+                                            </option>
+                                        </select>
+                                        <br>
+                                        <label [hidden]="tipoContratoChip.valid || tipoContratoChip.pristine"
+                                            class="label" style="color:red">El campo contrato chip es requerido</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer">
+                            <button class="btn btn-blue" (click)="item1Anterior()">Anterior</button>&nbsp;&nbsp;
+                            <button class="btn btn-blue" type="submit" [disabled]="contrato.invalid">Siguiente</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- ITEM 2  -->
+
+    <div *ngIf="itemActivo == 2">
+        <form class="form-default" (ngSubmit)="onSubmit(contrato1, 2)" #contrato1="ngForm">
+            <div class="row">
+                <div class="col-12">
+                    <div class="panel panel-blue">
+                        <div class="panel-header text-center noborder-bottom">
+                            <h4 class="panel-title">Registro &uacute;nico de Contratos - Supervisi&oacute;n</h4>
+                        </div>
+
+                        <ng-container>
+                            <div class="panel-body nb-r" >
+                                <div class="row">
+                                    <div class="col-12 col-lg clearfix" style="padding-left: 3px">
+                                        <app-chapterblue [numberChapter]="1"
+                                            [titleChapter]="'Detalles del proceso contractual'">
+                                        </app-chapterblue>
+                                        <br />
+                                    </div>
+
+
+                                    <div class="col-12 col-lg clearfix text-right pt-lg-down-0" style="padding: 20px">
+                                        <div class="msg-alerta">
+                                            <div>
+                                                <img src="../assets/images/Iconos/item1Supervision.png" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><br />
+
+                                <div class="form-item">
+                                    <div class="col-12 col-xl-6 d-flex flex-column flex-xl-row ml-0 ml-xl-3">
+                                        <label class="form-label" style="white-space: nowrap"> 1. Modalidad de
+                                            contrataci&oacute;n CHIP:</label>
+                                        <select id="contratacionCHIP" name="contratacionCHIP"
+                                            class="form-control w-75 w-down-100" [(ngModel)]="item2.contratacionCHIP"
+                                            required #contratacionCHIP="ngModel">
+                                            <option value="">Elija una opci&oacute;n</option>
+                                            <option *ngFor="let i of dataModalidadContratoChip" [ngValue]="i.id">
+                                                {{i.nombre}}</option>
+                                        </select>
+                                        <label [hidden]="contratacionCHIP.valid || contratacionCHIP.pristine"
+                                            class="label" style="color:red">La modalida de contratacion CHIP es
+                                            requerida</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-item">
+                                    <div class="col ml-0 ml-xl-3 d-flex flex-column flex-xl-row">
+                                        <label class="form-label">2. Contrato publicado en el SECOP o la TVEC:</label>
+                                        <div class="inline-block form-checkbox ml-xs">
+                                            <label id="contratoSECOP" name="contratoSECOP" class="check-si w-down-50"
+                                                [class]="contratoSecop ? 'active' : ''"
+                                                [(ngModel)]="item2.contratoSECOP" #contratoSECOP="ngModel"
+                                                (click)="changecontratoSECOP(true)"> Si </label>
+                                            <label id="contratoSECOP" name="contratoSECOP" class="check-no w-down-50"
+                                                [class]="!contratoSecop ? 'active' : ''"
+                                                [(ngModel)]="item2.contratoSECOP" #contratoSECOP="ngModel"
+                                                (click)="changecontratoSECOP(false)"> No </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="contratoSecop">
+                                    <div class="form-item btn-group" role="group" style="padding-left:25px;">
+                                        <div class="col ml-3 d-flex flex-column flex-xl-row">
+                                            <label class="form-label">
+                                                2.1. Plataforma:
+                                            </label>
+                                            <div class="inline-block ml-xs">
+                                                <div class="flex border-sm align-items-center">
+                                                    <div class="flex flex-grow-1" style="padding: 2px 10px;">
+                                                        <label class="text-basecolor no-margin">
+                                                            <input name="Plataforma" id="Plataforma" type="radio"
+                                                                style="width: auto !important;" [value]="1"
+                                                                [(ngModel)]="item2.plataforma" required
+                                                                #plataforma="ngModel">
+                                                            SECOP I
+                                                        </label>
+                                                    </div>
+                                                    <div class="flex flex-grow-1 border-left"
+                                                        style="padding: 2px 10px;">
+                                                        <label class="text-basecolor no-margin">
+                                                            <input name="Plataforma" id="Plataforma" type="radio"
+                                                                style="width: auto !important;" [value]="2"
+                                                                [(ngModel)]="item2.plataforma" required
+                                                                #plataforma="ngModel">
+                                                            SECOP II
+                                                        </label>
+                                                    </div>
+                                                    <div class="flex flex-grow-1 border-left"
+                                                        style="padding: 2px 10px;">
+                                                        <label class="text-basecolor no-margin">
+                                                            <input name="Plataforma" id="Plataforma" type="radio"
+                                                                style="width: auto !important;" [value]="3"
+                                                                [(ngModel)]="item2.plataforma" required
+                                                                #plataforma="ngModel">
+                                                            TVEC
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <table class="tableFiltroUsuario col-12 col-sm-5">
+                                                <tr>
+                                                    <td>
+                                                        <input type="radio" class="btn-check" [value]="1"
+                                                            name="Plataforma" id="Plataforma"
+                                                            [(ngModel)]="item2.plataforma" required
+                                                            #plataforma="ngModel">SECOP I
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" class="btn-check" [value]="2"
+                                                            name="Plataforma" id="Plataforma"
+                                                            [(ngModel)]="item2.plataforma" required
+                                                            #plataforma="ngModel">SECOP II
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" class="btn-check" [value]="3"
+                                                            name="Plataforma" id="Plataforma"
+                                                            [(ngModel)]="item2.plataforma" required
+                                                            #plataforma="ngModel">TVEC
+                                                    </td>
+                                                </tr>
+                                            </table> -->
+                                            <label [hidden]="plataforma.valid || plataforma.pristine" class="label"
+                                                style="color:red">La plataforma es requerida</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-item" style="padding-left:25px;">
+                                        <div class="col ml-3 d-flex flex-column flex-xl-row">
+                                            <label class="form-label" style="width: 265px;">
+                                                2.2. N° del proceso registrado en SECOP:
+                                            </label>
+                                            <input type="text" (keypress)="soloNumeros($event)"
+                                                class="input-text w-down-100" id="numeroRegistroSecop"
+                                                name="numeroRegistroSecop" [(ngModel)]="item2.numeroRegistroSecop"
+                                                maxlength="50" required #numeroRegistroSecop="ngModel">
+                                            <label
+                                                [hidden]="numeroRegistroSecop.valid || numeroRegistroSecop.pristine || fechaAdjudicacion.touched"
+                                                class="label" style="color:red">El número de registro SECOP es
+                                                requerido</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-item" style="padding-left:25px;">
+                                        <div class="col ml-3 d-flex flex-column flex-xl-row">
+                                            <label class="form-label" style="width: 265px;">
+                                                2.3. Link del contrato en SECOP:
+                                            </label>
+                                            <input type="text" class="input-text w-down-100" id="linkContratoSecop"
+                                                name="linkContratoSecop" [(ngModel)]="item2.linkContratoSecop"
+                                                maxlength="50" required #linkContratoSecop="ngModel">
+                                            <label [hidden]="linkContratoSecop.valid || linkContratoSecop.pristine"
+                                                class="label" style="color:red">El link del contrato SECOP es
+                                                requerido</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!contratoSecop" style="opacity:0.5;">
+                                    <div class="form-item btn-group" role="group" style="padding-left:25px;">
+                                        <div class="col ml-0 ml-xl-3 d-flex flex-column flex-xl-row">
+                                            <label class="form-label">
+                                                2.1. Plataforma:
+                                            </label>
+                                            <div class="inline-block ml-xs">
+                                                <div class="flex align-items-center border-sm">
+                                                    <div class="flex flex-grow-1" style="padding: 2px 10px;">
+                                                        <label class="text-basecolor no-margin">
+                                                            <input name="Plataforma" id="Plataforma" type="radio"
+                                                                style="width: auto !important;" [value]="1"
+                                                                [disabled]="true">
+                                                            SECOP I
+                                                        </label>
+                                                    </div>
+                                                    <div class="flex flex-grow-1 border-left"
+                                                        style="padding: 2px 10px;">
+                                                        <label class="text-basecolor no-margin">
+                                                            <input name="Plataforma" id="Plataforma" type="radio"
+                                                                style="width: auto !important;" [value]="2"
+                                                                [disabled]="true">
+                                                            SECOP II
+                                                        </label>
+                                                    </div>
+                                                    <div class="flex flex-grow-1 border-left"
+                                                        style="padding: 2px 10px;">
+                                                        <label class="text-basecolor no-margin">
+                                                            <input name="Plataforma" id="Plataforma" type="radio"
+                                                                style="width: auto !important;" [value]="3"
+                                                                [disabled]="true" />
+                                                            TVEC
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <table class="tableFiltroUsuario col-12 col-sm-5">
+                                                <tr>
+                                                    <td>
+                                                        <input type="radio" class="btn-check" [value]="1"
+                                                            name="Plataforma" id="Plataforma" disabled>SECOP I
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" class="btn-check" [value]="2"
+                                                            name="Plataforma" id="Plataforma" disabled>SECOP II
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" class="btn-check" [value]="3"
+                                                            name="Plataforma" id="Plataforma" disabled>TVEC
+                                                    </td>
+                                                </tr>
+                                            </table> -->
+                                        </div>
+                                    </div>
+                                    <div class="form-item" style="padding-left:25px;">
+                                        <div class="col-12 col-xl-6 d-flex ml-0 ml-xl-3 flex-column flex-xl-row">
+                                            <label class="form-label" style="white-space: nowrap; width: 265px;">
+                                                2.2. N° del proceso registrado en SECOP:
+                                            </label>
+                                            <input type="text" class="custom-input-text w-75 w-down-100"
+                                                id="numeroRegistroSecop" name="numeroRegistroSecop" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-item" style="padding-left:25px;">
+                                        <div class="col-12 col-xl-6 d-flex ml-0 ml-xl-3 flex-column flex-xl-row">
+                                            <label class="form-label" style="white-space: nowrap; width: 265px;">
+                                                2.3. Link del contrato en SECOP:
+                                            </label>
+                                            <input type="text" class="custom-input-text w-75 w-down-100"
+                                                id="linkContratoSecop" name="linkContratoSecop" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-item">
+                                    <div class="col-12 col-xl-4 d-flex flex-lg-down-column ml-0 ml-xl-3">
+                                        <label class="form-label"
+                                            style=" white-space: nowrap; min-width: 260px !important;">
+                                            3. Fecha de suscripci&oacute;n del contrato:
+                                        </label>
+                                        <div class="form-date" style="flex-grow: 1;">
+                                            <input type="date" class="custom-input-text w-100" name="fechaSuscripcion"
+                                                id="fechaSuscripcion" placeholder="dd/mm/yyyy"
+                                                [ngModel]="item2.fechaSuscripcion|date:'yyyy-MM-dd'"
+                                                (ngModelChange)="item2.fechaSuscripcion=$event" required
+                                                #fechaSuscripcion="ngModel">
+                                            <label
+                                                [hidden]="fechaSuscripcion.valid || fechaSuscripcion.pristine || fechaSuscripcion.touched"
+                                                class="label" style="color:red">La fecha de suscripci&oacute;n es
+                                                requerida</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-item">
+                                    <div class="col-12 col-xl-4 d-flex flex-lg-down-column ml-0 ml-xl-3">
+                                        <label class="form-label"
+                                            style=" white-space: nowrap; min-width: 260px !important;">
+                                            4. Fecha de adjudicación del contrato:
+                                        </label>
+                                        <div class="form-date" style="flex-grow: 1;">
+                                            <input type="date" class="custom-input-text w-100" name="fechaAdjudicacion"
+                                                id="fechaAdjudicacion" placeholder="dd/mm/yyyy"
+                                                [ngModel]="item2.fechaAdjudicacion|date:'yyyy-MM-dd'"
+                                                (ngModelChange)="item2.fechaAdjudicacion=$event" required
+                                                #fechaAdjudicacion="ngModel">
+                                            <label
+                                                [hidden]="fechaAdjudicacion.valid || fechaAdjudicacion.pristine || fechaAdjudicacion.touched"
+                                                class="label" style="color:red">La fecha de adjudicación es
+                                                requerida</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-item">
+                                    <div class="col-12 col-xl-4 d-flex flex-lg-down-column ml-0 ml-xl-3">
+                                        <label for="exampleFormControlInput1" class="form-label"
+                                            style="white-space: nowrap;  min-width: 260px !important;">
+                                            5. Fecha de inicio del contrato:
+                                        </label>
+                                        <div class="form-date" style="flex-grow: 1;" st>
+                                            <input type="date" name="inicioContrato" id="inicioContrato"
+                                                class="custom-input-text w-100" placeholder="dd/mm/aaaa"
+                                                [ngModel]="contrato.fechalnicioContrato|date:'yyyy-MM-dd'"
+                                                (ngModelChange)="contrato.fechalnicioContrato=$event"
+                                                #inicioContrato="ngModel" required>
+                                            <label [hidden]="inicioContrato.valid || inicioContrato.pristine"
+                                                class="label" style="color:red">La fecha de inicio del contrato es
+                                                requerida</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-item">
+                                    <div class="col-12 col-xl-4 d-flex flex-lg-down-column ml-0 ml-xl-3">
+                                        <label for="exampleFormControlInput1" class="form-label"
+                                            style="white-space: nowrap;  min-width: 260px !important;">
+                                            6. Fecha de terminaci&oacute;n del contrato:
+                                        </label>
+                                        <div class="form-date" style="flex-grow: 1;">
+                                            <input type="date" class="custom-input-text w-100" name="finContrato"
+                                                id="finContrato" placeholder="dd/mm/aaaa"
+                                                [ngModel]="contrato.fechaFinalContrato|date:'yyyy-MM-dd'"
+                                                (ngModelChange)="contrato.fechaFinalContrato=$event"
+                                                #finContrato="ngModel" required />
+                                            <label [hidden]="finContrato.valid || finContrato.pristine" class="label"
+                                                style="color:red">La fecha de fin del contrato es requerida</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-item">
+                                    <div class="col-12 col-xl-4 d-flex flex-lg-down-column ml-0 ml-xl-3">
+                                        <label class="form-label"
+                                            style="white-space: nowrap;  min-width: 260px !important;">
+                                            7. Valor total del contrato:
+                                        </label>
+                                        <input type="text" class="custom-input-text w-25 w-down-100" id="valorContrato"
+                                            name="valorContrato" (keyup)="getValorAnticipo()"
+                                            (keypress)="soloNumeros($event)" [(ngModel)]="item3.valorContrato"
+                                            maxlength="30" required #valorContrato="ngModel">
+                                        <label [hidden]="valorContrato.valid || valorContrato.pristine" class="label"
+                                            style="color:red">El valor del contrato es requerido</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer pt-xxl pb-xxl">
+                                <div class="row">
+                                    <div class="col-12 col-xl clearfix">
+                                        <button class="btn btn-blue w-down-100"
+                                            (click)="continuarLuego(contrato1.value, 2);finalizar()">Guardar y continuar
+                                            m&aacute;s tarde</button>
+                                    </div>
+                                    <div
+                                        class="col-12 col-xl d-xl-block d-flex flex-column-reverse flex-xl-row gap-down-15-px clearfix">
+                                        <button class="btn btn-blue w-down-100" (click)="Anterior(1)">Anterior</button>
+                                        <button class="btn btn-blue w-down-100" type="submit"
+                                            [disabled]="contrato1.invalid">Siguiente</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br />
+
+    <!--    ITEM 3    -->
+
+    <br />
+
+    <!--    ITEM 4    -->
+
+    <!--    ITEM 5    -->
+
+    <div *ngIf="itemActivo == 3">
+        <div>
+            <div class="form-default-inline">
+                <div class="col-12 mb-3">
+                    <div class="panel panel-blue">
+                        <div class="panel-header no-border-bottom text-center">
+                            <h4 class="panel-title">Registro &uacute;nico de Contratos - Supervisi&oacute;n</h4>
+                        </div>
+                        <div class="panel-body nb-r" >
+                            <div class="row">
+                                <div class="col-12 col-lg clearfix" style="padding-left: 3px">
+                                    <app-chapterblue [numberChapter]="2" [titleChapter]="'Información presupuestal'">
+                                    </app-chapterblue>
+                                    <br />
+                                </div>
+                                <div class="col-12 col-lg clearfix text-right pt-lg-down-0" style="padding: 20px">
+                                    <div class="msg-alerta">
+                                        <div>
+                                            <img src="../assets/images/Iconos/item2Supervision.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="form-item" style="padding-left: 15px">
+
+                                <label class="form-label">
+                                    1. Fuentes de financiaci&oacute;n presupuestal destinadas a
+                                    cubrir el costo del contrato:
+                                </label>
+                                <app-informacion-presupuestal [iD_Contrato]="contrato.id" [TipoFuncionalida]="1"
+                                    (data)="actualizarGranTotal($event)"></app-informacion-presupuestal>
+                            </div>
+                            <div class="form-item">
+                                <div class="d-flex mb-2 flex-column flex-xl-row">
+                                    <div class="title-suma-total w-down-100">
+                                        <label class="form-label ml-lg-down-0" style="margin-left: 6px">
+                                            2. Suma total de las fuentes de financiaci&oacute;n
+                                            registradas:
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input id="input-suma-total" type="text"
+                                            class="form-control w-down-100 ml-lg-down-0 disabledWithoutOpacity"
+                                            name="txtSumaTotalFuentesFinanciacion"
+                                            [ngModel]="dataTotalGeneralContratado.totalFuentesFinanciacion | currency: '$' : 'symbol' : '1.0-2'"
+                                            placeholder="Autom&aacute;tico" />
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-column flex-xl-row">
+                                    <div class="col-12 col-xl-9 px-lg-down-0 warning-container">
+                                        <div class="d-flex align-items-center container-icon">
+                                            &nbsp;&nbsp;
+                                            <img style="width: 50px; height: 50px"
+                                                src="../assets/images/Iconos/alert.png" /> &nbsp;&nbsp;
+                                            <br>
+                                            <label for="exampleFormControlInput1" class="labelred"
+                                                style="color: rgb(228, 52, 102)">
+                                                Aseg&uacute;rese de que el valor total de las fuentes de
+                                                financiaci&oacute;n coincida con el valor total del
+                                                contrato.
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-xl-6 ml-0 ml-xl-4 px-lg-down-0">
+                                        <div class="w-down-100" style="width: 193px;
+                                border-bottom: 1px solid rgb(228, 52, 102);
+                                border-left: 1px solid rgb(228, 52, 102);
+                                border-right: 1px solid rgb(228, 52, 102);
+                                border-radius: 10px 10px 0px 0px;">
+                                            <div class="text-center" style="border-radius: 10px 10px 0px 0px;
+                                                    background-color: rgb(228, 52, 102);">
+                                                <h6 class="panel-title" style="color: white">
+                                                    COSTO TOTAL
+                                                </h6>
+                                            </div>
+                                            <div class="text-center">
+                                                <h6 class="panel-title" id="lblCostoTotal"
+                                                    style="color: rgb(228, 52, 102)">
+                                                    {{ dataTotalGeneralContratado.valorTotal | currency: '$' : 'symbol'
+                                                    : '1.0-2' }}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+
+                            <div class="form-item d-flex flex-column flex-xl-row">
+                                <label for="" class="form-label pl-down-0" style="width: auto; padding-left: 20px;">
+                                    3. PDF del contrato: &nbsp;&nbsp;&nbsp;
+                                </label>
+                                <div style="display: inline-block; overflow: hidden;">
+                                    <div class="btn-fileUpload w-down-100 wmx-down-lg-100"
+                                        (click)="uploadPDFContrato()">
+                                        <span>Adjunte el archivo</span>
+                                        <img class="float-right ml-3"
+                                            src="../../../../../../assets/images/Iconos/input-file.png">
+                                        <input class="" type="file" id="fileUpload" name="fileUpload"
+                                            accept="application/pdf">
+                                    </div>
+                                    <a class="visorPDF" (click)="abrirPDF(modalPDF)">
+                                        {{ fileName }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer pt-xxl pb-xxl">
+                            <div class="row">
+                                <div class="col-12 col-xl clearfix">
+                                    <button class="btn btn-blue w-down-100" (click)="finalizar()">Guardar y continuar
+                                        m&aacute;s
+                                        tarde</button>
+                                </div>
+                                <div
+                                    class="col-12 col-xl d-xl-block d-flex flex-column-reverse flex-xl-row gap-down-15-px clearfix">
+                                    <button class="btn btn-blue w-down-100 mr-4" (click)="Anterior(2)">Anterior</button>
+                                    <button class="btn btn-blue w-down-100" (click)="guardarItem4()">Finalizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #modalPDF>
+        <div class="col-12 text-right mt-xs mb-xs">
+            <a class="btn-link" (click)="dismissAllModal()">
+                Cerrar
+                <mat-icon>clear</mat-icon>
+            </a>
+        </div>
+        <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+            [showPresentationModeButton]="true" [showDownloadButton]="true">
+        </ngx-extended-pdf-viewer>
+    </ng-template>
+
+</body>

@@ -1,0 +1,350 @@
+
+ @import '/src/assets/styles/variable.scss';
+.BordeSuperior{
+  border-top: 1px solid $base-color;
+}
+button{
+  background-color: #fff;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: #fff 1px solid;
+  margin: 10px;
+}
+button:hover {
+  cursor: pointer;
+}
+
+.botonImprimir{
+  background-color: white;
+  border-radius: 20px;
+  border: white 1px solid;
+  width: 50px;
+}
+.linkdisable{
+  pointer-events: none;
+  visibility: hidden;
+}
+
+button:disabled{
+  background-color: gray;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+}
+
+/* .SizeDialog{
+ // width: 50vw!important;
+} */
+table{
+  width: 100%;
+  padding: 0px 30px;
+}
+.TextosBlueLeft{
+  text-align: left;
+  color: $base-color;
+}
+td{
+  width: 50%;
+}
+.CenterButton{  
+   margin: auto;
+  display: -webkit-inline-box;
+  //width: 100%;
+}
+
+::ng-deep.button{
+  background-color: $base-color!important;
+  color: #fff!important;
+  border-radius: 20px;
+  border: $base-color 1px solid;
+  margin: auto;
+  display: block;
+}
+
+::ng-deep.mat-dialog-container {
+  padding: 0px !important;
+  border-radius:30px 30px 30px 30px !important;
+  border: $base-azulPAE 1px solid;
+  box-shadow: none;
+  min-width: 50%;
+}
+mat-form-field{
+  border-radius:20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff!important;
+  padding: 2%!important;
+  
+}
+mat-card-header{
+  padding-bottom: 20px;
+}
+.TituloDialog{
+  background-color: #E6EFFD;
+  /* padding: 10px 20px; */
+  text-align: center;
+  color: $base-color;
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+.buttonAr3 {
+  background-color: $base-color;
+  color: #fff;
+  border-radius: 50px;
+  border: 1px solid $base-color;
+  padding: 2%;
+  font-size: 16px;
+  cursor: pointer;   
+  float: left; margin-left: 10px; margin-top:10px;margin-bottom: 10px;
+  width: 100%;
+}
+
+.mat-dialog-content {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  max-height: 65vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.BordeSuperior{
+  border-top: 1px solid $base-color;
+}
+.form-control{
+  border: none!important;
+}
+
+img {
+  height: 30px;
+  align-items: center;
+  margin: auto;
+}
+
+.titletable3{
+  width: 100%;
+  border-radius: 12px 12px 0px 0px !important;
+  border: 1px solid $base-color;
+}
+
+.LeftUpCorner2{
+  border-top-right-radius:20px;
+  
+}
+.titletable2{
+  text-align: center!important;
+  background-color: #E2ECFD !important;
+  color: $base-color!important;
+  width: 100%;
+  padding: 4px 75px!important;
+  margin-bottom: -1px !important;
+  border-radius: 12px 12px 0px 0px !important;
+  border: 1px solid $base-color;
+}
+.botondeim{
+  text-align: right;
+  margin-right: 50px;
+  margin-left: auto;
+}
+.imgroter{
+  transform: rotate(270deg);
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  color: $base-color;
+  font-size: 13px;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+  border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 24px;
+  border-right: 1px solid;
+}
+
+td.mat-cell {
+  padding: 16px 0 16px 0;
+  border-bottom: 1px dotted $base-azulPAE;
+  //border-style: dotted;
+}
+
+table thead {
+  background-color: $header_table !important;
+  color: $base-color;
+  border: 1px solid;
+}
+
+table thead th {
+  border-top: 1px solid $base-azulPAE;
+  border-right: 1px solid $base-azulPAE;
+  padding: 20px;
+}
+
+table thead th:first-child {
+  border-left: 1px solid $base-azulPAE;
+  border-top-left-radius: 20px !important;
+}
+
+table td:first-child {
+  border-left: 1px solid $base-azulPAE;
+}
+
+table.left-radius thead th:first-child {
+  border-top-left-radius: 20px !important;
+  border-left: 10px solid $base-azulPAE;
+}
+
+table.right-radius thead th:last-child {
+  border-top-right-radius: 20px;
+  border-left: 1px solid $base-azulPAE;
+}
+
+.textagregar {
+  color: $base-color;
+}
+
+table tbody {
+  color: $base-color;
+}
+
+table tbody td {
+  border-bottom: 1px dashed $base-color !important;
+}
+
+table tbody tr td:first-child {
+  border-left: 1px solid $base-color;
+}
+
+table tbody tr td:last-child {
+  border-right: 1px solid $base-color;
+}
+
+table tbody tr:last-child td {
+  border-bottom: 1px solid $base-color;
+  border-bottom-style: solid !important;
+}
+
+td.mat-cell:first-of-type {
+  padding-left: 0 px !important;
+}
+
+.titletable {
+  float: right;
+  background-color: $base-color !important;
+  color: #fff!important;
+  width: fit-content;
+  padding: 4px 75px!important;
+  margin-bottom: -1px !important;
+  border-radius: 12px 12px 0px 0px !important;
+}
+
+.buttonAr {
+  color: $base-color;
+  border-color: $base-color;
+  padding: 14px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 12px 12px 12px 12px !important;
+}
+
+.espaciobutton {
+  margin-left: 5px !important;
+}
+
+// .mat-table::ng-deep {
+//   border: 1px solid $base-azulPAE;
+// }
+th.mat-header-cell {
+  text-align: center !important;
+  background-color: #E2ECFD !important;
+  //color: #fff!important;
+  width: fit-content;
+  padding: 0px 100px!important;
+  margin-bottom: -1px !important;
+  border: 1px solid $base-azulPAE;
+  //padding: 20px !important;
+}
+
+.red {
+  background-color: red;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.green {
+  background-color: green;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.yellow {
+  background-color: yellow;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.mat-row:hover .mat-cell {
+  background-color: $base-color;
+  color: #ffffff;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+
+.LeftUpCorner{
+  border-top-left-radius:20px;
+  
+}
+
+.LeftUpCorner2{
+  border-top-right-radius:20px;
+  
+}
+.CancelButton{
+  background-color: $base-azulPAE;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-azulPAE 1px solid;
+}

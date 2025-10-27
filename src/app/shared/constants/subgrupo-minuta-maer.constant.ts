@@ -1,0 +1,4 @@
+export enum SubgrupoMinutaMAER {
+    HUEVOS = 19,
+    LEGUMINOSAS_COCIDAS_Y_MEZCLAS_VEGETALES_COCIDAS = 7
+}

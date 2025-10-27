@@ -1,0 +1,47 @@
+
+<div class="row" style="margin-top: 40px;" [ngClass]="{'linkdisable':!getModulePermission(45,'ver')}">
+  <div class="col-12">
+      <div class="row">
+          <div class="col-12">
+              <div class="tab-control-secondary">
+                <div *ngIf="dis">
+                    <div id="disponible" class="tab-item pestanaCC active" (click)="cargarPTNpreparacion($event)" style="width: 33.33333%;">
+                        <div>PAC - Consolidado vigencia </div>
+                    </div>
+                    <div id="aprobacion" class="tab-item pestanaCC" (click)="cargarPTNpreparacion($event)" style="width: 33.33333%;">
+                        <div>PAC - Consolidado mensual</div>
+                    </div>
+                    <div class="tab-item nothing" style="width: 33.33333%;">
+                        <div>-</div>
+                    </div>
+
+                </div>
+                <div *ngIf="apr">
+                    <div id="disponible" class="tab-item pestanaCC " (click)="cargarPTNpreparacion($event)" style="width: 33.33333%;">
+                        <div>PAC - Consolidado vigencia </div>
+                    </div>
+                    <div id="aprobacion" class="tab-item pestanaCC active" (click)="cargarPTNpreparacion($event)" style="width: 33.33333%;">
+                        <div>PAC - Consolidado mensual</div>
+                    </div>
+                    <div class="tab-item nothing" style="width: 33.33333%;">
+                        <div>-</div>
+                    </div>
+
+                </div>
+                  
+              </div>
+          </div>
+      </div>
+
+      <div class="row" style="margin-bottom: 40px;" *ngIf="tipoSeleccionado==1">
+          <div class="col-12">
+            <app-consolidado-vigencia></app-consolidado-vigencia>
+          </div>
+      </div>
+      <div class="row" style="margin-bottom: 40px;" *ngIf="tipoSeleccionado==2">
+          <div class="col-12">
+            <app-consolidado-mensual></app-consolidado-mensual>
+          </div>
+      </div>
+  </div>
+</div>

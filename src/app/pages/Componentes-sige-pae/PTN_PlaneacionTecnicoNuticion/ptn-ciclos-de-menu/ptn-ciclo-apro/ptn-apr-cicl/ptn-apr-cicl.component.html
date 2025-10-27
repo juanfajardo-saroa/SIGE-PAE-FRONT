@@ -1,0 +1,2659 @@
+<div class="row" style="margin-top: 40px;">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <div class="tab-control-secondary d-flex">
+          <div id="disponible" class="tab-item pestanaCC w-down-auto d-flex" (click)="cargarPTNpreparacion($event)"
+            style="width: 33.33333%;">
+            <div>Ciclos de menús disponibles </div>
+          </div>
+          <div id="aprobacion" class="tab-item pestanaCC active w-down-auto d-flex" (click)="cargarPTNpreparacion($event)"
+            style="width: 33.33333%;">
+            <div>Ciclos en proceso de aprobación</div>
+          </div>
+          <div class="tab-item nothing d-flex w-down-100" style="width: 33.33333%;">
+            <div>-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 40px;" *ngIf="tipoSeleccionado==1">
+      <div class="col-12">
+        <app-ptn-ciclo-interno [idOpcionSeleccionado]="1"></app-ptn-ciclo-interno>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 40px;" *ngIf="tipoSeleccionado==2">
+      <div class="col-12">
+
+        <div class="sub d-flex flex-column d-sm-block justify-content-between">
+          <div class="d-flex flex-row align-items-center">
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-287.png " height="30px" width="auto">
+            <span style="color:#E43466 !important; margin-left: 10px; ">Ciclo de menús: {{nombreCiclo}}</span>
+          </div>
+
+          <button *ngIf="nombreEstado=='Rechazado' ||nombreEstado=='Por Aprobar' ||nombreEstado=='Pendiente' " [ngClass]="{'linkdisable':!getModulePermission(109,'editar')}" (click)="Editar()"
+            class="BordeRedondoAgregar mb-0" style="margin-left: 10px; margin-top:9px; float: right;" mat-raised-button>
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-3.png" alt="" height="14px" width="auto"
+              style="margin-right: 10px;">Editar ciclo
+          </button>
+          <button (click)="RegresarAprobaciones()" class="BordeRedondoAgregar mb-0"
+            style="margin-left: 10px; margin-top:9px; float: right;" mat-raised-button>
+            <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-295.png" alt="" height="20px" width="auto"
+              style="margin-right: 10px; ">Regresar al listado
+          </button>
+        </div>
+        <hr class="linea">
+        <!-- fin Resultados de preparacion -->
+        <!------inicio nombre del estado -->
+        <div>
+          <span style="color:#E43466 !important; margin-left: 10px; ">
+            <mat-icon [ngStyle]="{'color': colorEstado}">
+              {{ nombreEstado ? 'circle' : 'circle'}}
+            </mat-icon>
+            {{nombreEstado}}
+          </span>
+        </div>
+        <!------fin nombre del estado -->
+
+        <!--------inicio informacion general----------->
+        <div class="d-flex flex-auto w-full min-w-80 w-down-100 p-xl-4 pl-0 py-4 lt-xl:w-1/2">
+          <div style="float: left;">
+            <div style="float: left; background-color: #E43466; padding: 10px;">
+              <div style="height: 24px; width: 24px; background-color: #ffffff;
+                                border-radius: 50%; text-align: center; color: #E43466 !important; font-weight: 500; padding-top: 3px;
+                                ">1
+              </div>
+            </div>
+            <div class="ml-minus-1-px"
+              style="display: inline-block; background-color: #E43466; padding: 12px 0px 12px 0px; color: #ffffff !important;">
+              Información general
+            </div>
+            <div style="background-color: #E43466; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+                                  margin-left: -26px;float: right;">
+            </div>
+          </div>
+          <br>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="100">
+
+            <div class="d-flex flex-column">
+
+              <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0"> 1. Nombre del ciclo de menús: </div>
+                <div class="flex-basis-0 flex-grow-2">
+                  <input matInput id="pathDocumentoContrato" [readonly]="EsSoloLectura" value={{nombreCiclo}} class="tablaform5 w-down-100 box-sz-border-box" />
+                </div>
+              </div>
+
+              <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">2. Menú empleado como referencia: </div>
+                <div class="flex-basis-0 flex-grow-2">
+                  <input matInput id="pathDocumentoContrato" [readonly]=true value={{nombreReferencia}}
+                    class="tablaform5 w-down-100 box-sz-border-box" />
+                </div>
+              </div>
+
+              <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">3. Modelo de operación del ciclo de menús: </div>
+                <div class="flex-basis-0 flex-grow-2">
+                  <input matInput id="pathDocumentoContrato" [readonly]=true value={{nombreModeloOP}}
+                      class="tablaform5 w-down-100 box-sz-border-box" />
+                </div>
+              </div>
+
+              <ng-container *ngIf="preg">
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">4. Modalidad del ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreModalidad}}
+                        class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">5. Tipo de complemento del ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreTipoComplemento}}
+                        class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">6. Minuta para validar el ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreMinuta}} class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">7. Zonas para las cuales aplica el ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreZonas}} class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">8. Usa los mismos menús para todos los niveles educativos:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <div class="Ajustar">
+                      <mat-button-toggle-group disabled class="buttontog " [value]="NivelEducativo" required
+                        aria-label="seleccion">
+                        <div *ngFor="let escala of escala" style="border-left: 1px solid #005ACA; width: 50px;">
+                          <mat-button-toggle [value]="escala.id">
+                            {{escala.respuesta}}
+                          </mat-button-toggle>
+                        </div>
+                      </mat-button-toggle-group>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">9. Cantidad de menús que conforman el ciclo:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" [readonly]="EsSoloLectura" value={{cantidad}} required
+                        class="tablaform6 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+              </ng-container>
+
+              <ng-container *ngIf="preg1">
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">4. Minuta para validar el ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreMinuta}} class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">5. Tipo de complemento del ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreTipoComplemento}}
+                        class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">6. Cantidad de menús que conforman el ciclo:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" [readonly]="EsSoloLectura" value={{cantidad}} required
+                        class="tablaform6 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+              </ng-container>
+
+              <ng-container *ngIf="preg2">
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">4. Modalidad del ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreModalidad}}
+                        class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">5. Tipo de complemento del ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreTipoComplemento}}
+                        class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">6. Minuta para validar el ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreMinuta}} class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+              </ng-container>
+
+              <ng-container *ngIf="preg5">
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">7. Zonas para las cuales aplica el ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreZonas}} class="tablaform5 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">8. Niveles educativos para los cuales aplica el ciclo de menús:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" required [readonly]=true value={{nombreNivel2}} class="tablaform5  w-down-100 box-sz-border-box" />
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">9. Usa los mismos menús para todos los niveles educativos:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <div class="Ajustar">
+                      <mat-button-toggle-group disabled class="buttontog " [value]="NivelEducativo" required
+                        aria-label="seleccion">
+                        <div *ngFor="let escala of escala" style="border-left: 1px solid #005ACA; width: 50px;">
+                          <mat-button-toggle [value]="escala.id">
+                            {{escala.respuesta}}
+                          </mat-button-toggle>
+                        </div>
+                      </mat-button-toggle-group>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">10. Cantidad de menús que conforman el ciclo:</div>
+                  <div class="flex-basis-0 flex-grow-2" >
+                    <input matInput id="nombre" [readonly]="EsSoloLectura" value={{cantidad}} required
+                        class="tablaform6 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+              </ng-container>
+
+              <ng-container *ngIf="preg6">
+
+                <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                  <div class="TextosBlueLeft flex-basis-0 flex-grow-1 mx-lg-down-0 mb-lg-down-0">7. Cantidad de menús que conforman el ciclo:</div>
+                  <div class="flex-basis-0 flex-grow-2">
+                    <input matInput id="nombre" [readonly]="EsSoloLectura" value={{cantidad}} required
+                        class="tablaform6 w-down-100 box-sz-border-box" />
+                      <div class="invalid-feedback">
+                      </div>
+                  </div>
+                </div>
+
+              </ng-container>
+
+            </div>
+
+
+          </div>
+        </div>
+        <!--------fin informacion general----------->
+
+        <!--------inicio informacion nutricional ingredientes----------->
+        <div class="d-flex flex-auto flex-column flex-xl-row w-full min-w-80 p-xl-4 py-4 px-0 lt-xl:w-1/2">
+          <div class="d-flex" style="float: left;">
+            <div style="float: left; background-color: #E43466; padding: 10px;">
+              <div style="height: 24px; width: 24px; background-color: #ffffff;
+                                border-radius: 50%; text-align: center; color: #E43466 !important; font-weight: 500; padding-top: 3px;
+                                ">2
+              </div>
+            </div>
+            <div class="ml-minus-1-px"
+              style="display: inline-block; background-color: #E43466; padding: 12px 0px 12px 0px; color: #ffffff !important;">
+              Menús
+            </div>
+            <div class="ml-minus-1-px" style="background-color: #E43466; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;float: right;">
+            </div>
+          </div>
+          <div class="d-flex flex-column flex-xl-row align-items-center" *ngIf="maem" >
+            <div class="w-down-100" style="padding-left: 20px;
+                    color: #E43466!important;
+                    padding-top: 10px;">Ver los menús de la Zona:
+            </div>
+            <div style="max-width: 100px;min-width: 150px;
+                      padding-left: 10px;
+                      padding-top: 7px;" class="RedSelect wmx-down-lg-100 w-down-100">
+              <mat-select class="tablaform7 RedSelect" id="Modalidad" (selectionChange)="semanaclic($event.value)"
+                [value]="id_Zona">
+                <mat-option style="padding-left: 5px; color: #E43466!important;" *ngFor="let i of ZonasList2"
+                  [value]="i.id" class="RedSelect">
+                  {{i.nombre}}
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+
+        </div>
+        <br>
+        <br>
+        <div *ngIf="semana">
+
+          <div *ngIf="semana &&  semanaSeleccionada=='semana 1' && semanaSiguiente =='semana 2'"
+            style="border-top: #005ACA 1px solid; width: 30%; position: absolute; margin: 1.7% 0% 0% 50%;">-</div>
+          <div *ngIf="semana &&  semanaSeleccionada=='semana 1'&& semanaSiguiente ==''"
+            [ngClass]="{'invisibleClass':!showFirst, 'visibleClass':showFirst}"
+            style="border-top: #005ACA 1px solid; width: 0% !important; position: absolute; margin: 1.7% 25% 0% 20%;">-</div>
+          <div *ngIf="semana &&  semanaSeleccionada=='semana 2' &&   semanaSiguiente==''"
+            [ngClass]="{'invisibleClass':!showFirst, 'visibleClass':showFirst}"
+            style="border-top: #005ACA 1px solid; width: 20%; position: absolute; margin: 1.7% 25% 0% 20%;">-</div>
+            <div *ngIf="semana &&  semanaSeleccionada==semanaUltima && semanaAnterior !='' "
+            style="border-top: #005ACA 1px solid; width: 20%; position: absolute; margin: 1.7% 25% 0% 20%;">-</div>
+          <div *ngIf="semana &&  semanaAnterior !='' && semanaSeleccionada != semanaUltima && semanaSiguiente == semanaSiguiente  "
+            style="border-top: #005ACA 1px solid; width: 60%; position: absolute; margin: 1.7% 25% 0% 20%;">-</div>
+           
+          <div class="col-12 d-flex d-xl-block justify-content-center align-items-flex-start">
+            <div [class]="item.active ? 'active': ''" *ngFor="let item of semanaList;let i = index"
+              (click)="seleccionarTab(item)">
+            </div>
+            <button class="semanaButton marginButton" (click)="goBack()"
+              [ngClass]="{'invisibleClass':!showFirst, 'visibleClass':showFirst}">
+              {{ semanaAnterior }}
+            </button>
+            <div class="arrow-icons">
+              <button mat-icon-button class="butonsemana" (click)="goBack()"
+                [ngClass]="{'invisibleClass':!showFirst, 'visibleClass':showFirst}">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+              </button>
+            </div>
+            <button class="semanaButton2 w-down-auto marginButton2" (click)="SelectButton(semanaSeleccionada)">
+              {{ semanaSeleccionada }}
+            </button>
+            <div class="arrow-icons">
+              <button mat-icon-button class="butonsemana" (click)="goForward()"
+                [ngClass]="{'invisibleClass':!showLast, 'visibleClass':showLast}">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
+            </div>
+            <button class="semanaButton marginButton3" (click)="goForward()"
+              [ngClass]="{'invisibleClass':!showLast, 'visibleClass':showLast}">
+              {{ semanaSiguiente }}
+            </button>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <!----------------dias--------------------->
+          <div class="BordeTotal">
+
+            <mat-tab-group class="RegistroCiclo" style="margin: -25px 0 0 0!important"
+              [selectedIndex]="selectedTabIndex" (selectedIndexChange)="myTabFocusChange($event)">
+              <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+                <div>
+                  <mat-card-content class="text-center">
+                    <mat-dialog-content class="mat-typography">
+                      <br />
+                      <!-------------MAEM-------------->
+                      <ng-container *ngIf="maem">
+                        <!-----------------Nivel educativo----------------------->
+                        <div class="col2">
+                          <div>
+                            <mat-selection-list *ngIf="NivelEducativoList && NivelEducativoList.length > 0" class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+                              (selectionChange)="onNivelEducativoChange1(modeloTList.selectedOptions.selected)">
+                              <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList" [value]="element">
+                                <div class="center-vertically">
+                                  {{element}}
+                                </div>
+                              </mat-list-option>
+                            </mat-selection-list>
+                          </div>
+
+
+
+                        </div>
+                        <br>
+                        <br>
+                        <!---------------------Menu Preparacion---------------------------------->
+                        <hr *ngIf="Preparaciones" class="lineaPre">
+                        <div *ngIf="Preparaciones">
+                          <div class="Titulo2">Preparaciones del menú del {{diasText |
+                            lowercase}}, para {{gradoText}}:</div>
+                          <br>
+                          <div class="panel-body">
+                            <div class="row">
+                              <div class="col ">
+
+                                <mat-card style="width: 50%;">
+                                  <mat-card-content>
+                                    <table mat-table [dataSource]="dataSourcePreparacion " class="left-radius" matSort>
+
+                                      <ng-container matColumnDef="Preparacion">
+                                        <th class="LeftUpCorner LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                          style="padding-left: 0px;     min-width: 220px; ">
+                                          Preparación
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 0px; text-align: center; border-top: 1px solid; border-right: 1px solid; ">
+                                          {{element.sID_Preparacion}}
+                                        </td>
+                                      </ng-container>
+
+
+                                      <tr mat-header-row *matHeaderRowDef="displayedColumnsPreparacion "></tr>
+                                      <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsPreparacion; ">
+                                      </tr>
+                                    </table>
+
+                                  </mat-card-content>
+                                </mat-card>
+
+
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                        <!-------------------informacion nutricional del menu ------------------------->
+                        <hr *ngIf="Preparaciones" class="lineaPre">
+                        <div *ngIf="Preparaciones">
+                          <div class="Titulo2">Información nutricional del menú del {{diasText |
+                            lowercase}}, para {{gradoText}}:
+                          </div>
+                          <br>
+                          <div class="UbicaEstado mx-lg-down-0">
+                            <div class="EstadoItems d-flex flex-column flex-xl-row w-down-100">
+                              <div class="SeparadorItemsDown w-down-100" style="width: 15%; text-align: center;">Estado:</div>
+                              <div class="w-down-100 border-down-none" style="border-left: 1px dashed; width: 40%;">
+                                <div class="SeparadorItemsUp">
+                                  <mat-icon
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important; margin-right: 10px;">
+                                    circle
+                                  </mat-icon>Pendiente
+                                </div>
+                                <div class="SeparadorItemsDown">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="19px">
+                                  En el rango permitido
+                                </div>
+                              </div>
+                              <div class="w-down-100" style="width: 40%;">
+                                <div class="SeparadorItemsUp">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="19px">
+                                  Por encima del rango permitido
+                                </div>
+                                <div class="SeparadorItemsDown">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="19px">
+                                  Por debajo del rango permitido
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                          <!-----------macro--------------->
+                          <div class="marg overflow-auto">
+                            <table mat-table [dataSource]="dataSourceMacro">
+
+                              <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto wmx-down-lg-100 p-lg-down-1" style="max-width: 50px;">
+                                  No. </th>
+                                <td class="wmx-down-lg-100 p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="max-width: 50px; border-top: 1px solid; border-right: 1px dashed; text-align: left; padding-left: 10px">
+                                  {{element.titulo}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="energia">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto"> Name </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div
+                                  *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                  {{element.energia == null ? '0%' : element.energia |
+                                  percent}}
+                                  <mat-icon
+                                  *ngIf="(element.icoenergia==null || element.icoenergia==undefined || element.icoenergia==0)"
+                                  style="color: #E2E6FE!important;">
+                                  circle
+                                </mat-icon>
+                                <img
+                                  *ngIf="element.icoenergia==1"
+                                  src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                  class="imagendeta" style="height:15px">
+                                <img
+                                  *ngIf="element.icoenergia==3"
+                                  src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                  class="imagendeta" style="height:15px">
+                                <img
+                                  *ngIf="element.icoenergia==2"
+                                  src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                  class="imagendeta" style="height:15px">
+                                </div>
+                                <div
+                                  *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                  {{element.energia == null ? '0' :element.energia}}
+
+                                </div>
+                                </td>
+                              </ng-container>
+
+
+                              <ng-container matColumnDef="proteina">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef> Proteína (g) </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.proteina == null ? '0%' : element.proteina |
+                                    percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icoproteina==null || element.icoproteina==undefined || element.icoproteina==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icoproteina==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icoproteina==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icoproteina==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.proteina == null ? '0' :element.proteina}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="cabohidrato">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef> Carbohidratos <br>
+                                  totales (g) </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.carbohidrato == null ? '0%' : element.carbohidrato
+                                    | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icocarbohidrato==null || element.icocarbohidrato==undefined || element.icocarbohidrato==0)"
+                                    style="color: #E2E6FE!important">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.carbohidrato == null ? '0' :element.carbohidrato
+                                    }}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaTotal">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef> Grasas <br> totales (g)
+                                </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.grasaTotal == null ? '0%' : element.grasaTotal |
+                                    percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icograsaTotal==null || element.icograsaTotal==undefined || element.icograsaTotal==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icograsaTotal==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icograsaTotal==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icograsaTotal==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.grasaTotal == null ? '0' :element.grasaTotal }}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaSaturada">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef> Grasas <br> saturadas (g)
+                                </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.grasaSaturada == null ? '0%' :
+                                    element.grasaSaturada | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icograsaSaturada==null || element.icograsaSaturada==undefined || element.icograsaSaturada==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icograsaSaturada==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icograsaSaturada==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icograsaSaturada==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.grasaSaturada == null ? '0'
+                                    :(element.grasaSaturada)| number:'1.2-2'}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.grasaSaturada == null ? '0' :element.grasaSaturada }}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <!-- HEADERS -->
+
+                              <ng-container matColumnDef="titulo1">
+                                <th class="NoVer p-lg-down-1" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">No hay nada aqui
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo2">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="LeftUpCorner"
+                                  style="border-left: 1px solid;">
+                                  <b>Energía (kcal)</b>
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo3">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="LeftUpCorner2">
+                                  <b>Macronutrientes</b>
+                                </th>
+                              </ng-container>
+
+                              <tr mat-header-row *matHeaderRowDef="['titulo1','titulo2','titulo3']"></tr>
+                              <tr mat-header-row *matHeaderRowDef="displayedColumnsMacro"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumnsMacro;">
+                              </tr>
+                            </table>
+                          </div>
+                          <br>
+                          <!-----------micro--------------->
+                          <div class="marg overflow-auto">
+                            <table mat-table [dataSource]="dataSourceMicro">
+
+                              <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto wmx-down-lg-100 p-lg-down-1" style="max-width: 50px;">
+                                  No. </th>
+                                <td class="wmx-down-lg-100 p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="max-width: 50px; border-top: 1px solid; border-right: 1px dashed;text-align: left;padding-left: 10px;">
+                                  {{element.titulo}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="energia">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef
+                                  style="border-left: 1px solid;"> Calcio (mg) </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.calcio == null ? '0%' : element.calcio | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icocalcio==null || element.icocalcio==undefined || element.icocalcio==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icocalcio==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icocalcio==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icocalcio==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.calcio == null ? '0' :element.calcio}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="proteina">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef> Hierro (mg) </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.hierro == null ? '0%' : element.hierro | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icohierro==null || element.icohierro==undefined || element.icohierro==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icohierro==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icohierro==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icohierro==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.hierro == null ? '0' :element.hierro}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="cabohidrato">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef> Sodio (mg) </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.sodio == null ? '0%' : element.sodio | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icosodio==null || element.icosodio==undefined || element.icosodio==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icosodio==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf="element.icosodio==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf="element.icosodio==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.sodio == null ? '0' :element.sodio}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaTotal">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef> Vitamina A (ER) </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    No aplica
+                                  </div>
+
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    No aplica
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.vitamina == null ? '0' :element.vitamina}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaSaturada">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef> Zinc (mg) </th>
+                                <td class="p-lg-down-1" mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid;">
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    No aplica
+                                  </div>
+
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    No aplica
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.zinc == null ? '0' :element.zinc}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <!-- HEADERS -->
+
+                              <ng-container matColumnDef="titulo1">
+                                <th class="NoVer p-lg-down-1" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">No hay nada aqui
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo3">
+                                <th class="p-lg-down-1" mat-header-cell *matHeaderCellDef [attr.colspan]="5"
+                                  class="LeftUpCorner LeftUpCorner2" style="border-left: 1px solid;">
+                                  <b>Micronutrientes</b>
+                                </th>
+                              </ng-container>
+
+                              <tr mat-header-row *matHeaderRowDef="['titulo1','titulo3']"></tr>
+                              <tr mat-header-row *matHeaderRowDef="displayedColumnsMicro"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumnsMicro;">
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <br>
+                        <!----------------------componentes------------------------>
+                        <hr *ngIf="Preparaciones" class="lineaPre">
+                        <div *ngIf="Preparaciones">
+                          <div class="Titulo2">Componentes incluídos en el menú del {{diasText |
+                            lowercase}}, para {{gradoText}}:</div>
+                          <br>
+                          <div class="Titulo2">A. Obligatorios:</div>
+                          <div style="display:flex;flex-wrap: wrap;">
+                            <div  *ngFor="let com of frecuencia">
+                              <div style="float: left;"  *ngIf="com.frecuencia==5">
+                                <div class="ItemsObligatorios"
+                                [ngClass]="{disabled: !comp1  && com.idComponente ===1  || !comp2  && com.idComponente ===2 || !comp3  && com.idComponente ===3 || !comp4  && com.idComponente ===4 || !comp5  && com.idComponente ===5 || !comp6  && com.idComponente ===6 || !comp7  && com.idComponente ===7 || !comp8  && com.idComponente ===8 || !comp9  && com.idComponente ===9 || !comp10  && com.idComponente ===10 || !comp11  && com.idComponente ===11 || !comp12  && com.idComponente ===12 || !comp13  && com.idComponente ===13}">
+                                  <img *ngIf="com.idComponente ==1"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-261.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==2"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-262.png"
+                                    height="30px" style="padding-right:10px;">
+                                  <img *ngIf="com.idComponente ==3"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-266.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==4"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-268.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==5"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-272.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==6"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-273.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==7"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-276.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==8"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-296.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==9"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-266.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==10"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-264.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==11"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-270.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==12"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-274.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==13"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-275.png"
+                                    height="30px" style="padding-right:10px;">
+                                  <div>
+                                    {{com.componente}}
+
+                                    <button class="figure" mat-icon-button *ngIf="(this.CiclosMenusObject[0].iD_TipoModalidadComplemento==1 || this.CiclosMenusObject[0].iD_TipoModalidadComplemento==3) && com.idComponente ==2 && this.CiclosMenusObject[0].iD_TipoComplemento==1"
+                                      matTooltip="“Tenga en cuenta las siguientes reglas: 1) Deben incluirse preparaciones con carnes, mínimo cuatro veces por semana; 2) Se podrá incluir preparaciones con huevo máximo una vez por semana; 3) Máximo dos veces por semana podrán ofrecerse leguminosas. En estos casos, las preparaciones de leguminosa deben ir siempre acompañadas una vez a la semana por huevo y  otra por carne.”"
+                                      style="border: 0px !important; background: transparent !important; "
+                                      matTooltipPosition="above">
+                                      <!-- <mat-icon>info</mat-icon> -->
+                                      <img
+                                        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-292.png"
+                                        alt="" height="20px" width="auto">
+                                    </button>
+                                  </div>
+
+                                </div>
+                                <br>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="Titulo2">B. Opcionales:</div>
+                          <div style="display:flex;flex-wrap: wrap;">
+                            <div  *ngFor="let com of frecuencia">
+                              <div style="float: left;"  *ngIf="com.frecuencia!=5">
+                                <div class="ItemsObligatorios"
+                                [ngClass]="{disabled: !comp1  && com.idComponente ===1  || !comp2  && com.idComponente ===2 || !comp3  && com.idComponente ===3 || !comp4  && com.idComponente ===4 || !comp5  && com.idComponente ===5 || !comp6  && com.idComponente ===6 || !comp7  && com.idComponente ===7 || !comp8  && com.idComponente ===8 || !comp9  && com.idComponente ===9 || !comp10  && com.idComponente ===10 || !comp11  && com.idComponente ===11 || !comp12  && com.idComponente ===12 || !comp13  && com.idComponente ===13}">
+                                  <img *ngIf="com.idComponente ==1"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-261.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==2"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-262.png"
+                                    height="30px" style="padding-right:10px;">
+                                  <img *ngIf="com.idComponente ==3"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-266.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==4"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-268.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==5"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-272.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==6"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-273.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==7"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-276.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==8"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-296.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==9"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-266.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==10"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-264.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==11"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-270.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==12"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-274.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==13"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-275.png"
+                                    height="30px" style="padding-right:10px;">
+                                  <div>
+                                    {{com.componente}}
+
+                                    <button class="figure" mat-icon-button *ngIf="(this.CiclosMenusObject[0].iD_TipoModalidadComplemento==1 || this.CiclosMenusObject[0].iD_TipoModalidadComplemento==3) && com.idComponente ==2 && this.CiclosMenusObject[0].iD_TipoComplemento==1"
+                                      matTooltip="“Tenga en cuenta las siguientes reglas: 1) Deben incluirse preparaciones con carnes, mínimo cuatro veces por semana; 2) Se podrá incluir preparaciones con huevo máximo una vez por semana; 3) Máximo dos veces por semana podrán ofrecerse leguminosas. En estos casos, las preparaciones de leguminosa deben ir siempre acompañadas una vez a la semana por huevo y  otra por carne.”"
+                                      style="border: 0px !important; background: transparent !important; "
+                                      matTooltipPosition="above">
+                                      <!-- <mat-icon>info</mat-icon> -->
+                                      <img
+                                        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-292.png"
+                                        alt="" height="20px" width="auto">
+                                    </button>
+                                  </div>
+
+                                </div>
+                                <br>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!---------------------Menu Productos industralizados---------------------------------->
+                        <hr *ngIf="Productos" class="lineaPre">
+                        <div *ngIf="Productos">
+                          <div class="Titulo2">Productos del menú del {{diasText |
+                            lowercase}}, para {{gradoText}}:</div>
+                          <br>
+                          <div class="panel-body">
+                            <div class="row">
+                              <div class="col ">
+
+                                <mat-card style="width: 50%;">
+                                  <mat-card-content>
+                                    <table mat-table [dataSource]="dataSourceProducto " class="left-radius" matSort>
+                                      <!-- Nombre del documento Column -->
+                                      <ng-container matColumnDef="Preparacion">
+                                        <th class="LeftUpCorner
+                                LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                          style="padding-left: 0px;     min-width: 220px; ">
+                                          Producto
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 0px; text-align: center; border-top: 1px solid; border-right: 1px solid;">
+                                          {{element.sID_Producto}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- Fecha de actualización Column -->
+
+
+
+                                      <tr mat-header-row *matHeaderRowDef="displayedColumnsPreparacion "></tr>
+                                      <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsPreparacion; ">
+                                      </tr>
+                                    </table>
+                                    <!--  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons></mat-paginator> -->
+                                    <!-- <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+                                            <mat-progress-spinner color="primary" mode="indeterminate">
+                                            </mat-progress-spinner>
+                                          </div> -->
+                                  </mat-card-content>
+                                </mat-card>
+
+
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                        <!-------------------informacion nutricional del menu ------------------------->
+                        <hr *ngIf="Productos" class="lineaPre">
+                        <div *ngIf="Productos">
+                          <div class="Titulo2">Información nutricional del menú del {{diasText |
+                            lowercase}}, para {{gradoText}}:
+                          </div>
+                          <br>
+                          <div class="UbicaEstado">
+                            <div class="EstadoItems">
+                              <div class="SeparadorItemsDown">Estado:</div>
+                              <div style="border-left: 1px dashed;">
+                                <div class="SeparadorItemsUp">
+                                  <mat-icon
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;margin-left: 10px;">
+                                    circle
+                                  </mat-icon>Pendiente
+                                </div>
+                                <div class="SeparadorItemsDown">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="19px">
+                                  En el rango permitido
+                                </div>
+                              </div>
+                              <div>
+                                <div class="SeparadorItemsUp">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="19px">
+                                  Por encima del rango permitido
+                                </div>
+                                <div class="SeparadorItemsDown">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="19px">
+                                  Por debajo del rango permitido
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                          <!-----------macro--------------->
+                          <div class="marg">
+                            <table mat-table [dataSource]="dataSourceMacro">
+
+                              <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto" style="max-width: 50px!important;">
+                                  No. </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="max-width: 50px!important; border-top: 1px solid; border-right: 1px dashed; text-align: left;padding-left: 10px;">
+                                  {{element.titulo}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="energia">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto"> Name </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div
+                                  *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                  {{element.energia == null ? '0%' : element.energia |
+                                  percent}}
+                                  <mat-icon
+                                  *ngIf="(element.icoenergia==null || element.icoenergia==undefined || element.icoenergia==0)"
+                                  style="color: #E2E6FE!important;">
+                                  circle
+                                </mat-icon>
+                                <img
+                                  *ngIf="element.icoenergia==1"
+                                  src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                  class="imagendeta" style="height:15px">
+                                <img
+                                  *ngIf="element.icoenergia==3"
+                                  src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                  class="imagendeta" style="height:15px">
+                                <img
+                                  *ngIf="element.icoenergia==2"
+                                  src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                  class="imagendeta" style="height:15px">
+                                </div>
+                                <div
+                                  *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                  {{element.energia == null ? '0' :element.energia}}
+
+                                </div>
+                                </td>
+                              </ng-container>
+
+
+                              <ng-container matColumnDef="proteina">
+                                <th mat-header-cell *matHeaderCellDef> Proteína (g) </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.proteina == null ? '0%' : element.proteina |
+                                    percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icoproteina==null || element.icoproteina==undefined || element.icoproteina==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icoproteina==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icoproteina==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icoproteina==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.proteina == null ? '0' :element.proteina}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="cabohidrato">
+                                <th mat-header-cell *matHeaderCellDef> Carbohidratos <br>
+                                  totales (g) </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.carbohidrato == null ? '0%' : element.carbohidrato
+                                    | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icocarbohidrato==null || element.icocarbohidrato==undefined || element.icocarbohidrato==0)"
+                                    style="color: #E2E6FE!important">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.carbohidrato == null ? '0' :element.carbohidrato
+                                    }}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaTotal">
+                                <th mat-header-cell *matHeaderCellDef> Grasas <br> totales (g)
+                                </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.grasaTotal == null ? '0%' : element.grasaTotal |
+                                    percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icograsaTotal==null || element.icograsaTotal==undefined || element.icograsaTotal==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icograsaTotal==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icograsaTotal==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icograsaTotal==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.grasaTotal == null ? '0' :element.grasaTotal }}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaSaturada">
+                                <th mat-header-cell *matHeaderCellDef> Grasas <br> saturadas (g)
+                                </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.grasaSaturada == null ? '0%' :
+                                    element.grasaSaturada | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icograsaSaturada==null || element.icograsaSaturada==undefined || element.icograsaSaturada==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icograsaSaturada==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icograsaSaturada==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icograsaSaturada==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.grasaSaturada == null ? '0'
+                                    :(element.grasaSaturada)| number:'1.2-2'}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.grasaSaturada == null ? '0' :element.grasaSaturada }}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <!-- HEADERS -->
+
+                              <ng-container matColumnDef="titulo1">
+                                <th class="NoVer" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">No hay nada aqui
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo2">
+                                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="LeftUpCorner"
+                                  style="border-left: 1px solid;">
+                                  <b>Energía (kcal)</b>
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo3">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="LeftUpCorner2">
+                                  <b>Macronutrientes</b>
+                                </th>
+                              </ng-container>
+
+                              <tr mat-header-row *matHeaderRowDef="['titulo1','titulo2','titulo3']"></tr>
+                              <tr mat-header-row *matHeaderRowDef="displayedColumnsMacro"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumnsMacro;">
+                              </tr>
+                            </table>
+                          </div>
+                          <br>
+                          <!-----------micro--------------->
+                          <div class="marg">
+                            <table mat-table [dataSource]="dataSourceMicro">
+
+                              <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto" style="max-width: 50px!important;">
+                                  No. </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="max-width: 50px!important; border-top: 1px solid; border-right: 1px dashed;text-align: left;padding-left: 10px">
+                                  {{element.titulo}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="energia">
+                                <th mat-header-cell *matHeaderCellDef
+                                  style="border-left: 1px solid;"> Calcio (mg) </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.calcio == null ? '0%' : element.calcio | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icocalcio==null || element.icocalcio==undefined || element.icocalcio==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icocalcio==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icocalcio==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icocalcio==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.calcio == null ? '0' :element.calcio}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="proteina">
+                                <th mat-header-cell *matHeaderCellDef> Hierro (mg) </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.hierro == null ? '0%' : element.hierro | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icohierro==null || element.icohierro==undefined || element.icohierro==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icohierro==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icohierro==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf=" element.icohierro==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.hierro == null ? '0' :element.hierro}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="cabohidrato">
+                                <th mat-header-cell *matHeaderCellDef> Sodio (mg) </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.sodio == null ? '0%' : element.sodio | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icosodio==null || element.icosodio==undefined || element.icosodio==0)"
+                                    style="color: #E2E6FE!important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icosodio==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf="element.icosodio==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png"
+                                    class="imagendeta" style="height:15px">
+                                  <img
+                                    *ngIf="element.icosodio==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png"
+                                    class="imagendeta" style="height:15px">
+                                  </div>
+                                  <div
+                                    *ngIf="element.nombre !='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.sodio == null ? '0' :element.sodio}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaTotal">
+                                <th mat-header-cell *matHeaderCellDef> Vitamina A (ER) </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid; border-right: 1px dashed;">
+
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    No aplica
+                                  </div>
+
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    No aplica
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.vitamina == null ? '0' :element.vitamina}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaSaturada">
+                                <th mat-header-cell *matHeaderCellDef> Zinc (mg) </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="border-top: 1px solid;">
+                                  <div
+                                    *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    No aplica
+                                  </div>
+
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    No aplica
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.zinc == null ? '0' :element.zinc}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <!-- HEADERS -->
+
+                              <ng-container matColumnDef="titulo1">
+                                <th class="NoVer" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">No hay nada aqui
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo3">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="5"
+                                  class="LeftUpCorner LeftUpCorner2" style="border-left: 1px solid;">
+                                  <b>Micronutrientes</b>
+                                </th>
+                              </ng-container>
+
+                              <tr mat-header-row *matHeaderRowDef="['titulo1','titulo3']"></tr>
+                              <tr mat-header-row *matHeaderRowDef="displayedColumnsMicro"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumnsMicro;">
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <br>
+                        <!----------------------componentes------------------------>
+                        <hr *ngIf="Productos" class="lineaPre">
+                        <div *ngIf="Productos">
+                          <div class="Titulo2">Componentes incluídos en el menú del {{diasText |
+                            lowercase}}, para {{gradoText}}:</div>
+                          <br>
+                          <div class="Titulo2">A. Obligatorios:</div>
+                          <div style="display:flex;flex-wrap: wrap;">
+                            <div  *ngFor="let com of frecuencia">
+                              <div style="float: left;"  *ngIf="com.frecuencia==5">
+                                <div class="ItemsObligatorios"
+                                [ngClass]="{disabled: !comp1  && com.idComponente ===1  || !comp2  && com.idComponente ===2 || !comp3  && com.idComponente ===3 || !comp4  && com.idComponente ===4 || !comp5  && com.idComponente ===5 || !comp6  && com.idComponente ===6 || !comp7  && com.idComponente ===7 || !comp8  && com.idComponente ===8 || !comp9  && com.idComponente ===9 || !comp10  && com.idComponente ===10 || !comp11  && com.idComponente ===11 || !comp12  && com.idComponente ===12 || !comp13  && com.idComponente ===13}">
+                                  <img *ngIf="com.idComponente ==1"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-261.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==2"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-262.png"
+                                    height="30px" style="padding-right:10px;">
+                                  <img *ngIf="com.idComponente ==3"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-266.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==4"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-268.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==5"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-272.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==6"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-273.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==7"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-276.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==8"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-296.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==9"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-266.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==10"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-264.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==11"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-270.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==12"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-274.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==13"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-275.png"
+                                    height="30px" style="padding-right:10px;">
+                                  <div>
+                                    {{com.componente}}
+
+                                    <button class="figure" mat-icon-button *ngIf="(this.CiclosMenusObject[0].iD_TipoModalidadComplemento==1 || this.CiclosMenusObject[0].iD_TipoModalidadComplemento==3) && com.idComponente ==2 && this.CiclosMenusObject[0].iD_TipoComplemento==1"
+                                      matTooltip="“Tenga en cuenta las siguientes reglas: 1) Deben incluirse preparaciones con carnes, mínimo cuatro veces por semana; 2) Se podrá incluir preparaciones con huevo máximo una vez por semana; 3) Máximo dos veces por semana podrán ofrecerse leguminosas. En estos casos, las preparaciones de leguminosa deben ir siempre acompañadas una vez a la semana por huevo y  otra por carne.”"
+                                      style="border: 0px !important; background: transparent !important; "
+                                      matTooltipPosition="above">
+                                      <!-- <mat-icon>info</mat-icon> -->
+                                      <img
+                                        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-292.png"
+                                        alt="" height="20px" width="auto">
+                                    </button>
+                                  </div>
+
+                                </div>
+                                <br>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="Titulo2">B. Opcionales:</div>
+                          <div style="display:flex;flex-wrap: wrap;">
+                            <div  *ngFor="let com of frecuencia">
+                              <div style="float: left;"  *ngIf="com.frecuencia!=5">
+                                <div class="ItemsObligatorios"
+                                [ngClass]="{disabled: !comp1  && com.idComponente ===1  || !comp2  && com.idComponente ===2 || !comp3  && com.idComponente ===3 || !comp4  && com.idComponente ===4 || !comp5  && com.idComponente ===5 || !comp6  && com.idComponente ===6 || !comp7  && com.idComponente ===7 || !comp8  && com.idComponente ===8 || !comp9  && com.idComponente ===9 || !comp10  && com.idComponente ===10 || !comp11  && com.idComponente ===11 || !comp12  && com.idComponente ===12 || !comp13  && com.idComponente ===13}">
+                                  <img *ngIf="com.idComponente ==1"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-261.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==2"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-262.png"
+                                    height="30px" style="padding-right:10px;">
+                                  <img *ngIf="com.idComponente ==3"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-266.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==4"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-268.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==5"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-272.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==6"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-273.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==7"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-276.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==8"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-296.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==9"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-266.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==10"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-264.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==11"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-270.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==12"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-274.png"
+                                    height="30px" style="padding-right:10px;">
+                                    <img *ngIf="com.idComponente ==13"
+                                    src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-275.png"
+                                    height="30px" style="padding-right:10px;">
+                                  <div>
+                                    {{com.componente}}
+
+                                    <button class="figure" mat-icon-button *ngIf="(this.CiclosMenusObject[0].iD_TipoModalidadComplemento==1 || this.CiclosMenusObject[0].iD_TipoModalidadComplemento==3) && com.idComponente ==2 && this.CiclosMenusObject[0].iD_TipoComplemento==1"
+                                      matTooltip="“Tenga en cuenta las siguientes reglas: 1) Deben incluirse preparaciones con carnes, mínimo cuatro veces por semana; 2) Se podrá incluir preparaciones con huevo máximo una vez por semana; 3) Máximo dos veces por semana podrán ofrecerse leguminosas. En estos casos, las preparaciones de leguminosa deben ir siempre acompañadas una vez a la semana por huevo y  otra por carne.”"
+                                      style="border: 0px !important; background: transparent !important; "
+                                      matTooltipPosition="above">
+                                      <!-- <mat-icon>info</mat-icon> -->
+                                      <img
+                                        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-292.png"
+                                        alt="" height="20px" width="auto">
+                                    </button>
+                                  </div>
+
+                                </div>
+                                <br>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </ng-container>
+                      <!-------------MAER-------------->
+                      <ng-container *ngIf="maer">
+                        <hr *ngIf="Preparaciones2" class="lineaPre">
+                        <div *ngIf="Preparaciones2">
+                          <div class="Titulo2">Preparaciones del menú del {{diasText |
+                            lowercase}}:</div>
+                          <br>
+                          <div class="panel-body">
+                            <div class="row">
+                              <div class="col ">
+
+                                <mat-card style="width: 50%;">
+                                  <mat-card-content>
+                                    <table mat-table [dataSource]="dataSourcePreparacion " class="left-radius" matSort>
+
+                                      <ng-container matColumnDef="Preparacion">
+                                        <th class="LeftUpCorner LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                          style="padding-left: 0px;     min-width: 220px; ">
+                                          Preparación
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 0px; text-align: center; border-top: 1px solid; border-right: 1px solid; ">
+                                          {{element.sID_Preparacion}}
+                                        </td>
+                                      </ng-container>
+
+
+                                      <tr mat-header-row *matHeaderRowDef="displayedColumnsPreparacion "></tr>
+                                      <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsPreparacion; ">
+                                      </tr>
+                                    </table>
+
+                                  </mat-card-content>
+                                </mat-card>
+
+
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                        <hr *ngIf="Preparaciones2" class="lineaPre">
+                        <div *ngIf="Preparaciones2">
+                          <div class="Titulo2">Información nutricional del menú del {{diasText |
+                            lowercase}}:
+                          </div>
+                          <br>
+                          <div class="UbicaEstado">
+                            <div class="EstadoItems">
+                              <div class="SeparadorItemsDown">Estado:</div>
+                              <div style="border-left: 1px dashed;">
+                                <div class="SeparadorItemsUp">
+                                  <mat-icon
+                                    style="color: #E2E6FE!important; height: 20px !important; width: 20px !important; margin-right: 10px !important;">
+                                    circle
+                                  </mat-icon>Pendiente
+                                </div>
+                                <div class="SeparadorItemsDown">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="19px">
+                                  En el rango permitido
+                                </div>
+                              </div>
+                              <div>
+                                <div class="SeparadorItemsUp">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="19px">
+                                  Por encima del rango permitido
+                                </div>
+                                <div class="SeparadorItemsDown">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="19px">
+                                  Por debajo del rango permitido
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                          <!-----------macro--------------->
+                          <div class="marg">
+                            <table mat-table [dataSource]="dataSourceMacro2">
+
+                              <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto" style="max-width: 50px!important;">
+                                  No. </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="max-width: 50px!important; border-top: 1px solid; border-right: 1px dashed;text-align: left;padding-left: 10px">
+                                  {{element.titulo}}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="energia">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto"> Name </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.energia2 == null ? '0%' : element.energia2 | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icoenergia2==null || element.icoenergia2==undefined || element.icoenergia2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icoenergia2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icoenergia2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icoenergia2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.energia == null ? '0%' : element.energia | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icoenergia==null || element.icoenergia==undefined || element.icoenergia==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icoenergia==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icoenergia==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icoenergia==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.energia == null ? '0' :element.energia}} - {{element.energia2 == null ?
+                                    '0' : element.energia2}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.energia == null ? '0' :element.energia}}
+                                  </div>
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="proteina">
+                                <th mat-header-cell *matHeaderCellDef> Proteína (g) </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.proteina2 == null ? '0%' : element.proteina2 |percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icoproteina2==null || element.icoproteina2==undefined ||element.icoproteina2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important; ">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icoproteina2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icoproteina2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icoproteina2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.proteina == null ? '0%' : element.proteina |percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icoproteina==null || element.icoproteina==undefined ||element.icoproteina==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icoproteina==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icoproteina==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icoproteina==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.proteina == null ? '0' :element.proteina}} - {{element.proteina2 == null ?
+                                    '0' :element.proteina2}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.proteina == null ? '0' :element.proteina}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="cabohidrato">
+                                <th mat-header-cell *matHeaderCellDef> Carbohidratos <br>
+                                  totales (g) </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.carbohidrato2 == null ? '0%' : element.carbohidrato2| percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icocarbohidrato2==null || element.icocarbohidrato2==undefined || element.icocarbohidrato2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icocarbohidrato2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icocarbohidrato2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icocarbohidrato2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.carbohidrato == null ? '0%' : element.carbohidrato | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icocarbohidrato==null || element.icocarbohidrato==undefined || element.icocarbohidrato==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icocarbohidrato==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre  =='Recomendación'">
+                                    {{element.carbohidrato == null ? '0' :element.carbohidrato}} -
+                                    {{element.carbohidrato2 == null ? '0' :element.carbohidrato2}}
+                                  </div>
+                                  <div *ngIf="element.nombre  =='Aporte estimado'">
+                                    {{element.carbohidrato == null ? '0' :element.carbohidrato}}
+                                  </div>
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaTotal">
+                                <th mat-header-cell *matHeaderCellDef> Grasas <br> totales (g)
+                                </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.grasaTotal2 == null ? '0%' : element.grasaTotal2 |percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icograsaTotal2==null || element.icograsaTotal2==undefined || element.icograsaTotal2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icograsaTotal2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icograsaTotal2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icograsaTotal2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.grasaTotal == null ? '0%' : element.grasaTotal |percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icograsaTotal==null || element.icograsaTotal==undefined || element.icograsaTotal==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icograsaTotal==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icograsaTotal==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icograsaTotal==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.grasaTotal == null ? '0' :element.grasaTotal }} - {{element.grasaTotal2 ==
+                                    null ? '0' :element.grasaTotal2 }}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.grasaTotal == null ? '0' :element.grasaTotal }}
+                                  </div>
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaSaturada">
+                                <th mat-header-cell *matHeaderCellDef> Grasas <br> saturadas (g)
+                                </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.grasaSaturada2 == null ? '0%' :
+                                    element.grasaSaturada2 | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icograsaSaturada2==null || element.icograsaSaturada2==undefined || element.icograsaSaturada2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icograsaSaturada2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icograsaSaturada2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icograsaSaturada2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.grasaSaturada == null ? '0%' : element.grasaSaturada | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icograsaSaturada==null || element.icograsaSaturada==undefined || element.icograsaSaturada==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf=" element.icograsaSaturada==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf=" element.icograsaSaturada==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icograsaSaturada==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre=='Recomendación'">
+                                    {{element.grasaSaturada2 == null ? '0'
+                                    :(element.grasaSaturada2)| number:'1.2-2'}} -
+                                    {{element.grasaSaturada == null ? '0'
+                                    :(element.grasaSaturada)| number:'1.2-2'}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.grasaSaturada == null ? '0' :element.grasaSaturada}}
+                                  </div>
+                                </td>
+                              </ng-container>
+
+                              <!-- HEADERS -->
+
+                              <ng-container matColumnDef="titulo1">
+                                <th class="NoVer" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">No hay nada aqui
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo2">
+                                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="LeftUpCorner"
+                                  style="border-left: 1px solid;">
+                                  <b>Energía (kcal)</b>
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo3">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="LeftUpCorner2">
+                                  <b>Macronutrientes</b>
+                                </th>
+                              </ng-container>
+
+                              <tr mat-header-row *matHeaderRowDef="['titulo1','titulo2','titulo3']"></tr>
+                              <tr mat-header-row *matHeaderRowDef="displayedColumnsMacro"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumnsMacro;">
+                              </tr>
+                            </table>
+                          </div>
+                          <br>
+                          <!-----------micro--------------->
+                          <div class="marg">
+                            <table mat-table [dataSource]="dataSourceMicro2">
+
+                              <ng-container matColumnDef="nombre">
+                                <th mat-header-cell *matHeaderCellDef class="Oculto" style="max-width: 50px!important;">
+                                  No. </th>
+                                <td mat-cell *matCellDef="let element"
+                                  style="max-width: 50px!important; border-top: 1px solid; border-right: 1px dashed;text-align: left;padding-left: 10px">
+                                  {{element.titulo}} </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="energia">
+                                <th mat-header-cell *matHeaderCellDef style="border-left: 1px solid;"> Calcio (mg) </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.calcio2 == null ? '0%' : element.calcio2 | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icocalcio2==null || element.icocalcio2==undefined || element.icocalcio2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important; ">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icocalcio2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icocalcio2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icocalcio2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.calcio == null ? '0%' : element.calcio | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icocalcio==null || element.icocalcio==undefined || element.icocalcio==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img *ngIf=" element.icocalcio==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf=" element.icocalcio==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icocalcio==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.calcio == null ? '0' :element.calcio}} - {{element.calcio2 == null ? '0'
+                                    :element.calcio2}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.calcio == null ? '0' :element.calcio}}
+                                  </div>
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="proteina">
+                                <th mat-header-cell *matHeaderCellDef> Hierro (mg) </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.hierro2 == null ? '0%' : element.hierro2 | percent}}
+                                    <mat-icon
+                                    *ngIf=" (element.icohierro2==null || element.icohierro2==undefined || element.icohierro2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icohierro2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icohierro2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icohierro2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.hierro == null ? '0%' : element.hierro | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icohierro==null || element.icohierro==undefined || element.icohierro==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important; ">
+                                    circle
+                                  </mat-icon>
+                                  <img *ngIf="element.icohierro==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icohierro==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icohierro==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.hierro == null ? '0' :element.hierro}} - {{element.hierro2 == null ? '0'
+                                    :element.hierro2}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.hierro == null ? '0' :element.hierro}}
+                                  </div>
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="cabohidrato">
+                                <th mat-header-cell *matHeaderCellDef> Sodio (mg) </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.sodio2 == null ? '0%' : element.sodio2 | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icosodio2==null || element.icosodio2==undefined || element.icosodio2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img *ngIf="element.icosodio2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icosodio2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icosodio2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.sodio == null ? '0%' : element.sodio | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icosodio==null || element.icosodio==undefined || element.icosodio==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img *ngIf="element.icosodio==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icosodio==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icosodio==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.sodio == null ? '0' :element.sodio}} - {{element.sodio2 == null ? '0'
+                                    :element.sodio2}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.sodio == null ? '0' :element.sodio}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaTotal">
+                                <th mat-header-cell *matHeaderCellDef> Vitamina A (ER) </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid; border-right: 1px dashed;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.vitamina2 == null ? '0%' : element.vitamina2 |
+                                    percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icovitamina2==null || element.icovitamina2==undefined || element.icovitamina2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icovitamina2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icovitamina2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icovitamina2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.vitamina == null ? '0%' : element.vitamina |
+                                    percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icovitamina==null || element.icovitamina==undefined || element.icovitamina==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img
+                                    *ngIf="element.icovitamina==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icovitamina==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img
+                                    *ngIf="element.icovitamina==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre  =='Recomendación'">
+                                    {{element.vitamina == null ? '0' :element.vitamina}} - {{element.vitamina2 == null ?
+                                    '0' :element.vitamina2}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.vitamina == null ? '0' :element.vitamina}}
+                                  </div>
+
+                                </td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="grasaSaturada">
+                                <th mat-header-cell *matHeaderCellDef> Zinc (mg) </th>
+                                <td mat-cell *matCellDef="let element" style="border-top: 1px solid;">
+                                  <div *ngIf="element.nombre =='Porcentaje de cumplimiento de la adecuación'">
+                                    {{element.zinc2 == null ? '0%' : element.zinc2 | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icozinc2==null || element.icozinc2==undefined || element.icozinc2==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important;">
+                                    circle
+                                  </mat-icon>
+                                  <img *ngIf="element.icozinc2==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icozinc2==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icozinc2==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                    - {{element.zinc == null ? '0%' : element.zinc | percent}}
+                                    <mat-icon
+                                    *ngIf="(element.icozinc==null || element.icozinc==undefined || element.icozinc==0)"
+                                    style="color: #E2E6FE!important;height: 20px !important; width: 20px !important; float:left">
+                                    circle
+                                  </mat-icon>
+                                  <img *ngIf="element.icozinc==1"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icozinc==3"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="15px">
+                                  <img *ngIf="element.icozinc==2"
+                                    src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="15px">
+                                  </div>
+                                  <div *ngIf="element.nombre =='Recomendación'">
+                                    {{element.zinc == null ? '0' :element.zinc}} - {{element.zinc2 == null ? '0'
+                                    :element.zinc2}}
+                                  </div>
+                                  <div *ngIf="element.nombre =='Aporte estimado'">
+                                    {{element.zinc == null ? '0' :element.zinc}}
+                                  </div>
+                                </td>
+                              </ng-container>
+
+
+                              <!-- HEADERS -->
+
+                              <ng-container matColumnDef="titulo1">
+                                <th class="NoVer" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">No hay nada aqui
+                                </th>
+                              </ng-container>
+                              <ng-container matColumnDef="titulo3">
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="5"
+                                  class="LeftUpCorner LeftUpCorner2" style="border-left: 1px solid;">
+                                  <b>Micronutrientes</b>
+                                </th>
+                              </ng-container>
+
+                              <tr mat-header-row *matHeaderRowDef="['titulo1','titulo3']"></tr>
+                              <tr mat-header-row *matHeaderRowDef="displayedColumnsMicro"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumnsMicro;">
+                              </tr>
+                            </table>
+                          </div>
+                          <br>
+                          <div class="Titulo3">*Recomendación: El valor inferior corresponde a
+                            Preescolar y el superior a Media.</div>
+                          <br>
+                          <div class="Titulo3">*Porcentaje de cumplimiento de la adecuación: El
+                            valor inferior corresponde a Media y el superior a Preescolar.</div>
+
+                        </div>
+                        <hr *ngIf="Preparaciones2" class="lineaPre">
+                        <div *ngIf="Preparaciones2">
+                          <div class="Titulo2">Intercambios estandarizados en el menú del
+                            {{diasText |
+                            lowercase}}:</div>
+                          <br>
+                          <div class="UbicaEstado2">
+                            <div class="EstadoItems">
+                              <div class="SeparadorItemsDown">Estado:</div>
+                              <div style="border-left: 1px dashed;">
+                                <div class="SeparadorItemsUp">
+                                  <mat-icon
+                                    style="color: #E2E6FE!important; height: 20px !important; width: 20px !important; margin-right: 10px !important;">
+                                    circle
+                                  </mat-icon>Pendiente
+                                </div>
+                                <div class="SeparadorItemsDown">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                    height="19px">
+                                  En el rango permitido
+                                </div>
+                              </div>
+                              <div>
+                                <div class="SeparadorItemsUp">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                    height="19px">
+                                  Por encima del rango permitido
+                                </div>
+                                <div class="SeparadorItemsDown">
+                                  <img src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                    height="19px">
+                                  Por debajo del rango permitido
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="panel-body">
+                            <div class="row">
+                              <div class="col ">
+
+                                <mat-card>
+                                  <mat-card-content>
+                                    <table mat-table [dataSource]="dataComponentes " class="left-radius" matSort>
+
+                                      <ng-container matColumnDef="nombre">
+                                        <th class="LeftUpCorner " mat-header-cell *matHeaderCellDef
+                                          style="padding-left: 0px;     min-width: 220px;  border-bottom: 1px solid;">
+                                          Grupo de alimentos
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" class="grupomaer"
+                                          style="border-right: 1px dashed; text-align: left !important;">
+                                          <img *ngIf="element.iD_GrupoAlimento==1"
+                                            src="../.././../assets/iconos_PAE/PNG/Íconos_PAE-264.png" height="30px"
+                                            style="padding-right:10px; width: 40px;margin-left: 10px;">
+                                          <img *ngIf="element.iD_GrupoAlimento==2"
+                                            src="../.././../assets/iconos_PAE/PNG/Íconos_PAE-271.png" height="30px"
+                                            style="padding-right:10px; width: 40px; margin-left: 10px;">
+                                          <img *ngIf="element.iD_GrupoAlimento==3"
+                                            src="../.././../assets/iconos_PAE/PNG/Íconos_PAE-275.png" height="30px"
+                                            style="padding-right:10px; width: 40px;margin-left: 10px;">
+                                          <img *ngIf="element.iD_GrupoAlimento==4"
+                                            src="../.././../assets/iconos_PAE/PNG/Íconos_PAE-262.png" height="30px"
+                                            style="padding-right:10px;width: 40px;margin-left: 10px;">
+                                          <img *ngIf="element.iD_GrupoAlimento==5"
+                                            src="../.././../assets/iconos_PAE/PNG/Íconos_PAE-273.png" height="30px"
+                                            style="padding-right:10px;width: 40px;margin-left: 10px;">
+                                          <img *ngIf="element.iD_GrupoAlimento==6"
+                                            src="../.././../assets/iconos_PAE/PNG/Íconos_PAE-274.png" height="30px"
+                                            style="padding-right:10px;width: 40px;margin-left: 10px;">
+                                          <img *ngIf="element.iD_GrupoAlimento==7"
+                                            src="../.././../assets/iconos_PAE/PNG/Íconos_PAE-276.png" height="30px"
+                                            style="padding-right:10px;width: 40px;margin-left: 10px;">
+                                          {{element.grupo}}
+                                        </td>
+                                      </ng-container>
+
+
+                                      <ng-container matColumnDef="valor">
+                                        <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                          style="padding-left: 3%; min-width: 220px; border-bottom: 1px solid;">
+                                          Cantidad de intercambios<br>
+                                          estandarizados en el menú
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 0px; text-align: center; ">
+                                          {{element.prestados == null ? '0': element.prestados |
+                                          number:'1.2-2'}}
+                                          <mat-icon
+                                            *ngIf=" element.pasa ==null || element.pasa ==undefined || element.pasa==0"
+                                            style="color: #E2E6FE!important;height: 20px !important; width: 20px !important; margin-left: 10px;">
+                                            circle
+                                          </mat-icon>
+                                          <img *ngIf=" element.pasa=='Si'"
+                                            src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-15.png" class="imagendeta"
+                                            style="height:15px;">
+                                          <img *ngIf="element.pasa=='No, más del máximo'"
+                                            src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-21.png" class="imagendeta"
+                                            style="height:15px;">
+                                          <img *ngIf="element.pasa=='No, menos del mínimo'"
+                                            src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-16.png" class="imagendeta"
+                                            style="height:15px;">
+                                        </td>
+                                      </ng-container>
+                                      <tr mat-header-row *matHeaderRowDef="displayedColumnsGrupo "></tr>
+                                      <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsGrupo; "></tr>
+                                    </table>
+
+                                  </mat-card-content>
+                                </mat-card>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                      </ng-container>
+                    </mat-dialog-content>
+                  </mat-card-content>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+
+          </div>
+          <!----------------semana--------------------->
+          <br>
+          <div *ngIf="maem || maer">
+            <app-ptn-apr-semana-cicl [idSemanas]="step"></app-ptn-apr-semana-cicl>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div [ngClass]="{'linkdisable':!getModulePermission(109,'aprobar')}">
+      <!--------inicio Aprobaciones ----------->
+      <div class="d-flex flex-auto w-full min-w-80 p-xl-4 py-4 pl-0 lt-xl:w-1/2">
+        <div style="float: left;" [matBadge]="cantAprobaciones" [matBadgeHidden]="cantAprobaciones===0">
+          <div style="float: left; background-color: #E43466; padding: 10px;">
+            <div style="height: 24px; width: 24px; background-color: #ffffff;
+                                  border-radius: 50%; text-align: center; color: #E43466 !important; font-weight: 500; padding-top: 3px;
+                                  ">3
+            </div>
+          </div>
+          <div class="ml-minus-1-px"
+            style="display: inline-block; background-color: #E43466; padding: 12px 0px 12px 0px; color: #ffffff !important;">
+            Aprobaciones
+          </div>
+          <div style="background-color: #E43466; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+                                    margin-left: -26px;float: right;">
+          </div>
+        </div>
+        <br>
+      </div>
+      <!--------fin Aprobaciones----------->
+      <br>
+      <div class="sub2">
+
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-131.png ">
+
+        <span style=" color: #ed0057 !important;">Aprobaciones pendientes</span>
+      </div>
+      <hr class="linea">
+      <br>
+      <!--fin titulo  de aprobaciones-->
+
+      <div *ngIf="!yaCargoAprobaciones">
+        <div style="display: flex;">
+          <div><img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-21.png "
+              style="width:30px; height: 30px; float:left;"></div>
+          <div style="padding-left:10px;">
+            <span class="textoinformativo"> El ciclo de menú estará listo para ser aprobado / rechazado una vez haya
+              <br> diligenciado el ciclo de menú y se encuentre en estado “Por Aprobar”.</span>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div *ngIf="yaCargoAprobaciones">
+
+        <!--inicio de aprobaciones-->
+       <!--  <div [formGroup]="form" fxLayout="row wrap">
+          <div fxFlex="100">
+            <table class="bordeado">
+              <ng-container>
+                <tr>
+                  <td colspan="2" class="BordeadoSup"> Decisión de aprobación</td>
+                </tr>
+                <tr class="TablaObservacion BordeadoInf">
+                  <td class="BordeNone">
+                    <div *ngFor="let item of AccionesAprobacionesList" style="text-align: center;">
+
+                      <button id="accionAprobacion{{item.id}}" value="{{item.id}}"
+                        [class]="idaccion === 0  ? 'buttonAprobar' : idaccion ===1 ? (idaccion === item.id  ? 'btverde':'buttonAprobar') :idaccion ===7 ? (idaccion === item.id   ? 'btrojo' :'buttonAprobar'):'buttonAprobar' "
+                        (click)="joinRoom(item)">{{item.nombre}}</button>
+                    </div>
+                  </td>
+
+                  <td class="inputFull">
+                    <div>
+                      <div class="TextosBlueLeft"> Observaciones / Justificaciones</div>
+                    </div>
+
+                    <input id="observaciones" formControlName="observaciones" class="form-control inputFull2"
+                      type="text" required />
+                    <div
+                      *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+                      class="invalid-feedback">
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+            <br>
+
+            <div fxLayout="row wrap ">
+
+              <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+                <div class="text-right ">
+                  <button [disabled]="!form.valid " style="margin-left: 20px; height: 40px;" (click)="mensaje()">
+                    <span>Enviar resultado</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div> -->
+        <div [formGroup]="form" fxLayout="row wrap">
+          <div fxFlex="100">
+
+            <div class="BordeRedondo">
+              <div class="BordeadoSup">
+                <span>Decisión de aprobación</span>
+              </div>
+              <div class="d-flex flex-lg-row flex-column-reverse">
+                <div class="borderRight border-down-md-none d-flex flex-column justify-content-center">
+                  <div *ngFor="let item of AccionesAprobacionesList" style="text-align: center;">
+                    <button id="accionAprobacion{{item.id}}"
+                      [class]="idaccion === 0  ? 'buttonAprobar' : idaccion ===1 ? (idaccion === item.id  ? 'btverde':'buttonAprobar') :idaccion ===7 ? (idaccion === item.id   ? 'btrojo' :'buttonAprobar'):'buttonAprobar' "
+                      (click)="joinRoom(item)">{{item.nombre}}</button>
+                  </div>
+                </div>
+                <div class="w-100 mt-3 ml-xl-1 ml-0">
+                  <div class="form-group m-0 px-lg-down-10-px">
+                    <label class="TextosBlueLeft" for="formControlObservaciones">Observaciones /
+                      Justificaciones*</label>
+                    <input id="observaciones" formControlName="observaciones"
+                      class="inputFull2 mx-sm-down-0 w-down-sm-100" type="text" required />
+                    <div
+                      *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+                      class="invalid-feedback">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div fxFlex="100">
+              <br>
+
+              <div fxLayout="row wrap ">
+
+                <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+                  <div class="text-right ">
+                    <button [ngClass]="{'linkdisable':!getModulePermission(89,'aprobar')}" [disabled]="!form.valid "
+                      style="margin-left: 20px; height: 40px;" class="butonApro" (click)="mensaje()">
+
+                      <span>Enviar resultado</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--fin de aprobaciones-->
+      <br>
+      <br>
+
+      <div class="sub2">
+
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-131.png ">
+
+        <span style=" color: #ed0057 !important;">Histórico de aprobaciones</span>
+      </div>
+      <hr class="linea">
+      <br>
+
+      <!-- inicio Historico-->
+      <div fxLayout="row wrap">
+        <div fxFlex="100">
+          <mat-card>
+            <mat-card-content>
+              <div class="table-responsive" style="padding-left: 0px !important;">
+
+                <table mat-table [dataSource]="dataSourceAprobaciones" class="left-radius" matSort>
+                  <ng-container matColumnDef="fecha">
+                    <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                      Fecha
+                    </th>
+                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                      {{element.fecha==null?'-': (element.fecha) }} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="responsable">
+                    <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                      Responsable </th>
+                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                      {{element.responsable==null?'-': (element.responsable)}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="rol">
+                    <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> Rol del
+                      responsable
+                    </th>
+                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                      {{element.rol==null?'-': (element.rol)}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="accion">
+                    <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> Acción
+                    </th>
+                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                      {{element.accion==null?'-': (element.accion)}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="observaciones">
+                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                      Observaciones / Justificaciones
+                    </th>
+                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                      {{element.observaciones==null?'-': (element.observaciones)}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsAprobaciones"></tr>
+                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsAprobaciones;"></tr>
+
+                </table>
+                <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+                </mat-paginator>
+
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- fin Historico-->
+
+
+      <!--------fin informacion nutricional ingredientes----------->
+
+    </div>
+
+
+  </div>
+</div>

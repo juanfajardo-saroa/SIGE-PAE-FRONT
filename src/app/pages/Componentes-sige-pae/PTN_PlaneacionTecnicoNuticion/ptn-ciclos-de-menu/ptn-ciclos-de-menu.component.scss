@@ -1,0 +1,86 @@
+@import '/src/assets/styles/variable.scss';
+
+* {
+  font-size: $base-fontSize;
+  //color: #004884;
+}
+
+/* --------------------------- TABS */
+
+::ng-deep .tab-control-secondary div {
+  font-size: 14px !important;
+}
+
+mat-select,
+::ng-deep.mat-select-placeholder,
+::ng-deep.mat-select-panel,
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text,
+::ng-deep .mat-select-arrow {
+  color: #005ACA !important;
+}
+
+:host ::ng-deep .mat-tab-label {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 20px 20px 0px 0px !important;
+  color: $base-color !important;
+  font-size: 15px !important;
+  background-color: #E2ECFD !important;
+  width: 30%;
+  margin: 0.5px;
+  border-bottom: $base-color 2px solid;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px !important;
+  border-width: 2px;
+  border-color: $base-color;
+  border-bottom-color: white;
+  border-style: solid solid hidden solid;
+  border-radius: 20px 20px 0px 0px !important;
+  color: $base-colorred !important;
+  background-color: white !important;
+  //width: 25%;
+}
+
+/* .mat-tab-header {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    border-bottom: $base-azulPAE 1px solid;
+} */
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+  /* background-color: #1e88e5; */
+}
+
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar,
+.blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+  /* background-color: #1e88e5; */
+
+}
+
+::ng-deep.mat-tab-label .mat-tab-label-content {
+  font-weight: 800 !important;
+}
+
+/* --------------------------- FIN TABS */
+:ng-deep.mat-select-value {
+
+  color: #005ACA !important;
+
+  font-size: 13px !important;
+
+}

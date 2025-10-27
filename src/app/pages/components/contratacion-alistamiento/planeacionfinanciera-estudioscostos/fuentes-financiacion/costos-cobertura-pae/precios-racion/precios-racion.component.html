@@ -1,0 +1,171 @@
+<div class="table-responsive no-padding">
+  <table *ngIf="idTipoModeloOperacion == 1" class="table-priorizacion">
+    <thead>
+      <tr>
+        <th width="150px" rowspan="2" class="b-t-l-r">Jornada</th>
+        <th colspan="2" class="n-b-b">PS<br>(Preparado en sitio)</th>
+        <th class="n-b-b">IND<br>(Industrializada)</th>
+        <th colspan="2" class="n-b-b b-t-r-r">CCT<br>Comida caliente trasportada</th>
+      </tr>
+      <tr>
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>Almuerzo</th>
+        <th class="b-r">Complemento<br>AM/PM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSourcePxP; index as i">
+        <tr [class]="i == dataSourcePxP.length - 1 ? 'b-b' : ''">
+          <th class="bg-title">
+            <img *ngIf="item.icono == 1" style="width: 30px; height: 30px;" src="../assets/images/Iconos/manana.png">
+            <img *ngIf="item.icono == 2" style="width: 30px; height: 30px;" src="../assets/images/Iconos/tarde.png">
+            <img *ngIf="item.icono == 3" style="width: 30px; height: 30px;" src="../assets/images/Iconos/unica.png">
+            {{ item.jornada }}
+          </th>
+
+          <ng-container *ngIf="!editarPrecios">
+            <td class="b-l">{{ item.rpS_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.rpS_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.rI_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.cA_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.cA_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          </ng-container>
+
+          <ng-container *ngIf="editarPrecios">
+            <td class="b-l">
+              <input type="text" value="{{ item.rpS_ALM }}" [(ngModel)]="item.rpS_ALM" min="0" class="form-control"
+              style="min-width: 100px;">
+          </td>
+          <td>
+            <input type="text" value="{{ item.rpS_COM }}" [(ngModel)]="item.rpS_COM" min="0" class="form-control"
+              style="min-width: 100px;">
+          </td>
+          <td>
+            <input type="text" value="{{ item.rI_COM }}" [(ngModel)]="item.rI_COM" min="0" class="form-control"
+              style="min-width: 100px;">
+          </td>
+          <td>
+            <input type="text" value="{{ item.cA_ALM }}" [(ngModel)]="item.cA_ALM" min="0" class="form-control"
+              style="min-width: 100px;">
+          </td>
+          <td>
+            <input type="text" value="{{ item.cA_COM }}" [(ngModel)]="item.cA_COM" min="0" class="form-control"
+              style="min-width: 100px;">
+          </td>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <table *ngIf="idTipoModeloOperacion == 2" class="table-priorizacion">
+    <thead>
+      <tr>
+      <th width="150px" rowspan="2" class="b-t-l-r">Jornada</th>
+      <th colspan="2" class="n-b-b">PS<br>(Preparado en sitio)</th>
+      <th colspan="2" class="n-b-b">CCT<br>Comida caliente transportada</th>
+    </tr>
+    <tr>
+      <th>Complemento<br>Almuerzo</th>
+      <th class="b-r">Complemento<br>Almuerzo Cualificado</th>
+      <th>Complemento<br>Almuerzo</th>
+      <th class="b-r">Complemento<br>Almuerzo Cualificado</th>
+    </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSourcePxP; index as i">
+        <tr [class]="i == dataSourcePxP.length - 1 ? 'b-b' : ''">
+          <th class="bg-title">
+            <img *ngIf="item.icono == 1" style="width: 30px; height: 30px;" src="../assets/images/Iconos/manana.png">
+            <img *ngIf="item.icono == 2" style="width: 30px; height: 30px;" src="../assets/images/Iconos/tarde.png">
+            <img *ngIf="item.icono == 3" style="width: 30px; height: 30px;" src="../assets/images/Iconos/unica.png">
+            {{ item.jornada }}
+          </th>
+
+          <ng-container *ngIf="!editarPrecios">
+            <td class="b-l">{{ item.rpS_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.rpS_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.cA_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.cA_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          </ng-container>
+
+          <ng-container *ngIf="editarPrecios">
+            <td class="b-l">
+              <input type="text" value="{{ item.rpS_ALM }}" [(ngModel)]="item.rpS_ALM" min="0" class="form-control"
+                style="min-width: 100px;">
+            </td>
+            <td>
+              <input type="text" value="{{ item.rpS_COM }}" [(ngModel)]="item.rpS_COM" min="0" class="form-control"
+                style="min-width: 100px;">
+            </td>
+            <td>
+              <input type="text" value="{{ item.cA_ALM }}" [(ngModel)]="item.cA_ALM" min="0" class="form-control"
+                style="min-width: 100px;">
+            </td>
+            <td>
+              <input type="text" value="{{ item.cA_COM }}" [(ngModel)]="item.cA_COM" min="0" class="form-control"
+                style="min-width: 100px;">
+            </td>
+          </ng-container>
+        </tr>
+      </ng-container>
+
+    </tbody>
+  </table>
+
+  <table *ngIf="idTipoModeloOperacion == 3" class="table-priorizacion">
+    <thead>
+      <tr>
+        <th width="150px" rowspan="2" class="b-t-l-r">Jornada</th>
+        <th colspan="2" class="n-b-b">PS<br>(Preparado en sitio)</th>
+        <th colspan="2" class="n-b-b b-t-r-r">CCT<br>Comida caliente trasportada</th>
+      </tr>
+      <tr>
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>Almuerzo</th>
+        <th class="b-r">Complemento<br>AM/PM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSourcePxP; index as i">
+        <tr [class]="i == dataSourcePxP.length - 1 ? 'b-b' : ''">
+          <th class="bg-title">
+            <img *ngIf="item.icono == 1" style="width: 30px; height: 30px;" src="../assets/images/Iconos/manana.png">
+            <img *ngIf="item.icono == 2" style="width: 30px; height: 30px;" src="../assets/images/Iconos/tarde.png">
+            <img *ngIf="item.icono == 3" style="width: 30px; height: 30px;" src="../assets/images/Iconos/unica.png">
+            {{ item.jornada }}
+          </th>
+
+          <ng-container *ngIf="!editarPrecios">
+            <td class="b-l">{{ item.rpS_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.rpS_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.cA_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+            <td>{{ item.cA_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+          </ng-container>
+
+          <ng-container *ngIf="editarPrecios">
+            <td class="b-l">
+              <input type="text" value="{{ item.rpS_ALM }}" [(ngModel)]="item.rpS_ALM" min="0" class="form-control"
+                style="min-width: 100px;">
+            </td>
+            <td>
+              <input type="text" value="{{ item.rpS_COM }}" [(ngModel)]="item.rpS_COM" min="0" class="form-control"
+                style="min-width: 100px;">
+            </td>
+            <td>
+              <input type="text" value="{{ item.cA_ALM }}" [(ngModel)]="item.cA_ALM" min="0" class="form-control"
+                style="min-width: 100px;">
+            </td>
+            <td>
+              <input type="text" value="{{ item.cA_COM }}" [(ngModel)]="item.cA_COM" min="0" class="form-control"
+                style="min-width: 100px;">
+            </td>
+          </ng-container>
+        </tr>
+      </ng-container>    </tbody>
+  </table>
+
+</div>

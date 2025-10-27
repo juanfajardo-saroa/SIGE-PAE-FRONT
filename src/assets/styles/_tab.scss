@@ -1,0 +1,57 @@
+// @import '/src/assets/styles/variable.scss';
+.tab-control{
+  border-bottom: 1px solid #3266cc;
+
+  div{
+    display: inline-block;
+    padding: 8px 25px;
+    border: 1px solid #3266cc;
+    border-left: none;
+    border-bottom: unset;
+    text-align: center;
+  }
+
+  div:first-child{
+    border-left: 1px solid #3266cc;
+    border-top-left-radius: 10px;
+  }
+
+  div:last-child{
+    border-top-right-radius: 10px;
+  }
+}
+
+
+.tab-control:not(.inverted){
+  div.active{
+    background-color: #f54a62;
+  }
+
+  div h3{
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 14px;
+    color: $base-azulPAE;
+  }
+
+  div.active h3{
+    color: #ffffff;
+  }
+}
+
+.tab-control.inverted{
+  div.active{
+    background-color: #ffffff;
+  }
+
+  div h3{
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 14px;
+    color: $base-azulPAE;
+  }
+
+  div.active h3{
+    color: #f54a62;
+  }
+}

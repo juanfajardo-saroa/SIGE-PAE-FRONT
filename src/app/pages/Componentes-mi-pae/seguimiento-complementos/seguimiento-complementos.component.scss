@@ -1,0 +1,210 @@
+@import '/src/assets/styles/variable.scss';
+
+mat-card-title,
+mat-card-content,
+mat-card{
+    color: $base-azulPAE;
+    font-size: $base-fontSize  !important;
+    box-shadow: none !important;
+}
+
+.sizeIcon {
+    padding-left: 10px !important;
+}
+
+input{
+    padding-right: 2.5rem;
+}
+
+.sizeIconSearch {
+    color: #005ACA;
+    position: absolute;
+    display: block;
+    bottom: 1.2rem;
+    right: 1rem;
+}
+
+.paddingLeftStates{
+    padding-left: 10px !important;
+    font-size: 10px;
+}
+
+div.col {
+    padding: 0px 0px 0px 0px !important;
+    box-shadow: none !important;
+}
+
+.tab-control-secondary .tab-item.active div {
+    background-color: #ffffff;
+    border: 1px solid $base-azulPAE;
+    border-bottom: none;
+}
+
+.tab-control-secondary .tab-item div {
+    width: 100%;
+    text-align: center;
+    padding: 8px 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+
+.ubicaciontabla {
+    float: left;
+    width: 50%;
+    margin: 10px 0px 10px -4px;
+    box-shadow: none !important;
+}
+
+.ubicacionTablaEstado {
+    float: center !important;
+    width: auto !important;
+    border-radius: 15px;
+    border: 1px dashed;
+    color: $base-azulPAE;
+    padding: 10px 10px 10px 0px;
+}
+
+.alignCenter{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+b {
+    font-weight: 500;
+}
+
+.tablaform3 {
+    width: 100%;
+    color: $base-azulPAE;
+    border-color: $base-azulPAE;
+    border: 1px $base-borderStyle;
+    border-radius: $base-borderRadius  !important;
+    font-size: $base-fontSize;
+}
+
+.bordeizq2 {
+    border-left: 1px $base-borderStyle $base-azulPAE  !important;
+    border-radius: $base-borderRadius  !important;
+}
+
+.tablaform {
+    width: 100%;
+    border-color: $base-azulPAE;
+    color: $base-azulPAE;
+    border: 1px $base-borderStyle;
+    font-size: $base-fontSize;
+}
+
+.inputFilter{
+    width: 100%;
+    color: $base-azulPAE;
+    border: 1px solid $base-azulPAE;
+    background-color: transparent;
+    font-size: $base-fontSize;
+    height: 25px;
+}
+
+.imgFilter {
+    width: 30px;
+    height: 30px;
+    margin: 5px 0px 5px 0px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.imgResult {
+    float: left;
+}
+
+.resultLine {
+    display: inline-block;
+    padding: 15px 0px 0px 0px;
+    color: $base-azulPAE;
+    font-size: 15px !important;
+    width: 100%;
+}
+
+.linea {
+    background-color: $base-azulPAE;
+    margin-top: 0px;
+}
+
+.LeftUpCorner {
+    border: 1px $base-color solid;
+    border-radius: 20px 1px 1px 1px;
+}
+
+.RightUpCorner {
+    padding-right: 0px;
+    border: 1px $base-color solid;
+    border-radius: 1px 20px 1px 1px;
+}
+
+mat-card-title,
+mat-card-content {
+    color: $base-color;
+    font-size: 12px !important;
+    box-shadow: none !important;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    padding: 10px;
+    color: $base-color;
+    font-size: 12px;
+    text-align: center;
+    justify-content: center !important;
+}
+
+th.mat-header-cell {
+    border-bottom: 0.5px $base-borderStyle $base-azulPAE;
+}
+
+.shortCell {
+    width: auto !important;
+}
+
+.borderLeft{
+    border-left: 1px solid $base-azulPAE !important;
+}
+
+.borderLeft2{
+    border-left: 1px dashed $base-azulPAE;
+}
+
+.borderCols{
+    border-bottom: 0px !important;
+}
+
+.mat-row:hover .mat-cell {
+    background-color: $base-color;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type{
+    padding-right: 10px !important;
+}
+
+.sizeColIE{
+    padding-left: 40px;
+    padding-right: 40px;
+    text-align: center;
+}
+
+.sizeColS{
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.sizeCol{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.borderFilter {
+  border: 1px solid $base-azulPAE;
+  border-radius: 20px;
+}

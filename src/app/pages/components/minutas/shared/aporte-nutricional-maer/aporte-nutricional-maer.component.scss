@@ -1,0 +1,31 @@
+@import '/src/assets/styles/variable.scss';
+
+.card-link {
+    border: none;
+    background-color: white;
+}
+::ng-deep.swal2-close {
+  color: #fff;
+  margin-top: -5% !important;
+  box-shadow: none !important;
+  background-color: transparent;
+  font-size: 2em;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: center !important;
+  justify-self: center !important;
+  font-size: 12px !important;
+  border-radius: 20px !important;
+  background-size: contain !important;
+  padding: 2% 0% !important;
+  width: 30% !important;
+  color: $base-color !important;
+  background-position: top !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  display: inline-block;
+  object-fit: contain !important;
+}

@@ -1,0 +1,137 @@
+<div class="table-responsive">
+  <table *ngIf="modeloOperacion == 'MAEM'" class="table-priorizacion">
+    <thead>
+      <tr *ngIf="textRight" class="table-title">
+        <th colspan="3" class="cell-white"></th>
+        <th colspan="6" class="title-right">{{textRight}}</th>
+      </tr>
+      <tr>
+        <th width="15%" rowspan="2" class="border-top-left-radius">Jornada</th>
+        <th rowspan="2">Cantidad<br>de sedes</th>
+        <th rowspan="2">Matrícula</th>
+        <th colspan="2">PS<br>(Preparado en sitio)</th>
+        <th>IND<br>(Industrializado)</th>
+        <th colspan="2">CCT<br>(Comida Caliente Transportada)</th>
+        <th rowspan="2" [class]="textRight ? '' : 'border-top-right-radius'">Total<br>complemento<br>díarios</th>
+    </tr>
+    <tr class="no-border-top">
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+    </tr>
+</thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSource; index as i">
+        <tr *ngIf="!item.icono" style="height: 10px;"></tr>
+        <tr [class]="(i == dataSource.length - 2 ? 'b-b' : '') + (i == dataSource.length - 1 ? ' last-child': '')">
+          <th [class]="i < dataSource.length - 1 ? 'b-b-w' : ''">
+            <img *ngIf="item.icono == 1" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-42.png">
+            <img *ngIf="item.icono == 2" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-43.png">
+            <img *ngIf="item.icono == 3" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-44.png">
+            {{ item.jornada }}
+          </th>
+          <td class="b-l">{{item.cantidadSede | number: '1.0-2'}}</td>
+          <td>{{item.matricula | number: '1.0-2'}}</td>
+          <td class="b-l">{{item.rpS_ALM | number: '1.0-2'}}</td>
+          <td>{{item.rpS_COM | number: '1.0-2'}}</td>
+          <td>{{item.rI_COM | number: '1.0-2'}}</td>
+          <td>{{item.cA_ALM | number: '1.0-2'}}</td>
+          <td>{{item.cA_COM | number: '1.0-2'}}</td>
+          <th *ngIf="!item.icono" class="b-l text-center">{{item.racionesDiarias | number: '1.0-2'}}</th>
+          <td *ngIf="item.icono" class="b-l">{{item.racionesDiarias | number: '1.0-2'}}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <table *ngIf="modeloOperacion == 'MAER'" class="table-priorizacion">
+    <thead>
+      <tr *ngIf="textRight" class="table-title">
+          <th colspan="3" class="cell-white"></th>
+          <th colspan="5" class="title-right">{{textRight}}</th>
+      </tr>
+      <tr>
+          <th rowspan="2" class="border-top-left-radius">Jornada</th>
+          <th rowspan="2">Cantidad<br>de sedes</th>
+          <th rowspan="2">Matrícula</th>
+          <th colspan="2">PS<br>(Preparado en sitio)</th>
+          <th colspan="2">CCT<br>(Comida Caliente Transportada)</th>
+          <th rowspan="2" class="b-r">Total<br>complementos<br>díarios</th>
+      </tr>
+      <tr class="no-border-top">
+          <th>Complemento<br>Almuerzo</th>
+          <th>Complemento<br>Almuerzo Cualificado</th>
+          <th>Complemento<br>Almuerzo</th>
+          <th>Complemento<br>Almuerzo Cualificado</th>
+  
+      </tr>
+  </thead>
+    <tbody>
+      <ng-container *ngFor="let item of dataSource; index as i">
+        <tr [class]="(i == dataSource.length - 2 ? 'b-b' : '') + (i == dataSource.length - 1 ? ' last-child': '')">
+            <th [class]="i < dataSource.length - 1 ? 'b-b-w' : ''">
+                <img *ngIf="item.icono == 1" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-42.png">
+                <img *ngIf="item.icono == 2" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-43.png">
+                <img *ngIf="item.icono == 3" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-44.png"> {{ item.jornada }}
+            </th>
+            <td class="b-l">{{item.cantidadSede | number: '1.0-2'}}</td>
+            <td>{{item.matricula | number: '1.0-2'}}</td>
+            <td class="b-l">{{item.rpS_ALMR | number: '1.0-2'}}</td>
+            <td>{{item.rpS_COMR | number: '1.0-2'}}</td>
+            <td>{{item.cA_ALM | number: '1.0-2'}}</td>
+            <td>{{item.cA_COM | number: '1.0-2'}}</td>
+            <th *ngIf="!item.icono" class="b-l text-center">{{item.racionesDiarias | number: '1.0-2'}}</th>
+            <td *ngIf="item.icono" class="b-l">{{item.racionesDiarias | number: '1.0-2'}}</td>
+        </tr>
+    </ng-container>
+    </tbody>
+  </table>
+
+  <table *ngIf="modeloOperacion == 'MAIP'" class="table-priorizacion">
+    <thead>
+      <tr *ngIf="textRight" class="table-title">
+        <th colspan="3" class="cell-white"></th>
+        <th colspan="5" class="title-right">{{textRight}}</th>
+    </tr>
+    <tr>
+        <th rowspan="2" class="border-top-left-radius">Jornada</th>
+        <th rowspan="2">Cantidad<br>de sedes</th>
+        <th rowspan="2">Matrícula</th>
+        <th colspan="2">PS<br>(Preparado en sitio)</th>
+        <th colspan="2">CCT<br>(Comida Caliente Transportada)</th>
+        <th rowspan="2" class="b-r">Total<br>complementos<br>díarios</th>
+    </tr>
+    <tr class="no-border-top">
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+        <th>Complemento<br>Almuerzo</th>
+        <th>Complemento<br>AM/PM</th>
+    </tr>
+</thead>
+<tbody>
+    <ng-container *ngFor="let item of dataSource; index as i">
+        <tr [class]="(i == dataSource.length - 2 ? 'b-b' : '') + (i == dataSource.length - 1 ? ' last-child': '')">
+            <th [class]="i < dataSource.length - 1 ? 'b-b-w' : ''">
+                <img *ngIf="item.icono==1" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-42.png">
+                <img *ngIf="item.icono==2" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-43.png">
+                <img *ngIf="item.icono==3" style="width: 25px; height: 25px;" src="../assets/iconos_PAE/PNG/Iconos_PAE-44.png"> {{ item.jornada }}
+            </th>
+            <td class="b-l">{{item.cantidadSede | number: '1.0-2'}}</td>
+            <td>{{item.matricula | number: '1.0-2'}}</td>
+            <td class="b-l">{{item.rpS_ALM | number: '1.0-2'}}</td>
+            <td>{{item.rpS_COM | number: '1.0-2'}}</td>
+            <td>{{item.cA_ALM | number: '1.0-2'}}</td>
+            <td>{{item.cA_COM | number: '1.0-2'}}</td>
+            <th *ngIf="!item.icono" class="b-l text-center">{{item.racionesDiarias | number: '1.0-2'}}</th>
+            <td *ngIf="item.icono" class="b-l">{{item.racionesDiarias | number: '1.0-2'}}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  
+</div>
+
+

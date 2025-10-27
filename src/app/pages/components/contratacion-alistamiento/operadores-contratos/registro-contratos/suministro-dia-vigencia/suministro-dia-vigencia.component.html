@@ -1,0 +1,2297 @@
+<style>
+  .tableFiltroUsuario {
+    border-spacing: 0;
+    color: #005ACA;
+  }
+
+  .tableFiltroUsuario td {
+    text-align: left;
+    font-size: 13px;
+    color: #005ACA !important;
+    padding: 2.5px 10px;
+    border-top: 1px solid #005ACA;
+    border-right: 1px solid #005ACA;
+    border-bottom: 1px dotted #005ACA !important;
+  }
+
+  .tableFiltroUsuario td b {
+    color: #005ACA;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroUsuario td div {
+    color: #005ACA;
+    font-weight: 500;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroUsuario td:first-child {
+    border-left: 1px solid #005ACA;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .tableFiltroUsuario td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .tableUsuarios th,
+  .tableUsuarios td {
+    font-size: 13px;
+  }
+
+  table.tableUsuarios thead th:last-child {
+    border-top-right-radius: 20px !important;
+  }
+
+  table.tableFormUsuarios tr td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #005ACA;
+    font-size: 14px;
+  }
+
+  table.tableFormUsuarios tr td:first-child {
+    padding-left: 35px;
+  }
+
+  table.tableFormUsuarios tr td:last-child {
+    padding-right: 35px;
+  }
+
+  .tableFiltroUsuario i {
+    font-size: 25px;
+  }
+
+  .btn.btn-middle {
+    background-color: aliceblue;
+    border: 1px solid aliceblue;
+  }
+
+  .btn.btn-high {
+    background-color: #005ACA !important;
+    border: 1px solid #005ACA !important;
+  }
+
+  .disabledWithoutOpacity {
+    pointer-events: none;
+  }
+</style>
+
+<div class="row">
+  <div class="col-12">
+    <div class="tab-control-items d-flex">
+      <div class="tab-item" *ngFor="let item of dataPestanas">
+        <h3>{{ item.descripcion }}</h3>
+      </div>
+      <div class="flex-grow-1 tab-item-blank"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="panel panel-blue">
+      <div class="panel-header text-center">
+        <h4 class="panel-title">Registro único de Contratos - Suministro Regular {{ (itemContrato.subTipoContratoId && itemContrato.subTipoContratoId != VALOR_CERO) ? (', ' + obtenerTituloCategoria()) : VACIO}}</h4>
+      </div>
+
+      <ng-container *ngIf="form0Visible">
+          <div class="panel-body" style="border-radius: 0px !important;">
+            <form class="form-default">
+              <div class="form-item">
+                <div class="col-12 col-xl d-flex flex-column flex-xl-row ml-0 ml-xl-3">
+                    <label class="form-label">1. Número de contrato:</label>
+                    <input class="input-text w-down-100 ml-lg-down-0"
+                           [ngModelOptions]="{standalone: true}"
+                           [(ngModel)]="itemContrato.numeroContrato"
+                           (ngModelChange)="changeItemContrato('numeroContrato', $event)">
+                        <div class="div-label">
+                           <small class="color-invalid" *ngIf="showValidation0 && !itemContrato.numeroContrato">Complete este campo</small>
+                         </div>
+                </div>
+              </div>
+              <div class="form-item col-12">
+                <div class="col-12 col-xl d-flex flex-column flex-xl-row ml-0 ml-xl-3 ng-autocomplete row">
+                    <label class="form-label">2. Operador:</label>
+                    <select style="width: 250px;" class="input-text w-down-100 ml-lg-down-0"
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="itemContrato.iD_Operador"
+                            (ngModelChange)="changeItemContrato('iD_Operador', $event); changeDigitoVerificacion($event)">
+                      <option value="0">Buscar por nombre</option>
+                      <option *ngFor="let item of listOperadores" [ngValue]="item.operadorId">{{item.nombreRazonSocial}}</option>
+                    </select>
+                    <!-- <select style="width: 160px;" class="ml-3 input-text"
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="itemContrato.iD_Operador"
+                            (ngModelChange)="changeItemContrato('iD_Operador', $event); changeDigitoVerificacion($event)">
+                      <option value="0">Buscar por NIT</option>
+                      <option *ngFor="let item of listOperadores" [ngValue]="item.operadorId">{{transformarIdentificacionSinDV(item.identificacion)}}</option>
+                      </select>
+                      <label> &nbsp;- </label>
+                      <input type="text" class="ml-1 form-control text-center" id="digitoVerificacion"
+                        name="digitoVerificacion" style="width: 30px;" readonly [(ngModel)]="digitoVerificacioOperador"> -->
+                    <div class="d-flex flex-row flex-grow-1 display flex justify-content: flex-end; ">
+                      <select style="width: 160px;" class="ml-3 input-text ml-lg-down-0 flex-grow-1 flex-xl-grow-0"
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="itemContrato.iD_Operador"
+                            (ngModelChange)="changeItemContrato('iD_Operador', $event); changeDigitoVerificacion($event)">
+                      <option value="0">Buscar por NIT</option>
+                      <option *ngFor="let item of listOperadores" [ngValue]="item.operadorId">{{transformarIdentificacionSinDV(item.identificacion)}}</option>
+                      </select>
+                      <label> &nbsp;- </label>
+                      <input type="text" class="ml-1 form-control text-center" id="digitoVerificacion"
+                        name="digitoVerificacion" style="width: 30px;" readonly [(ngModel)]="digitoVerificacioOperador">
+                        <div class="div-label align-self-start ml-3">
+                          <small class="color-invalid" *ngIf="showValidation0 && !itemContrato.iD_Operador">Elija una opción</small>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="col-12 col-xl ml-0 ml-xl-3 d-flex flex-column flex-xl-row">
+                    <label class="form-label maxWidth-250 wmx-down-lg-100">3. Objeto del contrato: <br class="d-none d-xl-block"> (Tal y como aparece en la version firmada)</label>
+                    <textarea class="input-textarea wmx-down-lg-100 w-down-100 ml-lg-down-0" rows="3"
+                              [ngModelOptions]="{standalone: true}"
+                              [(ngModel)]="itemContrato.objetoContrato"
+                              (ngModelChange)="changeItemContrato('objetoContrato', $event)">
+                    </textarea>
+                    <div class="div-label align-self-center ml-3">
+                      <small class="color-invalid" *ngIf="showValidation0 && !itemContrato.objetoContrato">Complete este campo</small>
+                    </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="col-12 col-xl ml-0 ml-xl-3 d-xl-block d-flex flex-column flex-xl-row">
+                  <label class="form-label maxWidth-250 wmx-down-lg-100">4.  Categoría (El operador ha sido contratado para):</label>
+                <div class="d-flex mx-0 mx-xl-4">
+                  <table id="tabla-categoria" >
+                    <tbody>
+                      <tr *ngFor="let item of listSubtiposContratacion">
+                        <td id="td{{item.id}}">
+                            <input id="ck{{item.id}}" name="ck" type="radio"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="itemContrato.subTipoContratoId"
+                                [value]="item.id"
+                                (ngModelChange)="changeItemContrato('subTipoContratoId', $event)">
+                                {{item.subTipoContratacion}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="div-label align-self-center ml-3">
+                    <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation0 && !itemContrato.subTipoContratoId">Elija una opción</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="form-item">
+                <div class="col-12 col-xl ml-0 ml-xl-3 d-flex flex-column flex-xl-row">
+                    <label class="form-label maxWidth-250 wmx-down-lg-100">5. Tipo de contrato CHIP:</label>
+                    <select class="input-text w-down-100 ml-lg-down-0"
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="itemContrato.iD_TipoContratoCHIP"
+                            (ngModelChange)="changeItemContrato('iD_TipoContratoCHIP', $event)">
+                      <option value="0">Elija una opción</option>
+                      <option *ngFor="let item of listContratosCHIP" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div class="div-label align-self-center ml-3">
+                      <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation0 && !itemContrato.iD_TipoContratoCHIP">Elija una opción</small>
+                    </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="col-12 col-xl ml-0 ml-xl-3 d-flex flex-column flex-xl-row">
+                    <label class="form-label maxWidth-250 wmx-down-lg-100">6. Concepto de gasto CHIP:</label>
+                    <select class="input-text w-down-100 ml-lg-down-0"
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="itemContrato.iD_TipoConceptoGasto"
+                            (ngModelChange)="changeItemContrato('iD_TipoConceptoGasto', $event)">
+                      <option value="0">Elija una opción</option>
+                      <option *ngFor="let item of listConceptoGasto" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                     <div class="div-label align-self-center ml-3">
+                      <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation0 && !itemContrato.iD_TipoConceptoGasto">Elija una opción</small>
+                    </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="panel-footer pt-xxl pb-xxl">
+            <a class="btn btn-blue" (click)="anterior(0)">Anterior</a>
+            <a class="btn btn-blue ml-3" (click)="guardarSiguiente0()">Siguiente</a>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="form1Visible">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="pt-xxl pb-md">
+            <div class="row">
+              <div class="col-12 col-xl clearfix" style="padding-left: 3px">
+                <app-chapterblue [numberChapter]="1" [titleChapter]="'Detalles del proceso contractual'">   </app-chapterblue>
+                <br />
+              </div>
+              <div class="col-12 col-xl clearfix text-right"
+                    style="padding: 20px">
+                <div class="msg-alerta">
+                  <div>
+                    <img class="w-down-md-50 w-down-sm-100" src="./assets/images/Iconos/suministro/paso1-5.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form class="form-default">
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3 d-flex flex-column flex-xl-row">
+                <label class="form-label">1. Modalidad de contratación CHIP:</label>
+                <select class="input-text w-down-100 ml-lg-down-0"
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="itemDetalleProcesoContrato.iD_TipoContratacion"
+                        (ngModelChange)="changeItemDetalleProcesoContrato('iD_TipoContratacion', $event)">
+                  <option value="0">Elija una opción</option>
+                  <option *ngFor="let item of listTiposContratacion" [ngValue]="item.id">{{item.nombre}}</option>
+                </select>
+                <div class="div-label align-self-center ml-3">
+                  <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation1 && !itemDetalleProcesoContrato.iD_TipoContratacion">Elija una opción</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3 d-flex flex-column flex-xl-row">
+                <label class="form-label">2. Contrato publicado en el SECOP o la TVEC:</label>
+                <div class="inline-block form-checkbox ml-xs ml-lg-down-0">
+                  <label id="ckContratoPublicadoSi" class="check-si w-down-50"
+                         [class]="itemDetalleProcesoContrato.publicadorSECOP ? 'active' : ''"
+                         (click)="changeItemDetalleProcesoContrato('publicadorSECOP', true)">
+                         Si
+                  </label>
+                  <label id="ckContratoPublicadoNo" class="check-no w-down-50"
+                         [class]="!itemDetalleProcesoContrato.publicadorSECOP ? 'active' : ''"
+                         (click)="changeItemDetalleProcesoContrato('publicadorSECOP', false)">
+                         No
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <ng-container *ngIf="itemDetalleProcesoContrato.publicadorSECOP">
+              <div class="form-item">
+                <div class="col ml-0 ml-xl-3">
+                  <div class="ml-sm d-flex flex-column flex-xl-row">
+                    <label class="form-label">2.1. Plataforma:</label>
+                    <div class="d-flex mx-4 mx-lg-down-0">
+                      <table class="table tableFiltroUsuario">
+                        <tbody>
+                          <tr>
+                            <td class="text-size-down-9" *ngFor="let item of listTiposPlataformaContratacion">
+                              <input id="ckP{{item.id}}" name="ck" type="radio"
+                              [ngModelOptions]="{standalone: true}"
+                              [(ngModel)]="itemDetalleProcesoContrato.iD_PlataformaContrato"
+                              [value]="item.id"
+                              (ngModelChange)="changeItemDetalleProcesoContrato('iD_PlataformaContrato', $event)">
+                              {{item.nombre}}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="div-label align-self-center ml-3">
+                      <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation1 && !itemDetalleProcesoContrato.iD_PlataformaContrato">Elija una opción</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="col ml-0 ml-xl-3">
+                  <div class="ml-sm d-flex flex-column flex-xl-row">
+                    <label class="form-label">2.2. Nº del proceso registrado en SECOP:</label>
+                    <input type="text" class="input-text w-down-100 ml-lg-down-0"
+                          [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="itemDetalleProcesoContrato.numeroProcesoRegistradoSECOP">
+                          <div class="div-label align-self-center ml-3">
+                            <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation1 && !itemDetalleProcesoContrato.numeroProcesoRegistradoSECOP">Complete este campo</small>
+                          </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="col ml-0 ml-xl-3">
+                  <div class="ml-sm d-flex flex-column flex-xl-row">
+                    <label class="form-label">2.3. Link del contrato en SECOP:</label>
+                    <input type="text" class="input-text w-down-100 ml-lg-down-0"
+                          [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="itemDetalleProcesoContrato.linkContratoSECOP">
+                          <div class="div-label align-self-center ml-3">
+                            <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation1 && !itemDetalleProcesoContrato.linkContratoSECOP">Complete este campo</small>
+                          </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3 d-xl-block d-flex flex-row">
+                <label class="form-label">3. Fecha de suscripción del contrato:</label>
+                <div class="form-date  align-items-center  display: flex !important; justify-content: flex-end  !important;">
+                  <input class="input-text col-12 col-xl-2 w-down-100 ml-lg-down-0" name="dp" type="date" placeholder="dd/mm/yyyy"
+                    [ngModelOptions]="{standalone: true}"
+                    [ngModel]="itemDetalleProcesoContrato.fechaSuscripcion|date:'yyyy-MM-dd'"
+                    (ngModelChange)="itemDetalleProcesoContrato.fechaSuscripcion=$event">
+                    <div class="div-label align-self-center ml-3">
+                      <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation1 && !itemDetalleProcesoContrato.fechaSuscripcion">Elija una opción</small>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3 d-xl-block d-flex flex-row">
+                <label class="form-label">4. Fecha de adjudicación del contrato:</label>
+                <div class="form-date  align-items-center  display: flex !important; justify-content: flex-end  !important;">
+                  <input class="input-text col-12 col-xl-2 w-down-100 ml-lg-down-0"
+                         name="dp"
+                         type="date"
+                         placeholder="dd/mm/yyyy"
+                         [ngModelOptions]="{standalone: true}"
+                         [ngModel]="itemDetalleProcesoContrato.fechaAdjudicacion|date:'yyyy-MM-dd'"
+                         (ngModelChange)="itemDetalleProcesoContrato.fechaAdjudicacion=$event">
+                         <div class="div-label align-self-center ml-3">
+                          <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation1 && !itemDetalleProcesoContrato.fechaAdjudicacion">Elija una opción</small>
+                        </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer pt-xxl pb-xxl">
+          <div class="row gap-sm-down-10-px">
+            <div class="col-12 col-md-6 text-left">
+              <a class="btn btn-blue w-down-sm-100" (click)="guardarContinuar()">Guardar y continuar más tarde</a>
+            </div>
+            <div class="col-12 col-md-6 text-right d-md-block d-flex flex-column-reverse gap-sm-down-10-px">
+              <a class="btn btn-blue w-down-sm-100" (click)="anterior(1)">Anterior</a>
+              <a class="btn btn-blue w-down-sm-100 ml-0 ml-md-3" (click)="guardarSiguiente1()">Siguiente</a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="form2Visible">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="pt-xxl pb-md">
+            <div class="row">
+              <div class="col-12 col-xl clearfix" style="padding-left: 3px">
+                <app-chapterblue [numberChapter]="2" [titleChapter]="'Detalles del suministro'"></app-chapterblue>
+                <br />
+              </div>
+              <div class="col-12 col-xl clearfix text-right"
+                    style="padding: 20px">
+                <div class="msg-alerta">
+                  <div>
+                    <img class="w-down-md-50 w-down-sm-100" src="./assets/images/Iconos/suministro/paso2-5.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form class="form-default">
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3 d-xl-block d-flex flex-row">
+                <label class="form-label ">1. Fecha de inicio del suministro:</label>
+                <div class="form-date display: flex">
+                  <input type="date"
+                         class="input-text col-12 col-xl-2 w-down-100 ml-lg-down-0"
+                         placeholder="dd/mm/yyyy"
+                         [ngModelOptions]="{standalone: true}"
+                         [ngModel]="itemContrato.fechalnicioContrato|date:'yyyy-MM-dd'"
+                         (ngModelChange)="itemContrato.fechalnicioContrato=$event">
+                         <div class="div-label align-self-center ml-3">
+                          <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation2 && !itemContrato.fechalnicioContrato">Elija una opción</small>
+                        </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3 d-xl-block d-flex flex-row">
+                <label class="form-label">2. Fecha estimada de terminación del suministro:</label>
+                <div class="form-date display: flex">
+                  <input type="date"
+                         class="input-text col-12 col-xl-2 w-down-100 ml-lg-down-0"
+                         placeholder="dd/mm/yyyy"
+                         [ngModelOptions]="{standalone: true}"
+                         [ngModel]="itemContrato.fechaFinalContrato|date:'yyyy-MM-dd'"
+                         (ngModelChange)="itemContrato.fechaFinalContrato=$event">
+                         <div class="div-label align-self-center ml-3">
+                          <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation2 && !itemContrato.fechaFinalContrato">Elija una opción</small>
+                        </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3 d-xl-block d-flex flex-column">
+                <label class="form-label">3. Modelo de operación:</label>
+                <div class="d-flex justify-content-left w-down-100">
+                  <table id="tabla-modelo-operacion" class="table col-12 col-xl-6">
+                    <tr class="tabla-suministro-entrega" *ngFor="let modeloOperacion of listModelosOperacion">
+                      <td id="td-modelo-operacion{{modeloOperacion.id}}">
+                        <input type="checkbox"
+                        [checked]="modelosOperacionActivos.includes(modeloOperacion.id)"
+                        (change)="changeItemContrato('iD_TipoModeloOperacion', modeloOperacion.id); validarAgregarContratoModelo($event, modeloOperacion.id); validarModeloOperacionSeleccionado()"/>{{modeloOperacion.nombre}}
+                      </td>
+                      <hr/>
+                    </tr>
+                  </table>
+                  <div class="div-label align-self-center ml-3">
+                    <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation2 && modelosOperacionActivos.length === 0">Elija una opción</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-item" *ngIf="modelosOperacionActivos.length > VALOR_CERO">
+              <div class="col-12 col-xl ml-0 ml-xl-3">
+                <label class="form-label">4. Complementos contratados:</label>
+                <br/>
+
+                <div class="row justify-content-center">
+                  <div class="titulos_estado_diligenciamiento w-down-100">
+                    <div class="d-flex flex-column flex-xl-row align-items-start align-xl-items-center">
+                      <span>Estado del diligenciamiento: </span>
+                      <div class="d-flex align-items-center"><div class="pendiente_diligenciar ml-3 mr-2"></div>Pendiente por diligenciar</div>
+                      <div class="d-flex align-items-center"><div class="incompleto ml-3 mr-2"></div>Incompleto</div>
+                      <div class="d-flex align-items-center"><div class="completo ml-3 mr-2"></div>Completo</div>
+                    </div>
+                  </div>
+                </div>
+
+                <mat-tab-group [selectedIndex]="selectedTabIndex" style="width: 100%; display: flex;" (selectedIndexChange)="myTabFocusChange($event)">
+                  <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAEM.id)" style="left: 1px !important;">
+                    <ng-template mat-tab-label >
+                      <div class="d-flex align-items-center">
+                        <div [ngClass]="obtenerClaseEstadoDiligenciamiento(dataDetalleSumRacionesMAEM)"></div>
+                        <label class="form-label mx-2">
+                          <img style="width: 30px; height: 30px;" src="./assets/images/Iconos/icon_modelo_operacion.png">
+                          MAEM
+                        </label>
+                      </div>
+                    </ng-template>
+                    <br>
+
+                    <div class="ml-xxl ml-lg-down-0 pt-sm pb-sm border-bottom-dashed">
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="form-label">4.1. Complementos diarios contratados:</label>
+                          <button class="btn btn-blue" [disabled]="editRac" (click)="editarRac()">Editar</button>
+                        </div>
+                      </div>
+                      <div class="row mt-sm">
+                        <div class="col-12 col-xl-6 overflow-lg-down-auto" >
+                          <table  class="table-default">
+                            <thead class="row-span">
+                              <tr class="text-center">
+                                <th rowspan="2">Jornada</th>
+                                <th colspan="2">PS<br>(Preparado en sitio)</th>
+                                <th>IND<br>(Industrializada)</th>
+                                <th colspan="2">CCT<br>(Comida caliente Transportada)</th>
+                              </tr>
+                              <tr class="text-center">
+                                <th>Complemento<br>almuerzo</th>
+                                <th>Complemento<br>AM/PM</th>
+                                <th>Complemento<br>AM/PM</th>
+                                <th>Complemento<br>almuerzo</th>
+                                <th>Complemento<br>AM/PM</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataDetalleSumRacionesMAEM">
+                                <td class="display flex align-items-center td-jornada">
+                                  <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                  <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                  <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                  {{ item.jornada }}
+                                </td>
+
+                                <ng-container *ngIf="!editRac">
+                                  <td>{{item.rpS_ALM}}</td>
+                                  <td>{{item.rpS_COM}}</td>
+                                  <td>{{item.rI_COM}}</td>
+                                  <td>{{item.cA_ALM}}</td>
+                                  <td>{{item.cA_COM}}</td>
+                                </ng-container>
+
+                                <ng-container *ngIf="editRac">
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="item.rpS_ALM">
+                                            <div class="div-label">
+                                              <small class="color-invalid small-label" *ngIf="showValidationTable && !item.rpS_ALM">Ingrese valor</small>
+                                            </div>
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="item.rpS_COM">
+                                            <div class="div-label">
+                                              <small class="color-invalid small-label" *ngIf="showValidationTable && !item.rpS_COM">Ingrese valor</small>
+                                            </div>
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="item.rI_COM">
+                                            <div class="div-label">
+                                              <small class="color-invalid small-label" *ngIf="showValidationTable && !item.rI_COM">Ingrese valor</small>
+                                            </div>
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="item.cA_ALM">
+                                            <div class="div-label">
+                                              <small class="color-invalid small-label" *ngIf="showValidationTable && !item.cA_ALM">Ingrese valor</small>
+                                            </div>
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="item.cA_COM">
+                                            <div class="div-label">
+                                              <small class="color-invalid small-label" *ngIf="showValidationTable && !item.cA_COM">Ingrese valor</small>
+                                            </div>
+                                  </td>
+                                </ng-container>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="ml-xxl ml-lg-down-0 pt-sm pb-sm border-bottom-dashed">
+                      <div class="row">
+                        <div class="col-12 d-xl-block d-flex flex-column">
+                          <label class="form-label">4.2. Número de días de suministro contratados:</label>
+                          <div class="div-input">
+                          <input class="input-text text-left text-xl-center wmx-down-lg-100 w-down-100 ml-lg-down-0" type="number" style="max-width: 80px;"
+                              [ngModelOptions]="{standalone: true}"
+                              [(ngModel)]="itemContrato.noMeses"
+                              (ngModelChange)="changeItemContrato('noMeses', $event)"
+                              [disabled]="!editRac">
+                              <div class="div-small">
+                                <small class="color-invalid" *ngIf="showValidationTable && !itemContrato.noMeses">Ingrese valor</small>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="ml-xxl ml-lg-down-0 pt-sm pb-sm">
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="form-label">4.3. Total de complementos contratados:</label>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-12 col-xl-6 overflow-lg-down-auto px-lg-down-0" [class]="itemUtil.col_CSS_Rac">
+                        <table class="table-default">
+                          <thead class="row-span">
+                            <tr class="text-center">
+                              <th rowspan="2">Jornada</th>
+                              <th colspan="2">PS<br>(Preparado en Sitio)</th>
+                              <th>IND<br>(Industrializada)</th>
+                              <th colspan="2">CCT<br>(Comida Caliente Transportada)</th>
+                            </tr>
+                            <tr class="text-center">
+                              <th>Complemento<br>almuerzo</th>
+                              <th>Complemento<br>AM/PM</th>
+                              <th>Complemento<br>AM/PM</th>
+                              <th>Complemento<br>almuerzo</th>
+                              <th>Complemento<br>AM/PM</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataTotalRacionesMAEM">
+                              <td class="d-flex align-items-center td-jornada">
+                                <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                {{ item.jornada }}
+                              </td>
+                              <td>{{item.rpS_ALM}}</td>
+                              <td>{{item.rpS_COM}}</td>
+                              <td>{{item.rI_COM}}</td>
+                              <td>{{item.cA_ALM}}</td>
+                              <td>{{item.cA_COM}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="row mb-4 mt-xs" *ngIf="editRac">
+                        <div class="col-12 text-center" [class]="itemUtil.col_CSS_Rac">
+                          <button class="btn btn-white" (click)="cancelarEditRac()">Cancelar</button>
+                          <button class="btn btn-blue ml-sm" (click)="guardarEditRac(modeloOperacion.MAEM.id)">Guardar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-tab>
+                  <br>
+                  <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAIP.id)">
+                    <ng-template mat-tab-label >
+
+                      <div class="d-flex align-items-center">
+                        <div [ngClass]="obtenerClaseEstadoDiligenciamiento(dataDetalleSumRacionesPAEPI)"></div>
+                        <label class="form-label mx-2">
+                          <img style="width: 20px; height: 20px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-205.png">
+                          PAEPI
+                        </label>
+                      </div>
+                    </ng-template>
+                    <br>
+                    <div class="ml-xxl ml-lg-down-0 pt-sm pb-sm border-bottom-dashed">
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="form-label">4.1. Complementos diarios contratados:</label>
+                          <button class="btn btn-blue" [disabled]="editRac" (click)="editarRac()">Editar</button>
+                        </div>
+                      </div>
+                      <div class="row mt-sm">
+                        <div class="col-12 col-md-12 col-xl-6 overflow-lg-down-auto" [class]="itemUtil.col_CSS_Rac">
+                          <ng-container>
+                            <table class="table-default">
+                              <thead class="row-span">
+                                <tr class="text-center">
+                                  <th rowspan="2">Jornada</th>
+                                  <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                  <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                                </tr>
+                                <tr class="text-center">
+                                  <th>Complemento Almuerzo</th>
+                                  <th>Complemento AM/PM</th>
+                                  <th>Complemento Almuerzo</th>
+                                  <th>Complemento AM/PM</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="text-center" *ngFor="let item of dataDetalleSumRacionesPAEPI">
+                                  <td class="d-flex align-items-center td-jornada">
+                                    <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                    <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                    <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                    {{ item.jornada }}
+                                  </td>
+
+                                  <ng-container *ngIf="!editRac">
+                                    <td>{{item.rpS_ALM}}</td>
+                                    <td>{{item.rpS_COM}}</td>
+                                    <td>{{item.cA_ALM}}</td>
+                                    <td>{{item.cA_COM}}</td>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="editRac">
+                                    <td>
+                                      <input type="number" class="input-text text-center input-table-edit"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                        <div class="div-label">
+                                          <small class="color-invalid small-label" *ngIf="showValidationTable && !item.rpS_ALM">Ingrese valor</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text text-center input-table-edit"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                        <div class="div-label">
+                                          <small class="color-invalid small-label" *ngIf="showValidationTable && !item.rpS_COM">Ingrese valor</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text text-center input-table-edit"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                        <div class="div-label">
+                                          <small class="color-invalid small-label" *ngIf="showValidationTable && !item.cA_ALM">Ingrese valor</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text text-center input-table-edit"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                        <div class="div-label">
+                                          <small class="color-invalid small-label" *ngIf="showValidationTable && !item.cA_COM">Ingrese valor</small>
+                                        </div>
+                                    </td>
+                                  </ng-container>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="ml-xxl ml-lg-down-0 pt-sm pb-sm border-bottom-dashed">
+                      <div class="column">
+                        <div class="col-12 d-xl-block d-flex flex-column">
+                          <label class="form-label">4.2. Número de días de suministro contratados:</label>
+                          <div class="div-input">
+                          <input class="input-text text-left text-xl-center wmx-down-lg-100 w-down-100 ml-lg-down-0" type="number" style="max-width: 80px;"
+                               [ngModelOptions]="{standalone: true}"
+                               [(ngModel)]="itemContrato.noMeses"
+                               (ngModelChange)="changeItemContrato('noMeses', $event)"
+                               [disabled]="!editRac">
+                               <div class="div-small">
+                                <small class="color-invalid" *ngIf="showValidationTable && !itemContrato.noMeses">Ingrese valor</small>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="ml-xxl ml-lg-down-0 pt-sm pb-sm">
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="form-label">4.3. Total de complementos contratados:</label>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-12 col-xl-6 px-lg-down-0 overflow-lg-down-auto" [class]="itemUtil.col_CSS_Rac">
+                        <table class="table-default">
+                          <thead class="row-span">
+                            <tr class="text-center">
+                              <th rowspan="2">Jornada</th>
+                              <th colspan="2">Preparado en sitio<br>(PS)</th>
+                              <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                            </tr>
+                            <tr class="text-center">
+                              <th>Complemento Almuerzo</th>
+                              <th>Complemento AM/PM</th>
+                              <th>Complemento Almuerzo</th>
+                              <th>Complemento AM/PM</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataTotalRacionesPAEPI">
+                              <td class="d-flex align-items-center td-jornada">
+                                <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                {{ item.jornada }}
+                              </td>
+                              <td>{{item.rpS_ALM}}</td>
+                              <td>{{item.rpS_COM}}</td>
+                              <td>{{item.cA_ALM}}</td>
+                              <td>{{item.cA_COM}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                      <div class="row mb-4 mt-xs" *ngIf="editRac">
+                        <div class="col-12 text-center" [class]="itemUtil.col_CSS_Rac">
+                          <button class="btn btn-white" (click)="cancelarEditRac()">Cancelar</button>
+                          <button class="btn btn-blue ml-sm" (click)="guardarEditRac(modeloOperacion.MAIP.id)">Guardar</button>
+                        </div>
+                      </div>
+
+                  </mat-tab>
+              </mat-tab-group>
+
+
+
+              </div>
+            </div>
+          </form>
+
+        </div>
+        <div class="panel-footer pt-xxl pb-xxl">
+          <div class="row gap-sm-down-10-px">
+            <div class="col-12 col-md-6 text-left">
+              <a class="btn btn-blue w-down-sm-100" (click)="guardarContinuar2()">Guardar y continuar más tarde</a>
+            </div>
+            <div class="col-12 col-md-6 text-right d-md-block d-flex flex-column-reverse gap-sm-down-10-px">
+              <a class="btn btn-blue w-down-sm-100" (click)="anterior(2)">Anterior</a>
+              <a class="btn btn-blue ml-0 ml-md-3" (click)="guardarSiguiente2()">Siguiente</a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="form31Visible">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="pt-xxl pb-md">
+            <div class="row">
+              <div class="col-12 col-xl clearfix" style="padding-left: 3px">
+                <app-chapterblue [numberChapter]="3" [titleChapter]="'Sedes beneficiarias'"></app-chapterblue>
+                <br />
+              </div>
+              <div class="col-12 col-xl clearfix text-right"
+                    style="padding: 20px">
+                <div class="msg-alerta">
+                  <div>
+                    <img class="w-down-md-50 w-down-sm-100" src="./assets/images/Iconos/suministro/paso3-5.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="modelosOperacionActivos.length > VALOR_CERO">
+            <div class="col d-flex justify-content-center">
+              <div class="titulos_estado_diligenciamiento w-down-100">
+                <div class="d-flex flex-column flex-xl-row align-items-start align-xl-items-center">
+                  <span>Estado del diligenciamiento: </span>
+                  <div class="d-flex align-items-center"><div class="pendiente_diligenciar ml-3 mr-2"></div>Pendiente por diligenciar</div>
+                  <div class="d-flex align-items-center"><div class="incompleto ml-3 mr-2"></div>Incompleto</div>
+                  <div class="d-flex align-items-center"><div class="completo ml-3 mr-2"></div>Completo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mx-2 mx-xl-4 my-4">
+            <mat-tab-group [selectedIndex]="selectedTabIndex" style="width: 100%; display: flex;" (selectedIndexChange)="myTabFocusChange($event)">
+              <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAEM.id)">
+                <ng-template mat-tab-label >
+                  <div class="d-flex align-items-center">
+                    <div [ngClass]="dataSedesBenMAEM.length > 0 ? 'completo' : 'pendiente_diligenciar'"></div>
+                    <label class="form-label mx-2">
+                      <img style="width: 30px; height: 30px;" src="./assets/images/Iconos/icon_modelo_operacion.png">
+                      MAEM
+                    </label>
+                  </div>
+                </ng-template>
+                <br>
+
+                <form class="form-default">
+                  <div class="form-item">
+                    <div class="col px-lg-down-0">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="responsive-table-pae">
+                            <table class="table-default table-red table-hover-disabled">
+                              <thead>
+                                <tr class="text-center">
+                                  <th width="5%">
+                                    <input type="checkbox"
+                                            class="checkbox-width-none"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="itemUtil.seleccionTodo"
+                                            (ngModelChange)="changeItemUtil('seleccionTodo', $event)">
+                                  </th>
+                                  <th width="20%">Municipio</th>
+                                  <th width="30%">Institución Educativa</th>
+                                  <th width="30%">Sede Educativa</th>
+                                  <th>Jornada</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                          <div class="border-bottom-red responsive-table-pae" style="overflow-y: auto; max-height: 250px;">
+                            <table class="table-default  table-red table-hover-disabled">
+                              <tbody>
+                                <tr class="text-center" *ngFor="let item of dataSedesNoBenMAEM">
+                                  <td class="w-down-100" width="5%" data-label="">
+                                    <input type="checkbox"
+                                            class="checkbox-width-none"
+                                            *ngIf="item.municipio"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="item.seleccion"
+                                            (ngModelChange)="changeItem(item, 'seleccion', $event)">
+                                  </td>
+                                  <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                  <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                  <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                  <td class="w-down-100" data-label="Jornada">{{item.jornada}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="col-12 mt-sm text-center">
+                          <button class="btn btn-red" (click)="agregarSedes(modeloOperacion.MAEM.id)">Agregar al listado de beneficiarias</button>
+                        </div>
+                      </div>
+                      <div class="row mt-xl" *ngIf="dataSedesBenMAEM.length > VALOR_CERO">
+                        <div class="col-12">
+                          <div class="responsive-table-pae">
+                            <table class="table-default table-hover-disabled">
+                              <thead>
+                                <tr class="text-center">
+                                  <th width="5%">
+                                    <input type="checkbox"
+                                            class="checkbox-width-none"
+                                            [ngModelOptions]="{standalone: true}"
+                                            [(ngModel)]="itemUtil.seleccionTodoBen"
+                                            (ngModelChange)="changeItemUtil('seleccionTodoBen', $event)">
+                                  </th>
+                                  <th width="20%">Municipio</th>
+                                  <th width="30%">Institución Educativa</th>
+                                  <th width="30%">Sede Educativa</th>
+                                  <th>Jornada</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                          <div class="border-bottom responsive-table-pae" style="overflow-y: auto; max-height: 250px;">
+                            <table class="table-default table-hover-disabled">
+                              <tbody>
+                                <tr class="text-center" *ngFor="let item of dataSedesBenMAEM">
+                                  <td class="w-down-100" width="5%" data-label="">
+                                    <input type="checkbox"
+                                      class="checkbox-width-none"
+                                      *ngIf="item.municipio"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.seleccion"
+                                      (ngModelChange)="changeItem(item, 'seleccion', $event)">
+                                  </td>
+                                  <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                  <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                  <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                  <td class="w-down-100" data-label="Jornada">{{item.jornada}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="col-12 mt-sm text-center">
+                          <button class="btn btn-blue" (click)="eliminarSedes(modeloOperacion.MAEM.id)">Eliminar del listado de
+                            beneficiarias</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-item">
+                    <div class="col-12 col-xl ml-0 ml-xl-3 px-lg-down-0">
+                      <div class="row">
+                        <div class="col-12 col-xl-4">
+                          <label class="text-basered text-base-fontsize">Total complementos<br class="d-none d-xl-inline-block">diarios contratados</label>
+                          <table class="table-default table-red">
+                            <thead>
+                              <tr class="text-center">
+                                <th *ngFor="let item of colsJornadas">{{item}}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSumRacionesDiariasMAEM">
+                                <td>{{item.jornada}}</td>
+                                <td>{{item.almuerzo | number}}</td>
+                                <td>{{item.complemento | number}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-12 col-xl-4 mt-lg-down-1">
+                          <label class="text-basecolor text-base-fontsize">Total complementos diarios necesarios<br class="d-none d-xl-inline-block">para cubrir
+                            sedes beneficiarias</label>
+                          <table class="table-default">
+                            <thead>
+                              <tr class="text-center">
+                                <th *ngFor="let item of colsJornadas">{{item}}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSumRacionesContratadasMAEM">
+                                <td>{{item.jornada}}</td>
+                                <td>{{item.almuerzo | number}}</td>
+                                <td>{{item.complemento | number}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-12 col-xl-4 flex align-items-center mt-lg-down-1">
+                          <app-alert-message class="d-flex flex-row flex-xl-column align-items-center" [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'V'"
+                            [message]="'Asegúrese de que la cantidad de raciones contratadas alcance para cubrir las necesidades de las sedes beneficiarias.'">
+                          </app-alert-message>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </mat-tab>
+
+              <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAIP.id)">
+                <ng-template mat-tab-label >
+                  <div class="d-flex align-items-center">
+                    <div [ngClass]="dataSedesBenPAEPI.length > 0 ? 'completo' : 'pendiente_diligenciar'"></div>
+                    <label class="form-label mx-2">
+                      <img style="width: 20px; height: 20px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-205.png">
+                      PAEPI
+                    </label>
+                  </div>
+                </ng-template>
+                <br>
+
+                <form class="form-default">
+                  <div class="form-item">
+                    <div class="col px-lg-down-0">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="responsive-table-pae">
+                            <table class="table-default table-red table-hover-disabled">
+                              <thead>
+                                <tr class="text-center">
+                                  <th width="5%">
+                                    <input type="checkbox"
+                                      class="checkbox-width-none"
+                                      [ngModelOptions]="{standalone: true}"
+                                      [(ngModel)]="itemUtil.seleccionTodo"
+                                      (ngModelChange)="changeItemUtil('seleccionTodo', $event)">
+                                  </th>
+                                  <th width="20%">Municipio</th>
+                                  <th width="30%">Institución Educativa</th>
+                                  <th width="30%">Sede Educativa</th>
+                                  <th>Jornada</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                          <div class="border-bottom-red responsive-table-pae" style="overflow-y: auto; max-height: 250px;">
+                            <table class="table-default  table-red table-hover-disabled">
+                              <tbody>
+                                <tr class="text-center" *ngFor="let item of dataSedesNoBenPAEPI">
+                                  <td class="w-down-100" width="5%" data-label="">
+                                    <input type="checkbox"
+                                    class="checkbox-width-none"
+                                    *ngIf="item.municipio"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.seleccion"
+                                    (ngModelChange)="changeItem(item, 'seleccion', $event)">
+                                  </td>
+                                  <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                  <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                  <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                  <td class="w-down-100" data-label="Jornada">{{item.jornada}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="col-12 mt-sm text-center">
+                          <button class="btn btn-red" (click)="agregarSedes(modeloOperacion.MAIP.id)">Agregar al listado de beneficiarias</button>
+                        </div>
+                      </div>
+                      <div class="row mt-xl" *ngIf="dataSedesBenPAEPI.length > VALOR_CERO">
+                        <div class="col-12">
+                          <div class="responsive-table-pae">
+                            <table class="table-default table-hover-disabled">
+                              <thead>
+                                <tr class="text-center">
+                                  <th width="5%">
+                                    <input type="checkbox"
+                                      class="checkbox-width-none"
+                                      [ngModelOptions]="{standalone: true}"
+                                      [(ngModel)]="itemUtil.seleccionTodoBen"
+                                      (ngModelChange)="changeItemUtil('seleccionTodoBen', $event)">
+                                  </th>
+                                  <th width="20%">Municipio</th>
+                                  <th width="30%">Institución Educativa</th>
+                                  <th width="30%">Sede Educativa</th>
+                                  <th>Jornada</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
+                          <div class="border-bottom responsive-table-pae" style="overflow-y: auto; max-height: 250px;">
+                            <table class="table-default table-hover-disabled">
+                              <tbody>
+                                <tr class="text-center" *ngFor="let item of dataSedesBenPAEPI">
+                                  <td class="w-down-100" width="5%" data-label="">
+                                    <input type="checkbox" class="checkbox-width-none"   *ngIf="item.municipio"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.seleccion"
+                                      (ngModelChange)="changeItem(item, 'seleccion', $event)">
+                                  </td>
+                                  <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                  <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                  <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                  <td class="w-down-100" data-label="Jornada">{{item.jornada}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="col-12 mt-sm text-center">
+                          <button class="btn btn-blue" (click)="eliminarSedes(modeloOperacion.MAIP.id)">Eliminar del listado de
+                            beneficiarias</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-item">
+                    <div class="col-12 col-xl ml-0 ml-xl-3 px-lg-down-0">
+                      <div class="row">
+                        <div class="col-12 col-xl-4">
+                          <label class="text-basered text-base-fontsize">Total complementos<br class="d-none d-xl-inline-block">diarios contratados</label>
+                          <table class="table-default table-red">
+                            <thead>
+                              <tr class="text-center">
+                                <th *ngFor="let item of colsJornadas">{{item}}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSumRacionesDiariasPAEPI">
+                                <td>{{item.jornada}}</td>
+                                <td>{{item.almuerzo | number}}</td>
+                                <td>{{item.complemento | number}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-12 col-xl-4 mt-lg-down-1">
+                          <label class="text-basecolor text-base-fontsize">Total raciones diarias necesarias<br class="d-none d-xl-inline-block">para cubrir
+                            sedes beneficiarias</label>
+                          <table class="table-default">
+                            <thead>
+                              <tr class="text-center">
+                                <th *ngFor="let item of colsJornadas">{{item}}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSumRacionesContratadasPAEPI">
+                                <td>{{item.jornada}}</td>
+                                <td>{{item.almuerzo | number}}</td>
+                                <td>{{item.complemento | number}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-12 col-xl-4 flex align-items-center mt-lg-down-1">
+                          <app-alert-message class="d-flex flex-row flex-xl-column align-items-center" [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'V'"
+                            [message]="'Asegúrese de que la cantidad de raciones contratadas alcance para cubrir las necesidades de las sedes beneficiarias.'">
+                          </app-alert-message>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+
+
+        <div class="panel-footer pt-xxl pb-xxl">
+          <div class="row gap-sm-down-10-px">
+            <div class="col-12 col-md-6 text-left">
+              <a class="btn btn-blue w-down-sm-100" (click)="guardarContinuar()">Guardar y continuar más tarde</a>
+            </div>
+            <div class="col-12 col-md-6 text-right d-md-block d-flex flex-column-reverse gap-sm-down-10-px">
+              <a class="btn btn-blue w-down-sm-100" (click)="anterior(31)">Anterior</a>
+              <a class="btn btn-blue w-down-sm-100 ml-0 ml-md-3" (click)="guardarSiguiente3_1()">Siguiente</a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="form4Visible">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="pt-xxl pb-md">
+            <div class="row">
+              <div class="col-12 col-xl clearfix" style="padding-left: 3px">
+                <app-chapterblue [numberChapter]="4" [titleChapter]="'Características financieras'"></app-chapterblue>
+                <br />
+              </div>
+              <div class="col-12 col-xl clearfix text-right"
+                    style="padding: 20px">
+                <div class="msg-alerta">
+                  <div>
+                    <img class="w-down-md-50 w-down-sm-100" src="./assets/images/Iconos/suministro/paso4-5.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form class="form-default" (ngSubmit)="onSubmit()" #totalcontrato="ngForm" autocomplete="off">
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3 d-flex flex-column flex-xl-row align-items-start align-xl-items-center">
+                <label class="form-label">1. Valor total del contrato</label>
+                <input style="width: 150px;" type="number" class="form-control text-center w-down-100"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="itemContrato.valorTotalContrato"
+                  (click)="changeItemContrato('valorTotalContrato', $event)">
+                  <div class="div-label">
+                    <small class="color-invalid small-label" *ngIf="showValidationTotal && !itemContrato.valorTotalContrato">Ingrese valor</small>
+                  </div>
+              </div>
+            </div>
+
+
+            <div class="form-item">
+              <div class="col-12 col-xl ml-0 ml-xl-3">
+                <label class="form-label">2. Precios de los complementos</label>
+                <br/>
+
+                <div class="row justify-content-center">
+                  <div class="titulos_estado_diligenciamiento w-down-100">
+                    <div class="d-flex flex-column flex-xl-row align-items-start align-xl-items-center">
+                      <span>Estado del diligenciamiento: </span>
+                      <div class="d-flex align-items-center"><div class="pendiente_diligenciar ml-3 mr-2"></div>Pendiente por diligenciar</div>
+                      <div class="d-flex align-items-center"><div class="incompleto ml-3 mr-2"></div>Incompleto</div>
+                      <div class="d-flex align-items-center"><div class="completo ml-3 mr-2"></div>Completo</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <mat-tab-group  class="px-0 px-xl-3"[selectedIndex]="selectedTabIndex" style="width: 100%; display: flex;" (selectedIndexChange)="myTabFocusChange($event)">
+                <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAEM.id)">
+                  <ng-template mat-tab-label >
+                    <div class="d-flex align-items-center">
+                      <div [ngClass]="obtenerClaseEstadoDiligenciamiento(dataSumRacionesPreciosMAEM)"></div>
+                      <label class="form-label mx-2">
+                        <img style="width: 30px; height: 30px;" src="./assets/images/Iconos/icon_modelo_operacion.png">
+                        MAEM
+                      </label>
+                    </div>
+                  </ng-template>
+                  <br>
+                  <form class="form-default">
+                    <div class="form-item">
+                      <div class="col-12 col-xl ml-0 ml-xl-3">
+                        <label class="form-label">2.1. El contrato tiene precios diferenciados por zona (rural o urbana):</label>
+                        <div class="inline-block form-checkbox ml-xs w-down-100 ml-lg-down-0">
+                          <label id="ckContratoConAnticipoSi" class="check-si w-down-50"
+                            [class]="contratoModeloMAEM.manejaPreciosporzona ? 'active' : ''"
+                            (click)="changeItem(contratoModeloMAEM, 'manejaPreciosporzona', true); actualizarContratoModelo(modeloOperacion.MAEM.id); actualizarIdZonaYConsultarRaciones(modeloOperacion.MAEM.id, sedesZonaMAEM[VALOR_CERO].iD_Zona)">
+                            Si
+                          </label>
+                          <label id="ckContratoConAnticipoNo" class="check-no w-down-50"
+                            [class]="!contratoModeloMAEM.manejaPreciosporzona ? 'active' : ''"
+                            (click)="changeItem(contratoModeloMAEM,'manejaPreciosporzona', false); actualizarContratoModelo(modeloOperacion.MAEM.id); actualizarIdZonaYConsultarRaciones(modeloOperacion.MAEM.id, VALOR_CERO)">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-item">
+                      <div class="col-12 col-xl ml-0 ml-xl-3">
+                        <label class="form-label">2.2. El contrato tiene precios diferenciados por nivel educativo:</label>
+                        <div class="inline-block form-checkbox ml-xs w-down-100 ml-lg-down-0">
+                          <label id="ckContratoConAnticipoSi" class="check-si w-down-50"
+                            [class]="contratoModeloMAEM.manejaPreciosporNivelEducativo ? 'active' : ''"
+                            (click)="changeItem(contratoModeloMAEM,'manejaPreciosporNivelEducativo', true); actualizarContratoModelo(modeloOperacion.MAEM.id); actualizarIdNivelEducativoYConsultarRaciones(modeloOperacion.MAEM.id, sedesNivelEducativoMAEM[VALOR_CERO].iD_NivelEducativo)">
+                            Si
+                          </label>
+                          <label id="ckContratoConAnticipoNo" class="check-no w-down-50"
+                            [class]="!contratoModeloMAEM.manejaPreciosporNivelEducativo ? 'active' : ''"
+                            (click)="changeItem(contratoModeloMAEM,'manejaPreciosporNivelEducativo', false); actualizarContratoModelo(modeloOperacion.MAEM.id); actualizarIdNivelEducativoYConsultarRaciones(modeloOperacion.MAEM.id, VALOR_CERO)">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-item">
+                      <div class="col-12 col-xl ml-0 ml-xl-3 mb-3 d-flex flex-column flex-xl-row align-items-start align-xl-items-center">
+                        <label class="form-label">2.3. Precios acordados por tipo de complemento y modalidad:</label>
+                        <div class="row mt-sm mt-xl-0">
+                          <div class="col-12">
+                            <button class="btn btn-blue" [disabled]="editRacPrecio" (click)="editarRacPrecio()">Editar</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="!contratoModeloMAEM.manejaPreciosporzona && !contratoModeloMAEM.manejaPreciosporNivelEducativo" class="col">
+                        <div class="col-12 overflow-lg-down-auto col-md-12 col-xl-10 px-lg-down-0" [class]="itemUtil.col_CSS_Rac">
+                          <table class="table-default">
+                            <thead class="row-span">
+                              <tr class="text-center">
+                                <th rowspan="2">Jornada</th>
+                                <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                <th>Industrializada<br>(IND)</th>
+                                <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                              </tr>
+                              <tr class="text-center">
+                                <th>Complemento almuerzo</th>
+                                <th>Complemento AM/PM</th>
+                                <th>Complemento AM/PM</th>
+                                <th>Complemento almuerzo</th>
+                                <th>Complemento AM/PM</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSumRacionesPreciosMAEM">
+                                <td class="d-flex align-items-center td-jornada">
+                                  <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                  <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                  <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                  {{ item.jornada }}
+                                </td>
+
+                                <ng-container *ngIf="!editRacPrecio">
+                                  <td>{{item.rpS_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                  <td>{{item.rpS_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                  <td>{{item.rI_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                  <td>{{item.cA_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                  <td>{{item.cA_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                </ng-container>
+
+                                <ng-container *ngIf="editRacPrecio">
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rI_COM">
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                  </td>
+                                </ng-container>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <span class="text-basecolor">
+                            * Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0.
+                          </span>
+                        </div>
+                      </div>
+
+                      <div *ngIf="contratoModeloMAEM.manejaPreciosporzona && contratoModeloMAEM.manejaPreciosporNivelEducativo" class="container px-lg-down-0 mx-lg-down-0 wmx-down-lg-100 contenedor-precios-completo">
+                        <div class="contenedor-precios-diferenciados">
+                          <div class="titulos-precio-diferenciado">
+                            <button *ngFor="let item of sedesZonaMAEM"
+                              (click)="actualizarIdZonaYConsultarRaciones(modeloOperacion.MAEM.id, item.iD_Zona)"
+                              class="titulo_diferenciado titulo_diferenciado_zona_rural px-3 py-2 d-flex justify-content-center align-items-center"
+                              [ngClass]="{'backgroundSigePAE' : (item.iD_Zona == iD_ZonaMAEM)}">
+                              <div class="mr-2" [ngClass]="obtenerClaseEstadoDiligenciamiento([item])"></div>
+                              MAEM - Zona {{item.zona}}
+                            </button>
+                          </div>
+
+                          <div class="row mx-4 mb-4 flex-column flex-md-row borders">
+                            <div *ngFor="let item of sedesNivelEducativoMAEM"
+                              (click)="actualizarIdNivelEducativoYConsultarRaciones(modeloOperacion.MAEM.id, item.iD_NivelEducativo)"
+                              class="col border-right border-sm-bottom-list py-2 d-flex justify-content-center align-items-center text-nowrap cursor-pointer"
+                              [ngClass]="{'backgroundSigePAE' : (item.iD_NivelEducativo == iD_NivelEducativoMAEM)}">
+                              <div class="mr-2" [ngClass]="obtenerClaseEstadoDiligenciamiento([item])"></div>
+                                {{item.nivelEducativo}}
+                            </div>
+                          </div>
+
+                          <div class="col justify-content-center text-center">
+                            <div class="col-12 px-lg-down-0 responsive-table">
+                              <table class="table-default table-hover-disabled">
+                                <thead class="row-span">
+                                  <tr class="text-center">
+                                    <th rowspan="2">Jornada</th>
+                                    <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                    <th>Industrializada<br>(IND)</th>
+                                    <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                                  </tr>
+                                  <tr class="text-center">
+                                    <th>Complemento almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="text-center" *ngFor="let item of dataSumRacionesPreciosMAEM">
+                                    <td class="d-flex align-items-center td-jornada">
+                                      <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                      <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                      <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                      {{ item.jornada }}
+                                    </td>
+
+                                    <ng-container *ngIf="!editRacPrecio">
+                                      <td>{{item.rpS_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rpS_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rI_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="editRacPrecio">
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rI_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                      </td>
+                                    </ng-container>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <span class="text-basecolor">
+                              * Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="contratoModeloMAEM.manejaPreciosporzona && !contratoModeloMAEM.manejaPreciosporNivelEducativo" class="container px-lg-down-0 mx-lg-down-0 wmx-down-lg-100 contenedor-precios">
+                        <div class="contenedor-precios-diferenciados">
+                          <div class="titulos-precio-diferenciado">
+                            <button *ngFor="let item of sedesZonaMAEM"
+                              (click)="actualizarIdZonaYConsultarRaciones(modeloOperacion.MAEM.id, item.iD_Zona)"
+                              class="titulo_diferenciado titulo_diferenciado_zona_rural px-3 py-2 d-flex justify-content-center align-items-center"
+                              [ngClass]="{'backgroundSigePAE' : (item.iD_Zona == iD_ZonaMAEM)}">
+                              <div class="mr-2" [ngClass]="obtenerClaseEstadoDiligenciamiento([item])"></div>
+                              MAEM - Zona {{item.zona}}
+                            </button>
+                          </div>
+                          <div class="col justify-content-center text-center">
+                            <div class="col-12 px-lg-down-0 responsive-table">
+                              <table class="table-default table-hover-disabled">
+                                <thead class="row-span">
+                                  <tr class="text-center">
+                                    <th rowspan="2">Jornada</th>
+                                    <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                    <th>Industrializada<br>(IND)</th>
+                                    <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                                  </tr>
+                                  <tr class="text-center">
+                                    <th>Complemento almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="text-center" *ngFor="let item of dataSumRacionesPreciosMAEM">
+                                    <td class="d-flex align-items-center td-jornada">
+                                      <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                      <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                      <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                      {{ item.jornada }}
+                                    </td>
+
+                                    <ng-container *ngIf="!editRacPrecio">
+                                      <td>{{item.rpS_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rpS_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rI_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="editRacPrecio">
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rI_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                      </td>
+                                    </ng-container>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <span class="text-basecolor">
+                              * Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="!contratoModeloMAEM.manejaPreciosporzona && contratoModeloMAEM.manejaPreciosporNivelEducativo" class="container px-lg-down-0 px-lg-down-0 mx-lg-down-0 wmx-down-lg-100 contenedor-precios-completo">
+                        <div class="contenedor-precios-diferenciados">
+                          <div class="titulos-precio-diferenciado">
+                            <div class="row mx-4 mb-4 flex-column flex-md-row borders bg-white">
+                              <div *ngFor="let item of sedesNivelEducativoMAEM"
+                                (click)="actualizarIdNivelEducativoYConsultarRaciones(modeloOperacion.MAEM.id, item.iD_NivelEducativo)"
+                                class="col border-right border-sm-bottom-list py-2 d-flex justify-content-center align-items-center text-nowrap cursor-pointer"
+                                [ngClass]="{'backgroundSigePAE' : (item.iD_NivelEducativo == iD_NivelEducativoMAEM)}">
+                                <div class="mr-2" [ngClass]="obtenerClaseEstadoDiligenciamiento([item])"></div>
+                                  {{item.nivelEducativo}}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col justify-content-center text-center">
+                            <div class="col-12 px-lg-down-0 responsive-table">
+                              <table class="table-default table-hover-disabled">
+                                <thead class="row-span">
+                                  <tr class="text-center">
+                                    <th rowspan="2">Jornada</th>
+                                    <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                    <th>Industrializada<br>(IND)</th>
+                                    <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                                  </tr>
+                                  <tr class="text-center">
+                                    <th>Complemento almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="text-center" *ngFor="let item of dataSumRacionesPreciosMAEM">
+                                    <td class="d-flex align-items-center td-jornada">
+                                      <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                      <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                      <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                      {{ item.jornada }}
+                                    </td>
+
+                                    <ng-container *ngIf="!editRacPrecio">
+                                      <td>{{item.rpS_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rpS_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rI_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="editRacPrecio">
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rI_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                      </td>
+                                    </ng-container>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <span class="text-basecolor">
+                              * Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-item">
+                      <div class="col ml-0 ml-xl-3">
+                        <div class="row mt-xs pl-xxl">
+                          <div class="col-12 text-right" *ngIf="editRacPrecio" [class]="itemUtil.col_CSS_Rac">
+                            <button class="btn btn-white" (click)="cancelarEditRacPrecio()">Cancelar</button>
+                            <button class="btn btn-blue ml-sm" (click)="guardarEditRacPrecio(modeloOperacion.MAEM.id)">Guardar</button>
+                          </div>
+                        </div>
+                        <div class="row mt-sm pl-xxl px-lg-down-0">
+                          <div class="col-12 col-xl-10">
+                            <label class="text-basered font-size-13">De acuerdo con la cantidad de raciones establecidas en el
+                              contrato y el precio de las mismas, el costo del MAEM
+                              para el total de las sedes beneficiarias es:</label>
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl mt-sm pl-xxl">
+                          <div class="col-12 col-xl-4 pr-0 pl-0 mb-2">
+                            <table class="table-default table-red table-totales">
+                              <thead>
+                                <tr class="text-center">
+                                  <th>Jornada</th>
+                                  <th>Costo MAEM</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of dataSumRacionesValorTotalMAEM">
+                                  <td class="text-center">{{item.jornada}}</td>
+                                  <td class="text-left pl-4">{{item.costo | currency:'$':'symbol':'1.0-2'}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <div class="px-lg-down-0" style="padding: 0px 22px 0px 5px;">
+                            <div class="col-12 col-xl-4 pr-2 pl-1">
+                              <app-costo-total-tab [Titulo]="'Total MAEM'" [TotalGeneral]="sumContratosValorTotalMAEM" [Orientacion]="'H'" >
+                              </app-costo-total-tab>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </form>
+                </mat-tab>
+
+                <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAIP.id)">
+                  <ng-template mat-tab-label >
+                    <div class="d-flex align-items-center">
+                      <div [ngClass]="obtenerClaseEstadoDiligenciamiento(dataSumRacionesPreciosPAEPI)"></div>
+                      <label class="form-label mx-2">
+                        <img style="width: 20px; height: 20px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-205.png">
+                        PAEPI
+                      </label>
+                    </div>
+                  </ng-template>
+                  <br>
+
+                  <form class="form-default">
+                    <div class="form-item">
+                      <div class="col ml-3">
+                        <label class="form-label">2.1. El contrato tiene precios diferenciados por zona (rural o urbana):</label>
+                        <div class="inline-block form-checkbox ml-xs">
+                          <label id="ckContratoConAnticipoSi" class="check-si"
+                            [class]="contratoModeloPAEPI.manejaPreciosporzona ? 'active' : ''"
+                            (click)="changeItem(contratoModeloPAEPI, 'manejaPreciosporzona', true); actualizarContratoModelo(modeloOperacion.MAIP.id); actualizarContratoModelo(modeloOperacion.MAIP.id); actualizarIdZonaYConsultarRaciones(modeloOperacion.MAIP.id, sedesZonaPAEPI[VALOR_CERO].iD_Zona)">
+                            Si
+                          </label>
+                          <label id="ckContratoConAnticipoNo" class="check-no"
+                            [class]="!contratoModeloPAEPI.manejaPreciosporzona ? 'active' : ''"
+                            (click)="changeItem(contratoModeloPAEPI,'manejaPreciosporzona', false); actualizarContratoModelo(modeloOperacion.MAIP.id); actualizarIdZonaYConsultarRaciones(modeloOperacion.MAIP.id, VALOR_CERO)">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-item">
+                      <div class="col ml-3">
+                        <label class="form-label">2.2. El contrato tiene precios diferenciados por nivel educativo:</label>
+                        <div class="inline-block form-checkbox ml-xs">
+                          <label id="ckContratoConAnticipoSi" class="check-si"
+                            [class]="contratoModeloPAEPI.manejaPreciosporNivelEducativo ? 'active' : ''"
+                            (click)="changeItem(contratoModeloPAEPI,'manejaPreciosporNivelEducativo', true); actualizarContratoModelo(modeloOperacion.MAIP.id); actualizarIdNivelEducativoYConsultarRaciones(modeloOperacion.MAIP.id, sedesNivelEducativoPAEPI[VALOR_CERO].iD_NivelEducativo)">
+                            Si
+                          </label>
+                          <label id="ckContratoConAnticipoNo" class="check-no"
+                            [class]="!contratoModeloPAEPI.manejaPreciosporNivelEducativo ? 'active' : ''"
+                            (click)="changeItem(contratoModeloPAEPI,'manejaPreciosporNivelEducativo', false); actualizarContratoModelo(modeloOperacion.MAIP.id); actualizarIdNivelEducativoYConsultarRaciones(modeloOperacion.MAIP.id, VALOR_CERO)">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-item">
+                      <div class="col ml-3 mb-3">
+                        <label class="form-label">2.3. Precios acordados por tipo de complemento y modalidad:</label>
+                        <div class="row mt-sm">
+                          <div class="col-12">
+                            <button class="btn btn-blue" [disabled]="editRacPrecio" (click)="editarRacPrecio()">Editar</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="!contratoModeloPAEPI.manejaPreciosporzona && !contratoModeloPAEPI.manejaPreciosporNivelEducativo" class="col">
+                        <div class="col-12 overflow-lg-down-auto col-md-12 col-xl-10 px-lg-down-0" [class]="itemUtil.col_CSS_Rac">
+                          <table class="table-default">
+                            <thead class="row-span">
+                              <tr class="text-center">
+                                <th rowspan="2">Jornada</th>
+                                <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                              </tr>
+                              <tr class="text-center">
+                                <th>Complemento Almuerzo</th>
+                                <th>Complemento AM/PM</th>
+                                <th>Complemento Almuerzo</th>
+                                <th>Complemento AM/PM</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSumRacionesPreciosPAEPI">
+                                <td class="d-flex align-items-center td-jornada">
+                                  <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                  <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                  <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                  {{ item.jornada }}
+                                </td>
+
+                                <ng-container *ngIf="!editRacPrecio">
+                                  <td>{{item.rpS_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                  <td>{{item.rpS_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                  <td>{{item.cA_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                  <td>{{item.cA_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                </ng-container>
+
+                                <ng-container *ngIf="editRacPrecio">
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                  </td>
+                                  <td>
+                                    <input type="number" class="input-text text-center input-table-edit"
+                                      [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                  </td>
+                                </ng-container>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <span class="text-basecolor">
+                            * Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0.
+                          </span>
+                        </div>
+                      </div>
+
+                      <div *ngIf="contratoModeloPAEPI.manejaPreciosporzona && contratoModeloPAEPI.manejaPreciosporNivelEducativo" class="container px-lg-down-0 mx-lg-down-0 wmx-down-lg-100 contenedor-precios-completo">
+                        <div class="contenedor-precios-diferenciados">
+                          <div class="titulos-precio-diferenciado">
+                            <button *ngFor="let item of sedesZonaPAEPI"
+                              (click)="actualizarIdZonaYConsultarRaciones(modeloOperacion.MAIP.id, item.iD_Zona)"
+                              class="titulo_diferenciado titulo_diferenciado_zona_rural px-3 py-2 d-flex justify-content-center align-items-center"
+                              [ngClass]="{'backgroundSigePAE' : (item.iD_Zona == iD_ZonaPAEPI)}">
+                              <div class="mr-2" [ngClass]="obtenerClaseEstadoDiligenciamiento([item])"></div>
+                              PAEPI - Zona {{item.zona}}
+                            </button>
+                          </div>
+
+                          <div class="row mx-4 mb-4 flex-column flex-md-row borders">
+                            <div *ngFor="let item of sedesNivelEducativoPAEPI"
+                              (click)="actualizarIdNivelEducativoYConsultarRaciones(modeloOperacion.MAIP.id, item.iD_NivelEducativo)"
+                              class="col border-right border-sm-bottom-list py-2 d-flex justify-content-center align-items-center text-nowrap cursor-pointer"
+                              [ngClass]="{'backgroundSigePAE' : (item.iD_NivelEducativo == iD_NivelEducativoPAEPI)}">
+                              <div class="mr-2" [ngClass]="obtenerClaseEstadoDiligenciamiento([item])"></div>
+                                {{item.nivelEducativo}}
+                            </div>
+                          </div>
+
+                          <div class="col justify-content-center text-center">
+                            <div class="col-12 px-lg-down-0 responsive-table">
+                              <table class="table-default table-hover-disabled">
+                                <thead class="row-span">
+                                  <tr class="text-center">
+                                    <th rowspan="2">Jornada</th>
+                                    <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                    <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                                  </tr>
+                                  <tr class="text-center">
+                                    <th>Complemento Almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento Almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="text-center" *ngFor="let item of dataSumRacionesPreciosPAEPI">
+                                    <td class="d-flex align-items-center td-jornada">
+                                      <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                      <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                      <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                      {{ item.jornada }}
+                                    </td>
+
+                                    <ng-container *ngIf="!editRacPrecio">
+                                      <td>{{item.rpS_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rpS_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="editRacPrecio">
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                      </td>
+                                    </ng-container>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <span class="text-basecolor">
+                              * Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="contratoModeloPAEPI.manejaPreciosporzona && !contratoModeloPAEPI.manejaPreciosporNivelEducativo" class="container px-lg-down-0 mx-lg-down-0 wmx-down-lg-100 contenedor-precios">
+                        <div class="contenedor-precios-diferenciados">
+                          <div class="titulos-precio-diferenciado">
+                            <button *ngFor="let item of sedesZonaPAEPI"
+                              (click)="actualizarIdZonaYConsultarRaciones(modeloOperacion.MAIP.id, item.iD_Zona)"
+                              class="titulo_diferenciado titulo_diferenciado_zona_rural px-3 py-2 d-flex justify-content-center align-items-center"
+                              [ngClass]="{'backgroundSigePAE' : (item.iD_Zona == iD_ZonaPAEPI)}">
+                              <div class="mr-2" [ngClass]="obtenerClaseEstadoDiligenciamiento([item])"></div>
+                              PAEPI - Zona {{item.zona}}
+                            </button>
+                          </div>
+                          <div class="col justify-content-center text-center">
+                            <div class="col-12 px-lg-down-0 responsive-table">
+                              <table class="table-default table-hover-disabled">
+                                <thead class="row-span">
+                                  <tr class="text-center">
+                                    <th rowspan="2">Jornada</th>
+                                    <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                    <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                                  </tr>
+                                  <tr class="text-center">
+                                    <th>Complemento Almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento Almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="text-center" *ngFor="let item of dataSumRacionesPreciosPAEPI">
+                                    <td class="d-flex align-items-center td-jornada">
+                                      <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                      <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                      <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                      {{ item.jornada }}
+                                    </td>
+
+                                    <ng-container *ngIf="!editRacPrecio">
+                                      <td>{{item.rpS_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rpS_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="editRacPrecio">
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                      </td>
+                                    </ng-container>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <span class="text-basecolor">
+                              * Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="!contratoModeloPAEPI.manejaPreciosporzona && contratoModeloPAEPI.manejaPreciosporNivelEducativo" class="container px-lg-down-0 mx-lg-down-0 wmx-down-lg-100 contenedor-precios-completo">
+                        <div class="contenedor-precios-diferenciados">
+                          <div class="titulos-precio-diferenciado">
+                            <div class="row mx-4 mb-4 flex-column flex-md-row borders bg-white">
+                              <div *ngFor="let item of sedesNivelEducativoPAEPI"
+                                (click)="actualizarIdNivelEducativoYConsultarRaciones(modeloOperacion.MAIP.id, item.iD_NivelEducativo)"
+                                class="col border-right border-sm-bottom-list py-2 d-flex justify-content-center align-items-center text-nowrap cursor-pointer"
+                                [ngClass]="{'backgroundSigePAE' : (item.iD_NivelEducativo == iD_NivelEducativoPAEPI)}">
+                                <div class="mr-2" [ngClass]="obtenerClaseEstadoDiligenciamiento([item])"></div>
+                                  {{item.nivelEducativo}}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col justify-content-center text-center">
+                            <div class="col-12 px-lg-down-0 responsive-table">
+                              <table class="table-default table-hover-disabled">
+                                <thead class="row-span">
+                                  <tr class="text-center">
+                                    <th rowspan="2">Jornada</th>
+                                    <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                    <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                                  </tr>
+                                  <tr class="text-center">
+                                    <th>Complemento Almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                    <th>Complemento Almuerzo</th>
+                                    <th>Complemento AM/PM</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="text-center" *ngFor="let item of dataSumRacionesPreciosPAEPI">
+                                    <td class="d-flex align-items-center td-jornada">
+                                      <img *ngIf="item.jornada == 'Mañana' " style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/manana.png">
+                                      <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/tarde.png">
+                                      <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;" src="../../../../../../../assets/images/Iconos/unica.png">
+                                      {{ item.jornada }}
+                                    </td>
+
+                                    <ng-container *ngIf="!editRacPrecio">
+                                      <td>{{item.rpS_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.rpS_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_ALM | currency:'$':'symbol':'1.0-2'}}</td>
+                                      <td>{{item.cA_COM | currency:'$':'symbol':'1.0-2'}}</td>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="editRacPrecio">
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                      </td>
+                                      <td>
+                                        <input type="number" class="input-text text-center input-table-edit"
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                      </td>
+                                    </ng-container>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <span class="text-basecolor">
+                              * Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="form-item">
+                      <div class="col ml-0 ml-xl-3">
+                        <div class="row mt-xs pl-xxl">
+                          <div class="col-12 text-right" *ngIf="editRacPrecio" [class]="itemUtil.col_CSS_Rac">
+                            <button class="btn btn-white" (click)="cancelarEditRacPrecio()">Cancelar</button>
+                            <button class="btn btn-blue ml-sm" (click)="guardarEditRacPrecio(modeloOperacion.MAIP.id)">Guardar</button>
+                          </div>
+                        </div>
+                        <div class="row mt-sm pl-xxl px-lg-down-0">
+                          <div class="col-12 col-xl-10">
+                            <label class="text-basered font-size-13">De acuerdo con la cantidad de complementos establecidos en el
+                              contrato y el precio de los mismos, el costo del PAE
+                              para el total de las sedes beneficiarias es:</label>
+                          </div>
+                        </div>
+                        <div class="col-12 col-xl mt-sm pl-xxl">
+                          <div class="col-12 col-xl-4 pr-0 pl-0 mb-2">
+                            <table class="table-default table-red table-totales">
+                              <thead>
+                                <tr class="text-center">
+                                  <th>Jornada</th>
+                                  <th>Costo PAEPI</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of dataSumRacionesValorTotalPAEPI">
+                                  <td class="text-center">{{item.jornada}}</td>
+                                  <td class="text-left pl-4">{{item.costo | currency:'$':'symbol':'1.0-2'}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <div class="px-lg-down-0" style="padding: 0px 22px 0px 5px;">
+                            <div class="col-12 col-xl-4 pr-2 pl-2" >
+                              <app-costo-total-tab [Titulo]="'Total PAEPI'" [TotalGeneral]="sumContratosValorTotalPAEPI" [Orientacion]="'H'" style="padding: 0px 5px 0px 5px;">
+                              </app-costo-total-tab>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </form>
+
+                </mat-tab>
+              </mat-tab-group>
+
+              <div class="form-item row mx-lg-down-0 d-flex flex-column flex-xl-row">
+                <div class="col flex align-items-center">
+                  <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                    [textColor]="'text-basered'" [message]="'El valor total del contrato ingresado en el formulario NO coincide con el valor total calculado por el sistema. ¿Desea agregar rubros adicionales?'">
+                  </app-alert-message>
+                </div>
+                <div class="col mt-lg-down-1">
+                  <div class="inline-block form-checkbox-red ml-xs w-down-100">
+                    <label id="RubrosAddSi" class="check-si-red w-down-50" [class]="rubroAdd ? 'active' : ''"
+                        (click)="disableRubrosAdd($event, 'rubroAdd', true)">
+                        Si
+                    </label>
+                    <label id="RubrosAddNo" class="check-no-red w-down-50" [class]="!rubroAdd ? 'active' : ''"
+                        (click)="disableRubrosAdd($event, 'rubroAdd', false)">
+                        No
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="rubroAdd" class="form-item d-flex flex-column">
+                <label class="form-label mb-4">
+                   3. Rubros adicionales:
+                </label>
+                <app-rubros-adicionales [ValorTotalServicios]="1"
+                  [ValorContrato]="itemContrato.valorTotalContrato" [IdContrato]="itemContrato.id"
+                  (ValRubros)="validaRespuestaRubros($event,rubroAdd)"
+                  [anchoTable]="'55%'">
+                </app-rubros-adicionales>
+             </div>
+             <div  class="form-item ml-0 ml-xl-4">
+              <div  class="row px-lg-down-0" style="padding: 5px 10px 0 0px;">
+                  <div class="col-12 col-xl-4">
+                    <app-costo-total-tab [Titulo]="rubroAdd ? 'VALOR TOTAL DEL CONTRATO\n(Total + Rubros Adicionales)' : 'Total (todos los modelos de operación)'"
+                        [TotalGeneral]="sumContratosValorTotalMAEM + sumContratosValorTotalPAEPI + valTotalRubros" [Orientacion]="'H'">
+                    </app-costo-total-tab>
+                  </div>
+
+                  <div class="col-12 col-xl-4 mt-lg-down-1">
+                    <app-alert-message
+                        [imgSize]="'sm'" [textSize]="'sm'"  [aligment]="'H'"                         [textColor]="'text-basered'"
+                        [message]="'Asegúrese que el valor del contrato ingresado en el formulario, coincida con el valor total calculado por el sistema.'">
+                    </app-alert-message>
+                  </div>
+              </div>
+             </div>
+            </div>
+            <div class="panel-footer pt-xxl pb-xxl">
+              <div class="row gap-sm-down-10-px">
+                <div class="col-12 col-md-6 text-left">
+                  <a class="btn btn-blue w-down-sm-100" (click)="guardarContinuar()">Guardar y continuar más tarde</a>
+                </div>
+                <div class="col-12 col-md-6 text-right d-md-block d-flex flex-column-reverse gap-sm-down-10-px">
+                  <a class="btn btn-blue w-down-sm-100" (click)="anterior(4)">Anterior</a>
+                  <button class="btn btn-blue ml-0 ml-md-3" type="submit" [disabled]="sumContratosValorTotalMAEM + sumContratosValorTotalPAEPI + valTotalRubros!=itemContrato.valorTotalContrato">Siguiente</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </ng-container>
+
+
+
+      <ng-container *ngIf="form7Visible">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="pt-xxl pb-md">
+            <div class="row">
+              <div class="col-12 col-xl clearfix" style="padding-left: 3px">
+                <app-chapterblue [numberChapter]="5" [titleChapter]="'Información presupuestal'"></app-chapterblue>
+                <br />
+              </div>
+              <div class="col-12 col-xl clearfix text-right"
+                    style="padding: 20px">
+                <div class="msg-alerta">
+                  <div>
+                    <img class="w-down-md-50 w-down-sm-100" src="./assets/images/Iconos/suministro/paso5-5.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form class="form-default-inline">
+            <div class="form-item" style="padding-left: 15px">
+              <label class="form-label">
+                1. Fuentes de financiaci&oacute;n presupuestal destinadas a
+                cubrir el costo del contrato:
+              </label>
+              <app-informacion-presupuestal [iD_Contrato]="itemContrato.id" [TipoFuncionalida]="1" (data)="actualizarGranTotal($event)"></app-informacion-presupuestal>
+            </div>
+
+            <div class="form-item">
+              <div class="row">
+                <div class="col-12 mb-2 d-flex flex-column flex-xl-row">
+                  <label class="form-label ml-lg-down-0"
+                         style="margin-left: 6px">
+                    2. Suma total de las fuentes de financiaci&oacute;n
+                    registradas:
+                  </label>
+                  <input type="text"
+                         class="col-3 wmx-down-lg-100 w-down-100 ml-lg-down-0 input-text disabledWithoutOpacity"
+                         name="txtSumaTotalFuentesFinanciacion"
+                         [ngModel]="dataTotalGeneralContratado.totalFuentesFinanciacion | currency: '$' : 'symbol' : '1.0-2'"
+                    placeholder="Autom&aacute;tico" />
+                </div>
+
+                <div class="d-flex flex-column flex-xl-row">
+                  <div class="col-12 col-xl-5 flex-lg-down-basis-0 warning-container">
+                      <div class="d-flex align-items-center container-icon">
+                          &nbsp;&nbsp;
+                          <img style="width: 50px; height: 50px"
+                              src="../assets/images/Iconos/alert.png" /> &nbsp;&nbsp;
+                              <br>
+                          <label for="exampleFormControlInput1" class="labelred"
+                              style="color: rgb(228, 52, 102)">
+                              Aseg&uacute;rese de que el valor total de las fuentes de
+                              financiaci&oacute;n coincida con el valor total del
+                              contrato.
+                          </label>
+                      </div>
+                  </div>
+
+                  <div class="col-12 col-xl-7 ml-0 ml-xl-4">
+                      <div class="w-down-100" style="width: 193px;
+              border-bottom: 1px solid rgb(228, 52, 102);
+              border-left: 1px solid rgb(228, 52, 102);
+              border-right: 1px solid rgb(228, 52, 102);
+              border-radius: 10px 10px 0px 0px;">
+                          <div class="text-center" style="border-radius: 10px 10px 0px 0px;
+                                  background-color: rgb(228, 52, 102);">
+                              <h6 class="panel-title" style="color: white">
+                                  COSTO TOTAL
+                              </h6>
+                          </div>
+                          <div class="text-center">
+                              <h6 class="panel-title" id="lblCostoTotal"
+                                  style="color: rgb(228, 52, 102)">
+                                  {{ dataTotalGeneralContratado.valorTotal | currency: '$' : 'symbol'
+                                  : '1.0-2' }}
+                              </h6>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+
+                <!-- <div class="col-6">
+                  <div class="container-icon">
+                    &nbsp;&nbsp;
+                    <img style="width: 50px; height: 50px" src="../assets/images/Iconos/alert.png" />
+                    &nbsp;&nbsp;
+                    <label for="exampleFormControlInput1" class="labelred" style="color: rgb(228, 52, 102)">
+                      Aseg&uacute;rese de que el valor total de las fuentes de
+                      <br />
+                      financiaci&oacute;n coincida con el valor total del
+                      contrato.
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-3">
+                  <div style="width: 80%;
+                              border-bottom: 1px solid rgb(228, 52, 102);
+                              border-left: 1px solid rgb(228, 52, 102);
+                              border-right: 1px solid rgb(228, 52, 102);
+                              border-radius: 10px 10px 0px 0px;">
+                    <div class="text-center" style="border-radius: 10px 10px 0px 0px;
+                                                    background-color: rgb(228, 52, 102);">
+                      <h6 class="panel-title" style="color: white">
+                        COSTO TOTAL
+                      </h6>
+                    </div>
+                    <div class="text-center">
+                      <h6 class="panel-title" id="lblCostoTotal" style="color: rgb(228, 52, 102)">
+                        {{ dataTotalGeneralContratado.valorTotal | currency: '$' : 'symbol' : '1.0-2' }}
+                      </h6>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <br />
+
+            <div class="form-item d-flex flex-column flex-xl-row">
+              <label for="exampleFormControlInput1" class="form-label float-left">
+                3. PDF del contrato: &nbsp;&nbsp;&nbsp;
+              </label>
+              <div class="w-down-100" style="display: inline-block; overflow: hidden;">
+                <div class="btn-fileUpload wmx-down-lg-100 w-down-100" (click)="uploadPDF()">
+                  <span>Adjunte el archivo</span>
+                  <img class="float-right ml-3" src="../assets/images/Iconos/input-file.png">
+                  <input class=""
+                    type="file"
+                    id="fileUpload"
+                    name="fileUpload"
+                    accept="application/pdf">
+                </div>
+                <a class="visorPDF"
+                   (click)="abrirPDF(modalPDF)"
+                   *ngIf="itemContrato.nombreArchivoContrato && itemContrato.nombreArchivoContrato != ''">
+                   {{itemContrato.nombreArchivoContrato}}
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-footer pt-xxl pb-xxl">
+          <div class="row gap-sm-down-10-px">
+            <div class="col-12 col-md-6 text-left">
+              <a class="btn btn-blue w-down-sm-100" (click)="guardarContinuar()">Guardar y continuar más tarde</a>
+            </div>
+            <div class="col-12 col-md-6 text-right d-md-block d-flex flex-column-reverse gap-sm-down-10-px">
+              <a class="btn btn-blue w-down-sm-100" (click)="anterior(7)">Anterior</a>
+              <a class="btn btn-blue ml-0 ml-md-3" (click)="guardarSiguiente7()">Finalizar</a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>
+
+<ng-template #modalPDF>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer
+     [src]="srcPDF"
+     [useBrowserLocale]="true"
+     [textLayer]="true"
+     [showHandToolButton]="true"
+     [showPresentationModeButton]="true"
+     [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>

@@ -1,0 +1,29 @@
+.inline-block{
+  display: inline-block;
+}
+
+.d-inline-flex{
+  display: inline-flex;
+}
+
+.flex{
+  display: flex;
+}
+
+.flex-1{
+  flex: 1;
+}
+
+
+.flex-h{
+  display: inline-flex;
+  border-radius: 10px;
+
+  .flex-h-item{
+    display: flex;
+    align-items: center;
+    padding: 7.5px 15px;
+    color: $base-color;
+  }
+}
+

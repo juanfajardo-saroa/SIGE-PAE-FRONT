@@ -1,0 +1,304 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>Registro de usuarios</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                <br />
+                <div *ngIf="action !='Adicionar'">
+                  <div class="example-full-width">
+                    <br />
+                    <input id="id" formControlName="id" readonly="true" class=" form-control" style="display: none;" />
+                  </div>
+                </div>
+                <ng-container>
+                  <div class="d-flex flex-column px-5">
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">1. Tipo de documento<span style="color:red;">*
+                        </span></div>
+                      <div class="w-100">
+                        <mat-select class="control-md tablaform" id="id_TipoDocumentoIden"
+                          formControlName="id_TipoDocumentoIden" (selectionChange)="onTipoDocumentoClick($event.value)">
+                          <mat-option *ngFor="let item of TipoDocumentoIdenList" [value]="item.id">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('id_TipoDocumentoIden').invalid && (form.get('id_TipoDocumentoIden').dirty || form.get('id_TipoDocumentoIden').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Tipo de documento inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">2. Número Identificación <span style="color:red;">*
+                        </span> </div>
+                      <div class="w-100">
+                        <input (keyup)="onNumeroIde()" id="documentoIden"
+                          formControlName="documentoIden" class="form-control" (keydown)="onKeyDocument($event)"
+                          [maxlength]="maxDocumentId" />
+                        <div *ngIf="igualdoc" style="font-size: 15px; color: red;">
+                          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                            width="auto">Ya existe un usuario registrado<br> con este número de cédula
+                        </div>
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('documentoIden').invalid && (form.get('documentoIden').dirty )">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Número Identificación inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">3. Primer nombre<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <input id="primerNombre" formControlName="primerNombre" class="form-control" maxlength="20"
+                          oninput="this.value = this.value.replace(/[^a-zA-Z áéíóúÁÉÍÓÚñÑüÜ]/,'')" />
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('primerNombre').invalid && (form.get('primerNombre').dirty || form.get('primerNombre').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Primer nombre inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">4. Segundo nombre </div>
+                      <div class="w-100">
+                        <input id="segundoNombre" formControlName="segundoNombre" class="form-control" maxlength="20"
+                          oninput="this.value = this.value.replace(/[^a-zA-Z áéíóúÁÉÍÓÚñÑüÜ]/,'')" />
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('segundoNombre').invalid && (form.get('segundoNombre').dirty || form.get('segundoNombre').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Segundo nombre inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">5. Primer apellido<span style="color:red;">*
+                        </span> </div>
+                      <div class="w-100">
+                        <input id="primerApellido" formControlName="primerApellido" class="form-control" maxlength="20"
+                          oninput="this.value = this.value.replace(/[^a-zA-Z áéíóúÁÉÍÓÚñÑüÜ]/,'')" />
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('primerApellido').invalid && (form.get('primerApellido').dirty || form.get('primerApellido').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Primer apellido inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">6. Segundo apellido </div>
+                      <div class="w-100">
+                        <input id="segundoApellido" formControlName="segundoApellido" class="form-control" maxlength="20"
+                          oninput="this.value = this.value.replace(/[^a-zA-Z áéíóúÁÉÍÓÚñÑüÜ]/,'')" />
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('segundoApellido').invalid && (form.get('segundoApellido').dirty || form.get('segundoApellido').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Segundo apellido inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">7. Correo Electrónico<span style="color:red;">*
+                        </span></div>
+                      <div class="w-100">
+                        <input id="email" type="email" formControlName="email" class="form-control" maxlength="50" />
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('email').invalid && form.get('email').errors.email && (form.get('email').dirty || form.get('email').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Correo electrónico inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">8. Celular<span style="color:red;">* </span></div>
+                      <div class="w-100">
+                        <input type="number" id="phoneNumber" formControlName="phoneNumber" class="form-control"
+                          (keydown)="onKeyPhone($event)" maxlength="15" />
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('phoneNumber').invalid && (form.get('phoneNumber').dirty || form.get('phoneNumber').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Celular inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">9. Cargo<span style="color:red;">* </span></div>
+                      <div class="w-100">
+                        <input id="cargo" formControlName="cargo" class="form-control" maxlength="30"
+                          oninput="this.value = this.value.replace(/[^a-zA-Z0-9 áéíóúÁÉÍÓÚñÑüÜ]/,'')" />
+                        <mat-error>
+                          <mat-error class="error-message" style="font-size: 15px;"
+                            *ngIf="form.get('cargo').invalid && (form.get('cargo').dirty || form.get('cargo').touched)">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px"
+                              width="auto"> Cargo inválido
+                          </mat-error>
+                        </mat-error>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">10. Rol base<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="control-md tablaform" id="roleId" formControlName="roleId"
+                          (selectionChange)="onRolBaseClick($event.value)">
+                          <mat-option *ngFor="let item of listRolCrea" [value]="item.id_Rol">{{item.rol}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">11. Rol temporal</div>
+                      <div class="w-100">
+                        <mat-select class="control-md tablaform" id="roleIdTempo" formControlName="roleIdTempo">
+                          <mat-option *ngFor="let item of AspNetRolesTempList" [value]="item.id">{{item.name}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">12. Actor</div>
+                      <div class="w-100">
+                        <input matInput id="ubicacionBase" formControlName="ubicacionBase" required class="form-control"
+                          readonly="true" />
+                      </div>
+                    </div>
+
+                    <div *ngIf="!isInstitucion"
+                      class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4 pb-4">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100">13. Ubicación</div>
+                      <div class="w-100">
+                        <mat-select class="control-md tablaform" id="id_Ubicacion" formControlName="id_Ubicacion">
+                          <mat-option *ngFor="let item of UbicacionesList" [value]="item.id">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+
+
+                    <div *ngIf="isInstitucion">
+
+                      <div class="d-flex flex-column flex-md-row justify-content-between pt-4 pb-4">
+                        <div class="TextosBlueLeft w-75 w-down-sm-100">13. Ubicación</div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4 pb-4">
+                        <div class="TextosBlueLeft2 w-75 w-down-sm-100">Departamento</div>
+                        <div class="w-100">
+
+                          <mat-select class="control-md tablaform" id="DepartamentoEstablecimiento" required [(value)]="idDep"
+                            (selectionChange)="onDepartamentoClick($event.value)" placeholder="Seleccione">
+                            <mat-option *ngFor="let item of departamentosList" [value]="item.departamentoCode">
+                              {{item.departamentoNombre}}
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4 pb-4">
+                        <div class="TextosBlueLeft2 w-75 w-down-sm-100">Municipio</div>
+                        <div class="w-100">
+                          <mat-select class="control-md tablaform" id="CiudadEstablecimiento" required [(value)]="idMun"
+                            (selectionChange)="onMunicipioClick($event.value)" placeholder="Seleccione">
+                            <mat-option *ngFor="let item of DivipolasList" [value]="item.id">
+                              {{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador pt-4 pb-4">
+                        <div class="TextosBlueLeft2 w-75 w-down-sm-100">Institución Educativa</div>
+                        <div class="w-100">
+                          <input type="text" aria-label="Number" matInput [matAutocomplete]="auto"
+                            [formControl]="myControl" class="control-md tablaform" value={{idUbi}}>
+                          <mat-autocomplete (optionSelected)="form.controls.id_Ubicacion.setValue($event.option.value)"
+                           autoActiveFirstOption #auto="matAutocomplete" class="control-md tablaform" id="id_Ubicacion"
+                             [displayWith]="displayFn.bind(this)">
+                            <mat-option *ngFor="let item of filteredOptions | async"
+                              [value]="item.id" class="SpaceSelect">{{item.codigoDane}} - {{item.nombre}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+                  </div>
+                </ng-container>
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <br>
+                <div style="text-align: center;" class="elimi">
+                  ¿Está seguro de eliminar el registro?
+                </div>
+                <br>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                        <button [disabled]="!form.valid && action !='Eliminar'" (click)="doAction()">{{action}}
+                        </button>
+                      </div>
+                      <div>
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

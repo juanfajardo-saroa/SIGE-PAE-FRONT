@@ -1,0 +1,126 @@
+
+
+::ng-deep .mat-snack-bar-container{
+
+  color: #155724 !important;
+  background-color: #d4edda !important;
+  border-color: #c3e6cb !important;
+}
+::ng-deep .mat-simple-snackbar-action {
+  color: red;
+}
+
+
+.mat-simple-snackbar {
+  font-size: 1.2em;
+  color: white;
+}
+
+.snackbar-error {
+  background-color: red;
+}
+
+.snackbar-success {
+  background-color: green;
+}
+
+.snackbar-info {
+  background-color: blue;
+}
+
+.notif-success {
+  color: #155724 !important;
+  background-color: #d4edda !important;
+  border-color: #c3e6cb !important;
+}
+
+::ng-deep .snack-style{
+  background-color:rgb(72, 236, 39);
+  color: rgb(82, 82, 82);
+}
+
+
+
+::ng-deep .notif-success{
+  color: #155724 !important;
+  background-color: #d4edda !important;
+  border-color: #c3e6cb !important;
+}
+::ng-deep .mat-simple-snackbar-action {
+  color: red;
+}
+
+
+.mat-snack-bar-container{
+  color: #155724 !important;
+  background-color: #d4edda !important;
+  border-color: #c3e6cb !important;
+}
+
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+.custom-css-class {
+  background-color: brown;
+}
+
+#snackbar {
+  /* By Default, Hidden */
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 2px;
+  padding: 16px;
+  /* To always Keep on
+     Top of screen */
+  position: fixed;
+
+  /* To be displayed above
+     Parent HTML DOM element  */
+  z-index: 1;
+
+  /* Position Bottom Left
+     Corner of Screen */
+  left: 10px;
+  bottom: 30px;
+}
+
+/* Dynamically Appending this
+ Class to #snackbar via JS */
+.show-bar {
+  visibility: visible !important;
+  /* fadeout Time decided in
+     accordance to Total Time */
+  /* In case, Time = 3s,
+     fadeout 0.5s 2.5s */
+  animation: fadein 0.5s, fadeout 0.5s 4.5s;
+}
+
+/* when the Snackbar Appears */
+@keyframes fadein {
+  from {
+      bottom: 0;
+      opacity: 0;
+  }
+  to {
+      bottom: 30px;
+      opacity: 1;
+  }
+}
+
+/* when the Snackbar Disappears
+ from the Screen */
+@keyframes fadeout {
+  from {
+      bottom: 30px;
+      opacity: 1;
+  }
+  to {
+      bottom: 0;
+      opacity: 0;
+  }
+}

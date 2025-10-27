@@ -1,0 +1,49 @@
+li{
+    width: 85%; 
+    margin-left: 34px; 
+    padding-left: 11px;
+}
+
+li.active{
+    background-color: #3266cc; 
+}
+
+li.active span{
+    color:#fff
+}
+
+.fijada {
+    position: fixed;
+    
+  }
+
+  .menu-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .menu-events {
+    width: 300px;
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #555;
+  }
+
+  
+
+  .item ul li{
+    display: none;
+  }
+
+  .item .activado >li{
+    display: block;
+  }
+
+  .item ul li.activado{
+    
+    display: block;
+}
+

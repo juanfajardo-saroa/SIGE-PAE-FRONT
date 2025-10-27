@@ -1,0 +1,154 @@
+
+@import '/src/assets/styles/variable.scss';
+col-12 {
+    padding: 0px !important;
+}
+
+mat-card,
+mat-card-title,
+mat-card-content,
+div {
+    color: #005ACA;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text {
+    color: #005ACA !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-panel {
+    max-width: 100% !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-placeholder {
+    font-size: 13px !important;
+}
+
+div.row {
+    margin: 0px !important;
+}
+
+div.col {
+    padding: 0px 0px 0px 0px !important;
+}
+
+input {
+    color: #005ACA;
+    background-color: transparent;
+    border: #005ACA 1px solid !important;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+td {
+    text-align: center !important;
+}
+
+.tablaForm3 {
+    width: 100%;
+    color: #005ACA;
+    border-color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 20px !important;
+}
+
+.tablaForm {
+    width: 100%;
+    border-color: #005ACA;
+    color: #005ACA;
+    border: 1px solid #005ACA;
+    font-size: 13px;
+}
+
+.bordeIzq {
+    border-left: 1px solid #005ACA !important;
+    border-radius: 20px !important;
+}
+
+.bordeDer {
+    border-right: 1px solid #005ACA;
+}
+
+.sizeIconSearch {
+    position: absolute;
+    bottom: 0.8rem;
+    right: 1rem;
+}
+
+.imgFilter {
+    cursor: pointer;
+    top: 50px;
+    text-align: center !important;
+    padding-left: 2px;
+}
+
+.textF {
+    padding-top: 5px;
+    text-align: center;
+    font-weight: 500;
+    color: #005ACA;
+    cursor: pointer;
+    font-size: 10px !important
+}
+
+.pRelarive {
+    position: relative;
+}
+
+.pAbsolute {
+    position: absolute;
+}
+
+.spaceCol {
+    margin-right: -5px;
+}
+
+.lineR {
+    background-color: #E23465;
+    margin-top: 2px;
+}
+
+.iconR {
+    color: #E23465;
+    padding: 0px !important;
+}
+
+.lineR {
+    background-color: #E23465;
+    margin-top: -0.5% !important;
+}
+
+.sizeImgR {
+    margin-bottom: 1% !important;
+}
+
+.redCircle {
+    color: #FF0000;
+}
+
+.yellowCircle {
+    color: #ffd400;
+}
+
+.grayCircle {
+    color: #E2ECFD;
+}
+.mat-row:hover .mat-cell {
+    background-color: $base-color;
+    color: #ffffff !important;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  .mat-row:hover .mat-cell {
+    background-color: $base-color !important;
+    color: #ffffff !important;
+}
+
+}

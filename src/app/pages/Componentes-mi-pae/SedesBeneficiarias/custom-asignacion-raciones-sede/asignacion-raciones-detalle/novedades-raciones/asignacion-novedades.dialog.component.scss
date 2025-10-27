@@ -1,0 +1,191 @@
+//@import '../../../../../../assets/styles/variable';
+@import 'src/assets/styles/variable';
+
+.BordeSuperior {
+  border-top: 1px solid $base-color;
+}
+
+button {
+  background-color: $base-color;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+  margin: 10px;
+}
+.mat-select-value{
+  color: $base-azulPAE;
+}
+button:disabled {
+  background-color: gray;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+}
+
+button:hover {
+  cursor: pointer;
+}
+.TextosBlueLeft2 {
+  text-align: left;
+  color: $base-color;
+  float: left;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.SizeDialog {
+  width: 50vw !important;
+}
+
+table {
+  width: 100%;
+  padding: 0px 30px;
+}
+
+
+
+.TextosBlueLeft {
+  text-align: left;
+  color: $base-color;
+  float: left;
+  text-align: center;
+  margin-top: 16px;
+}
+
+td {
+  width: 50%;
+}
+
+.CenterButton {
+  margin: auto;
+  display: -webkit-inline-box;
+}
+
+::ng-deep.button {
+  background-color: $base-color !important;
+  color: #fff !important;
+  border-radius: 20px;
+  border: $base-color 1px solid;
+  margin: auto;
+  display: block;
+}
+
+::ng-deep.mat-dialog-container {
+  padding: 0px !important;
+  border-radius: 30px 30px 30px 30px !important;
+  border: $base-azulPAE 1px solid;
+  box-shadow: none;
+  min-width: 50%;
+}
+
+mat-form-field {
+  border-radius: 20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff !important;
+ // padding: 2% !important;
+
+}
+
+mat-card-header {
+  padding-bottom: 20px;
+}
+
+.TituloDialog {
+  background-color: #E6EFFD;
+  /* padding: 10px 20px; */
+  text-align: center;
+  color: $base-color;
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.buttonAr3 {
+  cursor: pointer;
+  background-color: #ffff;
+  color: $base-color;
+  border-radius: 50px;
+  border: 1px solid $base-color;
+  float: left;
+  text-align: center;
+}
+.tablaform3 {
+  border-radius: 12px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff !important;
+  padding: 1% !important;
+  height: 120px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+  font-weight: 500;
+  max-width: 95%;
+  color: $base-azulPAE !important;
+}
+
+.BordeSeparador {
+  border-bottom: $base-azulPAE 1px dotted;
+}
+
+.mat-dialog-content {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  max-height: 65vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.BordeSuperior {
+  border-top: 1px solid $base-color;
+}
+
+.form-control {
+  border: none !important;
+}
+
+.tablaform {
+  border-radius:20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff!important;
+  padding: 1%!important;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $base-color;
+  //width: 100%;
+  text-align: center;
+  float: left;
+  margin-left: 10px;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(sm) {
+  .SizeDialog{
+    width: 100% !important;
+  }
+}

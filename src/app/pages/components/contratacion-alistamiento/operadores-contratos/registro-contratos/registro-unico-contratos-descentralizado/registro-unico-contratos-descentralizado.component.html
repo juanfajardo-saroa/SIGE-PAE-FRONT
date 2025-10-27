@@ -1,0 +1,1114 @@
+<style>
+  .disabledWithoutOpacity {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+</style>
+
+<div class="row">
+  <div class="col-12">
+    <div class="tab-control-secondary">
+      <div class="tab-item" style="width: 25%;" [class]="item.active ? 'active': ''" *ngFor="let item of dataPestanas">
+        <div>{{ item.descripcion }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-xxl">
+  <div class="col-12">
+
+    <div class="panel panel-blue">
+      <div class="panel-header text-center noborder-bottom">
+        <h4 class="panel-title">Registro único de Contratos - Suministro descentralizado</h4>
+      </div>
+
+      <div *ngIf="viewActiva == 1">
+        <div class="panel-body" style="border-radius: 0px !important;" >
+          <div class="row">
+            <div class="col-12 col-xl-6 clearfix pl-1">
+              <app-chapterblue [numberChapter]="1" [titleChapter]="'Asociación de contratos'"></app-chapterblue>
+              <br />
+            </div>
+            <div class="col-12 col-xl-6 clearfix text-right" style="padding: 20px;">
+              <div class="msg-alerta">
+                <div>
+                  <img class="w-down-md-50 w-down-sm-100" src="../assets/images/Iconos/suministro/paso1-5.png">
+                </div>
+              </div>
+            </div>
+          </div>
+          <form class="form-default-inline">
+            <div class="form-item">
+              <div class="row">
+                <label for="exampleFormControlInput1" class="form-label"> 1. Asocie todos los contratos que pertenecen
+                  al suministro descentralizado: </label>
+                <div class="w-100 responsive-table-pae">
+                  <table class="table-default table-border-dashed-vertical table-hover-disabled">
+                    <thead>
+                      <tr class="text-center">
+                        <th>No. de contrato</th>
+                        <th>Operador</th>
+                        <th>Tipo contrato</th>
+                        <th>Valor</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="text-center" [hidden]="!nuevoRegistro">
+                        <td class="text-left" data-label="No. contrato">
+                          <select id="id" name="nroContrato" required class="form-select"
+                            [(ngModel)]="numeroContratoNuevo" (ngModelChange)="changeNumContrato($event)"
+                            style="width: 100%;">
+                            <option value="" [selected]="numeroContratoNuevo === undefined || numeroContratoNuevo === 0">Elija una opci&oacute;n</option>
+                            <option *ngFor="let i of dsContrato" [ngValue]="i.id">{{i.nroContrato}}</option>
+                          </select>
+                          <div class="div-label align-self-center ml-3">
+                            <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation && (numeroContratoNuevo === undefined || numeroContratoNuevo === 0 || this.numeroContratoNuevo === -1)">Elija una opción</small>
+                          </div>
+                        </td>
+                        <td class="text-left" data-label="Operador">
+                          <label id="operadorNuevo" name="operadorNuevo"></label>
+                        </td>
+                        <td class="text-left" data-label="T. contrato">
+                          <label id="tipoContratoNuevo" name="tipoContratoNuevo"></label>
+                        </td>
+                        <td class="text-left" data-label="Valor">
+                          <label id="valorTotalContratoNuevo" name="valorTotalContratoNuevo"></label>
+                        </td>
+                        <td class="text-left" data-label="Acciones">
+                          <a class="card-link" (click)="saveContratoAsociado(0)">
+                            <img style="width: 20px; height: 20px" src="../assets/images/Iconos/save_mini.png" />
+                          </a>
+                          <a class="card-link" (click)="cancelContratoAsociado(0)">
+                            <img src="../../../../../../assets/images/Iconos/cancel_blue.png" />
+                          </a>
+                        </td>
+                      </tr>
+                      <tr class="text-center" *ngFor="let item of dataSource; let indice = index ">
+                        <td class="text-left" data-label="No. contrato">
+                          <label class="text-lg-down-end d-block d-xl-inline-block" id="Id_ContratoLbl_{{ indice }}" [hidden]="!item.readonly">{{ item.numeroContrato
+                            }}</label>
+                          <select [hidden]="item.readonly" id="idcontrato" name="idcontrato" required class="form-select"
+                            [(ngModel)]="item.id_Contrato" style="width: 100%;">
+                            <option value="" selected>Elija una opci&oacute;n</option>
+                            <option *ngFor="let i of dsContrato" [ngValue]="i.id">{{i.nombre}}</option>
+                          </select>
+                        </td>
+                        <td class="text-left" data-label="Operador">
+                          <label class="text-lg-down-end d-block d-xl-inline-block" id="ID_OperadorLbl_{{ indice }}">{{ item.nomOperador }}</label>
+                        </td>
+                        <td class="text-left" data-label="T. contrato">
+                          <label class="text-lg-down-end d-block d-xl-inline-block" id="TipoContratoIdLbl_{{ indice }}">{{ item.tipoContrato }}</label>
+                        </td>
+                        <td class="text-left" data-label="Valor">
+                          <label class="text-lg-down-end d-block d-xl-inline-block" id="ValorLbl_{{ indice }}"
+                            [hidden]="!item.readonly">{{item.valorTotalContrato|currency:'$':'symbol':'1.0-2'}}</label>
+                          <input type="number" id="valorTotalContrato" name="valorTotalContrato" class="form-control"
+                            style="width: 100%;" [hidden]="item.readonly" [(ngModel)]="item.valorTotalContrato">
+                        </td>
+                        <td data-label="Acciones">
+                          <a class="card-link" (click)="cancelContratoAsociado(indice)" *ngIf="!item.readonly">
+                            <img src="../../../../../../assets/images/Iconos/cancel_blue.png" />
+                          </a>
+                          <a class="card-link" (click)="deleteContratoAsociado(item.id)" *ngIf="item.readonly">
+                            <img src="../../../../../../assets/images/Iconos/delete_blue.png" />
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 justify-content-end mt-sm">
+                  <a (click)="agregar()">
+                    <span class="fontSize15 float-right text-basecolor mt-xs ml-1">Asociar contrato</span>
+                    <img class="float-right widthImg35" src="../../../../../../assets/images/Iconos/add_blue.png">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-footer">
+          <div class="row gap-down-10-px">
+            <div class="col-12 col-xl-6 text-left">
+              <button class="btn btn-blue w-down-100" (click)="guardarContinuar()">Guardar y continuar más
+                tarde</button>
+            </div>
+            <div class="col-12 col-xl-6 text-right d-xl-block d-flex flex-column-reverse gap-down-10-px">
+              <button class="btn btn-blue w-down-100" (click)="Anterior1(0)">Anterior</button>
+              <button class="btn btn-blue w-down-100 ml-0 ml-xl-3" (click)="Siguiente(2)" [disabled]="btnSuministroSig">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="viewActiva == 2">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <form class="form-default">
+            <div class="form-item">
+              <div class="row">
+                <div class="col-12 col-xl-6 clearfix pl-0">
+                  <app-chapterblue [numberChapter]="2" [titleChapter]="'Detalles del suministro'"></app-chapterblue>
+                  <br />
+                </div>
+                <div class="col-12 col-xl-6 clearfix text-right" style="padding: 20px;">
+                  <div class="msg-alerta">
+                    <div>
+                      <img class="w-down-md-50 w-down-sm-100" src="../assets/images/Iconos/suministro/paso2-5.png">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-item">
+                <div class="col d-xl-block d-flex flex-column ml-0 ml-xl-3">
+                  <label class="form-label">1. Fecha de inicio del suministro:</label>
+                  <div class="form-date  display: flex !important; justify-content: flex-end  !important;">
+                    <input type="date" class="input-text w-down-100 mx-lg-down-0" placeholder="dd-mm-yyyy" [ngModelOptions]="{standalone: true}"
+                      [ngModel]="contratoNuevo.fechalnicioContrato|date:'yyyy-MM-dd'"
+                      (ngModelChange)="contratoNuevo.fechalnicioContrato=$event">
+                      <div class="div-label align-self-center ml-3">
+                        <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation && !contratoNuevo.fechalnicioContrato">Elija una opción</small>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-item">
+                <div class="col d-xl-block d-flex flex-column ml-0 ml-xl-3">
+                  <label class="form-label">2. Fecha estimada de terminación del suministro:</label>
+                  <div class="form-date  display: flex !important ; justify-content: flex-end  !important;">
+                    <input type="date" class="input-text w-down-100 mx-lg-down-0" placeholder="dd-mm-yyyy" [ngModelOptions]="{standalone: true}"
+                      [ngModel]="contratoNuevo.fechaFinalContrato|date:'yyyy-MM-dd'"
+                      (ngModelChange)="contratoNuevo.fechaFinalContrato= $event">
+                      <div class="div-label align-self-center ml-3" style="text-align: right;">
+                        <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation && !contratoNuevo.fechaFinalContrato">Elija una opción</small>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-item">
+                <div class="col d-xl-block d-flex flex-column ml-0 ml-xl-3">
+                  <label class="form-label">3. Modelo de operación<br class="d-none d-xl-inline">(Seleccione todas las que apliquen):</label>
+                  <div class="d-flex justify-content-left">
+                    <table id="tabla-modelo-operacion" class="table col col-xl-6">
+                      <tr class="tabla-suministro-entrega" *ngFor="let modeloOperacion of listModelosOperacion">
+                        <td id="td-modelo-operacion{{modeloOperacion.id}}">
+                          <input type="checkbox" [checked]="modelosOperacionActivos.includes(modeloOperacion.id)"
+                            (change)="changeItemContrato('iD_TipoModeloOperacion', modeloOperacion.id); modificarModeloOperacion($event, modeloOperacion.id)" />{{modeloOperacion.nombre}}
+                        </td>
+                        <hr />
+                      </tr>
+                    </table>
+                    <div class="div-label align-self-center ml-3">
+                      <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation && !modelosOperacionActivos.length">Elija una opción</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-item" *ngIf="modelosOperacionActivos.length > 0">
+                <div class="col d-xl-block d-flex flex-column ml-0 ml-xl-3">
+                  <label class="form-label">4. Complementos contratados:</label>
+                  <br />
+
+                  <div class="row justify-content-center">
+                    <div class="titulos_estado_diligenciamiento w-down-100">
+                      <div class="d-flex flex-column flex-xl-row align-items-start align-xl-items-center">
+                        <span>Estado del diligenciamiento: </span>
+                        <div class="d-flex align-items-center">
+                          <div class="pendiente_diligenciar ml-3 mr-2"></div>Pendiente por diligenciar
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <div class="incompleto ml-3 mr-2"></div>Incompleto
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <div class="completo ml-3 mr-2"></div>Completo
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <mat-tab-group [selectedIndex]="selectedTabIndex" style="width: 100%; display: flex;"
+                    (selectedIndexChange)="myTabFocusChange($event)">}
+                    <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAEM.id)">
+                      <ng-template mat-tab-label>
+                        <div class="d-flex align-items-center">
+                          <div [ngClass]="obtenerClaseEstadoDiligenciamiento(dataDetalleSumRacionesMAEM)"></div>
+                          <label class="form-label mx-2">
+                            <img style="width: 30px; height: 30px;"
+                              src="./assets/iconos_PAE/PNG/Iconos_PAE-203.png">
+                            MAEM
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <div class="ml-xxl ml-lg-down-0 pt-sm pb-sm border-bottom-dashed">
+                        <div class="row">
+                          <div class="col-12 d-xl-block d-flex flex-column gap-down-10-px">
+                            <label class="form-label">4.1. Número de días de suministro contratados:</label>
+                            <input class="input-text text-center wmx-down-lg-100 w-down-100 mx-lg-down-0" type="number" style="max-width: 80px;"
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="noMesesMAEM"
+                              (ngModelChange)="changeItemContrato('noMeses', $event)" [disabled]="!editRacMAEM">
+                            <button class="btn btn-blue" [disabled]="editRacMAEM"
+                              (click)="editarRac(modeloOperacion.MAEM.id)">Editar</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-item ml-xxl ml-lg-down-0 pt-sm pb-sm">
+                        <div class="row">
+                          <div class="col-12">
+                            <label class="form-label">4.2. Complementos contratados:</label>
+                          </div>
+                        </div>
+                        <div class="row mt-sm mx-lg-down-0">
+                          <div class="col-12 px-lg-down-0 col-xl-4 overflow-lg-down-auto" [class]="itemUtilMAEM.col_CSS_Rac">
+                            <table class="table-priorizacion">
+                              <thead class="row-span">
+                                <tr class="text-center">
+                                  <th width="100px" rowspan="2">Jornada</th>
+                                  <th colspan="2" class="n-b-b">PS<br>(Preparado en Sitio)</th>
+                                  <th class="n-b-b">IND<br>(Industrializada)</th>
+                                  <th colspan="2" class="n-b-b">CCT<br>(Comida Caliente Transportada)</th>
+                                </tr>
+                                <tr class="text-center">
+                                  <th>Complemento Almuerzo</th>
+                                  <th>Complemento AM/PM</th>
+                                  <th>Complemento AM/PM</th>
+                                  <th>Complemento Almuerzo</th>
+                                  <th class="border-right">Complemento AM/PM</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="text-center" *ngFor="let item of dataDetalleSumRacionesMAEM">
+                                  <th class="bg-title" [class]="item.icono == 3 ? 'border-bottom' : ''">
+                                    <img *ngIf="item.icono == 1" style="width: 30px; height: 30px;" src="../assets/images/Iconos/manana.png">
+                                    <img *ngIf="item.icono == 2" style="width: 30px; height: 30px;" src="../assets/images/Iconos/tarde.png">
+                                    <img *ngIf="item.icono == 3" style="width: 30px; height: 30px;" src="../assets/images/Iconos/unica.png">
+                                    {{ item.jornada }}
+                                  </th>
+
+                                  <ng-container *ngIf="!editRacMAEM">
+                                    <td class="b-l">{{item.rpS_ALM}}</td>
+                                    <td>{{item.rpS_COM}}</td>
+                                    <td>{{item.rI_COM}}</td>
+                                    <td>{{item.cA_ALM}}</td>
+                                    <td>{{item.cA_COM}}</td>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="editRacMAEM">
+                                    <td class="b-l">
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rI_COM">
+                                    </td>
+
+                                    <td>
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                    </td>
+                                  </ng-container>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <label class="form-label">* Si el contrato NO incluye complementos para alguna modalidad,
+                          ingrese el valor “cero” 0.</label>
+                        <br>
+                        <div class="row mt-xs" *ngIf="editRacMAEM">
+                          <div class="col-12 text-right" [class]="itemUtilMAEM.col_CSS_Rac">
+                            <button class="btn btn-white"
+                              (click)="cancelarEditRac(modeloOperacion.MAEM.id)">Cancelar</button>
+                            <button class="btn btn-blue ml-sm"
+                              (click)="guardarEditRac(modeloOperacion.MAEM.id)">Guardar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-tab>
+
+                    <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAIP.id)">
+                      <ng-template mat-tab-label>
+                        <div class="d-flex align-items-center">
+                          <div [ngClass]="obtenerClaseEstadoDiligenciamiento(dataDetalleSumRacionesMAIP)"></div>
+                          <label class="form-label mx-2">
+                            <img style="width: 20px; height: 20px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-205.png">
+                            PAEPI
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <div class="ml-xxl ml-lg-down-0 pt-sm pb-sm border-bottom-dashed">
+                        <div class="row">
+                          <div class="col-12 d-xl-block d-flex flex-column gap-down-10-px">
+                            <label class="form-label">4.1. Número de días de suministro contratados:</label>
+                            <input class="input-text text-center wmx-down-lg-100 w-down-100 mx-lg-down-0" type="number" style="max-width: 80px;"
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="noMesesMAIP"
+                              (ngModelChange)="changeItemContrato('noMeses', $event)" [disabled]="!editRacMAIP">
+                            <button class="btn btn-blue" [disabled]="editRacMAIP"
+                              (click)="editarRac(modeloOperacion.MAIP.id)">Editar</button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-item ml-xxl ml-lg-down-0 pt-sm">
+                        <div class="row">
+                          <div class="col-12">
+                            <label class="form-label">4.2. Complementos contratados:</label>
+                          </div>
+                        </div>
+                        <div class="row mt-sm mx-lg-down-0">
+                          <div class="col-12 px-lg-down-0 col-xl-4 overflow-lg-down-auto" [class]="itemUtilMAIP.col_CSS_Rac">
+                            <table class="table-priorizacion">
+                              <thead class="row-span">
+                                <tr class="text-center">
+                                  <th width="100px" rowspan="2">Jornada</th>
+                                  <th colspan="2">Preparado en sitio<br>(PS)</th>
+                                  <th colspan="2">Comida caliente transportada<br>(CCT)</th>
+                                </tr>
+                                <tr class="text-center">
+                                  <th>Complemento Almuerzo</th>
+                                  <th>Complemento AM/PM</th>
+                                  <th>Complemento Almuerzo</th>
+                                  <th>Complemento AM/PM</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="text-center" *ngFor="let item of dataDetalleSumRacionesMAIP">
+                                  <th class="bg-title" [class]="item.icono == 3 ? 'border-bottom' : ''">
+                                    <img *ngIf="item.icono == 1" style="width: 30px; height: 30px;" src="../assets/images/Iconos/manana.png">
+                                    <img *ngIf="item.icono == 2" style="width: 30px; height: 30px;" src="../assets/images/Iconos/tarde.png">
+                                    <img *ngIf="item.icono == 3" style="width: 30px; height: 30px;" src="../assets/images/Iconos/unica.png">
+                                    {{ item.jornada }}
+                                  </th>
+
+                                  <ng-container *ngIf="!editRacMAIP">
+                                    <td class="border-left">{{item.rpS_ALM}}</td>
+                                    <td>{{item.rpS_COM}}</td>
+                                    <td>{{item.cA_ALM}}</td>
+                                    <td>{{item.cA_COM}}</td>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="editRacMAIP">
+                                    <td class="border-left">
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_ALM">
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.rpS_COM">
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_ALM">
+                                    </td>
+                                    <td>
+                                      <input type="number" class="input-text-100 text-center"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="item.cA_COM">
+                                    </td>
+                                  </ng-container>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <label class="form-label">* Si el contrato NO incluye complementos para alguna modalidad,
+                          ingrese el valor “cero” 0.</label>
+                        <br>
+                        <div class="row mt-xs" *ngIf="editRacMAIP">
+                          <div class="col-12 text-right" [class]="itemUtilMAIP.col_CSS_Rac">
+                            <button class="btn btn-white"
+                              (click)="cancelarEditRac(modeloOperacion.MAIP.id)">Cancelar</button>
+                            <button class="btn btn-blue ml-sm"
+                              (click)="guardarEditRac(modeloOperacion.MAIP.id)">Guardar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-footer">
+          <div class="row gap-down-10-px">
+            <div class="col-12 col-xl-6 text-left">
+              <button class="btn btn-blue w-down-100" (click)="guardarContinuar()">Guardar y continuar más
+                tarde</button>
+            </div>
+            <div class="col-12 col-xl-6 text-right d-xl-block d-flex flex-column-reverse gap-down-10-px">
+              <button class="btn btn-blue w-down-100" (click)="Anterior(1)">Anterior</button>
+              <button class="btn btn-blue w-down-100 ml-0 ml-xl-3" (click)="Siguiente3(3)">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="viewActiva == 3">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="row">
+            <div class="col-12 col-xl-6 clearfix pl-1">
+              <app-chapterblue [numberChapter]="3" [titleChapter]="'Sedes beneficiarias'"></app-chapterblue><br />
+            </div>
+            <div class="col-12 col-xl-6 clearfix text-right" style="padding: 20px;">
+              <div class="msg-alerta">
+                <div>
+                  <img class="w-down-md-50 w-down-sm-100" src="../assets/images/Iconos/suministro/paso3-5.png">
+                </div>
+              </div>
+            </div>
+          </div>
+          <form class="form-default-inline">
+            <div class="form-item">
+              <div class="row justify-content-center">
+                <div class="titulos_estado_diligenciamiento w-down-100">
+                  <div class="d-flex flex-column flex-xl-row align-items-start align-xl-items-center">
+                    <span>Estado del diligenciamiento: </span>
+                    <div class="d-flex align-items-center">
+                      <div class="pendiente_diligenciar ml-3 mr-2"></div>Pendiente por diligenciar
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div class="incompleto ml-3 mr-2"></div>Incompleto
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div class="completo ml-3 mr-2"></div>Completo
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-tab-group [selectedIndex]="selectedTabIndex2" style="width: 100%; display: flex;"
+                (selectedIndexChange)="myTabFocusChange2($event)">
+                <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAEM.id)">
+                  <ng-template mat-tab-label>
+                    <div class="d-flex align-items-center">
+                      <div [ngClass]="dataSedesBenMAEM.length > 0 ? 'completo' : 'pendiente_diligenciar'"></div>
+                      <label class="form-label mx-2">
+                        <img style="width: 30px; height: 30px;" src="./assets/images/Iconos/icon_modelo_operacion.png">
+                        MAEM
+                      </label>
+                    </div>
+                  </ng-template>
+
+                  <div class="form-item col">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="table-fix-head border-bottom-red responsive-table-pae">
+                          <table class="table-sort table-default table-red table-hover-disabled">
+                            <thead>
+                              <tr class="text-center">
+                                <th>
+                                  <input width="100px" type="checkbox" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="itemUtilMAEM.seleccionTodo"
+                                    (ngModelChange)="changeItemUtil('seleccionTodo', $event, modeloOperacion.MAEM.id)" />
+                                </th>
+                                <th width="20%">
+                                  Municipio
+                                  <span class="boton-ordenar-tabla">&#x25BC;</span>
+                                </th>
+                                <th width="30%">
+                                  Institucón Educativa
+                                  <span class="boton-ordenar-tabla">&#x25BC;</span>
+                                </th>
+                                <th width="30%">
+                                  Sede Educativa
+                                  <span class="boton-ordenar-tabla">&#x25BC;</span>
+                                </th>
+                                <th width="15%">
+                                  Jornada
+                                  <span class="boton-ordenar-tabla">&#x25BC;</span>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSedesNoBenMAEM">
+                                <td>
+                                  <input width="100px" type="checkbox" *ngIf="item.municipio"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="item.seleccion"
+                                    (ngModelChange)="changeItem(item, 'seleccion', $event)" />
+                                </td>
+                                <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                <td class="w-down-100" width="15%" data-label="Jornada">{{item.jornada}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-12 mt-sm text-center">
+                        <button class="btn btn-red" (click)="agregarSedes(modeloOperacion.MAEM.id)">Agregar al listado
+                          de beneficiarias</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-item col">
+                    <div class="row mt-xl" *ngIf="dataSedesBenMAEM.length != 0">
+                      <div class="col-12">
+                        <div class="responsive-table-pae">
+                          <table class="table-default">
+                            <thead>
+                              <tr class="text-center">
+                                <th>
+                                  <input width="100px" type="checkbox" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="itemUtilMAEM.seleccionTodoBen"
+                                    (ngModelChange)="changeItemUtil('seleccionTodoBen', $event, modeloOperacion.MAEM.id)">
+                                </th>
+                                <th width="20%">Municipio</th>
+                                <th width="30%">Institucón Educativa</th>
+                                <th width="30%">Sede Educativa</th>
+                                <th width="15%">Jornada</th>
+                              </tr>
+                            </thead>
+                          </table>
+                        </div>
+                        <div class="border-bottom responsive-table-pae" style="overflow-y: auto; max-height: 250px;">
+                          <table class="table-default table-hover-disabled">
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSedesBenMAEM">
+                                <td class="w-down-100" width="5%">
+                                  <input width="100px" type="checkbox" *ngIf="item.municipio"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="item.seleccion"
+                                    (ngModelChange)="changeItem(item, 'seleccion', $event)">
+                                </td>
+                                <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                <td class="w-down-100" width="15%" data-label="Jornada">{{item.jornada}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-12 mt-sm text-center">
+                        <button class="btn btn-blue" (click)="eliminarSedes(modeloOperacion.MAEM.id)">Eliminar del
+                          listado de beneficiarias</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-item col ml-3">
+                    <div class="row">
+                      <div class="col-12 col-xl-4 responsive-table-pae">
+                        <label class="text-basered text-base-fontsize">Total complementos<br class="d-none d-xl-inline">díarios contratadas</label>
+                        <table class="table-default table-red table-hover-disabled">
+                          <thead>
+                            <tr class="text-center">
+                              <th *ngFor="let item of colsJornadas">{{item}}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataSumRacionesDiariasMAEM">
+                              <td [attr.data-label]="colsJornadas[0]">{{item.jornada}}</td>
+                              <td [attr.data-label]="colsJornadas[1]">{{item.almuerzo | number}}</td>
+                              <td [attr.data-label]="colsJornadas[2]">{{item.complemento | number}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-12 col-xl-4 responsive-table-pae pt-4 pt-xl-0">
+                        <label class="text-basecolor text-base-fontsize">Total complementos díarios necesarios<br class="d-none d-xl-inline">para
+                          cubrir sedes beneficiarias</label>
+                        <table class="table-default table-hover-disabled">
+                          <thead>
+                            <tr class="text-center">
+                              <th *ngFor="let item of colsJornadas">{{item}}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataSumRacionesContratadasMAEM">
+                              <td [attr.data-label]="colsJornadas[0]">{{item.jornada}}</td>
+                              <td [attr.data-label]="colsJornadas[1]">{{item.almuerzo | number}}</td>
+                              <td [attr.data-label]="colsJornadas[2]">{{item.complemento | number}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div class="col-12 col-xl-4 pt-2 pt-xl-0 flex align-items-center">
+                        <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'V'"
+                          [message]="'Asegúrese de que la cantidad de complementos contratados alcance para cubrir las necesidades de las sedes beneficiarias.'">
+                        </app-alert-message>
+                      </div>
+                    </div>
+                  </div>
+
+                </mat-tab>
+                <mat-tab *ngIf="modelosOperacionActivos.includes(modeloOperacion.MAIP.id)">
+                  <ng-template mat-tab-label>
+                    <div class="d-flex align-items-center">
+                      <div [ngClass]="dataSedesBenMAIP.length > 0 ? 'completo' : 'pendiente_diligenciar'"></div>
+                      <label class="form-label mx-2">
+                        <img style="width: 20px; height: 20px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-205.png">
+                        PAEPI
+                      </label>
+                    </div>
+                  </ng-template>
+
+                  <div class="form-item row">
+                    <div class="col-12">
+                      <div class="table-fix-head border-bottom-red responsive-table-pae">
+                        <table class="table-sort table-default table-red table-hover-disabled">
+                          <thead>
+                            <tr class="text-center">
+                              <th>
+                                <input width="100px" type="checkbox" [ngModelOptions]="{standalone: true}"
+                                  [(ngModel)]="itemUtilMAIP.seleccionTodo"
+                                  (ngModelChange)="changeItemUtil('seleccionTodo', $event, modeloOperacion.MAIP.id)" />
+                              </th>
+                              <th width="20%">
+                                Municipio
+                                <span class="boton-ordenar-tabla">&#x25BC;</span>
+                              </th>
+                              <th width="30%">
+                                Institucón Educativa
+                                <span class="boton-ordenar-tabla">&#x25BC;</span>
+                              </th>
+                              <th width="30%">
+                                Sede Educativa
+                                <span class="boton-ordenar-tabla">&#x25BC;</span>
+                              </th>
+                              <th width="15%">
+                                Jornada
+                                <span class="boton-ordenar-tabla">&#x25BC;</span>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataSedesNoBenMAIP">
+                              <td>
+                                <input width="100px" type="checkbox" *ngIf="item.municipio"
+                                  [ngModelOptions]="{standalone: true}" [(ngModel)]="item.seleccion"
+                                  (ngModelChange)="changeItem(item, 'seleccion', $event)" />
+                              </td>
+                              <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                              <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                              <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                              <td class="w-down-100" width="15%" data-label="Jornada">{{item.jornada}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="col-12 mt-sm text-center">
+                      <button class="btn btn-red" (click)="agregarSedes(modeloOperacion.MAIP.id)">Agregar al listado de
+                        beneficiarias</button>
+                    </div>
+                  </div>
+
+                  <div class="form-item col">
+                    <div class="row mt-xl" *ngIf="dataSedesBenMAIP.length != 0">
+                      <div class="col-12">
+                        <div class="responsive-table-pae">
+                          <table class="table-default">
+                            <thead>
+                              <tr class="text-center">
+                                <th>
+                                  <input width="100px" type="checkbox" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="itemUtilMAIP.seleccionTodoBen"
+                                    (ngModelChange)="changeItemUtil('seleccionTodoBen', $event, modeloOperacion.MAIP.id)">
+                                </th>
+                                <th width="20%">Municipio</th>
+                                <th width="30%">Institucón Educativa</th>
+                                <th width="30%">Sede Educativa</th>
+                                <th width="15%">Jornada</th>
+                              </tr>
+                            </thead>
+                          </table>
+                        </div>
+                        <div class="border-bottom responsive-table-pae" style="overflow-y: auto; max-height: 250px;">
+                          <table class="table-default table-hover-disabled">
+                            <tbody>
+                              <tr class="text-center" *ngFor="let item of dataSedesBenMAIP">
+                                <td class="w-down-100" width="5%">
+                                  <input width="100px" type="checkbox" *ngIf="item.municipio"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="item.seleccion"
+                                    (ngModelChange)="changeItem(item, 'seleccion', $event)">
+                                </td>
+                                <td class="w-down-100" width="20%" data-label="Municipio">{{item.municipio}}</td>
+                                <td class="w-down-100" width="30%" data-label="I. Educativa">{{item.institucionEducativa}}</td>
+                                <td class="w-down-100" width="30%" data-label="S. Educativa">{{item.sede}}</td>
+                                <td class="w-down-100" width="15%" data-label="Jornada">{{item.jornada}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-12 mt-sm text-center">
+                        <button class="btn btn-blue" (click)="eliminarSedes(modeloOperacion.MAIP.id)">Eliminar del
+                          listado de beneficiarias</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-item col ml-3">
+                    <div class="row">
+                      <div class="col-12 col-xl-4 responsive-table-pae">
+                        <label class="text-basered text-base-fontsize">Total complementos<br class="d-none d-xl-inline">díarios contratados</label>
+                        <table class="table-default table-red table-hover-disabled">
+                          <thead>
+                            <tr class="text-center">
+                              <th *ngFor="let item of colsJornadas">{{item}}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataSumRacionesDiariasMAIP">
+                              <td [attr.data-label]="colsJornadas[0]">{{item.jornada}}</td>
+                              <td [attr.data-label]="colsJornadas[1]">{{item.almuerzo | number}}</td>
+                              <td [attr.data-label]="colsJornadas[2]">{{item.complemento | number}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-12 col-xl-4 responsive-table-pae pt-4 pt-xl-0">
+                        <label class="text-basecolor text-base-fontsize">Total complementos díarios necesarios<br class="d-none d-xl-inline">para
+                          cubrir sedes beneficiarias</label>
+                        <table class="table-default table-hover-disabled">
+                          <thead>
+                            <tr class="text-center">
+                              <th *ngFor="let item of colsJornadas">{{item}}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataSumRacionesContratadasMAIP">
+                              <td [attr.data-label]="colsJornadas[0]">{{item.jornada}}</td>
+                              <td [attr.data-label]="colsJornadas[1]">{{item.almuerzo | number}}</td>
+                              <td [attr.data-label]="colsJornadas[2]">{{item.complemento | number}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div class="col-12 col-xl-4 pt-2 pt-xl-0 flex align-items-center">
+                        <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'V'"
+                          [message]="'Asegúrese de que la cantidad de complementos contratados alcance para cubrir las necesidades de las sedes beneficiarias.'">
+                        </app-alert-message>
+                      </div>
+                    </div>
+                  </div>
+
+                </mat-tab>
+              </mat-tab-group>
+
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-footer">
+          <div class="row gap-down-10-px">
+            <div class="col-12 col-xl-6 text-left">
+              <button class="btn btn-blue w-down-100" (click)="guardarContinuar()">Guardar y continuar más
+                tarde</button>
+            </div>
+            <div class="col-12 col-xl-6 text-right d-xl-block d-flex flex-column-reverse gap-down-10-px">
+              <button class="btn btn-blue w-down-100" (click)="Anterior(2)">Anterior</button>
+              <button class="btn btn-blue w-down-100 ml-0 ml-xl-3" (click)="Siguiente4(4)">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="viewActiva == 4">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="row">
+            <div class="col-12 col-xl-6 clearfix pl-1">
+              <app-chapterblue [numberChapter]="4" [titleChapter]="'Caracteristicas financieras'"></app-chapterblue>
+              <br />
+            </div>
+            <div class="col-12 col-xl-6 clearfix text-right" style="padding: 20px;">
+              <div class="msg-alerta">
+                <div>
+                  <img class="w-down-md-50 w-down-sm-100" src="../assets/images/Iconos/suministro/paso4-5.png">
+                </div>
+              </div>
+            </div>
+          </div>
+          <form class="form-default-inline">
+            <div class="form-item px-lg-down-0">
+              <form class="form-default">
+
+                <div class="form-item px-lg-down-0">
+                  <div class="col ml-0 ml-xl-3">
+                    <div class="row">
+                      <div class="col-12 col-xl-6 d-xl-block d-flex flex-column mb-2">
+                        <label class="form-label">1. Valor total de contrato:</label>
+                        <input class="input-text text-center w-down-100 ml-lg-down-0" type="number"
+                          [ngModelOptions]="{standalone: true}" [(ngModel)]="contratoNuevo.valorTotalContrato"
+                          (ngModelChange)="changeItemContrato('valorTotalContrato', $event)">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-item px-lg-down-0">
+                  <div class="col ml-0 ml-xl-3">
+                    <div class="row">
+                      <div class="col-12 col-xl-6 d-xl-block d-flex flex-column">
+                        <label class="form-label">2. Contratos asociados al suministro descentralizado:</label>
+                      </div>
+                    </div>
+                    <div class="row mt-sm">
+                      <div class="col-12 col-md-6 responsive-table-pae">
+                        <table class="table-default table-hover-disabled">
+                          <thead class="row-span">
+                            <tr class="text-center">
+                              <th>No de Contrato</th>
+                              <th>Operador</th>
+                              <th>Tipo de contrato</th>
+                              <th>Valor</th>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataContratosDescentralizados">
+                              <td data-label="No. Contrato">{{item.numeroContrato}}</td>
+                              <td data-label="Operador">{{item.nomOperador}}</td>
+                              <td data-label="T. contrato">Suministro - {{item.tipoContrato}}</td>
+                              <td data-label="Valor">{{item.valorTotalContrato|currency:'$':'symbol':'1.0-2'}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-item px-lg-down-0">
+                  <div class="col ml-0 ml-xl-3">
+                    <div class="row">
+                      <div class="col-12 col-xl-4 ml-0 ml-xl-4">
+                        <app-costo-total-tab [Titulo]="'TOTAL'" [TotalGeneral]="dataTotalGeneralContratado.valorTotalsuministro"
+                          [Orientacion]="'H'">
+                        </app-costo-total-tab>
+                      </div>
+                      <div class="form-item row d-flex gap-down-10-px"
+                        *ngIf="dataTotalGeneralContratado.valorTotal != contratoNuevo.valorTotalContrato || valTotalRubros!=0" >
+                        <div class="col-12 col-xl flex align-items-center" style="padding: 0;">
+                          <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                            [textColor]="'text-basered'" [message]="'El valor total del contrato ingresado en el formulario NO coincide con el valor total calculado por el sistema. ¿Desea agregar rubros adicionales?'">
+                          </app-alert-message>
+                        </div>
+                        <div class="col-12 col-xl">
+                          <div class="inline-block form-checkbox-red ml-xs w-down-100">
+                            <label id="RubrosAddSi" class="check-si-red w-down-50" [class]="rubroAdd ? 'active' : ''"
+                              (click)="disableRubrosAdd($event, 'rubroAdd', true)">
+                              Si
+                            </label>
+                            <label id="RubrosAddNo" class="check-no-red w-down-50" [class]="!rubroAdd ? 'active' : ''"
+                              (click)="disableRubrosAdd($event, 'rubroAdd', false)">
+                              No
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="rubroAdd" class="form-item">
+                        <label class="form-label">
+                           3. Rubros adicionales:
+                        </label>
+                        <app-rubros-adicionales [ValorTotalServicios]="1"
+                           [ValorContrato]="dataTotalGeneralContratado.valorTotalsuministro" [IdContrato]="contratoNuevo.id"
+                           (ValRubros)="validaRespuestaRubros($event,rubroAdd)">
+                        </app-rubros-adicionales>
+                     </div>
+                     <div  class="form-item row mx-lg-down-0">
+                      <div  class="row px-lg-down-0 gap-down-10-px" style="padding: 5px 10px 0 0;">
+                          <div class="col-12 col-xl-4 ml-0 ml-xl-4">
+                            <app-costo-total-tab [Titulo]="rubroAdd ? 'VALOR TOTAL DEL CONTRATO\n(Total + Rubros Adicionales)' : 'VALOR TOTAL DEL CONTRATO'"
+                                [TotalGeneral]="dataTotalGeneralContratado.valorTotalsuministro + valTotalRubros" [Orientacion]="'H'">
+                            </app-costo-total-tab>
+                          </div>
+
+                          <div class="col-12 col-xl-4">
+                            <app-alert-message
+                                [imgSize]="'sm'" [textSize]="'sm'"  [aligment]="'H'"                         [textColor]="'text-basered'"
+                                [message]="'Asegúrese que el valor del contrato ingresado en el formulario, coincida con el valor total calculado por el sistema.'">
+                            </app-alert-message>
+                          </div>
+                      </div>
+                     </div>
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-footer">
+          <div class="row gap-down-10-px">
+            <div class="col-12 col-xl-6 text-left">
+              <button class="btn btn-blue w-down-100" (click)="guardarContinuar()">Guardar y continuar más
+                tarde</button>
+            </div>
+            <div class="col-12 col-xl-6 text-right d-xl-block d-flex flex-column-reverse gap-down-10-px">
+              <button class="btn btn-blue w-down-100" (click)="AnteriorManejaP()">Anterior</button>
+              <button class="btn btn-blue w-down-100 ml-0 ml-xl-3" (click)="Siguiente5(5)">Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="viewActiva == 5">
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="row">
+            <div class="col-12 col-xl-6 clearfix pl-1">
+              <app-chapterblue [numberChapter]="5" [titleChapter]="'Información presupuestal'"></app-chapterblue>
+              <br />
+            </div>
+            <div class="col-12 col-xl-6 clearfix text-right" style="padding: 20px;">
+              <div class="msg-alerta">
+                <div>
+                  <img class="w-down-md-50 w-down-sm-100" src="../assets/images/Iconos/suministro/paso5-5.png">
+                </div>
+              </div>
+            </div>
+          </div>
+          <form class="form-default-inline">
+            <div class="form-item px-lg-down-0">
+
+
+              <form class="form-default">
+                <div class="form-item px-lg-down-0">
+                  <div class="col-12 col-xl ml-0 ml-xl-3">
+                    <div class="row">
+                      <div class="col-12 responsive-table-pae">
+                        <label class="form-label">1. Fuentes de financiación presupuestal destinada a cubrir el costo
+                          del contrato:</label>
+                        <table class="table-default table-hover-disabled">
+                          <thead class="row-span">
+                            <tr class="text-center">
+                              <th>Fuente</th>
+                              <th>Tipo</th>
+                              <th>Valor</th>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center" *ngFor="let item of dataTotal">
+                              <td data-label="Fuente">{{item.fuenteFinanciacion}}</td>
+                              <td data-label="Tipo">{{item.fuenteIngreso}}</td>
+                              <td data-label="Valor">{{item.valorFuente|currency:'$':'symbol':'1.0-2'}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="row mt-sm">
+                      <div class="col-12 col-xl-5">
+                        <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [textColor]="'text-basered'"
+                          [message]="'Para consultar información sobre CDPs y CRPs refíerase a la ficha de contrato de cada uno de los contratos asociados.'">
+                        </app-alert-message>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="form-item px-lg-down-0">
+                  <div class="col-12 col-xl ml-0 ml-xl-3">
+                    <div class="row">
+                      <div class="col-12">
+                        <label class="form-label">2. Suma total de las fuentes de financiación registradas:</label>
+                        <input type="text" class="text-center form-control disabledWithoutOpacity w-down-100 ml-lg-down-0"
+                          name="txtSumaTotalFuentesFinanciacion"
+                          [ngModel]="dataTotalGeneralContratado.totalFuentesFinanciacion | currency: '$' : 'symbol' : '1.0-2'"
+                          placeholder="Autom&aacute;tico" style="width: 23%; margin: 0px 0px 0px 105px;"/>
+                      </div>
+                    </div>
+                    <div class="row mt-md gap-down-10-px">
+                      <div class="col-12 col-xl-5">
+                        <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [textColor]="'text-basered'"
+                          [message]="'Asegúrese de que el valor total de las fuentes de financiación coincida con el valor total del contrato'">
+                        </app-alert-message>
+                      </div>
+                      <div class="col-12 col-xl-3">
+                        <table class="table-default-red">
+                          <thead>
+                            <tr class="text-center">
+                              <th>VALOR CONTRATO</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="text-center">
+                              <td>{{ dataTotalGeneralContratado.valorTotal | currency: '$' : 'symbol' : '1.0-2' }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-item px-lg-down-0">
+                  <div class="col-12 col-xl ml-0 ml-xl-3 file">
+                    <label for="" class="form-label" style="width: auto; margin-right: 10px;">3. PDF del
+                      contrato:</label>
+                    <div style="display: inline-block; overflow: hidden;">
+                      <div class="btn-fileUpload" (click)="uploadPDF()">
+                        <span>Adjunte el archivo</span>
+                        <img class="float-right ml-3" src="../../../../../../assets/images/Iconos/input-file.png">
+                        <input class="" type="file" id="pahtArchivo" name="pahtArchivo" accept="application/pdf"
+                          [(ngModel)]="contratoNuevo.pahtArchivo" required #pahtArchivo="ngModel">
+                      </div>
+                      <a class="visorPDF" (click)="abrirPDF(modalPDF)">
+                        {{ contratoNuevo.nombreArchivo }}
+                      </a>
+                    </div>
+                    <label [hidden]="pahtArchivo.valid || pahtArchivo.pristine || pahtArchivo.touched" class="label"
+                      style="color:red">El archivo CDP es requerido</label>
+
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-footer">
+          <div class="row gap-down-10-px">
+            <div class="col-12 col-xl-6 text-left">
+              <button class="btn btn-blue w-down-100" (click)="guardarContinuar()">Guardar y continuar más
+                tarde</button>
+            </div>
+            <div class="col-12 col-xl-6 text-right d-xl-block d-flex flex-column-reverse gap-down-10-px">
+              <button class="btn btn-blue w-down-100" (click)="Anterior(4)">Anterior</button>
+              <button class="btn btn-blue w-down-100 ml-0 ml-xl-3" (click)="Finalizar()">Finalizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #modalPDF>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>

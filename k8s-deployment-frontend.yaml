@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sige-pae-front
+  namespace: alimentos-dev
+  labels:
+    app: sige-pae-front
+    tier: frontend
+    version: migrated
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: sige-pae-front
+  template:
+    metadata:
+      labels:
+        app: sige-pae-front
+        tier: frontend
+        version: migrated
+    spec:
+      containers:
+      - name: sige-pae-front
+        image: azrcaksalimentosdev.azurecr.io/sige-pae-front:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: BACKEND_API_URL
+          value: "http://4.155.92.235/api"
+      imagePullSecrets:
+      - name: acr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sige-pae-front-service
+  namespace: alimentos-dev
+  labels:
+    app: sige-pae-front
+    tier: frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: sige-pae-front
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sige-pae-front-ingress
+  namespace: alimentos-dev
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/backend-path-prefix: "/"
+spec:
+  rules:
+  - host: sipae-front.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sige-pae-front-service
+            port:
+              number: 80

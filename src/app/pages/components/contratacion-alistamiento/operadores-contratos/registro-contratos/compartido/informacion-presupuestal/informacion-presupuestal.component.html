@@ -1,0 +1,386 @@
+<ng-container *ngFor="let fuenteFinanciacion of funtesFinanciacion; index as i_ff">
+  <div class="row mt-4">
+    <div class="col-12 col-xl-6 overflow-auto">
+
+      <div class="d-flex flex-column flex-xl-row tabla-fuente-financiacion">
+        <div class="header-section d-flex flex-xl-column flex-row justify-content-center align-items-center gap-10-px py-2 py-xl-0">
+          <label>Fuente </label>
+          <label>N° {{ i_ff + 1 }}</label>
+        </div>
+        <div class="form-section tabla-border-left d-flex flex-column gap-10-px px-2 py-2 border-down-none">
+          <div class="d-flex flex-column flex-xl-row">
+            <label class="label-width-section w-down-100">Fuente:</label>
+            <div class="info-width-section flex-grow-1 w-down-100">
+              <label class="info" *ngIf="fuenteFinanciacion.readonly">{{
+                fuenteFinanciacion.fuenteFinanciacion
+                }}</label>
+              <select *ngIf="!fuenteFinanciacion.readonly" width="100%" class="dropdow"
+                style="width: 100% !important; height: auto !important" name="tipoFuente_{{ i_ff }}"
+                [ngModelOptions]="{ standalone: true }" [ngModel]="fuenteFinanciacion.iD_FuenteFinanciacion"
+                (ngModelChange)="
+                  changeItemFuente(
+                    fuenteFinanciacion,
+                    'iD_FuenteFinanciacion',
+                    $event
+                  )
+                " [ngClass]="{ disabledWithOpacity: fuenteFinanciacion.readonly }">
+                <option value="">Elija una opci&oacute;n</option>
+                <option *ngFor="let item of listFuentePresupuestal" [ngValue]="item.id">
+                  {{ item.nombre }}
+                </option>
+              </select>
+          <label *ngIf="showValidation  && !fuenteFinanciacion.iD_FuenteFinanciacion" class="label"
+          style="color:red">La fuente de financiación es requerido.</label>
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row">
+            <label class="label-width-section w-down-100">Tipo:</label>
+            <div class="info-width-section flex-grow-1 w-down-100">
+              <label class="info" *ngIf="fuenteFinanciacion.readonly">{{
+                fuenteFinanciacion.fuenteIngreso
+                }}</label>
+              <select *ngIf="!fuenteFinanciacion.readonly" class="dropdow"
+                style="width: 100% !important; height: auto !important" name="tipoFuente_{{ i_ff }}"
+                [ngModelOptions]="{ standalone: true }" [ngModel]="fuenteFinanciacion.iD_FuenteIngresos"
+                (ngModelChange)="
+                  changeItemFuente(
+                    fuenteFinanciacion,
+                    'iD_FuenteIngresos',
+                    $event
+                  )
+                " [ngClass]="{ disabledWithOpacity: fuenteFinanciacion.readonly }">
+                <option value>Elija una opci&oacute;n</option>
+                <option *ngFor="let item of listTipoFuentePresupuestal" [ngValue]="item.iD_FuenteIngreso">
+                  {{ item.nombre }}
+                </option>
+              </select>
+              <label *ngIf="showValidation && (!fuenteFinanciacion.iD_FuenteIngresos || fuenteFinanciacion.iD_FuenteIngresos === 'Elija una opci&oacute;n')" class="label"
+              style="color:red">El tipo de fuente financiación es requerida.</label>
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-xl-row">
+            <label class="label-width-section w-down-100">Valor:</label>
+            <div class="info-width-section" style="width: 80%">
+              <label class="info" style="width: 80% !important" *ngIf="fuenteFinanciacion.readonly">{{
+                fuenteFinanciacion.valor | currency: "$":"symbol":"1.0-2"
+                }}</label>
+              <input *ngIf="!fuenteFinanciacion.readonly" class="text" style="width: 80% !important"
+                name="txtValorT_{{ i_ff }}" type="number" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="fuenteFinanciacion.valor" (ngModelChange)="fuenteFinanciacion.valor = $event;"
+                [ngClass]="{ disabledWithOpacity: fuenteFinanciacion.readonly }" />
+                <label *ngIf="showValidation && fuenteFinanciacion.valor <= 0 " class="label"
+                style="color:red">El valor de la fuente financiación es requerida</label>
+            </div>
+          </div>
+
+        </div>
+        <div class="buttons-section tabla-border-left d-flex justify-content-center align-items-center gap-down-10-px py-2 py-xl-0 border-down-none">
+          <a class="card-link" *ngIf="fuenteFinanciacion.readonly" (click)="
+                  fuenteFinanciacion.readonly = !fuenteFinanciacion.readonly
+                ">
+                <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+              </a>
+
+              <a class="card-link ml-lg-down-0" *ngIf="!fuenteFinanciacion.readonly" (click)="validarFuente(fuenteFinanciacion)">
+                <img style="width: 20px; height: 20px" src="../assets/images/Iconos/save_mini.png" />
+              </a>
+
+              <!--<a class="card-link" *ngIf="!fuenteFinanciacion.readonly && fuenteFinanciacion.id!=0"
+								(click)="fuenteFinanciacion.readonly=!fuenteFinanciacion.readonly">
+								<img style="width: 20px; height: 20px;" src="../assets/images/Iconos/cancel_mini.png">
+							</a>-->
+
+              <a class="card-link ml-lg-down-0" *ngIf="
+                  fuenteFinanciacion.readonly && fuenteFinanciacion.id != 0
+                " (click)="
+                  eliminarFuente(
+                    fuenteFinanciacion.id,
+                    i_ff,
+                    fuenteFinanciacion.cdps.length
+                  )
+                ">
+                <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+              </a>
+
+              <a class="card-link" *ngIf="fuenteFinanciacion.id == 0" (click)="removerFuente(i_ff)">
+                <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+              </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row mt-4 mb-2">
+    <div class="col-12">
+      <label class="form-label" *ngIf="fuenteFinanciacion.id != 0">
+        &nbsp;&nbsp;&nbsp; Certificados de Disponibilidad Presupuestal (CDP) y
+        Certificados de Registro Presupuestal (CRP) asociados a la Fuente N°
+        {{ i_ff + 1 }}:
+      </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-xl-10 my-3 px-lg-down-0">
+      <div class="col-12 px-lg-down-0 my-3" *ngFor="let cdp of fuenteFinanciacion.cdps; index as i_cd">
+        <div class="col-12">
+          <div class="table-resposive responsive-table-pae" *ngIf="fuenteFinanciacion.id != 0 && fuenteFinanciacion.cdps.length != 0">
+            <table class="table table-sm table-info-llenado table-hover-disabled">
+              <thead>
+                <tr class="text-center">
+                  <th>CDP Nº {{i_cd + 1}}</th>
+                  <th *ngFor="let item of cdpTableDescription">
+                    {{ item }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container>
+                  <tr>
+                    <td width="15%" class="text-center py-1 w-down-100" attr.data-label="CDP Nº {{i_cd + 1}}">
+                      <label *ngIf="cdp.readonly" (click)="cdp.btnsAction = !cdp.btnsAction">{{ cdp.numeroCDP }}</label>
+                      <input *ngIf="!cdp.readonly" name="numCdp_{{ fuenteFinanciacion.id + '_' + i_cd }}"
+                        class="form-control text-center" type="number" [ngModelOptions]="{ standalone: true }"
+                        [ngModel]="cdp.numeroCDP" (ngModelChange)="cdp.numeroCDP = $event" placeholder="Ingrese Nº"
+                        [ngClass]="{ disabledWithOpacity: cdp.readonly }" />
+                        <label *ngIf="showValidationCDP && cdp.numeroCDP <= 0 " class="label"
+                        style="color:red">Complete este campo</label>
+                    </td>
+                    <td width="15%" class="text-center py-1 w-down-100" [attr.data-label]="cdpTableDescription[0]">
+                      <label *ngIf="cdp.readonly">{{
+                        cdp.fechaCDP | date: "dd/MM/yyyy"
+                        }}</label>
+                      <input *ngIf="!cdp.readonly" name="fechaCdp_{{ fuenteFinanciacion.id + '_' + i_cd }}"
+                        class="form-control" type="date" [ngModelOptions]="{ standalone: true }"
+                        [ngModel]="cdp.fechaCDP | date: 'yyyy-MM-dd'" (ngModelChange)="cdp.fechaCDP = $event"
+                        placeholder="Elija fecha" [ngClass]="{ disabledWithOpacity: cdp.readonly }" />
+                        <label *ngIf="showValidationCDP && (cdp.fechaCDP == ''  || cdp.fechaCDP == null)" class="label"
+                        style="color:red">Complete este campo</label>
+                    </td>
+                    <td width="15%" class="text-center py-1 w-down-100" [attr.data-label]="cdpTableDescription[1]">
+                      <label *ngIf="cdp.readonly">{{
+                        cdp.valorCDP | currency: "$":"symbol":"1.0-2"
+                        }}</label>
+                      <input *ngIf="!cdp.readonly" name="cifraCdp_{{ fuenteFinanciacion.id + '_' + i_cd }}"
+                        class="form-control text-center" type="number" [ngModelOptions]="{ standalone: true }"
+                        [ngModel]="cdp.valorCDP" (ngModelChange)="cdp.valorCDP = $event" placeholder="Ingrese cifra"
+                        [ngClass]="{ disabledWithOpacity: cdp.readonly }" />
+                        <label *ngIf="showValidationCDP && cdp.valorCDP <= 0" class="label"
+                        style="color:red">Complete este campo</label>
+                    </td>
+                    <td width="35%" class="text-center py-1 w-down-100" [attr.data-label]="cdpTableDescription[2]">
+                      <div *ngIf="!cdp.readonly" class="btn-fileUpload-fuente" (click)="
+                          uploadPDF(
+                            'archivoCdp_' + fuenteFinanciacion.id + '_' + i_cd,
+                            cdp,
+                            'pahtArchivoCDP',
+                            'archivoCDP'
+                          )
+                        ">
+                        <span>Adjuntar
+                          <img class="ml-2" src="../../../../../../assets/images/Iconos/input-file.png" /></span>
+                        <input class="" type="file" id="archivoCdp_{{ fuenteFinanciacion.id + '_' + i_cd }}"
+                          name="archivoCdp_{{ fuenteFinanciacion.id + '_' + i_cd }}" accept="application/pdf" />
+                      </div>
+                      <a class="visorPDF" (click)="downloadFile(cdp.archivoCDP, cdp.pahtArchivoCDP)">
+                        {{ cdp.pahtArchivoCDP }}
+                      </a>
+                    </td>
+                    <td width="20%" class="text-center border-left border-none-table-td py-1 w-down-100" [attr.data-label]="cdpTableDescription[3]">
+                      <a class="card-link" *ngIf="cdp.readonly" (click)="cdp.readonly = !cdp.readonly">
+                        <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                      </a>
+
+                      <a class="card-link" *ngIf="!cdp.readonly" (click)="validarCdpFuente(cdp)">
+                        <img style="width: 20px; height: 20px" src="../assets/images/Iconos/save_mini.png" />
+                      </a>
+
+                      <!--<a class="card-link" *ngIf="!cdp.readonly && cdp.id!=0" (click)="cdp.readonly=!cdp.readonly">
+                        <img style="width: 20px; height: 20px;" src="../assets/images/Iconos/cancel_mini.png">
+                      </a>-->
+
+                      <a class="card-link" *ngIf="cdp.id != 0 && cdp.readonly" (click)="
+                          eliminarCdp(
+                            fuenteFinanciacion.cdps,
+                            fuenteFinanciacion.crps,
+                            cdp.id
+                          )
+                        ">
+                        <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                      </a>
+
+                      <a class="card-link" *ngIf="cdp.id == 0" (click)="removerCdp(fuenteFinanciacion.cdps, i_cd)">
+                        <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                      </a>
+
+                      <a class="card-link link-crp" *ngIf="cdp.id != 0" (click)="
+                          addCrpFuente(
+                            fuenteFinanciacion.crps,
+                            cdp.id,
+                            cdp.numeroCDP
+                          )
+                        ">
+                        <img style="width: 15px; height: 16px; margin-left: 5px;"
+                          src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                        <span style="
+                          color: white;
+                          margin-right: 5px;">
+                          CRP
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-12 px-lg-down-0 pl-4 pr-4"
+          *ngIf="fuenteFinanciacion.id != 0 && fuenteFinanciacion.crps.length != 0 && filtrarCRPPorCDP(fuenteFinanciacion.crps, cdp.numeroCDP).length > 0">
+          <div class="table-responsive responsive-table-pae pl-down-0" style="padding-left: 14px">
+            <table class="table table-sm table-info-llenado table-hover-disabled">
+              <thead>
+                <tr class="text-center">
+                  <th>CRP Nº {{i_cd + 1}}</th>
+                  <th class="text-center" *ngFor="let item of crpTableDescription">
+                    {{ item }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                  *ngFor="let crp of filtrarCRPPorCDP(fuenteFinanciacion.crps, cdp.numeroCDP); index as i_cr">
+                  <tr>
+                    <td width="15%" class="text-center py-1 w-down-100" attr.data-label="CRP Nº {{i_cd + 1}}">
+                      <label *ngIf="crp.readonly" (click)="crp.btnsAction = !crp.btnsAction">{{ crp.numeroCRP }}</label>
+                      <input *ngIf="!crp.readonly" class="form-control text-center"
+                        name="crpNumero_{{ fuenteFinanciacion.id + '_' + i_cr }}" type="number"
+                        [ngModelOptions]="{ standalone: true }" [ngModel]="crp.numeroCRP"
+                        (ngModelChange)="crp.numeroCRP = $event" [ngClass]="{ disabledWithOpacity: crp.readonly }"
+                        placeholder="Ingrese Nº" />
+                        <label *ngIf="showValidationCRP && crp.numeroCRP <= 0" class="label"
+                        style="color:red">Complete este campo</label>
+                    </td>
+                    <td width="15%" class="text-center py-1 w-down-100" [attr.data-label]="crpTableDescription[0]">
+                      <label *ngIf="crp.readonly">{{
+                        crp.fechaCRP | date: "dd/MM/yyyy"
+                        }}</label>
+                      <input *ngIf="!crp.readonly" class="form-control text-center"
+                        name="crpFecha_{{ fuenteFinanciacion.id + '_' + i_cr }}" type="date"
+                        [ngModelOptions]="{ standalone: true }" [ngModel]="crp.fechaCRP | date: 'yyyy-MM-dd'"
+                        (ngModelChange)="crp.fechaCRP = $event" [ngClass]="{ disabledWithOpacity: crp.readonly }"
+                        placeholder="Ingrese fecha" />
+                        <label *ngIf="showValidationCRP && crp.fechaCRP == null" class="label"
+                        style="color:red">Complete este campo</label>
+                    </td>
+                    <td width="15%" class="text-center py-1 w-down-100" [attr.data-label]="crpTableDescription[1]">
+                      <label *ngIf="crp.readonly">{{
+                        crp.valorCRP | currency: "$":"symbol":"1.0-2"
+                        }}</label>
+                      <input *ngIf="!crp.readonly" class="form-control text-center"
+                        name="crpValor_{{ fuenteFinanciacion.id + '_' + i_cr }}" type="number"
+                        [ngModelOptions]="{ standalone: true }" [ngModel]="crp.valorCRP"
+                        (ngModelChange)="crp.valorCRP = $event" [ngClass]="{ disabledWithOpacity: crp.readonly }"
+                        placeholder="Ingrese cifra" />
+                        <label *ngIf="showValidationCRP && crp.valorCRP <= 0" class="label"
+                        style="color:red">Complete este campo</label>
+                    </td>
+                    <td width="25%" class="text-center py-1 w-down-100" [attr.data-label]="crpTableDescription[2]">
+                      <div *ngIf="!crp.readonly" class="btn-fileUpload-fuente" (click)="
+                          uploadPDF(
+                            'crpFile_' + fuenteFinanciacion.id + '_' + i_cr,
+                            crp,
+                            'pathArchivoCRP',
+                            'archivoCRP'
+                          )
+                        ">
+                        <span>Adjuntar
+                          <img class="ml-2" src="../../../../../../assets/images/Iconos/input-file.png" /></span>
+                        <input class="" type="file" id="crpFile_{{ fuenteFinanciacion.id + '_' + i_cr }}"
+                          name="crpFile_{{ fuenteFinanciacion.id + '_' + i_cr }}" accept="application/pdf" />
+                      </div>
+                      <a class="visorPDF" (click)="downloadFile(crp.archivoCRP, crp.pathArchivoCRP)">
+                        {{ crp.pathArchivoCRP }}
+                      </a>
+                    </td>
+                    <td width="20%" class="border-left border-none-table-td text-center py-1 w-down-100" [attr.data-label]="crpTableDescription[3]">
+                      <a class="card-link" *ngIf="crp.readonly" (click)="crp.readonly = !crp.readonly">
+                        <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                      </a>
+
+
+                      <a class="card-link" *ngIf="!crp.readonly" (click)="validarCrpFuente(crp)">
+                        <img style="width: 20px; height: 20px" src="../assets/images/Iconos/save_mini.png" />
+                      </a>
+
+                      <!--<a class="card-link" *ngIf="!crp.readonly && crp.id!=0" (click)="crp.readonly=!crp.readonly">
+                        <img style="width: 20px; height: 20px;" src="../assets/images/Iconos/cancel_mini.png">
+                      </a>-->
+
+                      <a class="card-link" *ngIf="crp.id != 0 && crp.readonly"
+                        (click)="eliminarCrp(fuenteFinanciacion.crps, crp.id)">
+                        <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                      </a>
+
+                      <a class="card-link" *ngIf="crp.id == 0" (click)="removerCrp(fuenteFinanciacion.crps, i_cr)">
+                        <img style="width: 20px; height: 20px" src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-xl-2 mt-3 mt-lg-down-0 text-right text-xl-center">
+      <div class="mt-2" (click)="addCdpFuente(fuenteFinanciacion.cdps, fuenteFinanciacion.id)">
+        <img class="mr-2" src="../assets/images/Iconos/add_blue.png" />
+        <label class="align-middle">Agregar CDP</label>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="row mb-3 align-items-start align-items-xl-center">
+  <div class="col-6 d-flex flex-column d-xl-block">
+    <div class="form-inline d-flex flex-column flex-xl-row align-items-start align-items-xl-center">
+      <label class="form-label w-down-100 mr-2">Valor total en CRPs: </label>
+      <label class="input-text w-down-100 ml-lg-down-0">{{
+        dataTotalGeneralContratado.totalCRP | currency: "$":"symbol":"1.0-2"
+        }}</label>
+    </div>
+  </div>
+  <div class="col-6 flex align-self-center">
+    <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'" [message]="
+        'Asegúrese de que el monto total en CRPs coincida con el valor de la fuente de financiaci&oacute;n.'
+      ">
+    </app-alert-message>
+  </div>
+</div>
+
+<div class="row line-descontinua">
+  <div class="col-12 pt-3">
+    <div class="text-right" (click)="addFuenteFinanciacion()">
+      <img class="mr-2" src="../assets/images/Iconos/add_blue.png" />
+      <label>Agregar fuente de financiaci&oacute;n</label>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalPdfFuente>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPdfFuente" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>

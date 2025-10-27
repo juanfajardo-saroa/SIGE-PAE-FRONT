@@ -1,0 +1,204 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>{{ action }} PAC - Consolidado mensual</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                <br />
+                <div *ngIf="action !='Adicionar'">
+                  <div class="example-full-width">
+                    <br />
+                    <input matInput id="id" formControlName="id" readonly="true" class=" form-control"
+                      style="display: none;" />
+                  </div>
+                </div>
+                <table>
+                  <!-- <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">ETC </div>
+                      </td>
+                      <td>
+                        <mat-form-field class="example-full-width">
+                          <mat-label> Seleccione E T C...</mat-label>
+                          <mat-select id="iD_ETC" formControlName="iD_ETC">
+                            <mat-option *ngFor="let item of ETCList" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                    </tr>
+                  </ng-container> -->
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Mes<span style="color:red;">* </span> </div>
+                      </td>
+                      <td class="BordeSeparador">
+                        <!-- <mat-form-field class="example-full-width">
+                          <mat-label> Seleccione Mes...</mat-label>
+                          <mat-select id="mes" formControlName="mes">
+                            <mat-option *ngFor="let item of MesList" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field> -->
+                        <mat-select id="mes" formControlName="mes" class="tablaform">
+                          <mat-option *ngFor="let item of MesList" [value]="item.id">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                 <!--  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">Solicitado por ETC</div>
+                      </td>
+                      <td>
+                        <mat-form-field class="example-full-width" >
+                          <mat-label>Giro Proyectado</mat-label>
+                          <br />
+                          <input  matInput type="number" id="giroProyectado" formControlName="giroProyectado" [readonly]=true
+                            placeholder="Giro Proyectado" class="form-control" />
+                          <div
+                            *ngIf="form.get('giroProyectado').invalid && (form.get('giroProyectado').dirty || form.get('giroProyectado').touched)"
+                            class="invalid-feedback">
+                          </div>
+                        </mat-form-field>
+                      </td>
+                    </tr>
+                  </ng-container> -->
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Transferido por UAPA<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                       <!--  <mat-form-field class="example-full-width" >
+                          <mat-label>Transferido por UAPA</mat-label>
+                          <br />
+                          <input matInput type="number" min="0" id="giroConfirmado" formControlName="giroConfirmado" required
+                            placeholder="Transferido por UAPA" class="form-control" />
+                          <div
+                            *ngIf="form.get('giroConfirmado').invalid && (form.get('giroConfirmado').dirty || form.get('giroConfirmado').touched)"
+                            class="invalid-feedback">
+                          </div>
+                        </mat-form-field> -->
+                        <input matInput type="number" min="0" id="giroConfirmado" formControlName="giroConfirmado" required
+                            placeholder="Transferido por UAPA" class="form-control" />
+                          <div
+                            *ngIf="form.get('giroConfirmado').invalid && (form.get('giroConfirmado').dirty || form.get('giroConfirmado').touched)"
+                            class="invalid-feedback">
+                          </div>
+
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">3. Fecha de transferencia<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                       <!--  <mat-form-field class="example-full-width" >
+                          <mat-label>fecha Transferencia</mat-label>
+                          <br />
+                          <input  matInput [matDatepicker]="fechaTransferencia" formControlName="fechaTransferencia"
+                            id="fechaTransferencia" required>
+                          <mat-datepicker-toggle matSuffix [for]="fechaTransferencia">
+                            <mat-icon style="color: rgb(14, 92, 235);" matDatepickerToggleIcon>calendar_month</mat-icon>
+                          </mat-datepicker-toggle>
+                          <mat-datepicker #fechaTransferencia></mat-datepicker>
+                        </mat-form-field>-->
+
+                          <input class="fechaText"  matInput [matDatepicker]="fechaTransferencia" formControlName="fechaTransferencia"
+                            id="fechaTransferencia" />
+                          <mat-datepicker-toggle matSuffix [for]="fechaTransferencia">
+                            <mat-icon style="color: rgb(14, 92, 235);" matDatepickerToggleIcon>calendar_month</mat-icon>
+                          </mat-datepicker-toggle>
+                          <mat-datepicker #fechaTransferencia></mat-datepicker>
+
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container>
+                    <tr>
+                      <td >
+                        <div class="TextosBlueLeft">4. No. orden de pago<span style="color:red;">* </span></div>
+                      </td>
+                      <td>
+                        <!-- <mat-form-field class="example-full-width" >
+                          <mat-label>No. orden de pago</mat-label>
+                          <br />
+                          <input matInput type="number" min="0" id="numeroOrden" formControlName="numeroOrden" required
+                            placeholder="No. orden de pago" class="form-control" />
+                          <div
+                            *ngIf="form.get('numeroOrden').invalid && (form.get('numeroOrden').dirty || form.get('numeroOrden').touched)"
+                            class="invalid-feedback">
+                          </div>
+                        </mat-form-field> -->
+                        <input matInput type="number" min="0" id="numeroOrden" formControlName="numeroOrden" required
+                            placeholder="No. orden de pago" class="form-control" />
+                          <div
+                            *ngIf="form.get('numeroOrden').invalid && (form.get('numeroOrden').dirty || form.get('numeroOrden').touched)"
+                            class="invalid-feedback">
+                          </div>
+
+                      </td>
+                    </tr>
+                  </ng-container>
+
+
+                </table>
+
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                                <div style="text-align: center;">
+                  ¿Está seguro de eliminar el registro?
+                </div>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                        <button [disabled]="!form.valid && action !='Eliminar'" (click)="doAction()">Guardar cambios
+                        </button>
+                      </div>
+                      <!-- <div>
+                        <button [disabled]="!form.valid && action !='Eliminar'" color="accent"  (click)="notificarDialog()">Guardar cambios y notificar a la ETC</button>
+                      </div> -->
+                      <div>
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

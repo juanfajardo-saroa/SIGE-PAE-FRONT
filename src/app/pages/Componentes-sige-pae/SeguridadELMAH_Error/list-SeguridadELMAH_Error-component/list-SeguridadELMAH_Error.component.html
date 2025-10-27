@@ -1,0 +1,136 @@
+  <div class="row">
+    <div class="col-12">
+      <mat-tab-group style="width: 100%; display: flex;">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span>Gestión de errores</span>
+          </ng-template>
+          <br>
+         <div fxLayout="row wrap">
+          <div>
+            <mat-card>
+              <mat-card-content>
+                <div fxLayout="row wrap" class="align-items-center acomodarAll">
+                  <div class="BordeRedondoFiltroAvanzado">
+                    <div>
+                      <div class="text-center">
+                        <a class="TextBlue">
+                          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " height="50px" width="auto">
+                        </a>
+                      </div>
+                    </div>
+                    <div class="FullSize">
+                      <div>
+                        <input class="buscar" matInput (keyup)="applyFilter($any($event).target.value)"
+                          placeholder="Buscar Error">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+
+    <div fxLayout="row wrap">
+      <div fxFlex="100">
+        <mat-card>
+          <mat-card-content>
+            <div class="table-responsive">
+              <div style="width: 100%; float: right;">
+                <div class="titletable">Errores</div>
+              </div>
+              <table mat-table [dataSource]="dataSource" class="left-radius" matSort >
+
+                <ng-container matColumnDef="select">
+                  <ng-container matColumnDef="action1">
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Acci&oacute;n </th>
+                    <td mat-cell *matCellDef="let element" class="action-link">
+                      <a (click)="openDialog('Actualizar',element)" class="m-r-10 cursor-pointer">
+                      <img src="../../../../../../assets/images/Iconos/edit_blue.png"></a>
+
+                    </td>
+                  </ng-container>
+
+
+
+                </ng-container>
+                <ng-container matColumnDef="application">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Application</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.application}} </td>
+</ng-container>
+<ng-container matColumnDef="host">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Host</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.host}} </td>
+</ng-container>
+<ng-container matColumnDef="type">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Type</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.type}} </td>
+</ng-container>
+<ng-container matColumnDef="source">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Source</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.source}} </td>
+</ng-container>
+<ng-container matColumnDef="message">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Message</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.message}} </td>
+</ng-container>
+<ng-container matColumnDef="user">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> User</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.user}} </td>
+</ng-container>
+<ng-container matColumnDef="statusCode">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Status Code</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.statusCode}} </td>
+</ng-container>
+<ng-container matColumnDef="timeUtc">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Time Utc</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.timeUtc}} </td>
+</ng-container>
+<ng-container matColumnDef="sequence">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Sequence</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.sequence}} </td>
+</ng-container>
+<ng-container matColumnDef="allXml">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> All Xml</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.allXml}} </td>
+</ng-container>
+<ng-container matColumnDef="data">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Data</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.data}} </td>
+</ng-container>
+<ng-container matColumnDef="auditoria">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> auditoria</th>
+  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{element.auditoria}} </td>
+</ng-container>
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef  mat-sort-header> Acci&oacute;n </th>
+                  <td mat-cell *matCellDef="let element" class="action-link">
+                    <a (click)="openDialog('Actualizar',element)" class="m-r-10 cursor-pointer">
+                    <img src="../../../../../../assets/images/Iconos/edit_blue.png"></a>
+
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let myRowData; columns: displayedColumns;"></tr>
+
+              </table>
+              <mat-paginator #paginator
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 50, 100]"
+                showFirstLastButtons>
+              </mat-paginator>
+              <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    </mat-tab>
+    </mat-tab-group>
+    </div>
+  </div>

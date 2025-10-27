@@ -1,0 +1,119 @@
+// @import '/src/assets/styles/variable.scss';
+.form-separador{
+    width: 102.2%;
+    margin-left: -12px;
+    padding: 13px 5px 13px 5px;
+    display: inline-block;
+}
+
+.form-separador:not(:last-child){
+    border-bottom: 1px dotted $base-azulPAE;
+}
+
+.form-separador:first-child{
+    margin-top: -9px;
+}
+
+.form-separador:last-child{
+    margin-bottom: -9px;
+}
+
+.form-bold{
+    font-weight: 600;
+    display: block;
+    float: left;
+    width: 25%;
+}
+
+.text-alert {
+    width: 85%;
+    color: $base-colorred;
+    font-weight: 500;
+}
+
+select{
+    background-color: #fff;
+    // float: left;
+    height: 22px;
+}
+
+.form-control, .form-select{
+    width: 40%;
+    border-color: $base-color;
+    border-radius: 3px;
+    height: 22px;
+}
+
+.form-selectesp{
+    width: 100%;
+    border-color: transparent;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-input {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.btn-fileUpload {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    padding: 2px 10px;
+    border: 1px solid $base-color;
+    border-radius: 5px;
+    width: 200px;
+    max-width: 200px;
+
+    span{
+      font-size: 15px;
+      color: $base-color;
+    }
+
+    img{
+      height: 20px;
+      margin-top: -1px;
+    }
+}
+
+.btn-fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.file .form-bold{
+    width: 15%;
+}
+
+// Form Second
+.form-default{
+  .form-item{
+    width: 100%;
+    padding: 13px 5px 13px 5px;
+    display: inline-block;
+
+    .form-label{
+      margin-bottom: 0;
+      color: $base-color;
+      font-weight: 500;
+      display: block;
+      float: left;
+      width: 35%;
+    }
+  }
+
+  .form-item:not(:last-child){
+    border-bottom: 1px dotted $base-azulPAE;
+  }
+}

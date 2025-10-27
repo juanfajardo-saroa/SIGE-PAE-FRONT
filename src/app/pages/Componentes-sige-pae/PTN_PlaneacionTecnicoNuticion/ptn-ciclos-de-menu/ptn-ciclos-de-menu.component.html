@@ -1,0 +1,46 @@
+<div class="row" style="margin-top: 40px;">
+  <div class="col-12">
+      <div class="row">
+          <div class="col-12">
+              <div class="tab-control-secondary">
+                <div class="d-flex" *ngIf="dis">
+                    <div id="disponible" class="tab-item pestanaCC active w-down-auto d-flex" (click)="cargarPTNpreparacion($event)" style="width: 33.33333%;">
+                        <div>Ciclos de menús disponibles </div>
+                    </div>
+                    <div id="aprobacion" class="tab-item pestanaCC w-down-auto d-flex" (click)="cargarPTNpreparacion($event)" style="width: 33.33333%;">
+                        <div>Ciclos en proceso de aprobación</div>
+                    </div>
+                    <div class="tab-item nothing d-flex w-down-100" style="width: 33.33333%;">
+                        <div>-</div>
+                    </div>
+
+                </div>
+                <div class="d-flex" *ngIf="apr">
+                    <div id="disponible" class="tab-item pestanaCC w-down-auto d-flex" (click)="cargarPTNpreparacion($event)" style="width: 33.33333%;">
+                        <div>Ciclos de menús disponibles </div>
+                    </div>
+                    <div id="aprobacion" class="tab-item pestanaCC active w-down-auto d-flex" (click)="cargarPTNpreparacion($event)" style="width: 33.33333%;">
+                        <div>Ciclos en proceso de aprobación</div>
+                    </div>
+                    <div class="tab-item nothing d-flex w-down-100" style="width: 33.33333%;">
+                        <div>-</div>
+                    </div>
+
+                </div>
+
+              </div>
+          </div>
+      </div>
+
+      <div class="row" style="margin-bottom: 40px;" *ngIf="tipoSeleccionado==1">
+          <div class="col-12">
+            <app-ptn-ciclo-interno [idOpcionSeleccionado]="1"></app-ptn-ciclo-interno>
+          </div>
+      </div>
+      <div class="row" style="margin-bottom: 40px;" *ngIf="tipoSeleccionado==2">
+          <div class="col-12">
+            <app-ptn-ciclo-interno  [idOpcionSeleccionado]="2"></app-ptn-ciclo-interno>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,537 @@
+@import '/src/assets/styles/variable.scss';
+
+mat-card,
+mat-card-title,
+mat-card-content,
+mat-list-option,
+div,
+input,
+td,
+th.mat-header-cell,
+td.mat-cell,
+table {
+    color: #005ACA;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+input,
+::ng-deep.mat-select-value {
+    text-align: left !important;
+    align-items: left;
+    justify-content: left;
+}
+
+::ng-deep.mat-cell {
+    text-align: center !important;
+}
+
+.AlingLeft {
+    text-align: left !important;
+}
+
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text {
+    color: #005ACA !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-panel {
+    max-width: 100% !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-placeholder {
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-arrow {
+    color: transparent !important;
+}
+
+mat-select {
+    padding: 0px !important;
+}
+
+div.col {
+    margin: 1%;
+}
+
+::ng-deep.mat-cell {
+    text-align: center !important;
+}
+
+::ng-deep.table-default thead tr th:not(.empty):first-child {
+    width: 33% !important;
+}
+
+::ng-deep.table-default thead tr th:nth-child(2) {
+    width: 25% !important;
+}
+
+::ng-deep.table-default thead tr th:nth-child(3) {
+    width: 21% !important;
+}
+
+::ng-deep.table-default thead tr th:not(.empty):last-child {
+    width: 21% !important;
+}
+
+.AlingTitle {
+    margin: 2% 10px 20px 13px;
+}
+
+.AlingTitle2 {
+    margin: 2% 10px 20px 10px;
+}
+
+.AlingText {
+    margin: 30px !important;
+}
+
+.ColorTextR {
+    color: #E23465 !important;
+}
+
+.FloatL {
+    float: left !important;
+}
+
+.FloatR {
+    float: right !important;
+}
+
+.CursorP {
+    cursor: pointer;
+}
+
+.MarginL {
+    margin-right: 10% !important;
+}
+
+.SmallBlue {
+    font-size: 10px !important;
+    margin-left: 25px;
+    line-height: 15px;
+}
+
+.NumeroPendiente {
+    height: 24px;
+    width: 24px;
+    background-color: #ffff;
+    border-radius: 50%;
+    text-align: center;
+    color: #E23465;
+    font-weight: 500;
+    padding-top: 3px;
+}
+
+.NumeroPendienteColor {
+    float: left;
+    background-color: #E23465;
+    padding: 10px;
+}
+
+.BordePendiente {
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 1px 50px 50px 1px;
+    border: 1px $base-borderStyle #E23465;
+    border-left: 0px !important;
+    color: $base-azulPAE;
+    padding: 9px 20px;
+    margin-left: -18px;
+}
+
+.FondoR {
+    display: inline-block;
+    padding: 12px;
+    color: #fff;
+    padding-left: 0px;
+    background-color: #E23465;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    margin-left: -1% !important;
+}
+
+.redCircle {
+    color: #FF0000;
+}
+
+.greenCircle {
+    color: green;
+}
+
+.yellowCircle {
+    color: #ffd400;
+}
+
+.grayCircle {
+    color: #E2ECFD;
+}
+
+.iconExpansionMore {
+    color: $base-azulPAE ;
+    align-items: center !important;
+}
+
+.iconExpansionMore:hover {
+    color: #fff !important;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:is(.example-expanded-row) {
+    background-color: #005ACA !important;
+
+    .colorW {
+        background-color: #005ACA !important;
+        color: #ffffff !important;
+    }
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: center !important;
+    justify-self: center !important;
+    font-size: 12px !important;
+    border-radius: 20px !important;
+    background-image: url(../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+    background-size: contain !important;
+    padding: 2% 0% !important;
+    width: 30% !important;
+    color: $base-color !important;
+    background-position: top !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
+    display: inline-block;
+    object-fit: contain !important;
+}
+
+::ng-deep.swal2-close {
+    color: #ffff;
+    margin-top: -25px !important;
+    box-shadow: none !important;
+    background-color: transparent;
+    font-size: 2em !important;
+}
+
+.tablaForm2 {
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 70% !important;
+    height: 30% !important;
+    margin: 1% 0% 1% 0% !important;
+    padding: 3px;
+}
+
+.tablaForm {
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 70% !important;
+    height: 30% !important;
+    margin: 2% 0% 2% 0% !important;
+    padding: 3px;
+}
+
+.bordeIzq {
+    border-left: 1px solid #005ACA !important;
+    border-radius: 20px !important;
+}
+
+.lineSolid {
+    border-top: 1px solid #005ACA;
+}
+
+.lineDashed {
+    border-bottom: 1px dashed #005ACA;
+    border-right: 0px !important;
+}
+
+.BorderNone {
+    border-right: 0px !important;
+    border-bottom: 0px !important;
+}
+
+.BorderBottonNone {
+    padding-top: 1% !important;
+    border-bottom: 0px !important;
+}
+
+.alignTd {
+    width: 40% !important;
+    border-left: 0px !important;
+}
+
+.alignRight {
+    display: flex !important;
+    justify-content: right !important;
+}
+
+.ButtonRight {
+    margin-left: 15% !important;
+}
+
+.marginB {
+    margin-bottom: 5% !important;
+    margin-top: 3% !important;
+}
+
+.BordeRedondoAgregar {
+    border-radius: 20px;
+    border: solid 1px #005ACA;
+    background-color: #005ACA;
+    color: #ffff;
+    padding: 2px 20px;
+    margin: 0px 2px 0px 0px;
+}
+
+.marginB2 {
+    padding: 2px 30px;
+    margin-bottom: 5% !important;
+    margin-top: 3% !important;
+}
+
+.BordeRedondoAgregar:disabled {
+    opacity: 0.2 !important;
+}
+
+.col2 {
+    max-width: 18% !important;
+    margin-right: 2% !important;
+}
+
+.marginIzq {
+    margin: 0px 0px 0px 2px !important;
+}
+
+.TextosBlueLeft {
+    text-align: left;
+    float: left;
+}
+
+.TextosBlueLeft2 {
+    margin-left: 12%;
+    text-align: left !important;
+}
+
+.TextosBlueLeft3 {
+    margin-left: 5%;
+    margin-top: 5%;
+    text-align: left !important;
+}
+
+.AlingText {
+    margin-left: 30px !important;
+}
+
+.SmallBlue {
+    font-size: 10px !important;
+    margin-left: 25px;
+    line-height: 15px;
+    text-align: left !important;
+}
+
+.SizeTable {
+    width: 122%;
+    margin: 1% !important;
+}
+
+.textButtonImg {
+    float: center !important;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 0% !important;
+}
+
+.buttonImg {
+    background-color: #ffff;
+    color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 90%;
+    height: 40% !important;
+    margin: 2% 0% 2% 0% !important;
+}
+
+.inputV {
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 90%;
+    height: 30% !important;
+    margin: 2% 0% 2% 0% !important;
+    padding: 3px;
+    text-align: center !important;
+}
+
+.PositionTable {
+    width: 80%;
+}
+
+::ng-deep.mat-row:hover .mat-cell {
+    background-color: #fff !important;
+    color: #005ACA !important;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+::ng-deep.swal2-styled.swal2-cancel,
+::ng-deep.swal2-styled.swal2-confirm {
+    border-radius: 5em !important;
+    padding: 0.2em 2em !important;
+    margin-top: 0% !important;
+    font-size: 12px !important;
+}
+
+::ng-deep.swal2-actions {
+    margin-top: 0% !important;
+}
+
+::ng-deep.swal2-styled.swal2-confirm {
+    background-color: #005ACA !important;
+    color: #ffff !important;
+    box-shadow: none !important;
+}
+
+::ng-deep.swal2-styled.swal2-cancel {
+    background-color: #E2ECFD !important;
+    color: #005ACA !important;
+}
+
+.alignImg {
+    margin-right: 4% !important;
+    margin-left: -20% !important;
+}
+
+.alignImg2 {
+    margin-right: 20% !important;
+    margin-left: -20% !important;
+}
+
+.lineBlue {
+    background-color: #005ACA;
+    margin: 1% 4% 1% 4% !important;
+    width: 92%;
+}
+
+.listOption2 {
+    background-color: #ffff;
+    border: 1px solid #005ACA;
+    color: #005ACA !important;
+    width: 12%;
+    margin: 0% 0% 2% 0% !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content-reverse,
+.mat-list-base .mat-list-option .mat-list-item-content-reverse {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    cursor: pointer;
+}
+
+mat-selection-list {
+    padding: 0% !important;
+
+    .mat-list-option {
+        display: inline-block;
+        height: auto;
+        width: auto;
+        cursor: pointer;
+        text-align: center !important;
+    }
+}
+
+.sizeText {
+    margin: 0% 4% !important;
+}
+
+mat-list-option[aria-selected="true"] {
+    color: $gov-white !important;
+    background-color: $base-azulPAE !important;
+}
+
+mat-list-option:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+mat-list-option:last-child {
+    border-radius: 0 8px 8px 0;
+}
+.linkdisable{
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+
+  @import "~bootstrap/scss/bootstrap-grid";
+
+  @include media-breakpoint-down(lg) {
+    .responsive-table-pae .mat-table .mat-row:hover .mat-cell {
+      background-color: transparent !important;
+      opacity: 1 !important;
+    }
+  }

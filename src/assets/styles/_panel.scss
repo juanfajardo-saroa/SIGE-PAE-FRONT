@@ -1,0 +1,39 @@
+.panel.panel-blue{
+
+  .panel-header{
+    padding: 1rem;
+    background-color: aliceblue;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid $base-color;
+
+    h4.panel-title{
+      margin: 0;
+      font-size: 16px;
+      color: $base-color;
+      font-weight: 500;
+    }
+  }
+
+  .panel-body{
+    border: 1px solid $base-color;
+    border-top: none;
+  }
+  .panel-body.noborder{
+    border: none;
+  }
+
+  .panel-footer{
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid $base-color;
+  }
+
+  .panel-footer:not(.noborder){
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid $base-color;
+    border-top: none;
+  }
+
+}

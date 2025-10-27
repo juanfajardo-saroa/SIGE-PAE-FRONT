@@ -1,0 +1,14 @@
+@import '/src/assets/styles/variable.scss';
+
+h3, h4 {
+    color: $base-color;
+}
+
+.card-header {
+    padding: 0;
+    background: aliceblue;
+}
+
+.separador-bottom-botted {
+    border-bottom: 1px dotted $base-color;
+}

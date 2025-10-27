@@ -1,0 +1,493 @@
+<div *ngIf="!addPlant">
+    <div *ngIf="!modelMaer">
+        <div class="d-flex flex-row AlingTitle" fxLayout="row wrap">
+            <div class="d-flex">
+                <div class="NumeroPendienteColor">
+                    <div class="NumeroPendiente">
+                        1
+                    </div>
+                </div>
+                <div class="FondoR">
+                    Bodegas y plantas de ensamble o producción
+                </div>
+            </div>
+            <div *ngIf="!modelPaepi" class="BordePendiente">
+                <mat-icon [ngClass]="getStateColor(getState(estadoMenor))">
+                    circle
+                </mat-icon>
+                <span class="text-basered">{{ getStateMajor(estadoMenor) }}</span>
+                <div class="FloatR"></div>
+            </div>
+            <div *ngIf="modelPaepi" class="BordePendiente">
+                <mat-icon [ngClass]="getStateColor(getState(estadoMenorObligatoria))">
+                    circle
+                </mat-icon>
+                <span class="text-basered">{{ getStateMajor(estadoMenorObligatoria) }}</span>
+                <div class="FloatR"></div>
+            </div>
+        </div>
+        <div *ngIf="modelPaepi" [formGroup]="establecimientoForm">
+            <ng-container>
+                <div class="d-flex flex-column flex-xl-row">
+                    <div class="sizeText">
+                        ¿Cuenta con bodegas y/o plantas de ensamble o producción?
+                    </div>
+                    <div class="MarginL">
+                        <mat-selection-list #estadoList [multiple]="false" (selectionChange)="onQuestionlick()"
+                            formControlName="yesNotQuestions">
+                            <mat-list-option class="listOption2" *ngFor="let element of yesNotQuestion"
+                                [value]="element.id">
+                                {{element.descripcion}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                    <div *ngIf="answerYes" class="FloatR CursorP" (click)="addRecord()" [ngClass]="{'linkdisable':!getModulePermission(73,'crear')}">
+                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="30px">
+                        Agregar establecimiento
+                    </div>
+
+                    <button *ngIf="answered" (click)="sendApprovePaepi()" class="BordeRedondoAgregar FloatR">Enviar para
+                        aprobación</button>
+
+                </div>
+                <hr class="lineBlue">
+            </ng-container>
+        </div>
+        <div *ngIf="!modelPaepi" class="AlingText ColorTextR">
+            Agregue todas las bodegas, plantas de ensamble y/o plantas de producción que serán empleada para la
+            operación
+            del
+            PAE.
+        </div>
+        <div *ngIf="!modelPaepi" class="AlingText overflow-auto">
+            <table [dataSource]="dataSource" class="table-default" mat-table matSort multiTemplateDataRows>
+                <ng-container matColumnDef="TipoEstablecimiento">
+                    <th mat-header-cell *matHeaderCellDef>Tipo de establecimiento</th>
+                    <td mat-cell *matCellDef="let element" class="BorderBottonNone colorW">{{
+                        element.sID_TipoPlantaBodega }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let element" class="BorderBottonNone colorW">{{ element.nombre }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Estado">
+                    <th mat-header-cell *matHeaderCellDef>Estado</th>
+                    <td mat-cell *matCellDef="let element" class="BorderBottonNone colorW">
+                        <mat-icon [ngClass]="getStateColor(getState(element.iD_EstadoPlantaBodega))">
+                            circle
+                        </mat-icon>
+                        {{ getState(element.iD_EstadoPlantaBodega) }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="VerDetalles">
+                    <th mat-header-cell *matHeaderCellDef>Ver detalles</th>
+                    <td mat-cell *matCellDef="let element" class="BorderBottonNone colorW"
+                        (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()"
+                        (click)="clickedRow(element)">
+                        <img *ngIf="expandedElement !== element"
+                            src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-302.png" height="20px">
+                        <img *ngIf="expandedElement === element"
+                            src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-301.png" height="20px">
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                        <div class="example-element-detail flex-column flex-xl-row"
+                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <div class="PositionTable w-down-100" [formGroup]="establecimientoForm">
+                                <table>
+                                    <ng-container>
+                                        <tr>
+                                            <td class="alignTd lineDashed">
+                                                <div class="TextosBlueLeft">1. Tipo de establecimiento <span
+                                                        *ngIf="isEdit" style="color:red;">*</span></div>
+                                            </td>
+                                            <td class="lineDashed">
+                                                <mat-select class="tablaForm" id="TipoEstablecimiento"
+                                                    formControlName="TipoEstablecimiento" required
+                                                    placeholder="Seleccione" [disabled]="!isEdit">
+                                                    <mat-option *ngFor="let item of tipoEstablecimientoList"
+                                                        [value]="item.id">
+                                                        {{item.nombre}}</mat-option>
+                                                </mat-select>
+                                                <br>
+                                                <mat-error>
+                                                    <mat-error class="error-message errorM"
+                                                        *ngIf="establecimientoForm.get('TipoEstablecimiento').invalid && alertOpened">
+                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                            alt="" height="10px" width="auto"> Complete este campo
+                                                    </mat-error>
+                                                </mat-error>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container>
+                                        <tr>
+                                            <td class="alignTd lineDashed">
+                                                <div class="TextosBlueLeft">2. Nombre o consecutivo <span *ngIf="isEdit"
+                                                        style="color:red;">*</span></div>
+                                            </td>
+                                            <td class="lineDashed">
+                                                <input matInput id="NombreEstablecimiento"
+                                                    formControlName="NombreEstablecimiento" class="tablaForm"
+                                                    (keydown)="onKeyNumber2($event)" [readonly]="!isEdit" />
+                                                <br>
+                                                <mat-error>
+                                                    <mat-error class="error-message errorM"
+                                                        *ngIf="establecimientoForm.get('NombreEstablecimiento').invalid && alertOpened">
+                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                            alt="" height="10px" width="auto"> Complete este campo
+                                                    </mat-error>
+                                                </mat-error>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container>
+                                        <div class="TextosBlueLeft3">3. Ubicación:</div>
+                                        <tr>
+                                            <td class="alignTd" style="border-bottom: 0px !important;">
+                                                <div class="TextosBlueLeft2">3.1. Departamento: <span *ngIf="isEdit"
+                                                        style="color:red;">*</span></div>
+                                            </td>
+                                            <td class="BorderNone">
+                                                <mat-select class="tablaForm2" id="DepartamentoEstablecimiento"
+                                                    (selectionChange)="onDepartamentoClick($event.value)"
+                                                    formControlName="DepartamentoEstablecimiento" required
+                                                    placeholder="Seleccione" [disabled]="!isEdit">
+                                                    <mat-option *ngFor="let item of departamentosList"
+                                                        [value]="item.departamentoCode">
+                                                        {{item.departamentoNombre}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <br>
+                                                <mat-error>
+                                                    <mat-error class="error-message errorM"
+                                                        *ngIf="establecimientoForm.get('DepartamentoEstablecimiento').invalid && alertOpened">
+                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                            alt="" height="10px" width="auto"> Complete este campo
+                                                    </mat-error>
+                                                </mat-error>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="alignTd" style="border-bottom: 0px !important;">
+                                                <div class="TextosBlueLeft2">3.2. Ciudad: <span *ngIf="isEdit"
+                                                        style="color:red;">*</span></div>
+                                            </td>
+                                            <td class="BorderNone">
+                                                <mat-select class="tablaForm2" id="CiudadEstablecimiento"
+                                                    formControlName="CiudadEstablecimiento" required
+                                                    placeholder="Seleccione" [disabled]="!isEdit">
+                                                    <mat-option *ngFor="let item of DivipolasList" [value]="item.id">
+                                                        {{item.nombre}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <br>
+                                                <mat-error>
+                                                    <mat-error class="error-message errorM"
+                                                        *ngIf="establecimientoForm.get('CiudadEstablecimiento').invalid && alertOpened">
+                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                            alt="" height="10px" width="auto"> Complete este campo
+                                                    </mat-error>
+                                                </mat-error>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="alignTd lineDashed">
+                                                <div class="TextosBlueLeft2">3.3. Dirección: <span *ngIf="isEdit"
+                                                        style="color:red;">*</span></div>
+                                            </td>
+                                            <td class="lineDashed">
+                                                <input matInput id="DireccionEstablecimiento"
+                                                    formControlName="DireccionEstablecimiento" class="tablaForm2"
+                                                    [readonly]="!isEdit" />
+                                                <br>
+                                                <mat-error>
+                                                    <mat-error class="error-message errorM"
+                                                        *ngIf="establecimientoForm.get('DireccionEstablecimiento').invalid && alertOpened">
+                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                            alt="" height="10px" width="auto"> Complete este campo
+                                                    </mat-error>
+                                                </mat-error>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container>
+                                        <div class="TextosBlueLeft3">4. Información de contacto:</div>
+                                        <tr>
+                                            <td class="alignTd" style="border-bottom: 0px !important;">
+                                                <div class="TextosBlueLeft2">4.1. Nombres y apellidos: <span
+                                                        *ngIf="isEdit" style="color:red;">*</span></div>
+                                            </td>
+                                            <td class="BorderNone">
+                                                <input matInput id="Nombre" formControlName="Nombre" class="tablaForm2"
+                                                    (keydown)="onKeyNumber2($event)" [readonly]="!isEdit" />
+                                                <br>
+                                                <mat-error>
+                                                    <mat-error class="error-message errorM"
+                                                        *ngIf="establecimientoForm.get('Nombre').invalid && alertOpened">
+                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                            alt="" height="10px" width="auto"> Complete este campo
+                                                    </mat-error>
+                                                </mat-error>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="alignTd" style="border-bottom: 0px !important;">
+                                                <div class="TextosBlueLeft2">4.2. Celular: <span *ngIf="isEdit"
+                                                        style="color:red;">*</span></div>
+                                            </td>
+                                            <td class="BorderNone">
+                                                <input matInput id="Celular" formControlName="Celular" type="number"
+                                                    class="tablaForm2" (keydown)="onKeyNumber($event)"
+                                                    [readonly]="!isEdit" />
+                                                <br>
+                                                <mat-error>
+                                                    <mat-error class="error-message errorM"
+                                                        *ngIf="establecimientoForm.get('Celular').invalid && alertOpened">
+                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                            alt="" height="10px" width="auto"> Complete este campo
+                                                    </mat-error>
+                                                </mat-error>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="alignTd lineDashed">
+                                                <div class="TextosBlueLeft2">4.3. Correo electrónico: <span
+                                                        *ngIf="isEdit" style="color:red;">*</span></div>
+                                            </td>
+                                            <td class="lineDashed">
+                                                <input matInput id="CorreoElectronico"
+                                                    formControlName="CorreoElectronico" class="tablaForm2" type="email"
+                                                    maxlength="50" [readonly]="!isEdit" />
+                                                <br>
+                                                <mat-error>
+                                                    <mat-error class="error-message errorM"
+                                                        *ngIf="establecimientoForm.get('CorreoElectronico').invalid && alertOpened">
+                                                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                            alt="" height="10px" width="auto"> Complete este campo
+                                                    </mat-error>
+                                                </mat-error>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <div class="TextosBlueLeft3">5. Documentación:</div>
+                                </table>
+                                <div class="SizeTable w-down-100 responsive-table-pae">
+                                    <table [dataSource]="documentos" class="table-default table-hover-disabled" mat-table matSort>
+                                        <ng-container matColumnDef="Documento">
+                                            <th mat-header-cell *matHeaderCellDef>Documento</th>
+                                            <td mat-cell *matCellDef="let element" class="AlingLeft pl-lg-down-15-px" data-label="Documento">{{ element.nombre
+                                                }}
+                                                <span style="color:red;">*</span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Archivo">
+                                            <th mat-header-cell *matHeaderCellDef>Archivo</th>
+                                            <td mat-cell *matCellDef="let element" data-label="Archivo">
+                                                <button *ngIf="isEdit" class="buttonImg w-down-100 btn-file cursorP">Adjuntar
+                                                    archivo
+                                                    <img src="../.././../../../../assets/iconos_PAE/PNG/Iconos_PAE-87.png "
+                                                        height="15px" width="auto">
+                                                    <input id="file-upload" name="file-upload" type="file"
+                                                        data-max-size="3064" class="cursorP" required
+                                                        (change)="onFileSelected($any($event).currentTarget.files, 'file', element.id, 1)"
+                                                        accept="application/pdf">
+                                                    <p class="textButtonImg">{{element.contenidoRespuesta}}</p>
+                                                </button>
+                                                <button *ngIf="!isEdit" class="buttonImg w-down-100 btn-file"
+                                                    (click)="openDialog('Ver', establecimientoForm.value, element.pathFile, element.id, establecimientoForm.get(element.estadoFormName).value, 1)">
+                                                    Revisar archivo
+                                                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-87.png "
+                                                        height="15px" width="auto">
+                                                    <p class="textButtonImg">
+                                                        {{establecimientoForm.get(element.fileFormName).value}}</p>
+                                                </button>
+                                                <br>
+                                                <mat-error class="error-message errorM"
+                                                    *ngIf="establecimientoForm.get(element.fileFormName).invalid && alertOpened">
+                                                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                        alt="" height="10px" width="auto">
+                                                    Complete este campo
+                                                </mat-error>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Vigencia">
+                                            <th mat-header-cell *matHeaderCellDef>Vigencia</th>
+                                            <td mat-cell *matCellDef="let element" data-label="Vigencia">
+                                                <input [formControlName]="element.validityFormName" matInput
+                                                    type="number" min="0" id="" required [readonly]="!isEdit"
+                                                    (keydown)="onKeyNumber($event)" class="inputV w-down-100" />
+                                                <br>
+                                                <mat-error class="error-message errorM"
+                                                    *ngIf="establecimientoForm.get(element.validityFormName).invalid && alertOpened">
+                                                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png"
+                                                        alt="" height="10px" width="auto">
+                                                    Complete este campo
+                                                </mat-error>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Estado">
+                                            <th mat-header-cell *matHeaderCellDef>Estado</th>
+                                            <td mat-cell *matCellDef="let element" data-label="Estado">
+                                                <mat-icon
+                                                    [ngClass]="getStateColor(getState(this.establecimientoForm.get(element.estadoFormName).value))">
+                                                    circle
+                                                </mat-icon>
+                                                {{getState(this.establecimientoForm.get(element.estadoFormName).value)}}
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDocuments"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDocuments;"></tr>
+                                    </table>
+                                    <br>
+                                    <div class="SmallBlue">
+                                        *El Plan de saneamiento debe contener:
+                                        <br>
+                                        A. Programa de limpieza y desinfección, B. Manejo de residuos sólidos y
+                                        líquidos, C.
+                                        Control
+                                        de
+                                        plagas y D.
+                                        Abastecimeinto de agua.
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="ButtonRight">
+                                <button (click)="goToEdit()" *ngIf="!isEdit" class="BordeRedondoAgregar marginB2" [ngClass]="{'linkdisable':!getModulePermission(73,'editar')}"><img
+                                        class="alignImg2" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-3.png"
+                                        height="13px" width="auto">Editar</button>
+                                <button *ngIf="isEdit" (click)="saveChanges(element)"
+                                    class="BordeRedondoAgregar marginB">Guardar
+                                    cambios</button>
+                                <button *ngIf="!isEdit" (click)="deleteElement(element.id, element.nombre)"
+                                    class="BordeRedondoAgregar" [ngClass]="{'linkdisable':!getModulePermission(73,'eliminar')}"><img class="alignImg"
+                                        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" height="20px"
+                                        width="auto">Eliminar</button>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === row"
+                    (click)="expandedElement = expandedElement === row ? null : row"></tr>
+
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+            <br>
+            <div class="FloatR CursorP" (click)="addRecord()" [ngClass]="{'linkdisable':!getModulePermission(73,'crear')}">
+                <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="30px">
+                Agregar establecimiento
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div *ngIf="addPlant">
+    <app-registro-establecimiento></app-registro-establecimiento>
+    <br>
+</div>
+<div *ngIf="!addPlant">
+    <div class="row flex-column flex-xl-row">
+        <div class="d-flex flex-row AlingTitle2 col ml-lg-down-0" fxLayout="row wrap">
+            <div class="d-flex">
+                <div class="NumeroPendienteColor">
+                    <div class="NumeroPendiente">
+                        {{numberTittle}}
+                    </div>
+                </div>
+                <div class="FondoR">
+                    Documentación obligatoria – Operación del PAE
+                </div>
+            </div>
+            <div class="BordePendiente">
+                <mat-icon [ngClass]="getStateColor(getState(estadoMenorObligatoria))">
+                    circle
+                </mat-icon>
+                <span class="text-basered">{{ getStateMajor(estadoMenorObligatoria) }}</span>
+                <div class="FloatR"></div>
+            </div>
+        </div>
+        <div class="d-flex col col2">
+            <button (click)="goToEditDocuments()" *ngIf="!isEditDocuments"
+                class="BordeRedondoAgregar marginB2 FloatR" [ngClass]="{'linkdisable':!getModulePermission(73,'editar')}"><img class="alignImg2"
+                    src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-3.png" height="13px"
+                    width="auto">Editar</button>
+            <button (click)="saveMandatoryDocuments()" *ngIf="isEditDocuments"
+                class="BordeRedondoAgregar marginB FloatR">Guardar cambios</button>
+        </div>
+    </div>
+    <div class="AlingText responsive-table-pae" [formGroup]="documentosObligatoriosForm">
+        <table [dataSource]="documentosObligatorios" class="table-default table-hover-disabled" mat-table matSort>
+            <ng-container matColumnDef="DocumentoObligatorio">
+                <th mat-header-cell *matHeaderCellDef>Documento</th>
+                <td mat-cell *matCellDef="let element" class="AlingLeft pl-lg-down-15-px" data-label="Documento">{{ element.nombre }} <span
+                        *ngIf="isEditDocuments && element.required" style="color:red;"> *</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="ArchivoObligatorio">
+                <th mat-header-cell *matHeaderCellDef>Archivo adjunto</th>
+                <td mat-cell *matCellDef="let element" data-label="Archivo adjunto">
+                    <button *ngIf="isEditDocuments" class="buttonImg w-down-100 btn-file cursorP">Adjuntar archivo
+                        <img src="../.././../../../../assets/iconos_PAE/PNG/Iconos_PAE-87.png " height="15px"
+                            width="auto">
+                        <input id="file-upload" name="file-upload" type="file" data-max-size="3064" class="cursorP"
+                            required (change)="onFileSelected($any($event).currentTarget.files, 'file', element.id, 2)"
+                            accept="application/pdf">
+                        <p class="textButtonImg">{{element.contenidoRespuesta}}</p>
+                    </button>
+                    <button *ngIf="!isEditDocuments" class="buttonImg w-down-100 btn-file"
+                        (click)="openDialog('Ver', documentosObligatoriosForm.value, element.pathFile, element.id, documentosObligatoriosForm.get(element.estadoFormName).value, 2)">
+                        Revisar archivo
+                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-87.png " height="15px" width="auto">
+                        <p class="textButtonImg">
+                            {{documentosObligatoriosForm.get(element.fileFormName).value}}</p>
+                    </button>
+                    <br>
+                    <mat-error class="error-message errorM"
+                        *ngIf="documentosObligatoriosForm.get(element.fileFormName).invalid && alertOpened">
+                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                            width="auto">
+                        Complete este campo
+                    </mat-error>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="VigenciaObligatorio">
+                <th mat-header-cell *matHeaderCellDef>Vigencia</th>
+                <td mat-cell *matCellDef="let element" data-label="Vigencia">
+                    <input [formControlName]="element.validityFormName" matInput type="number" min="0" id=""
+                        [readonly]="!isEditDocuments" (keydown)="onKeyNumber($event)" class="inputV w-down-100" />
+                    <br>
+                    <mat-error class="error-message errorM"
+                        *ngIf="documentosObligatoriosForm.get(element.validityFormName).invalid && alertOpened">
+                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                            width="auto">
+                        Complete este campo
+                    </mat-error>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="EstadoObligatorio">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let element" data-label="Estado">
+                    <mat-icon
+                        [ngClass]="getStateColor(getState(this.documentosObligatoriosForm.get(element.estadoFormName).value))">
+                        circle
+                    </mat-icon>
+                    {{getState(this.documentosObligatoriosForm.get(element.estadoFormName).value)}}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsMandatoryDocuments"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsMandatoryDocuments;"></tr>
+        </table>
+        <br>
+        <div class="SmallBlue">
+            *El Plan de saneamiento debe contener:
+            <br>
+            A. Programa de limpieza y desinfección, B. Manejo de residuos sólidos y líquidos, C.
+            Control de plagas y D. Abastecimeinto de agua.
+        </div>
+        <br>
+    </div>
+</div>

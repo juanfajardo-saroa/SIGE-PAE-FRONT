@@ -1,0 +1,320 @@
+@import '/src/assets/styles/variable.scss';
+
+.SizeDialog {
+    min-width: 70vw !important;
+}
+
+.CenterButton {
+    margin: auto;
+    display: -webkit-inline-box;
+}
+
+.TituloDialog {
+    background-color: #E6EFFD;
+    text-align: center;
+    color: $base-color;
+    display: block;
+    margin: 0% 0% 5% 0% !important;
+}
+
+strong {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+::ng-deep.mat-dialog-container{
+    max-height: 520px !important;
+    box-shadow: none;
+    padding: 0px !important;
+    border-radius: 30px 30px 30px 30px !important;
+    box-shadow: none;
+}
+
+.marginDialog{
+    margin: 0% 4% 0% 4% !important;
+}
+
+.AlingTitle {
+    margin: 5% 0% 13% 0% !important;
+}
+
+.AlingTitle2 {
+    margin: 0% 0% 15% 0% !important;
+}
+
+.AlingText {
+    margin: 30px !important;
+}
+
+.ColorTextR {
+    color: #E23465 !important;
+}
+
+.FloatL {
+    float: left !important;
+}
+
+.NumeroPendiente {
+    height: 24px;
+    width: 24px;
+    background-color: #ffff;
+    border-radius: 50%;
+    text-align: center;
+    color: #E23465;
+    font-weight: 500;
+    padding-top: 3px;
+}
+
+.NumeroPendienteColor {
+    float: left;
+    background-color: #E23465;
+    padding: 10px;
+}
+
+.FinalRedondo {
+    background-color: #E23465;
+    height: 44px;
+    width: 44px;
+    border-radius: 0% 50% 50% 0;
+    margin-left: -26px;
+    float: right;
+}
+
+.FondoR {
+    display: inline-block;
+    background-color: #E23465;
+    padding: 12px;
+    color: #fff;
+    padding-left: 0px;
+}
+
+.buttonImg {
+    background-color: #ffff;
+    color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 90% !important;
+    height: 40% !important;
+    margin: 2% 0% 2% 0% !important;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.sizeTableDoc {
+    width: 60% !important;
+    margin-top: 5% !important;
+    margin-left: 1% !important;
+}
+
+.SizeImgText {
+    margin-left: 1%;
+    color: #E23465 !important;
+}
+
+.sizeImg {
+    float: left !important;
+    margin-right: 1%;
+    margin-top: 5px;
+}
+
+.lineR {
+    background-color: #E23465;
+    margin-top: 3px;
+}
+
+.bordeado {
+    border-radius: 20px;
+    border: 1px solid $base-azulPAE;
+    border-spacing: 0px 0px;
+    width: 98%;
+    margin: 0% 1%;
+}
+
+.BordeadoSup {
+    border: 1px solid #E6EFFD;
+    border-left: 1px solid #E6EFFD !important;
+    border-bottom: 1px solid $base-color;
+    border-radius: 20px 20px 1px 1px;
+    background-color: #E6EFFD;
+    color: $base-azulPAE;
+    padding: 2%;
+}
+
+.BordeadoInf {
+    border: 1px solid #FFF;
+    border-radius: 1px 1px 20px 20px;
+    background-color: #FFF;
+    color: $base-azulPAE;
+    padding: 0%;
+}
+
+.TablaObservacion {
+    display: block;
+}
+
+.buttonAprobar {
+    color: $base-color;
+    background-color: #E6EFFD;
+    border: #E6EFFD;
+    border-radius: 20px;
+    margin: 0px 10px 10px 10px;
+    width: 80%;
+}
+
+.btrojo {
+    background-color: red;
+    color: #fff;
+    border: red;
+    padding: auto;
+    margin-bottom: 10px;
+}
+
+.btverde {
+    background-color: green;
+    color: #fff;
+    border: green;
+    margin-bottom: 10px;
+}
+
+.TablaObservacion {
+    display: block;
+}
+
+.BordeNone {
+    border-right: $base-azulPAE 1px solid;
+    border-style: hidden solid hidden hidden !important;
+    padding-top: 1%;
+}
+
+.inputFull {
+    width: 100%;
+    font-size: $base-fontSize;
+}
+
+.inputFull2 {
+    width: 97%;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    font-size: $base-fontSize;
+    height: 20%;
+    color: #005ACA;
+}
+
+.TextosBlueLeft3 {
+    margin: 1% 2%;
+}
+
+.textagregar {
+    color: $base-color;
+}
+
+button:disabled {
+    background-color: gray;
+    color: #fff !important;
+    border-radius: 20px;
+    padding: 2px 15px;
+    border: $base-color 1px solid;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button {
+    background-color: $base-color;
+    color: #fff;
+    border-radius: 20px;
+    padding: 2px 15px;
+    border: $base-color 1px solid;
+    margin-right: 1%;
+}
+
+.LeftUpCorner2 {
+    border-top-right-radius: 20px;
+}
+
+::ng-deep.mat-cell {
+    text-align: center !important;
+}
+
+::ng-deep.mat-sort-header-content {
+    margin-left: 15% !important;
+}
+
+::ng-deep.mat-header-cell,
+::ng-deep.matHeaderCellDef {
+    border-bottom: 1px solid #005ACA !important;
+}
+
+.bordeinf {
+    border-bottom: 1px solid #005ACA;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: center !important;
+    justify-self: center !important;
+    font-size: 12px !important;
+    border-radius: 20px !important;
+    background-image: url(../../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+    background-size: contain !important;
+    padding: 2% 0% !important;
+    width: 30% !important;
+    color: $base-color !important;
+    background-position: top !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
+    display: inline-block;
+    object-fit: contain !important;
+}
+
+::ng-deep.swal2-close {
+    color: #ffff;
+    margin-top: -20px !important;
+    box-shadow: none !important;
+    background-color: transparent;
+    font-size: 2em !important;
+}
+
+::ng-deep .swal2-styled.swal2-cancel{
+    border-radius: 0px !important;
+    padding: 0.2em 2em !important;
+    margin-top: 2px !important;
+    font-size: 1em !important;
+    border-radius: 0.25em !important;
+    /* padding: 0.2em 2em !important; */
+    margin-top: 2px !important;
+    border: 0;
+    height: 35px !important;
+  }
+
+::ng-deep.swal2-actions {
+    margin: 0% !important;
+}
+
+.mat-badge-content{
+    background : #FF0000;
+    color: #fff;
+    border: 1px #fff solid
+  }

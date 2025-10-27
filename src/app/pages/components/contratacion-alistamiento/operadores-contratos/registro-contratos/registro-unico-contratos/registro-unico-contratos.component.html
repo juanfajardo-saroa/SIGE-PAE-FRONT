@@ -1,0 +1,246 @@
+<style>
+	.tableFiltroUsuario {
+		border-spacing: 0;
+		color: #005ACA;
+	}
+
+	.tableFiltroUsuario td {
+		text-align: center;
+		font-size: 13px !important;
+		color: #005ACA !important;
+		padding: 2.5px 10px;
+		border-top: 1px solid #005ACA;
+		border-right: 1px solid #005ACA;
+		border-bottom: 1px solid #005ACA;
+	}
+
+	.tableFiltroUsuario td b {
+		color: #005ACA;
+		font-size: 13px !important;
+	}
+
+	.tableFiltroUsuario td div {
+		color: #005ACA;
+		font-weight: 500;
+		font-size: 13px !important;
+	}
+
+	.tableFiltroUsuario td:first-child {
+		border-left: 1px solid #005ACA;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+	}
+
+	.tableFiltroUsuario td:last-child {
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
+
+	.tableUsuarios th,
+	.tableUsuarios td {
+		font-size: 13px;
+	}
+
+	table.tableUsuarios thead th:last-child {
+		border-top-right-radius: 20px !important;
+	}
+
+	table.tableFormUsuarios tr td {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		color: #005ACA;
+		font-size: 14px;
+	}
+
+	table.tableFormUsuarios tr td:first-child {
+		padding-left: 35px;
+	}
+
+	table.tableFormUsuarios tr td:last-child {
+		padding-right: 35px;
+	}
+
+	input,
+	select {
+		border: 1px #005ACA solid;
+		padding: 3px 10px;
+		width: 100%;
+		color: #005ACA;
+	}
+
+	input:not(.noRadius),
+	select:not(.noRadius) {
+		border-radius: 5px;
+	}
+
+	.cssForm {
+		font-size: 12px;
+	}
+
+	i {
+		font-style: normal;
+	}
+
+	.tableFiltroUsuario i {
+		font-size: 25px;
+	}
+
+	.btn.btn-middle {
+		background-color: aliceblue;
+		border: 1px solid aliceblue;
+	}
+
+	.btn.btn-high {
+		background-color: #005ACA !important;
+		border: 1px solid #005ACA !important;
+	}
+</style>
+
+<div class="row">
+	<div class="col-12">
+		<div class="tab-control-secondary">
+			<div class="tab-item"
+				 [ngStyle]="{'width': '30%' }"
+				 [class]="item.active ? 'active': ''"
+				 *ngFor="let item of dataPestanas">
+			  <div>{{ item.descripcion }}</div>
+			</div>
+			<div class="tab-item nothing" [ngStyle]="{'width': '70%' }">
+				<div>-</div>
+			</div>
+		  </div>
+	</div>
+</div>
+
+<div class="row mt-lg">
+	<div class="col-12">
+		<div class="panel panel-blue">
+			<div class="panel-header no-border-bottom text-center">
+				<h4 class="panel-title">Registro &uacute;nico de Contratos</h4>
+			</div>
+			<div class="panel-body" style="border-radius: 0px !important;">
+				<form class="form-default-inline">
+					<div class="form-item text-center">
+						<label for="exampleFormControlInput1" class="form-label">
+							1. Seleccione el tipo de contrato que desea agregar
+						</label>
+						<br />
+						<div class="row justify-content-center">
+							<div *ngFor="let link of TipoContrato; let i = index" class="col-auto">
+								<button class="button msg-alerta row" (click)="tipoContrato(link)">
+									<div *ngIf="contrato != link.Id" style="background-color: #e2ecfd;">
+										<img class="col-auto" src="../assets/images/Iconos/{{ link.Descripcion }}.png" style="height: 50px; padding: 3px;">
+										<label class="col-auto" style="color:#005aca; display: inline-flex;" [innerHTML]="TipoContratoText[i].Texto">
+										</label>
+									</div>
+									<div *ngIf="contrato == link.Id" style="background-color: #015acb;">
+										<img class="col-auto" src="../assets/images/Iconos/{{ link.Descripcion }}Activo.png" style="height: 50px; padding: 3px;">
+										<label class="col-auto" style="color:white; display: inline-flex;" [innerHTML]="TipoContratoText[i].Texto">
+										</label>
+									</div>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div *ngIf="contrato == 1 || contrato == 2 || contrato == 4 ">
+						<div class="form-item text-center">
+							<label for="exampleFormControlInput1" class="form-label">
+								2. Indique a quién le corresponde este contrato:
+							</label>
+							<br>
+							<div class="d-flex justify-content-center">
+								<table class="tableFiltroUsuario col-12 col-lg-6 px-lg-down-0">
+									<tr>
+										<td>
+											<label for="ckSum1"><input id="ckSum1" name="ckSum" type="radio"
+													[ngModelOptions]="{standalone: true}" [(ngModel)]="itemSuministro.corresponde" [value]="1"
+													(ngModelChange)="changeItemSuministro('corresponde', $event)" (change)="selectedOption = itemSuministro.corresponde"> La ETC</label>
+										</td>
+										<td>
+
+											<label for="cdSum"><input id="ckSum2" name="ckSum" type="radio"
+
+												[ngModelOptions]="{standalone: true}" [(ngModel)]="itemSuministro.corresponde" [value]="2"
+												(ngModelChange)="changeItemSuministro('corresponde', $event)" (change)="selectedOption = itemSuministro.corresponde">Una Entidad Territorial No
+											Certificada (ET)</label>
+											<br>
+											<select class="input-text-100" [ngModelOptions]="{standalone: true}"
+												[(ngModel)]="itemSuministro.iD_ET" (ngModelChange)="changeItemSuministro('iD_ET', $event)">
+												<option value="0">Elija una ET</option>
+												<option *ngFor="let item of listETs" [ngValue]="item.id">
+													{{item.nombre}}</option>
+											</select>
+                      <div class="div-label align-self-center ml-3">
+                        <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation || itemSuministro.corresponde == 2 && itemSuministro.iD_ET == 0">Seleccione una ET.</small>
+                      </div>
+										</td>
+									</tr>
+								</table>
+							</div>
+              <div class="div-label align-self-center ml-3">
+                <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation && !selectedOption">Seleccione a quien le corresponde el contrato.</small>
+              </div>
+						</div>
+						<div class="form-item text-center" *ngIf="contrato == 1">
+							<label for="exampleFormControlInput1" class="form-label">
+								3. Indique el tipo de suministro a entregar:
+							</label>
+							<br />
+							<div class="d-flex justify-content-center">
+								<table class="tableFiltroUsuario col-12 col-xl-6 px-lg-down-0">
+									<tr class="tabla-suministro-entrega d-md-table-row d-flex flex-column">
+										<td class="border-sm-down-solid-1-px border-sm-down-radius-10-px" *ngFor="let tipoSuministro of tiposSuministros">
+											<input type="radio"
+											(click)="changeItemSuministro('tipoSuministro', tipoSuministro.id)"
+											[ngModelOptions]="{standalone: true}"
+											[(ngModel)]="itemSuministro.tipoSuministro"
+											[value]="tipoSuministro.id">{{tipoSuministro.nombre}}
+										</td>
+									</tr>
+								</table>
+							</div>
+              <div class="div-label align-self-center ml-3">
+                <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation && !itemSuministro.tipoSuministro">Seleccione el tipo de suministro.</small>
+              </div>
+						</div>
+					</div>
+
+					<div class="form-item text-center" *ngIf="contrato == 5">
+						<label for="exampleFormControlInput1" class="form-label">
+
+							2. Indique qué tipo de supervisión que le corresponde a este contrato:
+
+						</label>
+						<br />
+						<div class="d-flex justify-content-center">
+							<select class="input-text"
+								[ngModelOptions]="{standalone: true}"
+								[(ngModel)]="tipoSupervision"
+								(ngModelChange)="validarInformacion($event)">
+								<option value="0">Elija una opción</option>
+								<option *ngFor="let item of subTiposContratacion" [ngValue]="item.id">{{item.subTipoContratacion}}</option>
+							</select>
+						</div>
+            <div class="div-label align-self-center ml-3">
+              <small class="color-invalid" style="white-space: nowrap;" *ngIf="showValidation2 && (!tipoSupervision || tipoSupervision === 0)">Seleccione el tipo de supervisión</small>
+            </div>
+					</div>
+				</form>
+			</div>
+
+			<div class="panel-footer"
+				*ngIf="(contrato == 1 || contrato == 2 || contrato == 4) && getModulePermission(13,'crear')">
+				<button class="btn btn-blue" disabled (click)="Anterior()">Anterior</button>&nbsp;&nbsp;
+				<button class="btn btn-blue" (click)="Siguiente()">Siguiente</button>
+			</div>
+			<div class="panel-footer"
+				*ngIf="(contrato == 3 || contrato == 5 || contrato == 6) && getModulePermission(13,'crear')">
+				<button class="btn btn-blue" disabled (click)="Anterior()">Anterior</button>&nbsp;&nbsp;
+				<button class="btn btn-blue"  (click)="Siguiente()">Siguiente</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<br />

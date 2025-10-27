@@ -1,0 +1,80 @@
+<style>
+    .card {
+      border: none;
+    }
+
+    .table-responsive {
+      padding-left: 30px;
+    }
+
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+      <mat-card>
+        <mat-card-content class="responsive-table-pae">
+          <table mat-table [dataSource]="dataSource " class="left-radius pl-down-0" matSort>
+            <!-- Nombre del documento Column -->
+            <ng-container matColumnDef="Nombresita">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Nombre del documento
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Nom. documento"> {{element.nombre}}
+              </td>
+            </ng-container>
+            <!-- Fecha de actualización Column -->
+            <ng-container matColumnDef="Fechasita">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Fecha de actualización</th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="F. actualización">
+                {{element.fechaActualizacion | date:'dd-MMM-yyyy' | uppercase | withoutDots}} </td>
+            </ng-container>
+            <!-- Descripción Column -->
+            <ng-container matColumnDef="Descripcionsita">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;  min-width: 250px;">Descripción </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Descripción">
+                {{element.descripcionDiagnostico}} </td>
+            </ng-container>
+
+            <!-- Archivo adjunto Column -->
+            <ng-container matColumnDef="Archivosita">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px;  min-width: 250px; ">Archivo adjunto </th>
+              <td class="pr-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; color: white; " data-label="Archivo adjunto">
+                <!-- {{element.pathDiasnosticoSituacion}}
+   -->
+                <!-- <mat-card-actions class="text-center">
+                  <a class="btn-registrar" (click)="downloadFile(element.pathDiasnosticoSituacion)"><img
+                      src="../.././../assets/images/download.png"> DESCARGAR</a>
+                </mat-card-actions> -->
+                <mat-card-actions class="text-center">
+                  <button class="buttonAr w-down-100"(click)="downloadFile(element.pathDiasnosticoSituacion)">Ver adjunto
+                    <mat-icon class="espaciobutton " style="color: #005ACA;">check</mat-icon>
+                  <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                </button>
+                </mat-card-actions>
+
+              </td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
+          </table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+          </mat-paginator>
+          <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap ">
+
+
+
+  </div>
+

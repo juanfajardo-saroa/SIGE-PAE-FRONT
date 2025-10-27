@@ -1,0 +1,25 @@
+<div class="positionTable w-down-100 mx-lg-down-0">
+    <div class="tablaForm3 bordeIzq">
+        <div class="TituloDialog">
+            Registro de producto
+        </div>
+        <div class="positionTable2 w-down-100 ml-lg-down-0" [formGroup]="typeForm">
+            1. Selecione el tipo de producto que desea registrar:
+            <br>
+            <mat-selection-list class="d-xl-block d-flex flex-column align-items-center" (selectionChange)="onTypeClick()" #estadoList [multiple]="false" formControlName="tipo">
+                <mat-list-option class="cardBlue w-100 wmx-down-lg-75 w-down-auto" *ngFor="let element of tipoProductoList" [value]="element.id">
+                    {{element.descripcion}}
+                    <img *ngIf="!element.selected" [src]="element.image" width="30px" height="30px"/>
+                    <img *ngIf="element.selected" [src]="element.imageSelected" width="30px" height="30px"/>
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+        <hr class="lineA">
+        <div class="alignCenter">
+            <button (click)="goToBack()" class="BordeRedondoAgregar">Anterior</button>
+            <button [disabled]="!typeForm.valid" (click)="onSubmitClick()"
+                class="BordeRedondoAgregar BordeRedondoAgregar2">Siguiente</button>
+        </div>
+        <br>
+    </div>
+</div>

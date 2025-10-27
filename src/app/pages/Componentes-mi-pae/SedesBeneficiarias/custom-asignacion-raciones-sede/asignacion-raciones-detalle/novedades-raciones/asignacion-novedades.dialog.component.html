@@ -1,0 +1,119 @@
+
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>Reporte de novedades</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                <br />
+                <div *ngIf="action !='Adicionar'">
+                  <div class="example-full-width">
+                    <br />
+                    <input id="id" formControlName="id" readonly="true" class=" form-control" style="display: none;" />
+                  </div>
+                </div>
+                <table>
+
+                  <ng-container *ngIf="action =='Adicionar'">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Fecha del reporte:<span style="color:red;">* </span></div>
+                        <input id="fecha" formControlName="fecha" required  type="date" id="start" name="trip-start" 
+                          class="tablaform" />
+                        <div *ngIf="form.get('fecha').invalid && (form.get('fecha').dirty || form.get('fecha').touched)"
+                          class="invalid-feedback">
+                        </div>
+                      </td>
+                    </tr>
+                  
+                  </ng-container>
+
+                  <ng-container *ngIf="action =='Adicionar'">
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Descripción de la novedad:<span style="color:red;">* </span></div>
+                        <br>
+                        <textarea matInput id="descripcion" formControlName="descripcion" required
+                           class="tablaform3 control-md"></textarea>
+                           <div
+                          *ngIf="form.get('descripcion').invalid && (form.get('descripcion').dirty || form.get('descripcion').touched)"
+                          class="invalid-feedback">
+                        </div>
+                    </tr>
+                    
+                  </ng-container>
+
+                  <ng-container *ngIf="action =='Adicionar'">
+                    <tr *ngIf="action=='Adicionar'" fxLayout="row wrap">
+                      <td fxFlex="30">
+                        <!-- <td class="BordeSeparador" fxFlex="30"> -->
+                        <div class="TextosBlueLeft2">3. Soporte (si aplica):<span style="color:red;">* </span> </div>
+                        <div class="container">
+                          <button class="buttonAr3 btn-file" requerid><p  style="float: left; margin-right: 2px;">Adjuntar soporte</p>
+                            <p  style="float: left; margin-right: 2px">{{nom}}</p> 
+                            <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description</mat-icon>
+                            <input id="file-upload" name="file-upload" type="file" data-max-size="3064" requerid
+                              (change)="onFileSelected($any($event).currentTarget.files)" accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                            'application/vnd.rar', 'application/zip', 'application/msword',
+                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                            'application/pdf', 'application/vnd.ms-excel',
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                            'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                          </button>
+                          <!-- <button *ngIf="form.value.pathDocumentoContrato" class="buttonAr3 btn-file" (click)="downloadFile()" mat-raised-button> <i class="fa fa-download"></i>
+                            Descargar archivo previo</button> -->
+                        </div>
+                      </td>
+                  </ng-container>
+                </table>
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <div style="text-align: center;color: #005ACA;">
+                  <br>
+                  ¿Está seguro de eliminar el registro?
+                  
+                </div><br>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                       
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                      <!-- <div>
+                        <button [disabled]="!form.valid && action !='Eliminar'" color="accent"  (click)="notificarDialog()">Guardar cambios y notificar a la UAPA</button>
+                      </div> -->
+                      <div>
+                        <button [disabled]="!form.valid && action !='Eliminar'" (click)="doAction()">Guardar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

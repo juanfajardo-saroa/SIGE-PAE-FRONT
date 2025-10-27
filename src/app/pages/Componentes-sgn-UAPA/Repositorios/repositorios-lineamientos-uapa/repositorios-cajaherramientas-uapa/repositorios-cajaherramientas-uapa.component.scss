@@ -1,0 +1,243 @@
+@import '/src/assets/styles/variable.scss';
+
+.table-responsive{
+    padding-left: 0px !important;
+    padding-top: 10px !important;
+}
+table {
+    width: 100%;
+   //border-collapse:collapse !important;
+    border-top-left-radius: 20px !important;
+  }
+  table thead {
+    background-color: $header_table  !important;
+    color: $base-color  !important;
+    border: 1px solid;
+  }
+  .label {
+    padding: 3px 10px;
+    line-height: 13px;
+    font-weight: 400;
+    border-radius: 4px;
+    font-size: 75%;
+    margin-left: 0px;
+}
+.aletaimput{
+  border-color: red !important;
+}
+  .BordeRedondoEliminar {
+    margin-right: 10px;
+    height: 20px;
+    float: left;
+    margin-top: 5px;
+  }
+  
+  table thead th {
+    border-top: 1px solid $base-azulPAE;
+    border-right: 1px solid $base-azulPAE;
+    padding: 20px;
+    border-bottom: 1px solid $base-azulPAE;
+  }
+  
+  table thead th:first-child {
+    border-left: 1px solid $base-azulPAE;
+    border-top-left-radius: 20px !important;
+  }
+  table thead th:last-child {
+    border-top-right-radius: 20px !important;
+  }
+
+
+.letraAzul{
+ font-size: $base-fontsize;
+ color: $base-azulPAE;
+}
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 0px solid #dee2e6;
+}
+
+.inputSelect{
+    border-radius: 12px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff !important;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $base-color;
+  font-size: 12px;
+  height: 40px;
+}
+.BordeSeparador{
+    border-bottom: $base-azulPAE 1px dotted;
+    color: $base-azulPAE;
+  }
+  .inputSelect2 {
+    border-radius: 12px !important;
+    border: $base-azulPAE solid 1px;
+    background-color: #fff !important;
+    padding: 1% !important;
+    width: 100%;
+    height: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: $base-color;
+    font-size: 12px;
+
+    /* text-align-last: start; */
+  
+  }
+  .inputSelect3 {
+    border-radius: 12px !important;
+    border: $base-azulPAE solid 1px;
+    background-color: #fff !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: $base-color;
+    font-size: 12px;
+    height: 40px;
+    width: 100%;
+    /* text-align-last: start; */
+  
+  }
+  .fechaText{
+    border-radius:20px 20px 20px 20px !important;
+    border: $base-azulPAE solid 1px;
+    background-color: #fff!important;
+    padding: 1%!important;
+    height: 25px;
+    width: 250px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    float: left;
+    text-align: left;
+    font-size: 12px;
+    color: $base-color;
+  }
+  .fechaText::-webkit-input-placeholder { color: $base-color; }
+  
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+  }
+  .buttonAr {
+    color: #005ACA;
+    border-color: #005ACA !important;
+    border: 1px solid;
+    padding: 2px 18px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 12px 12px 12px 12px !important;
+    background-color: #ffff;
+    /* width: 80%; */
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+   // float: left;
+   
+  }
+  .btn-file {
+    position: relative;
+    overflow: hidden;
+  }
+   
+//aviso
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  justify-self: center;
+  font-size: 13px;
+  border-radius: 20px !important;
+  //background-image: url(../../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+  background-image: url(../../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+  background-size: cover;
+  padding: 2% 0%;
+  width: 30%;
+  //height: 50%; 
+  color: $base-color  !important;
+  background-position: top !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
+::ng-deep.swal2-styled.swal2-confirm {
+  display: none!important;
+}
+.swal2-html-container {
+  text-align: center !important;
+}
+
+.swal2-styled.swal2-confirm {
+  border: 1px solid $base-azulPAE;
+  border-radius: 0px !important;
+  background: initial;
+  background-color: $base-azulPAE;
+  color: $gov-white  !important;
+  font-size: 1em;
+  box-shadow: none;
+}
+
+.swal-button--cancel {
+  border-radius: 20px !important;
+}
+::ng-deep.swal2-close {
+  z-index: 2;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  margin-top: 0;
+  margin-right: 0;
+  position: absolute!important;
+  margin-bottom: -1.2em;
+  padding: 0;
+  overflow: hidden;
+  transition: none !important;
+  border: none;
+  border-radius: 5px;
+  background: 0 0;
+  color: $gov-gray;
+  font-family: serif;
+  font-family: monospace;
+  font-size: 2.5em;
+  cursor: pointer;
+  justify-self: end;
+  transition: box-shadow none !important;
+  box-shadow: none !important;
+}
+.buttonImg {
+  background-color: #ffff;
+  color: #005ACA;
+  border: 1px solid #005ACA;
+  border-radius: 8px !important;
+  width: 100%;
+  height: 30%;
+  margin: 2% 0% 2% 0% !important;
+  //float: left;
+}
+
+button.buttonImg {
+  padding: 0% !important;
+}
+.textButtonImg {
+  float: center !important;
+  font-weight: 500;
+  font-size: 13px;
+  margin-bottom: 0% !important;
+}

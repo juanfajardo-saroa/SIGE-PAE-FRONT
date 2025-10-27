@@ -1,0 +1,383 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="tab-control-secondary">
+      <div *ngIf="iD_TipoModeloOperacion && iD_TipoModeloOperacion == idTipoModeloOperacionMAEM">
+        <div class="tab-item" style="width: 33.333%;" [class]="item.active ? 'active': ''"
+          *ngFor="let item of datosPestanasMAEM" (click)="seleccionarTab(item)">
+          <div>Minuta {{ item.descripcion }}</div>
+        </div>
+      </div>
+      <div *ngIf="iD_TipoModeloOperacion && iD_TipoModeloOperacion == idTipoModeloOperacionMAER">
+        <div class="tab-item" style="width: 33.333%;" [class]="item.active ? 'active': ''"
+          *ngFor="let item of datosPestanasMAER" (click)="seleccionarTab(item)">
+          <div>Minuta {{ item.descripcion }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-lg mb-xl">
+  <div class="col-12 col-sm-7">
+    <div class="row border-md no-margin pt-sm pb-sm">
+      <div class="col-12 col-sm-6">
+        <label class="text-basecolor">Nivel educativo</label>
+        <select class="control-md" [disabled]="!itemsDisabled" [ngModel]="tipoNivelEducativoId"
+          (ngModelChange)="changeModelFiltro('TipoNivelEducativo', $event)">
+          <option value="0">Elija una opci&oacute;n</option>
+          <option *ngFor="let item of listNivelEducativos" [ngValue]="item.id">{{item.nombre}}</option>
+        </select>
+      </div>
+      <div class="col-12 col-sm-6">
+        <label class="text-basecolor">Nivel de actividad fis&iacute;ca</label>
+        <select class="control-md" [disabled]="!itemsDisabled" [ngModel]="tipoActividadFisicaId"
+          (ngModelChange)="changeModelFiltro('TipoActividadFisica', $event)">
+          <option *ngFor="let item of listTiposActividadFisica" [ngValue]="item.id">{{item.nombre}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-5 vertical-middle">
+    <button class="btn btn-blue" [disabled]="!itemsDisabled" (click)="filtrarMinutas()">
+      <mat-icon>search</mat-icon>
+      Filtrar minutas
+    </button>
+  </div>
+</div>
+
+
+<ng-container *ngIf="minutaVisible">
+  <div class="row">
+    <div class="flex align-items-center">
+      <app-chapter [numberChapter]="1" [titleChapter]="'Composición y reglas'"></app-chapter>
+
+      <div *ngIf="editaMinuta" class="flex ml-sm text-center">
+        <button class="btn btn-blue" [disabled]="!itemsDisabled" (click)="editarMinuta()">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+      </div>
+    </div>
+
+    <div class="col-12 mt-md">
+      <label class="text-basered no-margin"><b>{{dataMinuta.tipoRacion}}</b></label>
+      <ul class="list-style-default">
+        <li>Modalidad: {{dataMinuta.modalidad}}</li>
+        <li>Nivel educativo: {{itemNivelEducativos.nombre}}</li>
+        <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+      </ul>
+    </div>
+    <div class="col-12 mt-sm">
+      <table class="table-default table-border-dashed-vertical">
+        <thead>
+          <tr class="text-center">
+            <th colspan="2">Componente</th>
+            <th>Grupo de <br> alimentos</th>
+            <th>Frecuencia</th>
+            <th>Tamaño de la <br> porci&oacute;n (peso neto)</th>
+            <!-- <th *ngIf="iD_TipoMinuta != 3">Intercambios</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="pt-sm pb-sm">
+            <td rowspan="3" width="10%" class="text-center">
+              <img style="width: 45px; height: 45px;" *ngIf="itemComponente.imagen"
+                src="../../../../../../assets/images/minutas/{{ itemComponente.imagen }}" />
+            </td>
+            <td rowspan="3" width="15%" class="text-center pl-sm pr-sm">{{ itemComponente.nombreComponente }}</td>
+            <td width="30%" class="pl-sm pr-sm">
+              - {{ itemComponente.nombreGrupoAlimento }}
+              <!-- <li *ngFor="let item of itemComponente.listAlimentoComponente; index as i;"
+                  [class]="i < itemComponente.listAlimentoComponente.length - 1 ? 'border-bottom-dashed' : ''">
+                  {{item.nombre}}
+              </li> -->
+            </td>
+            <td rowspan="3" width="12%" class="text-center pl-xs pr-xs">
+              <label *ngIf="itemsDisabled">
+                {{itemComponente.nombreFrecuencia}}
+              </label>
+              <select class="control-md" id="disabledFrecuencia{{itemComponente.id}}" *ngIf="!itemsDisabled"
+                [(ngModel)]="itemComponente.frecuencia"
+                (ngModelChange)="changeModelMinuta('frecuencia', $event, itemComponente)">
+                <option value="0">Elija una opción</option>
+                <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{item.nombre}}</option>
+              </select>
+            </td>
+            <td width="20%" class="text-center pl-xs pr-xs">
+              <div class="mb-sm">
+                <span *ngIf="itemsDisabled">
+                  {{itemComponente.max_Gramo}}
+                </span>
+                <span class="mr-xs" *ngIf="!itemsDisabled">
+                  <input type="number" style="width: 50px; display: inline-block;"
+                    class="control-md text-center noUpDown" [(ngModel)]="itemComponente.max_Gramo"
+                    (ngModelChange)="changeModelMinuta('max_Gramo', $event, itemComponente)">
+                </span>
+                <span>{{itemComponente.unidadMedida}}</span>
+              </div>
+            </td>
+            <!-- <td *ngIf="iD_TipoMinuta != 3" rowspan="3" width="13%" class="text-center pl-sm pr-sm">
+              <a>Ver listados de <br> intercambios</a>
+            </td> -->
+          </tr>
+          <ng-container *ngFor="let item of itemComponente.listAlimentoComponente; index as i;">
+            <tr>
+              <td width="30%" class="border-left-dashed pl-sm pr-sm">
+                - {{item.nombre}}
+              </td>
+              <td width="20%" class="text-center pl-xs pr-xs">
+                <div *ngIf="itemsDisabled">
+                  <ng-container *ngIf="item.minVisible">
+                    <span>{{item.min_Gramo + ' ' + item.unidadMedida}}</span>
+                    <span class="ml-xs mr-xs">-</span>
+                  </ng-container>
+                  <span>{{item.max_Gramo + ' ' + item.unidadMedida}}</span>
+                </div>
+
+                <div *ngIf="!itemsDisabled" class="flex justify-content-center">
+                  <ng-container *ngIf="item.minVisible">
+                    <div class="flex">
+                      <div>
+                        <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                          [(ngModel)]="item.min_Gramo" (ngModelChange)="changeModelMinuta('min_Gramo', $event, item)">
+                        <div>{{item.unidadMedida}}</div>
+                      </div>
+                    </div>
+
+                    <span class="ml-xs mr-xs">-</span>
+                  </ng-container>
+
+                  <div class="flex">
+                    <div>
+                      <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                        [(ngModel)]="item.max_Gramo" (ngModelChange)="changeModelMinuta('max_Gramo', $event, item)">
+                      <div>{{item.unidadMedida}}</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+
+          <tr class="pt-sm pb-sm" *ngFor="let item of dataSourceComponentes">
+            <td width="10%" class="text-center">
+              <img style="width: 45px; height: 45px;" src="../../../../../../assets/images/minutas/{{ item.imagen }}" />
+            </td>
+            <td width="15%" class="text-center pl-sm pr-sm">{{ item.nombreComponente }}</td>
+            <td width="30%" class="pl-sm pr-sm">
+              <li *ngFor="let item of item.listGrupoAlimentos; index as i;">
+                {{item.nombre}}
+              </li>
+            </td>
+            <td width="12%" class="text-center pl-xs pr-xs">
+              <label *ngIf="itemsDisabled">
+                {{item.nombreFrecuencia}}
+              </label>
+              <select class="control-md" *ngIf="!itemsDisabled" [(ngModel)]="item.frecuencia"
+                (ngModelChange)="changeModelMinuta('frecuencia', $event, item)">
+                <option value="0">Elija una opción</option>
+                <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{item.nombre}}</option>
+              </select>
+            </td>
+            <td width="20%" class="text-center pl-xs pr-xs">
+              <div *ngIf="itemsDisabled">
+                <ng-container *ngIf="item.nombreComponente.toString().trim().toUpperCase() != 'GRASAS'">
+                  <span>{{item.min_Gramo + ' ' + item.unidadMedida}}</span>
+                  <span class="ml-xs mr-xs">-</span>
+                </ng-container>
+                <span>{{item.max_Gramo + ' ' + item.unidadMedida}}</span>
+              </div>
+
+              <div *ngIf="!itemsDisabled" class="flex justify-content-center">
+                <ng-container *ngIf="item.nombreComponente.toString().trim().toUpperCase() != 'GRASAS'">
+                  <div class="flex">
+                    <div>
+                      <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                        [(ngModel)]="item.min_Gramo" (ngModelChange)="changeModelMinuta('min_Gramo', $event, item)">
+
+                      <div>{{item.unidadMedida}}</div>
+                    </div>
+                  </div>
+
+                  <span class="ml-sm mr-sm">-</span>
+                </ng-container>
+
+                <div class="flex">
+                  <div>
+                    <input type="number" style="width: 50px; display: inline-block;"
+                      class="control-md text-center noUpDown" [(ngModel)]="item.max_Gramo"
+                      (ngModelChange)="changeModelMinuta('max_Gramo', $event, item)">
+
+                    <div>{{item.unidadMedida}}</div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <!-- <td *ngIf="iD_TipoMinuta != 3" width="13%" class="text-center pl-sm pr-sm">
+              <a>Ver listados de <br> intercambios</a>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-xxl">
+    <app-chapter [numberChapter]="2" [titleChapter]="'Aporte nutricional'"></app-chapter>
+
+    <div class="col-12 mt-md">
+      <label class="text-basered no-margin"><b>{{dataMinuta.tipoRacion}}</b></label>
+      <ul class="list-style-default">
+        <li>Modalidad: {{dataMinuta.modalidad}}</li>
+        <li>Nivel educativo: {{itemNivelEducativos.nombre}}</li>
+        <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+      </ul>
+    </div>
+
+    <div class="col-12 mt-sm">
+      <div class="row">
+        <div class="col-12 offset-sm-1 col-sm-10 info-aportes">
+          <div *ngFor="let item of aportes" class="item-info">
+            <div>
+              <p><b>{{item.title}}</b><br>{{item.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12 offset-sm-1 col-sm-10">
+      <table class="table-default table-border-dashed-vertical">
+        <thead>
+          <tr class="text-center">
+            <th class="empty"></th>
+            <th *ngFor="let column of dataRowspanMacro; index as i" rowspan="2"
+              [class]="i === 0 ? 'border-top-left-radius-md' : ''">
+              {{column}}
+            </th>
+            <th class="p-xxs noborder-bottom" [class]="dataRowspanMacro.length == 0 ? 'border-top-left-radius-md' : ''"
+              colspan="100">Macronutrientes</th>
+          </tr>
+          <tr class="text-center">
+            <th class="empty border-bottom"></th>
+            <th *ngFor="let column of dataColumnsMacro; index as i" class="noBorder-radius"
+              [class]="i === 0 ? 'border-left' : ''">
+              {{column}}
+            </th>
+            <!-- <th class="noBorder-radius"
+                rowspan="{{item.nomNutriente == 'Calorías (Kcal)' ? 2 : 1}}"
+                [class]="i === 0 ? 'border-left' : ''"
+                *ngFor="let item of dataMacroNutrientes; index as i">
+              {{item.nomNutriente}}
+            </th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td width="150px">
+              Aporte m&iacute;nimo
+            </td>
+            <td width="150px" class="text-center" *ngFor="let item of dataMacroNutrientes">
+              <label *ngIf="itemsDisabled">
+                {{item.aporteMinimo}}
+              </label>
+              <input type="text" style="width: 50px; display: inline-block;" *ngIf="!itemsDisabled"
+                class="control-md text-center" [(ngModel)]="item.aporteMinimo" [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="changeModelMinutaNutriente('aporteMinimo', $event, item)">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Recomendado
+            </td>
+            <td class="text-center" *ngFor="let item of dataMacroNutrientes">
+              <label *ngIf="itemsDisabled || item.calculado">
+                {{item.aporteRecomendado}}
+              </label>
+              <input type="text" style="width: 50px; display: inline-block;" *ngIf="!itemsDisabled && !item.calculado"
+                class="control-md text-center" [(ngModel)]="item.aporteRecomendado"
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="changeModelMinutaNutriente('aporteRecomendado', $event, item)">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              % Adecuaci&oacute;n
+            </td>
+            <td class="text-center" *ngFor="let item of dataMacroNutrientes">
+              <label>{{item.porcentajeAdecuacion | percent}}</label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-xxl">
+    <div class="col-12 offset-sm-1 col-sm-10">
+      <table class="table-default table-border-dashed-vertical">
+        <thead>
+          <tr class="text-center">
+            <th class="empty"></th>
+            <th class="border-top-left-radius-md p-xxs noborder-bottom" colspan="100">Micronutrientes</th>
+          </tr>
+          <tr class="text-center">
+            <th class="empty border-bottom"></th>
+            <th class="noBorder-radius" [class]="i === 0 ? 'border-left' : ''"
+              *ngFor="let column of dataColumnsMicro; index as i">
+              {{column}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td width="150px">
+              Aporte m&iacute;nimo
+            </td>
+            <td width="150px" class="text-center" *ngFor="let item of dataMicroNutrientes">
+              <label *ngIf="itemsDisabled">
+                {{item.aporteMinimo}}
+              </label>
+              <input type="text" style="width: 50px; display: inline-block;" *ngIf="!itemsDisabled"
+                class="control-md text-center" [(ngModel)]="item.aporteMinimo" [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="changeModelMinutaNutriente('aporteMinimo', $event, item)">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Recomendado
+            </td>
+            <td class="text-center" *ngFor="let item of dataMicroNutrientes">
+              <label *ngIf="itemsDisabled || item.calculado">
+                {{item.aporteRecomendado}}
+              </label>
+              <input type="text" style="width: 50px; display: inline-block;" *ngIf="!itemsDisabled && !item.calculado"
+                class="control-md text-center" [(ngModel)]="item.aporteRecomendado"
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="changeModelMinutaNutriente('aporteRecomendado', $event, item)">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              % Adecuaci&oacute;n
+            </td>
+            <td class="text-center" *ngFor="let item of dataMicroNutrientes">
+              <label>{{item.porcentajeAdecuacion | percent}}</label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row mt-xxl mb-xxl">
+    <div *ngIf="!itemsDisabled" class="col-12 text-center">
+      <button class="btn btn-blue" (click)="guardarAlimentosNutrientesMinuta()">Guardar</button>
+      <button class="btn btn-white ml-sm" (click)="cancelarEdicion()">Cancelar</button>
+    </div>
+  </div>
+</ng-container>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>

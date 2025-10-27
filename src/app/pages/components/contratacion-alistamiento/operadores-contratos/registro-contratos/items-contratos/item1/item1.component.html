@@ -1,0 +1,165 @@
+<style>
+    .tableFiltroUsuario{
+      border-spacing: 0;
+      color: #005ACA;
+    }
+  
+    .tableFiltroUsuario td{
+      text-align: center;
+      font-size: 13px !important;
+      color: #005ACA !important;
+      padding: 2.5px 10px;
+      border-top: 1px solid #005ACA;
+      border-right: 1px solid #005ACA;
+      border-bottom: 1px solid #005ACA;
+    }
+    .tableFiltroUsuario td b{
+      color: #005ACA;
+      font-size: 13px !important;
+    }
+    .tableFiltroUsuario td div{
+      color: #005ACA;
+      font-weight: 500;
+      font-size: 13px !important;
+    }
+  
+    .tableFiltroUsuario td:first-child{
+      border-left: 1px solid #005ACA;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  
+    .tableFiltroUsuario td:last-child{
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  
+    .tableUsuarios th,
+    .tableUsuarios td{
+      font-size: 13px;
+    }
+    table.tableUsuarios thead th:last-child{
+      border-top-right-radius: 20px !important;
+    }
+  
+  
+    table.tableFormUsuarios tr td{
+      padding-top: 12px;
+      padding-bottom: 12px;
+      color: #005ACA;
+      font-size: 14px;
+    }
+  
+    table.tableFormUsuarios tr td:first-child{
+      padding-left: 35px;
+    }
+    table.tableFormUsuarios tr td:last-child{
+      padding-right: 35px;
+    }
+  
+    input,
+    select{
+      border: 1px #005ACA solid;
+      padding: 3px 10px;
+      width: 100%;
+      color: #005ACA;
+    }
+  
+    input:not(.noRadius),
+    select:not(.noRadius){
+      border-radius: 5px;
+    }
+  
+    .cssForm{
+      font-size: 12px;
+    }
+  
+    i{
+      font-style: normal;
+    }
+  
+    .tableFiltroUsuario i{
+      font-size: 25px;
+    }
+  
+    .btn.btn-middle{
+      background-color: aliceblue;
+      border: 1px solid aliceblue;
+    }
+    .btn.btn-high{
+      background-color: #005ACA !important;
+      border: 1px solid #005ACA !important;
+    }
+  </style>
+  
+  <form class="form-default-inline" (ngSubmit)="onSubmit(contrato.value)" #contrato="ngForm">  
+  <div class="row">
+    <div class="col-12">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+          <h4 class="panel-title">Registro &uacute;nico de Contratos - Supervisi&oacute;n</h4>
+        </div>
+        <div class="panel-body">
+         
+            <div class="form-item">
+              <label for="exampleFormControlInput1" class="form-label">
+                1. N&uacute;mero del contrato:
+              </label>
+              <input type="text" class="form-control" id="txtNumeroContrato" name="numeroContrato" [(ngModel)]="model.numeroContrato" maxlength="5|0" required #numeroContrato="ngModel">
+              <label [hidden]="numeroContrato.valid || numeroContrato.pristine" class="label" style="color:red">El número de contrato es requerido</label>
+            </div>
+            <div class="form-item">
+              <label for="exampleFormControlInput1" class="form-label">
+                2. Empresa interventora:
+              </label>              
+              <label class="ml-xs">-</label>
+              <select id="empresaInterventora" name="empresaInterventora" [(ngModel)]="model.empresaInterventora" required #empresaInterventora="ngModel">
+                <option value="" selected>Elija una opci&oacute;n</option> 
+                <option *ngFor="let i of dataOperadores" [ngValue]="i.id">{{i.nombreRazonSocial}}</option>
+              </select>
+              <input type="text" class="form-control" id="txtNit" placeholder="Buscar por NIT" style="width: 110px;"> - 
+              <input type="text" class="form-control" id="txtDigito" style="width: 30px;" readonly>
+              <label [hidden]="empresaInterventora.valid || empresaInterventora.pristine" class="label" style="color:red">El campo empresa interventora es requerido</label>
+            </div>
+  
+            <div class="form-item">
+              <div class="row">
+                  <div clas="col-2" style="padding-left:18px;">
+                    <label for="exampleFormControlInput1" class="form-label float-left">
+                      3. Objeto del contrato:<br/> (Tal y como aparece <br/> en la versión firmada)
+                    </label>
+                  </div>
+                  <div class="col-10" style="padding-top:8px;">
+                    <textarea id="objetoContrato" name="objetoContrato" [(ngModel)]="model.objetoContrato" class="form-control" rows="2" cols="60" required #objetoContrato="ngModel">                
+                    </textarea>
+                    <label [hidden]="objetoContrato.valid || objetoContrato.pristine" class="label" style="color:red">El campo objeto de contrato es requerido</label>
+                    <div></div>
+                  </div>
+              </div>
+            </div>
+  
+            <div class="form-item">
+              <label class="form-label">
+                4. Tipo de contrato CHIP:
+                <select id="tipoContratoChip" name="tipoContratoChip" [(ngModel)]="model.tipoContratoChip" required #tipoContratoChip="ngModel">
+                  <option value="" selected>Elija una opci&oacute;n</option> 
+                  <option *ngFor="let i of dataContratoChip" [ngValue]="i.id">{{i.nombre}}</option>
+                </select>
+                <label [hidden]="tipoContratoChip.valid || tipoContratoChip.pristine" class="label" style="color:red">El campo contrato chip es requerido</label>
+              </label>
+                          
+            </div>
+         
+        </div>
+  
+        <div class="panel-footer">
+            <button class="btn btn-blue" (click)="Anterior()">Anterior</button>&nbsp;&nbsp;            
+            <button class="btn btn-blue" type="submit" [disabled]="contrato.invalid" >Siguiente</button>
+        </div>
+        <pre>{{ contrato.value | json }}</pre>
+      </div>
+    </div>
+  </div>
+</form>
+<br/>
+

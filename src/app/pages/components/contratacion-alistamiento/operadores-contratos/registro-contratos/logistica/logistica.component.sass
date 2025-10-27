@@ -1,0 +1,137 @@
+@import '/src/assets/styles/variable.scss'
+@import '../../../../../../../assets/sass/theme/table-sigepae'
+@import '../../../../../../../assets/styles/radio_button'
+
+
+input[type='checkbox']
+  width: 1.8rem !important
+
+/* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label
+  font-family: "Montserrat",sans-serif
+  border-radius: 20px 20px 0px 0px !important
+  color: $base-color !important
+  font-size: 15px
+  background-color: #E2ECFD !important
+  width: 50%
+  margin: 0.5px
+  border-bottom: $base-color 1px solid
+
+:host ::ng-deep .mat-tab-label-active
+  font-family: "Montserrat",sans-serif
+  font-size: 15px
+  border-width: 1px
+  border-color: $base-color
+  border-bottom-color: white
+  border-style: solid solid hidden solid
+  border-radius: 20px 20px 0px 0px !important
+  color: $base-color !important
+  background-color: white !important
+  //width: 25%
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar
+  background-color: none!important
+  display: none!important
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar
+  background-color: none!important
+  display: none!important
+  /* background-color: #1e88e5 */
+
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar, .blue .mat-tab-nav-bar.mat-primary .mat-ink-bar
+  background-color: none!important
+  display: none!important
+  /* background-color: #1e88e5 */
+
+::ng-deep.mat-tab-label .mat-tab-label-content
+  font-weight: 800!important
+
+:host ::ng-deep .mat-tab-body-content
+  border: 1px solid $base-azulPAE
+  border-top: none
+  border-radius: 0px 0px 20px 20px
+  overflow: hidden
+
+  @media (max-width: 1024px)
+    overflow: auto
+
+
+/* --------------------------- FIN TABS */
+
+.titulos_estado_diligenciamiento
+  color: $base-azulPAE
+  border: 1px dotted $base-azulPAE
+  border-radius: 10px
+  padding: 10px
+  margin-top: 20px
+  margin-bottom: 20px
+
+.pendiente_diligenciar, .incompleto, .completo
+  height: 16px
+  width: 16px
+  border-radius: 50%
+  border: 1px solid $base-azulPAE
+
+
+.pendiente_diligenciar
+  background-color: $header_table
+
+
+.incompleto
+  background-color: $semaforo-amarillo
+
+
+.completo
+  background-color: $semaforo-verde
+
+.advertencia-valor-total-fuentes
+  max-width: 381px
+
+.width-180
+  min-width: 180px
+
+
+.width-costo-total-warning
+    max-width: 450px
+
+.disabled
+    pointer-events: none
+    opacity: 0.4
+
+.max-width-alert
+    max-width: 380px
+
+.width-sumas-totales-fuentes
+    width: 200px !important
+
+.titulo-total-complementos-contratados
+  color: $base-colorred
+
+.titulo-total-complementos-necesarios
+  color: $base-azulPAE
+
+.table-fix-head
+  border-top-left-radius: 15px
+  border-top-right-radius: 35px
+  overflow: auto
+  max-height: 250px !important
+
+.table-fix-head thead th
+  position: sticky
+  top: 0
+  z-index: 1
+
+.boton-ordenar-tabla-red
+  color: $base-colorred !important
+  cursor: pointer !important
+
+.boton-ordenar-tabla-blue
+  color: $base-color !important
+  cursor: pointer !important
+
+.border-bottom-base_color
+  border-bottom: 1px $base-color solid
+
+#mat-tab-label-0-1
+  background: #ffffff !important

@@ -1,0 +1,79 @@
+
+<div class="table-responsive no-padding">
+    <table class="table-priorizacion" style="width: 100% !important; max-width: 100% !important;">
+        <thead>
+            <tr>
+                <th width="150px" rowspan="2" class="b-t-l-r">Jornada</th>
+                <th colspan="2" class="n-b-b">PS<br>(Preparado en sitio)</th>
+                <th colspan="2" class="n-b-b b-t-r-r">CCT<br>Comida caliente trasportada</th>
+            </tr>
+            <tr>
+                <th>Complemento<br>Almuerzo</th>
+                <th>Complemento<br>Almuerzo Cualificado</th>
+                <th>Complemento<br>Almuerzo</th>
+                <th style="border-right: 1px solid #005aca !important;">Complemento<br>Almuerzo Cualificado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of dataSource; index as i">
+                <tr [class]="i == dataSource.length - 1 ? 'b-b' : ''">
+                    <th class="bg-title">
+                        <img *ngIf="item.jornada == 'Mañana'" style="width: 30px; height: 30px;"
+                            src="../assets/images/Iconos/manana.png">
+                        <img *ngIf="item.jornada == 'Tarde'" style="width: 30px; height: 30px;"
+                            src="../assets/images/Iconos/tarde.png">
+                        <img *ngIf="item.jornada == 'Única'" style="width: 30px; height: 30px;"
+                            src="../assets/images/Iconos/unica.png">
+                        {{ item.jornada }}
+                    </th>
+
+                    <ng-container *ngIf="!editar">
+                        <ng-container *ngIf="signoPrecio">
+                            <td class="b-l">{{ item.rpS_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+                            <td>{{ item.rpS_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+                            <td>{{ item.cA_ALM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+                            <td>{{ item.cA_COM | currency: '$' : 'symbol' : '1.0-2' }}</td>
+                        </ng-container>
+                        <ng-container *ngIf="!signoPrecio">
+                            <td class="b-l">{{ item.rpS_ALM }}</td>
+                            <td>{{ item.rpS_COM }}</td>
+                            <td>{{ item.cA_ALM }}</td>
+                            <td>{{ item.cA_COM }}</td>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="editar">
+                        <td class="b-l">
+                            <input type="number" value="{{ item.rpS_ALM }}" [(ngModel)]="item.rpS_ALM" min="0"
+                                class="form-control" style="width: 100%;">
+                                <div class="div-label">
+                                  <small class="color-invalid small-label" [hidden]="item.rpS_ALM && !item.showValidationTable">Ingrese valor</small>
+                                </div>
+                        </td>
+                        <td>
+                            <input type="number" value="{{ item.rpS_COM }}" [(ngModel)]="item.rpS_COM" min="0"
+                                class="form-control" style="width: 100%;">
+                                <div class="div-label">
+                                  <small class="color-invalid small-label" [hidden]="item.rpS_COM && !item.showValidationTable">Ingrese valor</small>
+                                </div>
+                        </td>
+                        <td>
+                            <input type="number" value="{{ item.cA_ALM }}" [(ngModel)]="item.cA_ALM" min="0"
+                                class="form-control" style="width: 100%;">
+                                <div class="div-label">
+                                  <small class="color-invalid small-label" [hidden]="item.cA_ALM && !item.showValidationTable">Ingrese valor</small>
+                                </div>
+                        </td>
+                        <td>
+                            <input type="number" value="{{ item.cA_COM }}" [(ngModel)]="item.cA_COM" min="0"
+                                class="form-control" style="width: 100%;">
+                                <div class="div-label">
+                                  <small class="color-invalid small-label" [hidden]="item.cA_COM && !item.showValidationTable">Ingrese valor</small>
+                                </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

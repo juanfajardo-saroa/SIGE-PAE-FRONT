@@ -1,0 +1,63 @@
+
+    <div class="col-md-6">
+      <label class="banner-text">
+        <strong class="strongheader">
+          {{nombreUbicacion}}
+        </strong>
+      </label>
+    </div>
+    <br>
+  <br>
+
+  <!-- Filtros  -->
+<div class="d-flex flex-column flex-xl-row w-100 gap-20-px">
+  <div class="container-filter w-40 w-down-100 d-flex">
+    <div class="d-flex flex-column flex-grow-1 pl-4 align-self-end">
+      <span class="ml-2">Entidad Territorial Certificada (ETC)</span>
+      <div class="text-center ">
+      <div class="w-100">
+        <mat-select class="control-md tablaform4"
+        id="id_UbicacionETC"
+        (selectionChange)="onETCClick($event.value)"
+        placeholder="Seleccione"
+       >
+          <mat-option *ngFor="let item of UbicacionesListETCs" [value]="item.id">{{item.nombre}}
+          </mat-option>
+        </mat-select>
+      </div>
+    </div>
+    </div>
+    <div class="px-5 py-2 border-left-separator">
+      <a class="btn-agregar "><img (click)="ConsultarBotonETC()"
+        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png "
+        style="width:50px; height: 50px; margin-top: 10px;cursor: pointer;">
+      <div><a class="font-weight-bold">Consultar <br> ETC</a></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="container-filter w-40 w-down-100 d-flex">
+    <div class="d-flex flex-column flex-grow-1 pl-4 align-self-end">
+      <span class="ml-2">Entidad Territorial no Certificada (ET)</span>
+      <div class="text-center ">
+      <div class="w-100">
+        <mat-select class="control-md tablaform4"
+              id="id_UbicacionET"
+              placeholder="Seleccione"
+              >
+          <mat-option *ngFor="let item of UbicacionesListETs" [value]="item.id">{{item.nombre}}
+          </mat-option>
+        </mat-select>
+      </div>
+      </div>
+    </div>
+    <div class="px-5 py-2 border-left-separator">
+      <a class="btn-agregar "><img (click)="ConsultarBotonETC()"
+        src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png "
+        style="width:50px; height: 50px; margin-top: 10px;cursor: pointer;">
+      <div><a class="font-weight-bold">Consultar  <br> ET</a></div>
+    </a>
+    </div>
+  </div>
+</div>
+<br>

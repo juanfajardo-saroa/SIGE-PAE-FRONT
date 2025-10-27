@@ -1,0 +1,248 @@
+<div *ngIf="!IsCancel">
+    <div class="positionTable">
+        <div class="tablaForm3 bordeIzq" [formGroup]="establecimientoForm">
+            <div class="TituloDialog">
+                Registro de establecimiento
+            </div>
+
+            <div class="d-flex flex-column">
+
+              <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 fg-0_4">1. Tipo de establecimiento <span style="color:red;">*</span></div>
+                <div class="flex-basis-0 flex-grow-1 w-down-100">
+                  <mat-select class="tablaForm w-down-100 h-down-auto" id="TipoEstablecimiento" formControlName="TipoEstablecimiento"
+                      required placeholder="Seleccione">
+                      <mat-option *ngFor="let item of tipoEstablecimientoList" [value]="item.id">
+                          {{item.nombre}}</mat-option>
+                  </mat-select>
+                  <br>
+                  <mat-error>
+                      <mat-error class="error-message errorM"
+                          *ngIf="establecimientoForm.get('TipoEstablecimiento').invalid && alertOpened">
+                          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                              height="10px" width="auto"> Complete este campo
+                      </mat-error>
+                  </mat-error>
+                </div>
+              </div>
+
+              <div class="lineDashed d-flex flex-column flex-xl-row mx-3 mx-xl-0 mt-3 mt-xl-0 pb-2 pb-xl-0 align-items-xl-center align-items-start">
+                <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 fg-0_4">2. Nombre o consecutivo <span style="color:red;">*</span></div>
+                <div class="flex-basis-0 flex-grow-1 w-down-100">
+                  <input matInput id="NombreEstablecimiento" formControlName="NombreEstablecimiento"
+                      class="tablaForm w-down-100 h-down-auto" (keydown)="onKeyNumber2($event)" />
+                  <br>
+                  <mat-error>
+                      <mat-error class="error-message errorM"
+                          *ngIf="establecimientoForm.get('NombreEstablecimiento').invalid && alertOpened">
+                          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                              height="10px" width="auto"> Complete este campo
+                      </mat-error>
+                  </mat-error>
+                </div>
+              </div>
+
+              <div class="lineDashed d-flex flex-column mx-3 mx-xl-0 mt-3 pb-2 align-items-xl-center align-items-start">
+                <div class="TextosBlueLeft  w-100 ml-lg-down-0 pb-3 pb-xl-0">3. Ubicación:</div>
+                <div class="d-flex flex-column w-100">
+
+                  <div class="d-flex flex-column flex-xl-row align-items-xl-center">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 fg-0_4">3.1. Departamento: <span style="color:red;">*</span></div>
+                    <div class="flex-basis-0 flex-grow-1 w-down-100">
+                      <mat-select class="tablaForm2 h-auto w-down-100" id="DepartamentoEstablecimiento"
+                          (selectionChange)="onDepartamentoClick($event.value)"
+                          formControlName="DepartamentoEstablecimiento" required placeholder="Seleccione">
+                          <mat-option *ngFor="let item of departamentosList" [value]="item.departamentoCode">
+                              {{item.departamentoNombre}}
+                          </mat-option>
+                      </mat-select>
+                      <br>
+                      <mat-error>
+                          <mat-error class="error-message errorM"
+                              *ngIf="establecimientoForm.get('DepartamentoEstablecimiento').invalid && alertOpened">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                                  height="10px" width="auto"> Complete este campo
+                          </mat-error>
+                      </mat-error>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row align-items-xl-center">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 fg-0_4">3.2. Ciudad: <span style="color:red;">*</span></div>
+                    <div class="flex-basis-0 flex-grow-1 w-down-100">
+                      <mat-select class="tablaForm2 h-auto w-down-100" id="CiudadEstablecimiento"
+                          formControlName="CiudadEstablecimiento" required placeholder="Seleccione">
+                          <mat-option *ngFor="let item of DivipolasList" [value]="item.id">
+                              {{item.nombre}}
+                          </mat-option>
+                      </mat-select>
+                      <br>
+                      <mat-error>
+                          <mat-error class="error-message errorM"
+                              *ngIf="establecimientoForm.get('CiudadEstablecimiento').invalid && alertOpened">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                                  height="10px" width="auto"> Complete este campo
+                          </mat-error>
+                      </mat-error>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row align-items-xl-center">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 fg-0_4">3.3. Dirección: <span style="color:red;">*</span></div>
+                    <div class="flex-basis-0 flex-grow-1 w-down-100">
+                      <input matInput id="DireccionEstablecimiento" formControlName="DireccionEstablecimiento"
+                          class="tablaForm2 h-auto w-down-100" />
+                      <br>
+                      <mat-error>
+                          <mat-error class="error-message errorM"
+                              *ngIf="establecimientoForm.get('DireccionEstablecimiento').invalid && alertOpened">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                                  height="10px" width="auto"> Complete este campo
+                          </mat-error>
+                      </mat-error>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="lineDashed d-flex flex-column mx-3 mx-xl-0 mt-3 pb-2 align-items-xl-center align-items-start">
+                <div class="TextosBlueLeft w-100 ml-lg-down-0 pb-3 pb-xl-0">4. Información de contacto:</div>
+
+                <div class="d-flex flex-column w-100">
+
+                  <div class="d-flex flex-column flex-xl-row align-items-xl-center">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 fg-0_4">4.1. Nombres y apellidos: <span style="color:red;">*</span></div>
+                    <div class="flex-basis-0 flex-grow-1 w-down-100">
+                      <input matInput id="Nombre" formControlName="Nombre" class="tablaForm2 h-auto w-down-100"
+                          (keydown)="onKeyNumber2($event)" />
+                      <br>
+                      <mat-error>
+                          <mat-error class="error-message errorM"
+                              *ngIf="establecimientoForm.get('Nombre').invalid && alertOpened">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                                  height="10px" width="auto"> Complete este campo
+                          </mat-error>
+                      </mat-error>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row align-items-xl-center">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 fg-0_4">4.2. Celular: <span style="color:red;">*</span></div>
+                    <div class="flex-basis-0 flex-grow-1 w-down-100">
+                      <input matInput id="Celular" formControlName="Celular" class="tablaForm2 h-auto w-down-100" type="number"
+                          (keydown)="onKeyNumber($event)" />
+                      <br>
+                      <mat-error>
+                          <mat-error class="error-message errorM"
+                              *ngIf="establecimientoForm.get('Celular').invalid && alertOpened">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                                  height="10px" width="auto"> Complete este campo
+                          </mat-error>
+                      </mat-error>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column flex-xl-row align-items-xl-center">
+                    <div class="TextosBlueLeft ml-0 ml-xl-5 flex-basis-0 fg-0_4">4.3. Correo electrónico: <span style="color:red;">*</span></div>
+                    <div class="flex-basis-0 flex-grow-1 w-down-100">
+                      <input matInput id="CorreoElectronico" formControlName="CorreoElectronico"
+                          class="tablaForm2 h-auto w-down-100" type="email" maxlength="50" />
+                      <br>
+                      <mat-error>
+                          <mat-error class="error-message errorM"
+                              *ngIf="establecimientoForm.get('CorreoElectronico').invalid && alertOpened">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                                  height="10px" width="auto"> Complete este campo
+                          </mat-error>
+                      </mat-error>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="d-flex flex-column mx-3 mx-xl-0 mt-3 pb-2 align-items-xl-center align-items-start">
+                <div class="TextosBlueLeft w-100">5. Documentación:</div>
+              </div>
+
+            </div>
+
+            <div class="SizeTable responsive-table-pae">
+                <table [dataSource]="documentos" class="table-default table-hover-disabled" mat-table matSort>
+                    <ng-container matColumnDef="Documento">
+                        <th mat-header-cell *matHeaderCellDef>Documento</th>
+                        <td mat-cell *matCellDef="let element" class="AlingLeft pl-lg-down-15-px" data-label="Documento">{{ element.nombre }} <span
+                                style="color:red;">*</span></td>
+                    </ng-container>
+                    <ng-container matColumnDef="Archivo">
+                        <th mat-header-cell *matHeaderCellDef>Archivo</th>
+                        <td mat-cell *matCellDef="let element" data-label="Archivo">
+                            <button class="buttonImg w-down-100 btn-file cursorP">Adjuntar archivo
+                                <img src="../.././../../../../assets/iconos_PAE/PNG/Iconos_PAE-87.png " height="15px"
+                                    width="auto">
+                                <input id="file-upload" name="file-upload" type="file"
+                                    [formControlName]="element.fileFormName" data-max-size="3064" class="cursorP"
+                                    required
+                                    (change)="onFileSelected($any($event).currentTarget.files, 'file', element.id)"
+                                    accept="application/pdf">
+                                <p class="textButtonImg">{{element.contenidoRespuesta}}</p>
+                            </button>
+                            <br>
+                            <mat-error class="error-message errorM"
+                                *ngIf="establecimientoForm.get(element.fileFormName).invalid && alertOpened">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                                    width="auto">
+                                Complete este campo
+                            </mat-error>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Vigencia">
+                        <th mat-header-cell *matHeaderCellDef>Vigencia</th>
+                        <td mat-cell *matCellDef="let element" data-label="Vigencia">
+                            <input [formControlName]="element.validityFormName" matInput type="number" min="0" id=""
+                                (keydown)="onKeyNumber($event)" class="inputV w-down-100" />
+                            <br>
+                            <mat-error class="error-message errorM"
+                                *ngIf="establecimientoForm.get(element.validityFormName).invalid && alertOpened">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                                    width="auto">
+                                Complete este campo
+                            </mat-error>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Estado">
+                        <th mat-header-cell *matHeaderCellDef>Estado</th>
+                        <td mat-cell *matCellDef="let element" data-label="Estado">
+                            <mat-icon
+                                [ngClass]="getStateColor(getState(element.fileFormName, element.validityFormName))">
+                                circle
+                            </mat-icon>
+                            {{getState(element.fileFormName, element.validityFormName)}}
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <br>
+                <div class="SmallBlue">
+                    *El Plan de saneamiento debe contener:
+                    <br>
+                    A. Programa de limpieza y desinfección, B. Manejo de residuos sólidos y líquidos, C. Control de
+                    plagas y D.
+                    Abastecimeinto de agua.
+                </div>
+            </div>
+            <hr class="lineSolid">
+            <div class="alignCenter">
+                <button (click)="goToBack()" class="BordeRedondoAgregar">Cancelar</button>
+                <button [disabled]="!establecimientoForm.valid && alertOpened" (click)="onSubmitClick()"
+                    class="BordeRedondoAgregar marginIzq">Agregar</button>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div *ngIf="IsCancel">
+    <app-plan-alistamiento-documentacion></app-plan-alistamiento-documentacion>
+</div>

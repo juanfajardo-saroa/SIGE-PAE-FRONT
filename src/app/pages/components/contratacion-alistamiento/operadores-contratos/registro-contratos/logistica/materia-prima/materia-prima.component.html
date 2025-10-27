@@ -1,0 +1,95 @@
+
+<div class="content-detail row mt-2 ml-1 mx-lg-down-0 px-lg-down-0 col justify-content-center text-center responsive-table-pae" *ngIf="dataMateriPrima.length >= VALOR_CERO" >
+  <table  class="table-default w-down-100" [ngStyle]="{ 'width': anchoTable }">
+    <thead class="row-span">
+      <tr class="text-center">
+        <th>Nombre del producto</th>
+        <th>Unidades compradas</th>
+        <th>Valor unitario</th>
+        <th>Valor total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-center" *ngFor="let item of dataMateriPrima; index as i">
+        <td data-label="Nombre producto">
+          <input id="input-nombre-producto" type="text"
+          class="input-text text-center"
+          name="nombreAlimento{{i}}"
+          *ngIf="item.id == VALOR_CERO"
+          [ngModel]="item.nombreAlimento | uppercase"
+          (ngModelChange)="changeItem(item, 'nombreAlimento', $event)"
+          placeholder="Ingrese texto"
+          required/>
+          <label class="text-right text-xl-center" *ngIf="item.id != VALOR_CERO">{{item.nombreAlimento | uppercase}}</label>
+          <div class="div-label">
+          <small class="color-invalid" *ngIf="dataMateriPrima[i].estadoGuardado && !item.nombreAlimento">Complete este campo</small>
+        </div>
+        </td>
+        <td data-label="Un. compradas">
+          <input id="input-unidades-compradas" type="text"
+            class="input-text text-center"
+            name="unidadesContratadas{{i}}"
+            *ngIf="item.id == VALOR_CERO"
+            (keypress)="soloNumeros($event)"
+            [(ngModel)]="item.unidadesContratadas"
+            (ngModelChange)="calculoValorTotal(item)"
+            placeholder="Ingrese cifra"
+            required/>
+            <label class="text-right text-xl-center" *ngIf="item.id != VALOR_CERO">{{item.unidadesContratadas}}</label>
+            <div class="div-label">
+              <small class="color-invalid" *ngIf="dataMateriPrima[i].estadoGuardado && !item.unidadesContratadas">Complete este campo</small>
+            </div>
+        </td>
+        <td data-label="Valor unitario">
+          <input id="input-valor-unitario" type="text"
+            class="input-text text-center"
+            name="valorUnitario{{i}}"
+            *ngIf="item.id == VALOR_CERO"
+            [ngModel]="item.valorUnitario"
+            (ngModelChange)="item.valorUnitario = $event"
+            (ngModelChange)="calculoValorTotal(item)"
+            (keypress)="soloNumeros($event)"
+            (ngModelChange)="calculoValorTotal(item)"
+            placeholder="Ingrese cifra"
+            required/>
+            <label class="text-right text-xl-center" *ngIf="item.id != VALOR_CERO">{{item.valorUnitario}}</label>
+            <div class="div-label">
+              <small class="color-invalid" *ngIf="dataMateriPrima[i].estadoGuardado && !item.valorUnitario">Complete este campo</small>
+            </div>
+        </td>
+        <td data-label="Valor total" >
+          <input id="input-valor-total" type="text" style="pointer-events: none;"
+            class="input-text text-center"
+            name="valorTotal{{i}}"
+            *ngIf="item.id == VALOR_CERO"
+            [ngModel]="item.valorTotal | currency: '$': 'symbol' : '1.0-2'"
+            placeholder="Ingrese cifra"/>
+            <label class="text-right text-xl-center" *ngIf="item.id != VALOR_CERO">{{item.valorTotal}}</label>
+            <div class="div-label">
+              <small class="color-invalid" *ngIf="dataMateriPrima[i].estadoGuardado && !item.valorTotal">Complete este campo</small>
+            </div>
+        </td>
+        <div data-label="Acciones" class="text-center">
+          <a class="card-link" (click)="validaMateriaPrima(i)">
+            <img *ngIf="item.id == VALOR_CERO" width="23" height="22"
+            src="../assets/images/Iconos/save_mini.png">
+         </a>
+          <a class="card-link" (click)="eliminarMateriaPrima(i, item.id)">
+            <img style="width: 23; height: 22"
+            src="../assets/images/Iconos/materia-prima/eliminar.png">
+         </a>
+        </div>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="row" [ngStyle]="{ 'width': anchoTable }">
+  <div class="col-12 text-right">
+    <div class="mt-2" (click)="addMateriaPrima()">
+      <img class="mr-2" src="../assets/images/Iconos/add_blue.png" />
+      <label>Agregar fila</label>
+    </div>
+  </div>
+</div>

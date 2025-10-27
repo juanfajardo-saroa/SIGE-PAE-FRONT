@@ -1,0 +1,329 @@
+@import '/src/assets/styles/variable.scss';
+//titlo del rojo 1 ciclo
+.AlingText {
+    margin: 30px !important;
+}
+
+.ColorTextR {
+    color: $base-colorred !important;
+}
+
+.FloatL {
+    float: left !important;
+}
+
+.FloatR {
+    float: right !important;
+}
+/* .mat-table:not(.nohover) .mat-row:hover .mat-cell {
+  background-color: #005ACA;
+  color: #ffffff !important;
+} */
+
+
+
+.NumeroPendiente {
+    height: 24px;
+    width: 24px;
+    background-color: #ffff;
+    border-radius: 50%;
+    text-align: center;
+    color: $base-colorred;
+    font-weight: 500;
+    padding-top: 3px;
+}
+
+.NumeroPendienteColor {
+    float: left;
+    background-color: $base-colorred;
+    padding: 10px;
+}
+.FinalRedondo {
+    background-color: $base-colorred;
+    height: 44px;
+    width: 44px;
+    border-radius: 0% 50% 50% 0;
+    margin-left: -26px;
+    float: right;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.FondoR {
+    display: inline-block;
+    background-color:$base-colorred;
+    padding: 12px;
+    color: #fff;
+    padding-left: 0px;
+}
+.BordePendiente {
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 1px 50px 50px 1px;
+    border: 1px $base-borderStyle $base-colorred;
+    border-left: 0px !important;
+    color: $base-colorred;
+    padding: 9px 20px;
+    margin-left: -18px;
+}
+
+.AlingTitle {
+    margin: 2% 10px 20px 10px;
+}
+
+//el cuerpo de los modelos tab
+:host ::ng-deep #mat-tab-label-1-1 #mat-tab-label-3-1 #mat-tab-label-2-1 #mat-tab-label-6-1 {
+    font-family: "Montserrat", sans-serif;
+    border-radius: 20px 20px 0px 0px !important;
+    color: $base-color !important;
+    font-size: 15px;
+    background-color: transparent !important;
+    width: 50%;
+    margin: 0.5px;
+    border-bottom: $base-color 1px solid;
+    pointer-events: none;
+  }
+
+
+
+  //linea del boton de guardar
+  .lineaPre{
+    border: 1px solid $base-azulPAE;
+    height: 0px;
+  }
+
+  // botones
+  .buttonAr4 {
+
+    background-color: $base-azulPAE;
+    color: #ffffff;
+    border-color: $base-azulPAE;
+    /* padding: 14px 18px; */
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 12px 12px 12px 12px !important;
+    margin-block-end: auto;
+  }
+  .CenterButton{
+    margin: auto;
+
+    font-size: 15px !important;
+
+  }
+
+  //estados
+  .alignCenter{
+    display: flex !important;
+    justify-content: center !important;
+}
+.ubicacionTablaEstado {
+    float: center !important;
+    width: auto !important;
+    border-radius: 15px;
+    border: 1px dashed;
+    color: $base-azulPAE;
+    padding: 10px 10px 10px 0px;
+}
+.paddingLeftStates{
+    padding-left: 10px !important;
+    font-size: $base-fontSize;
+}
+.sizeIcon {
+    padding-left: 10px !important;
+}
+
+//texto de minuta
+.textmenu{
+    color: $base-azulPAE;
+    font-size: $base-fontSize;
+    margin-left: 20px;
+}
+
+//select de minutas
+.tablaform {
+    border-radius: 20px 20px 20px 20px !important;
+    border: $base-azulPAE solid 1px;
+    background-color: #fff !important;
+    height: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: $base-color;
+    padding: 1px 10px !important;
+    text-align: left;
+    width: 50%;
+    margin-left: 20px;
+    margin-bottom: 20px;
+
+  }
+  ::ng-deep .mat-select-arrow {
+    color: $base-azulPAE  !important;
+}
+
+//tabla general
+.LeftUpCorner {
+    border-radius: 20px 1px 1px 1px;
+  }
+
+  .LeftUpCorner2 {
+    border-radius: 1px 20px 1px 1px;
+  }
+
+  //niveles educativos
+  .center-vertically {
+    display: flex;
+    align-items: center;
+  }
+  .TituloDialog3 {
+
+    text-align: center;
+      color: $base-azulPAE;
+      display: block;
+      margin: auto;
+      /* width: 86%; */
+      /* border-bottom: #005ACA 1px solid; */
+      font-size: $base-fontSize !important;
+
+  }
+  .mat-list-text {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  mat-list-option:first-child {
+    border-radius: $base-borderRadius 0 0 $base-borderRadius;
+    border: 1px solid $base-azulPAE;
+  }
+
+  mat-list-option:last-child {
+    border-radius: 0 $base-borderRadius $base-borderRadius 0;
+    border-top: 1px solid $base-azulPAE;
+    border-bottom: 1px solid $base-azulPAE;
+    border-right: 1px solid $base-azulPAE;
+  }
+
+  mat-selection-list .mat-list-option {
+    display: inline-block;
+    height: auto;
+    width: auto;
+    border-top: 1px solid $base-azulPAE;
+    border-bottom: 1px solid $base-azulPAE;
+    border-right: 1px solid $base-azulPAE;
+  }
+
+  mat-list-option[aria-selected="true"] {
+    color: $gov-white  !important;
+    background-color: $base-azulPAE  !important;
+  }
+
+  mat-selection-list {
+    padding: 0;
+  }
+
+  .col2 {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+
+  .mat-list-base .mat-list-option {
+    color: $base-azulPAE ;
+    font-size: $base-fontSize;
+  }
+  .BordeTotal {
+    border: 1px solid $base-azulPAE;
+    border-radius: 20px;
+    margin-left: 20px;
+      margin-right: 20px;
+  }
+
+  //select de ciclo
+  .tablaform2 {
+    border-radius: 20px 20px 20px 20px !important;
+    border: $base-azulPAE solid 1px;
+    background-color: #fff !important;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: $base-color;
+    padding: 1px 10px !important;
+    text-align: left;
+    width: 90%;
+
+  }
+  table td:first-child {
+    border-left: 1px solid $base-azulPAE;
+    background-color: $base-azulClaroPAE !important;
+    border-right: 1px solid $base-azulPAE;
+    border-top: 1px solid $base-azulPAE;
+
+  }
+  td.mat-cell:last-of-type {
+     padding-right: 0px;
+}
+.tablaform2 ::ng-deep  .mat-select-value {
+  display: table-cell;
+  max-width: 0;
+  width: 100%;
+  height: 100px!important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-top: 10px;
+}
+.tablaform2 ::ng-deep .mat-select-value-text {
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tablaform2 ::ng-deep .mat-select-placeholder {
+
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+th.mat-header-cell:first-of-type{
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.nohayciclo{
+  border: 1px solid red;
+  height: 100px;
+  text-align: center;
+  padding: 10px;
+  width: 90%;
+  border-radius: 20px;
+  color: red;
+  font-size: 13px;
+ margin: 10px;
+}
+
+
+.nohayciclo1{
+  border: 1px solid $base-azulPAE;
+  height: 100px;
+  text-align: center;
+  padding: 10px;
+  width: 90%;
+  border-radius: 20px;
+  color: $base-azulPAE;
+  font-size: 13px;
+ margin: 10px;
+ opacity: 0.4;
+}
+.linkdisable{
+  pointer-events: none;
+  visibility: hidden;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  .border-radius-list-option {
+    border-radius: 20px !important;
+  }
+}

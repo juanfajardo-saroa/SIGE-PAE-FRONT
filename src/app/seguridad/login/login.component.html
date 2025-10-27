@@ -1,0 +1,155 @@
+<!-- <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)"> -->
+<div class="row m-md-down-0">
+
+  <div class="imagenPrincipal col-xl-9 d-none d-xl-block">
+    <img src="../.././../assets/images/ecosistema4.png" height="100%" width="100%" alt="">
+  </div>
+
+  <div class="All col-xl-3 col-12 justify-content-center">
+    <!--
+  <picture>
+    <img styles="width:100%; height:auto; "
+    sizes="(max-width: 960px) 100vw, 960px"
+
+    background-position= "unset"
+    srcset="
+    ../../../assets/images/ecosistema_okt0gc_c_scale,w_200.jpg 200w,
+    ../../../assets/images/ecosistema_okt0gc_c_scale,w_548.jpg 548w,
+    ../../../assets/images/ecosistema_okt0gc_c_scale,w_817.jpg 817w,
+    ../../../assets/images/ecosistema_okt0gc_c_scale,w_960.jpg 960w"
+    src="../../../assets/images/ecosistema.jpg"
+    alt="">
+    </picture> -->
+
+    <div class="card-body">
+
+      <img class="ImagenMinEduc" alt="homepage" src="../.././../assets/images/LogoMinEducacion2.png" height="55px" width="auto">
+
+      <div *ngIf="showError" class="alert alert-danger" role="alert">
+        {{errorMessage}}
+      </div>
+
+      <mat-card class="AlignRight pr-0 pr-xl-5">
+        <div class="LoginPrincipal">
+
+          <div class="TextBienvenidaBlue">
+            Bienvenido(a) al ECOSISTEMA de información SiPAE <br>
+            ingrese sus datos para iniciar sesión:
+          </div>
+
+          <mat-card class="BoxLogin  ">
+            <div class="m-t-14">
+              <mat-card-content styles="overflow: visible;">
+                <form id="loginform" [formGroup]="loginForm" autocomplete="off" novalidate
+                  (ngSubmit)="loginUser(loginForm.value)">
+                  <div class="text-center">
+                    <img class="ImagenSistema" alt="homepage" src="../.././../assets/iconos_PAE/PNG/Iconos_PAE-1.png"
+                      height="18%" width="18%">
+                  </div>
+
+
+                  <div fxLayout="row wrap">
+                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                      <mat-label class="Texto" for="documentType">Tipo de Documento</mat-label>
+                      <div>
+                        <select class="control-md tablaform letraDocum" selected [(ngModel)]="selected"
+                          id="documentType" formControlName="documentType">
+                          <option *ngFor="let item of TipoDocumentoIdenList" [value]="item.id">{{item.nombre}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                      <mat-label class="Texto" for="document">N&uacute;mero de Documento</mat-label>
+
+                      <input matInput type="Texto" id="document" formControlName="document" class="form-control Texto">
+                      <div>
+                        <em *ngIf="validateControl('document') && hasError('document', 'required')"
+                          style="color: rgb(255, 0, 0);font-size:12px!important;" class="espacioPeque">
+                          <img src="../../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" height="12px" width="12px">
+                          N&uacute;mero de Documento o usuario es requerido
+                        </em>
+                      </div>
+
+                    </div>
+
+                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+
+                      <div class="form-group">
+                        <mat-label for="password" class="col-form-label col-sm-2 letraDocum espacioPeque"
+                          style="padding-left: 10px!important;">Contrase&ntilde;a</mat-label>
+
+                        <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+                          class="form-control Texto ">
+                        <mat-icon matSuffix
+                          style="color: darkblue; float: right; left: -15px; margin-top: -23px;  position: relative;  z-index: 2;"
+                          (click)="togglePasswordVisibility()">
+                          {{showPassword?'visibility_off':'visibility'}}
+                        </mat-icon>
+                        <div>
+                          <em class="Texto" style="color: rgb(255, 0, 0);"
+                            *ngIf="validateControl('password') && hasError('password', 'required')">
+                            <img src="../../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" height="12px" width="12px">
+                            Contraseña es requerida
+                          </em>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+
+                    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" class="Acomodar">
+                      <button type="submit" class="BordeBoton Texto" [disabled]="!loginForm.valid">Iniciar
+                        Sesión</button>
+
+                        <a class="TextoOlvido" (click)="openDialog('Enviar', {})">¿Olvidó su contraseña?</a>
+                    </div>
+
+
+
+
+
+
+                    <!-- <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                <button class="BordeBoton btn btn-info" [disabled]="!loginForm.valid" type="button">Iniciar Sesión</button>
+              </div> -->
+
+                  </div>
+
+
+                  <br>
+                  <!-- <div class="form-group row">
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-info" [disabled]="!loginForm.valid">Iniciar Sesión</button>
+                </div>
+            </div> -->
+
+
+                </form>
+              </mat-card-content>
+            </div>
+          </mat-card>
+          <div *ngIf="errorMessage" class="Texto text-center " style="color: rgb(255, 0, 0);">
+            <img src="../../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" height="12px" width="12px">Usuario o contraseña
+            incorrecta
+          </div>
+          <hr>
+          <div class="text-center">
+            <img alt="homepage" src="../../assets/images/LogoAlimentos.png" height="40%" width="40%">
+          </div>
+          <div class="TextCenterBlue">
+            Unidad Administrativa Especial <br>
+            de Alimentación Escolar
+          </div>
+
+        </div>
+
+      </mat-card>
+    </div>
+  </div>
+
+</div>
+<!--
+</form> -->

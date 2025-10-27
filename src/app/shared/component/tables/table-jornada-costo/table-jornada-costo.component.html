@@ -1,0 +1,19 @@
+<div class="col-12 pr-0 pl-0 my-2">
+    <table class="table-default table-red table-totales" style="width: 100% !important; max-width: 100% !important;">
+        <thead>
+            <tr>
+                <th>Jornada</th>
+                <th>Costo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of dataSource; index as i">
+                <tr>
+                    <td class="text-center">{{item.jornada}}</td>
+                    <td *ngIf="signoPrecio" class="text-left pl-4">{{item.costo | currency:'$':'symbol':'1.0-2'}}</td>
+                    <td *ngIf="!signoPrecio" class="text-left pl-4">{{item.costo}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,185 @@
+<div class="row mx-sm-down-15-px_min">
+  <div class="col-12 px-xs-down-0">
+    <div class="tab-control-secondary d-flex">
+      <div class="tab-item w-down-auto d-flex" style="width: 33.333%;" [class]="item.active ? 'active': ''"
+        *ngFor="let item of datosPestanas" (click)="seleccionarTab(item)">
+        <div>{{ item.descripcion }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-lg mb-xl">
+  <form [formGroup]="formFiltro">
+    <div class="row">
+      <div class="col-12 col-lg-7">
+        <div class="row border-md no-margin">
+          <div class="col-12 col-lg-5 pt-sm pb-sm">
+            <label class="text-basecolor">Nivel educativo</label>
+            <select class="control-md" [disabled]="!itemsDisabled" formControlName="tipoNivelEducativoId">
+              <option value="0">Elija una opci&oacute;n</option>
+              <option *ngFor="let item of listNivelEducativos" [ngValue]="item.id">{{item.nombre}}</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-5 pt-sm pb-sm">
+            <label class="text-basecolor">Nivel de actividad fis&iacute;ca</label>
+
+            <select class="control-md" [disabled]="!itemsDisabled" formControlName="tipoActividadFisicaId"
+            (ngModelChange)="changeModel(newMinutaMaemLeve, 'tipoActividadFisicaId', $event)">
+              <option *ngFor="let item of listTiposActividadFisica" [ngValue]="item.id">{{item.nombre}}</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-2 pt-sm pb-sm border-left text-center">
+            <button class="btn btn-icon btn-blue"
+              [disabled]="!itemsDisabled || (!autorizacionLeve && formFiltro.get('tipoActividadFisicaId').value == 1)"
+              (click)="busquedaMinutas(null, true)">
+              <mat-icon>search</mat-icon>
+            </button><br />
+            <label class="text-basecolor">Filtrar</label>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="minutaVisible && iD_MinutaPatronAlimento > 0" class="col-12 col-sm-5">
+        <ng-container *ngIf="editaMinuta && itemsDisabled">
+          <div class="">
+            <button class="btn btn-blue text-left" style="width: 164px;" [disabled]="!itemsDisabled"
+              (click)="editarMinuta()">
+              <mat-icon>edit</mat-icon>
+              <span> Editar Minuta </span>
+            </button>
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-blue text-left" style="width: 164px;" [disabled]="!itemsDisabled"
+              (click)="eliminarMinuta()">
+              <img src="../../../../../assets/images/Iconos/delete_blue.png" />
+              <span>Eliminar Minuta</span>
+            </button>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="editaMinuta && !itemsDisabled">
+          <div class="text-center">
+            <app-footer-patron [iD_MinutaPatronAlimento]="iD_MinutaPatronAlimento" [itemComponente]="itemComponente"
+              [dataSourceComponentes]="dataSourceComponentes" [dataSourceAlimentoProteico]="dataSourceAlimentoProteico"
+              [dataSourceAlimentoLecheInd]="dataSourceAlimentoLecheInd" [dataMacroNutrientes]="dataMacroNutrientes"
+              [dataMicroNutrientes]="dataMicroNutrientes" [cambioNivelEducativo]="cambioNivelEducativo | async" (cancelarEdicionMod)="cancelarEdicionMod($event)">
+            </app-footer-patron>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="row" *ngIf="!autorizacionLeve && formFiltro.get('tipoActividadFisicaId').value == 1">
+  <div class="col-12 col-md-6">
+    <app-alert-message [imgSize]="'xs'" [textSize]="'xs'" [aligment]="'H'" [message]="messageAlert">
+    </app-alert-message>
+    <a class="cursor-pointer"   [routerLink]="['/minuta-excepcional']" >aquí</a>.
+  </div>
+</div>
+
+
+
+<ng-container *ngIf="minutaVisible && iD_MinutaPatronAlimento > 0">
+  <div class="panel panel-blue">
+    <div class="panel-body noborder">
+      <div class="pt-xxl" *ngIf="!itemsDisabled">
+        <div class="tab-control-tertiary">
+          <div *ngFor="let item of listNivelEducativos" class="tab-item text-center"
+            [class]="item.id == dataMinuta.tipoNivelEducativoId ? 'active' : ''" style="width: 25%;"
+            (click)="busquedaMinutas(item, false)">
+            {{item.nombre}}
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-xl">
+        <div class="flex align-items-center" *ngIf="bgColorChapterBlue">
+          <app-chapter-azul-bg [numberChapter]="1" [titleChapter]="'Composición y reglas'"></app-chapter-azul-bg>
+        </div>
+        <div class="flex align-items-center" *ngIf="bgColorChapterRed">
+          <app-chapter [numberChapter]="1" [titleChapter]="'Composición y reglas'"></app-chapter>
+        </div>
+
+
+
+        <div *ngIf="bgColorChapterBlue" class="col-12 mt-md">
+          <label class="text-basecolor no-margin"><b>{{dataMinuta.tipoRacion | uppercase}}</b></label>
+          <ul class="list-style-default-blue">
+            <li>Modalidad: {{dataMinuta.modalidad}}</li>
+            <li>Nivel educativo: {{itemNivelEducativos.nombre}}</li>
+            <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+          </ul>
+        </div>
+        <div class="col-12 mt-md" *ngIf="bgColorChapterRed">
+          <label class="text-basered no-margin"><b>{{dataMinuta.tipoRacion | uppercase}}</b></label>
+          <ul class="list-style-default">
+            <li>Modalidad: {{dataMinuta.modalidad}}</li>
+            <li>Nivel educativo: {{itemNivelEducativos.nombre}}</li>
+            <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+          </ul>
+        </div>
+
+        <div class="col-12 mt-sm">
+          <app-composicion-reglas class="responsive-table" *ngIf="iD_MinutaPatronAlimento > 0 && composicionVisible"
+            [iD_MinutaPatronAlimento]="iD_MinutaPatronAlimento" [itemComponente]="itemComponente" [modalidadComplementoId]="dataMinuta?.modalidadComplementoId"
+            [itemsDisabled]="itemsDisabled" [tipoComplementoId]="dataMinuta?.tipoComplementoId" (itemComponenteMod)="itemComponenteMod($event)"
+            (dataSourceComponentesMod)="dataSourceComponentesMod($event)"  (dataSourceAlimentoProteicoMod)="dataSourceAlimentoProteicoMod($event)"
+             (dataSourceAlimentoLecheIndMod)="dataSourceAlimentoLecheIndMod($event)" onchange="" (edicionTerminada)="terminarEdicion($event) ">
+          </app-composicion-reglas>
+        </div>
+        <div class="col-12 mt-sm">
+          <p class="text-basecolor">
+            *Agua apta para el consumo humano: su inclusi&oacute;n de manera adicional debe realizarse paulatinamente, seg&uacute;n la frecuencia definida por la ETC a partir del an&aacute;lisis de contexto
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-xxl">
+        <app-chapter-azul-bg *ngIf="bgColorChapterBlue" [numberChapter]="2" [titleChapter]="'Aporte nutricional'"></app-chapter-azul-bg>
+        <app-chapter *ngIf="bgColorChapterRed" [numberChapter]="2" [titleChapter]="'Aporte nutricional'"></app-chapter>
+
+        <div *ngIf="bgColorChapterBlue" class="col-12 mt-md">
+          <label class="text-basecolor no-margin"><b>{{dataMinuta.tipoRacion | uppercase}}</b></label>
+          <ul class="list-style-default-blue">
+            <li>Modalidad: {{dataMinuta.modalidad}}</li>
+            <li>Nivel educativo: {{itemNivelEducativos.nombre}}</li>
+            <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+          </ul>
+        </div>
+        <div *ngIf="bgColorChapterRed" class="col-12 mt-md">
+          <label class="text-basered no-margin"><b>{{dataMinuta.tipoRacion | uppercase}}</b></label>
+          <ul class="list-style-default">
+            <li>Modalidad: {{dataMinuta.modalidad}}</li>
+            <li>Nivel educativo: {{itemNivelEducativos.nombre}}</li>
+            <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+          </ul>
+        </div>
+
+        <div class="col-12 mt-sm">
+          <div class="row">
+            <div class="col-12 flex-xl-row flex-column offset-sm-1 col-sm-10 info-aportes">
+              <div *ngFor="let item of aportes" class="item-info">
+                <div>
+                  <p><b>{{item.title}}</b><br>{{item.description}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="col-12 offset-sm-1 col-sm-10">
+          <app-aporte-nutricional class="responsive-table" *ngIf="iD_MinutaPatronAlimento > 0 && composicionVisible"
+            [iD_MinutaPatronAlimento]="iD_MinutaPatronAlimento" [itemsDisabled]="itemsDisabled"
+            (dataMacroNutrientesMod)="dataMacroNutrientesMod($event)"
+            (dataMicroNutrientesMod)="dataMicroNutrientesMod($event)">
+          </app-aporte-nutricional>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>

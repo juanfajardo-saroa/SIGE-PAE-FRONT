@@ -1,0 +1,885 @@
+import { Component, OnInit, ViewChild,OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ContratosApiService } from '../../../../../../shared/services/contratos-api.service';
+import { AsignacionRecursosApiService } from '../../../../../../shared/services/asignacion-recursos-api.service';
+import { Observable, OperatorFunction } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { NgbTypeahead, NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
+import { MessageService } from 'src/app/services/message.service';
+import { LocalStorage } from 'src/app/static/local-storage';
+import { Subscription } from 'rxjs';
+
+const ID_ESTADO_EN_APROBACION: number = 1;
+const ID_TIPOCONTRATO: number = 5;
+const ID_SUB_INTERVENTORIA: number = 9;
+const ID_SUB_EQUIPO_PAE: number = 10;
+
+type State = { id: number, name: string, nit: string };
+
+@Component({
+  selector: 'app-contratos-supervision',
+  templateUrl: './contratos-supervision.component.html',
+  /* providers: [
+    ContratosApiService, NgbTypeahead, AsignacionRecursosApiService
+  ], */
+  styleUrls: ['./contratos-supervision.component.sass']
+})
+export class ContratosSupervisionComponent implements OnInit,OnDestroy {
+
+  itemVigencia = JSON.parse(localStorage.getItem('VigSeleccionadaJson'));
+
+  public states: any = [];
+  public itemActivo: number = 1;
+  public tipoContrato!: number;
+  public idContrato: number = 0;
+  public tipoSupervision!: number;
+  public dataOperadores: any = [];
+  public dataContratoChip: any = [];
+  public dataTiposPolizas: any = [];
+  public dataPolizas: any = [];
+  public dataModalidadContratoChip: any = [];
+  public dataPeriodoAmortizacion: any = [];
+  public dataFuentesFinanciacion: any = [];
+  public dataFuentesFinanciacionPresupuestal: any = [];
+  public dataFuenteIngresos: any = [];
+  public dataCDPs: any = [];
+  public dataCRPs: any = [];
+  public empresaInterventora: any = [];
+  public contratoSecop: boolean = false;
+  public cAnticipo: boolean = false;
+  public nuevoCDP: boolean = false;
+  public nuevoCRP: boolean = false;
+  public IdFuente: number = 0;
+  public IdCdp: number = 0;
+  public TotalCRP: number = 0;
+  public TotalFuentes: number = 0;
+  public TotalContrato: number = 0;
+  public fileName: string = '';
+  private iD_ETC: number = Number(localStorage.getItem('IdUbicacion'));
+  private subs = new Subscription()
+  public srcPDF: any;
+  public showValidation: boolean = false;
+  public showPDFValidation: boolean = false;
+
+
+  public item1 = {
+    idEmpresaInterventora: "",
+    numeroContrato: "",
+    empresaInterventora: "",
+    empresaInterventoraModel: "",
+    nitEmpresaInterventora: "",
+    digitoVerificacion: "0",
+    objetoContrato: "",
+    tipoContratoChip: "",
+    dv: ""
+  }
+
+  public item2: any = {
+    inicioContrato: "",
+    finContrato: "",
+    contratacionCHIP: "",
+    contratoSECOP: false,
+    plataforma: "",
+    fechaAdjudicacion: "",
+    numeroRegistroSecop: "",
+    linkContratoSecop: "",
+    fechaSuscripcion: ""
+  }
+
+  public item3 = {
+    valorContrato: "",
+    contratoAnticipo: false,
+    porcentajeAnticipo: "",
+    valorAnticipo: "",
+    periodicidadAmortizacion: "",
+    numeroPagos: ""
+  }
+
+  public item4 = {
+    tipoPolizas: 0,
+    fechaPoliza: '',
+    fechaAprobacion: '',
+    numeroPoliza: '',
+    valorTotal: '',
+  }
+
+  public dataCdp = {
+    id: 0,
+    iD_FuenteFinanciacion: 0,
+    numeroCDP: '',
+    fechaCDP: '',
+    pahtArchivoCDP: '',
+    estado: true,
+    auditoria: LocalStorage.getAuditoria('')
+  }
+
+  public dataCrp = {
+    id: 0,
+    iD_CDP: 0,
+    numeroCRP: '',
+    fechaCRP: '',
+    valorCRP: '',
+    pathArchivoCRP: '',
+    estado: true,
+    auditoria: LocalStorage.getAuditoria('')
+  }
+
+  public fuenteFinancia = {
+    iD_Contrato: 0,
+    iD_FuenteFinanciacion: '',
+    iD_FuenteIngresos: '',
+    valor: '',
+    estado: true,
+    auditoria: LocalStorage.getAuditoria(''),
+  }
+
+  public dataTotalGeneralContratado: any = {
+    diferencia: 0,
+    diferenciaFuentesFinanciacion: 0,
+    totalCRP: 0,
+    totalFuentesFinanciacion: 0,
+    valorTotal: 0,
+    valorTotalPriorizacion: 0,
+  };
+
+  constructor(
+    public router: Router,
+    private rutaActiva: ActivatedRoute,
+    private _contratosApiService: ContratosApiService,
+    private _asignacionRecursosApiService: AsignacionRecursosApiService,
+    private _modalService: NgbModal,
+    private _messageService: MessageService
+  ) { }
+
+  ngOnInit(): void {
+    this.getOperadores();
+    this.getContratoChip();
+    this.getPeriodoAmortizacion();
+    this.getModalidadContratoChip();
+    this.getTiposPolizas();
+    this.getAllPolizas();
+
+    this.rutaActiva.params.subscribe(params => {
+      if (params['tipoSupervision'] != undefined) {
+        let tipoSup = +params['tipoSupervision'];
+        this.contrato.subTipoContratoId = tipoSup;
+      }
+
+      if (params['idContrato'] != undefined) {
+        this.get_ContratoInfo(+params['idContrato']);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subs) { this.subs.unsubscribe(); }
+  }
+
+
+  get_ContratoInfo(idContrato: number) {
+    this._contratosApiService.get_SedesContratosHojaContrato(idContrato)
+      .subscribe(response => {
+        if (response.success) {
+          let data: any = response.result.length > 0 ? response.result.shift() : {};
+
+          this.contrato.id = data.id_Contrato != null ? data.id_Contrato : 0;
+          this.contrato.TipoContratoId = data.tipoContratoId != null ? data.tipoContratoId : 0;
+          this.contrato.iD_Vigencia = data.iD_Vigencia != null ? data.iD_Vigencia : this.itemVigencia?.id;
+          this.contrato.iD_EstadoContrato = data.iD_EstadoContrato != null ? data.iD_EstadoContrato : 0;
+          this.contrato.subTipoContratoId = data.subTipoContratoId != null ? data.subTipoContratoId : 0;
+
+          this.contrato.nomOperador = data.nomOperador;
+          this.contrato.digitoVerificacion = data.digitoVerificacion;
+          this.contrato.nitOperador = data.nitOperador;
+
+          /**
+           * item 1
+           */
+          this.item1.numeroContrato = data.numeroContrato != null ? data.numeroContrato : '';
+          this.item1.objetoContrato = data.objetoContrato != null ? data.objetoContrato : '';
+          this.item1.tipoContratoChip = data.iD_TipoContratoCHIP != null ? data.iD_TipoContratoCHIP : 0;
+          this.item1.empresaInterventora = data.nomOperador ?? '';
+          this.item1.nitEmpresaInterventora = data.nitOperador ?? '';
+          this.item1.dv = data.digitoVerificacion ?? '';
+          let iD_Operador = data.id_operador != null ? data.id_operador : 0;
+          this.empresaInterventoraChangeFn(iD_Operador);
+          /**
+           * item 2
+           */
+          this.contrato.fechalnicioContrato = data.fechalnicioContrato != null ? moment(data.fechalnicioContrato).isBetween('1753-01-01', '9999-12-31') ? new Date(data.fechalnicioContrato) : null : null;
+          this.contrato.fechaFinalContrato = data.fechaFinalContrato != null ? moment(data.fechaFinalContrato).isBetween('1753-01-01', '9999-12-31') ? new Date(data.fechaFinalContrato) : null : null;
+          //this.contrato.iD_TipoModeloOperacion = data.iD_TipoModeloOperacion != null ? data.iD_TipoModeloOperacion : null;
+          this.contrato.fechaAdjudicacion = data.fechaAdjudicacionContrato != null ? moment(data.fechaAdjudicacionContrato).isBetween('1753-01-01', '9999-12-31') ? new Date(data.fechaAdjudicacionContrato) : null : null;
+          this.contrato.iD_TipoConceptoGasto = data.iD_TipoConceptoGasto != null ? data.iD_TipoConceptoGasto : 0;
+          this.contrato.iD_ETC = data.iD_ETC != null ? data.iD_ETC : 0;
+          this.contrato.iD_ET = data.iD_ET != null ? data.iD_ET : 0;
+          this.contrato.estado = data.estado != null ? data.estado : true;
+          this.contrato.valorTotalContrato = data.valorTotalContrato != null ? data.valorTotalContrato : 0;
+          this.item3.valorContrato = this.contrato.valorTotalContrato;
+
+          this.contrato.conAnticipo = data.conAnticipo != null ? data.conAnticipo : false;
+          this.contrato.nombreArchivo = data.nombreArchivo != null ? data.nombreArchivo : '';
+          this.contrato.archivo = data.nombreArchivo != null ? data.nombreArchivo : '';
+
+          this.get_ProcesoContractual(this.contrato.id);
+          this.get_AnticiposContrato(this.contrato.id);
+        } else {
+          this._messageService.showError('ERROR: ' + response.error, 'top center');
+        }
+      });
+  }
+
+  get_ProcesoContractual(idContrato: number) {
+
+    this._contratosApiService.getProcesoContractual(idContrato)
+      .subscribe(response => {
+        if (response.success) {
+          let data: any = response.result.length > 0 ? response.result.shift() : {};
+
+          this.detallesProcesoContratos.id = data.id != null ? data.id : 0;
+          this.detallesProcesoContratos.ID_Contrato = idContrato;
+
+          this.contratoSecop = data.publicadorSECOP != null ? data.publicadorSECOP : false;
+          this.item2.inicioContrato = '';
+          this.item2.finContrato = '';
+          this.item2.contratacionCHIP = data.iD_TipoContratacion != null ? data.iD_TipoContratacion : 0;
+          this.item2.contratoSECOP = data.publicadorSECOP != null ? data.publicadorSECOP : false;
+          this.item2.plataforma = data.iD_PlataformaContrato != null ? data.iD_PlataformaContrato : 0;
+          this.item2.fechaAdjudicacion = data.fechaAdjudicacion != null ? this.getFormatedDate(data.fechaAdjudicacion, 'yyyy-MM-dd') : '';
+          this.item2.numeroRegistroSecop = data.numeroProcesoRegistradoSECOP != null ? data.numeroProcesoRegistradoSECOP : '';
+          this.item2.linkContratoSecop = data.linkContratoSECOP != null ? data.linkContratoSECOP : '';
+          this.item2.fechaSuscripcion = data.fechaSuscripcion != null ? this.getFormatedDate(data.fechaSuscripcion, 'yyyy-MM-dd') : '';
+          this.item2.fechaFinalContrato = data.fechaFinalContrato != null ? this.getFormatedDate(data.fechaFinalContrato, 'yyyy-MM-dd') : '';
+        } else {
+          this._messageService.showError('ERROR: ' + response.error, 'top center');
+        }
+      });
+  }
+
+
+  get_AnticiposContrato(idContrato: number) {
+    this._contratosApiService.get_AnticiposContratos(idContrato)
+      .subscribe(response => {
+        if (response.success) {
+          let data: any = response.result.length > 0 ? response.result.shift() : {};
+          this.anticipoContrato.id = data.id != null ? data.id : 0;
+          this.anticipoContrato.ID_Contrato = idContrato;
+          this.anticipoContrato.ID_tipoperiodicidad = data.iD_tipoperiodicidad != null ? data.iD_tipoperiodicidad : 0;
+          this.anticipoContrato.ValorAnticipo = data.valorAnticipo != null ? data.valorAnticipo : 0;
+          this.anticipoContrato.PorcentajeAnticipo = data.porcentajeAnticipo != null ? data.porcentajeAnticipo : 0;
+          this.anticipoContrato.TipoPeriodicidadld = data.tipoPeriodicidadld != null ? data.tipoPeriodicidadld : 0;
+          this.anticipoContrato.NumeroPagos = data.numeroPagos != null ? data.numeroPagos : 0;
+        } else {
+          this._messageService.showError('ERROR: ' + response.error, 'top center');
+        }
+      });
+  }
+
+  getFormatedDate(date: Date, format: string) {
+    const datePipe = new DatePipe('en-US');
+    return datePipe.transform(date, format);
+  }
+
+  actualizarGranTotal(data: any) {
+    this.dataTotalGeneralContratado.diferencia = data.diferencia;
+    this.dataTotalGeneralContratado.diferenciaFuentesFinanciacion = data.diferenciaFuentesFinanciacion;
+    this.dataTotalGeneralContratado.totalCRP = data.totalCRP;
+    this.dataTotalGeneralContratado.totalFuentesFinanciacion = data.totalFuentesFinanciacion;
+    this.dataTotalGeneralContratado.valorTotal = data.valorTotal;
+    this.dataTotalGeneralContratado.valorTotalPriorizacion = data.valorTotalPriorizacion;
+  }
+
+  dismissAllModal() {
+    this._modalService.dismissAll();
+  }
+
+  abrirPDF(contenido: any) {
+    if (this.dataCdp.pahtArchivoCDP != null) {
+      this.srcPDF = "data:application/pdf;base64," + this.dataCdp.pahtArchivoCDP;
+      this._modalService.open(contenido, { size: 'xl' });
+    }
+  }
+
+  uploadPDF(entity: any, control: string) {
+    const fileUpload = document.getElementById(control) as HTMLInputElement;
+    const MAXIMO_BYTES = 10000000;
+
+
+    fileUpload.onchange = () => {
+      if (fileUpload.files?.length && fileUpload.files.length > 0) {
+
+        const file = fileUpload.files[0];
+        this.fileName = file.name;;
+
+        if (file.type == 'application/pdf') {
+          if (file.size <= MAXIMO_BYTES) {
+
+            this.fileName = file.name;
+            entity.pahtArchivoCDP = file.name;
+            entity.pathArchivoCRP = file.name;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              // OJO SE DEBE CREAR EL CAMPO PARA GUARDAR EL ARCHIVO
+              // entity.<nombre campo a guardar> = reader.result?.toString().replace('data:application/pdf;base64,', '');
+              fileUpload.value = '';
+
+            };
+          }
+          else {
+            fileUpload.value = '';
+            this._messageService.showInfo("El tamaño del archivo supera los 10MB", 'top center');
+          }
+        }
+        else {
+          fileUpload.value = '';
+          this._messageService.showInfo("El formato del archivo no es un PDF", 'top center');
+        }
+
+      }
+    }
+    fileUpload.click();
+  }
+
+
+  finalizar3(form: any) {
+    this.continuarLuego(form, 3);
+    this.finalizar();
+  }
+
+  uploadPDFContrato() {
+    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+    const MAXIMO_BYTES = 100000000;
+
+    fileUpload.onchange = () => {
+      if (fileUpload.files?.length && fileUpload.files.length > 0) {
+
+        const file = fileUpload.files[0];
+        this.contrato.nombreArchivo = file.name;
+
+        if (file.type == 'application/pdf') {
+          if (file.size <= MAXIMO_BYTES) {
+
+            this.fileName = file.name;
+            this.contrato.nombreArchivo
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              //this.entity.archivoResolucion = reader.result?.toString().replace('data:application/pdf;base64,', '');
+            };
+          }
+          else {
+            fileUpload.value = '';
+            this._messageService.showInfo("El tamaño del archivo supera los 100MB", 'top center');
+          }
+        }
+        else {
+          fileUpload.value = '';
+          this._messageService.showInfo("El formato del archivo no es un PDF", 'top center');
+        }
+
+      }
+    }
+
+    fileUpload.click();
+  }
+
+
+
+  finalizar() {
+    this._messageService.showInfo('Se guardo el contrato.', 'top center');
+    this.router.navigate(['/registro-contratos']);
+  }
+
+
+
+  formatterName = (state: State) => state.name;
+  formatterNit = (state: State) => state.nit;
+  searchName: OperatorFunction<string, readonly { id: any, name: any, nit: any }[]> = (text$: Observable<string>) => text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    filter(term => term.length >= 2),
+    map(term => this.states.filter((state: any) => new RegExp(term, 'mi').test(state.name)).slice(0, 10))
+  )
+
+  searchNit: OperatorFunction<string, readonly { id: any, name: any, nit: any }[]> = (text$: Observable<string>) => text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    filter(term => term.length >= 2),
+    map(term => this.states.filter((state: any) => new RegExp(term, 'mi').test(state.nit)).slice(0, 10))
+  )
+
+  changecontratoSECOP(_cs: boolean) {
+    this.contratoSecop = _cs;
+    this.item2.contratoSECOP = _cs;
+  }
+
+  changeContratoAnticipo(_cs: boolean) {
+    this.cAnticipo = _cs;
+    this.item3.contratoAnticipo = _cs;
+  }
+
+  empresaInterventoraChangeFn(valor: any) {
+    if (valor != undefined) {
+      for (let i = 0; i < this.dataOperadores.length; i++) {
+        if (this.dataOperadores[i].id == valor) {
+          this.item1.idEmpresaInterventora = this.dataOperadores[i].id;
+          this.item1.nitEmpresaInterventora = this.dataOperadores[i].nit;
+          this.item1.empresaInterventora = this.dataOperadores[i].nombreRazonSocial;
+          this.item1.dv = this.dataOperadores[i].dv;
+        }
+      }
+    }
+  }
+
+  item1Anterior() {
+    this.router.navigate(['registroUnicoContratos']);
+  }
+
+  Anterior(itemAnterior: number) {
+    this.itemActivo = itemAnterior;
+  }
+
+
+  Siguiente(itemSiguiente: number) {
+    this.itemActivo = itemSiguiente;
+  }
+
+  getOperadores() {
+    this._contratosApiService.Get_AllOperadores()
+      .subscribe(response => {
+        if (response.success) {
+          this.dataOperadores = response.result;
+          for (let i = 0; i < this.dataOperadores.length; i++) {
+            this.states.push({ id: this.dataOperadores[i].id, name: this.dataOperadores[i].nombreRazonSocial, nit: this.dataOperadores[i].nit, dv: this.dataOperadores[i].dv });
+          }
+        }
+        else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+      });
+  }
+
+  getPeriodoAmortizacion() {
+    this._contratosApiService.Get_AllTiposPeriodicidad()
+      .subscribe(response => {
+        if (response.success) {
+          this.dataPeriodoAmortizacion = response.result;
+        }
+        else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+      });
+  }
+
+  soloNumeros(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  getValorAnticipo() {
+    if (parseInt(this.item3.valorContrato) > 0 && parseInt(this.item3.porcentajeAnticipo) > 0) {
+      var valor = (parseInt(this.item3.valorContrato) * parseInt(this.item3.porcentajeAnticipo)) / 100;
+      this.item3.valorAnticipo = valor.toString();
+    }
+  }
+
+  getAllPolizas() {
+    if (this.idContrato > 0) {
+      this._contratosApiService.GetAllPolizasByIdContrato(this.idContrato)
+        .subscribe(response => {
+          if (response.success) {
+
+            this.dataPolizas = response.result;
+          }
+          else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+        });
+    }
+  }
+
+  getdataCDPs(idFuenteFinanciacion: number) {
+    this._contratosApiService.GetAllTipoFuentePresupuestal(idFuenteFinanciacion)
+      .subscribe(response => {
+        if (response.success) {
+          this.dataCDPs = response.result;
+          for (let i = 0; i < this.dataCDPs.length; i++) {
+            this.dataCDPs[i].editar = false;
+          }
+        }
+        else {
+          this.dataCDPs = [];
+        }
+      });
+  }
+
+  getdataCRPs(idCdp: number) {
+    this._contratosApiService.GetCrpsAsociados(idCdp)
+      .subscribe(response => {
+        if (response.success) {
+          this.dataCRPs = response.result;
+          for (let i = 0; i < this.dataCRPs.length; i++) {
+            this.dataCRPs[i].editar = false;
+          }
+        }
+        else {
+          this.dataCRPs = [];
+        }
+      });
+  }
+
+  AgregarAnticipo(form: any) {
+
+    if (this.anticipoContrato.id <= 0) {
+      this.anticipoContrato.ID_Contrato = this.contrato.id,
+        this.anticipoContrato.ID_tipoperiodicidad = form.periodicidadAmortizacion,
+        this.anticipoContrato.ValorAnticipo = form.valorAnticipo,
+        this.anticipoContrato.PorcentajeAnticipo = form.porcentajeAnticipo,
+        this.anticipoContrato.TipoPeriodicidadld = form.periodicidadAmortizacion,
+        this.anticipoContrato.NumeroPagos = form.numeroPagos,
+        this.anticipoContrato.Estado = true,
+        this.anticipoContrato.auditoria = LocalStorage.getAuditoria('')
+
+      this._contratosApiService.post_AddAnticiposContratos(this.anticipoContrato)
+        .subscribe(response => {
+          if (response.success) {
+            this.anticipoContrato.id = response.result;
+          }
+          else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+        });
+    }
+  }
+
+  AgregarDetalleProceso(form: any) {
+    if (this.detallesProcesoContratos.id <= 0) {
+      this.detallesProcesoContratos.ID_Contrato = this.contrato.id;
+      this.detallesProcesoContratos.ID_TipoContratacion = form.contratacionCHIP;
+      this.detallesProcesoContratos.ID_PlataformaContrato = form.Plataforma;
+      this.detallesProcesoContratos.PublicadorSECOP = this.item2.contratoSECOP;
+      this.detallesProcesoContratos.NumeroProcesoRegistradoSECOP = form.numeroRegistroSecop;
+      this.detallesProcesoContratos.LinkContratoSECOP = form.linkContratoSecop;
+      this.detallesProcesoContratos.FechaAdjudicacion = form.fechaAdjudicacion;
+      this.detallesProcesoContratos.Estado = true;
+      this.detallesProcesoContratos.auditoria = LocalStorage.getAuditoria('');
+      this.detallesProcesoContratos.fechaSuscripcion = form.fechaSuscripcion;
+
+      this._contratosApiService.post_AddDetallesProcesoContratos(this.detallesProcesoContratos)
+        .subscribe(response => {
+          if (response.success) {
+            this.detallesProcesoContratos.id = response.result;
+          }
+          else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+        });
+    }
+    else {
+      this.detallesProcesoContratos.ID_Contrato = this.contrato.id;
+      this.detallesProcesoContratos.ID_TipoContratacion = form.contratacionCHIP;
+      this.detallesProcesoContratos.ID_PlataformaContrato = form.Plataforma;
+      this.detallesProcesoContratos.PublicadorSECOP = this.item2.contratoSECOP;
+      this.detallesProcesoContratos.NumeroProcesoRegistradoSECOP = form.numeroRegistroSecop;
+      this.detallesProcesoContratos.LinkContratoSECOP = form.linkContratoSecop;
+      this.detallesProcesoContratos.FechaAdjudicacion = form.fechaAdjudicacion; //.year + '-' + this.dosDigitosFecha(form.fechaAdjudicacion.month) + '-' + this.dosDigitosFecha(form.fechaAdjudicacion.day);
+      this.detallesProcesoContratos.fechaSuscripcion = form.fechaSuscripcion;
+      this.detallesProcesoContratos.Estado = true;
+      this.detallesProcesoContratos.auditoria = LocalStorage.getAuditoria('');
+      this._contratosApiService.putProcesoContractual(this.detallesProcesoContratos)
+        .subscribe(response => {
+          if (response.success) {
+          } else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+        });
+
+
+    }
+  }
+
+
+  /*
+  // ELIMINAR
+  agregarPoliza(form: any){
+
+    this.Polizas.iD_Contrato = this.contrato.id;
+    this.Polizas.iD_TipoPoliza = form.tipoPolizas;
+    this.Polizas.fechaPoliza = form.fechaPoliza.year + '-' + this.dosDigitosFecha(form.fechaPoliza.month) + '-' + this.dosDigitosFecha(form.fechaPoliza.day);
+    this.Polizas.fechaAprobacion = form.fechaAprobacion.year + '-' + this.dosDigitosFecha(form.fechaAprobacion.month) + '-' + this.dosDigitosFecha(form.fechaAprobacion.day);
+    this.Polizas.numero = form.numeroPoliza;
+    this.Polizas.valorTotal = form.valorTotal;
+
+      this._contratosApiService.post_AddPolizas(this.Polizas)
+      .subscribe(response => {
+        if(response.success){
+            this.item4 = { tipoPolizas: 0, fechaPoliza: '', fechaAprobacion: '', numeroPoliza: '', valorTotal: '',
+          }
+            this.getAllPolizas();
+        }
+        else{ this._messageService.showError('ERROR: '+ response.error, 'top center'); }
+      });
+
+  }
+  */
+
+  seleccionado(id: number): string {
+
+    var seleccionado = this.dataTiposPolizas.filter((x: any) => x.id == id)
+    return seleccionado[0].nombre;
+  }
+
+  getContratoChip() {
+    this._contratosApiService.Get_AllContratoChip()
+      .subscribe(response => {
+        if (response.success) {
+          this.dataContratoChip = response.result;
+        }
+        else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+      });
+  }
+
+  getTiposPolizas() {
+    this._contratosApiService.GetTiposPolizas()
+      .subscribe(response => {
+        if (response.success) {
+
+          this.dataTiposPolizas = response.result;
+        }
+        else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+      });
+  }
+
+  getModalidadContratoChip() {
+    this._contratosApiService.Get_AllContratosTiposContratacion()
+      .subscribe(response => {
+        if (response.success) {
+          this.dataModalidadContratoChip = response.result;
+        }
+        else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+      });
+  }
+
+  onSubmit(form: any, itemActivo: number): void {
+
+    if (form.invalid) {
+      for (const control of Object.keys(form.controls)) {
+        form.controls[control].markAsTouched();
+      }
+      return;
+    }
+
+    if (form.valid == true) {
+
+      this.itemActivo = itemActivo + 1;
+      switch (itemActivo) {
+        case 1: {
+          this.guardarItem1(form.value, false);
+          break;
+        }
+        case 2: {
+          this.guardarItem2(form.value, false);
+          break;
+        }
+        case 3: {
+          this.guardarItem3(false);
+          break;
+        }
+        case 4: {
+          this.guardarItem1(form.value, false);
+          break;
+        }
+      }
+    }
+  }
+
+  continuarLuego(form: any, itemActivo: number): void {
+
+    switch (itemActivo) {
+      case 1: {
+        this.guardarItem1(form.value, false);
+        break;
+      }
+      case 2: {
+        this.guardarItem2(form, false);
+        break;
+      }
+      case 3: {
+        this.guardarItem3(false);
+        break;
+      }
+      case 4: {
+        this.guardarItem1(form.value, false);
+        break;
+      }
+    }
+  }
+
+
+
+  guardarItem1(form: any, msg: boolean) {
+    this.contrato.numeroContrato = form.numeroContrato;
+    this.contrato.objetoContrato = form.objetoContrato;
+    this.contrato.iD_TipoContratoCHIP = form.tipoContratoChip;
+    this.contrato.iD_Operador = form.empresaInterventora;
+    this.GuardarContrato(msg);
+  }
+
+  guardarItem2(form: any, msg: boolean) {
+
+    this.contrato.valorTotalContrato = form.valorContrato == '' ? 0 : form.valorContrato;
+    if (form.contratoSECOP) {
+      if (!msg) {
+        this.AgregarDetalleProceso(form);
+      }
+      this.GuardarContrato(msg);
+    } else {
+      this.AgregarDetalleProceso(form);
+      this.GuardarContrato(msg);
+    }
+
+  }
+
+  guardarItem3(msg: boolean) {
+    this.itemActivo = msg == true ? this.itemActivo : this.itemActivo + 1;
+    this.GuardarContrato(msg);
+  }
+
+  guardarItem4() {
+    if (this.dataTotalGeneralContratado.totalCRP != this.dataTotalGeneralContratado.totalFuentesFinanciacion) {
+      this._messageService.showInfo('La suma total de los crp debe ser igual a la suma total de las fuentes de financiación', 'top center');
+      return;
+    } else if (this.dataTotalGeneralContratado.totalFuentesFinanciacion != this.dataTotalGeneralContratado.valorTotal) {
+      this._messageService.showInfo('La suma total de las fuentes de financiación debe ser igual al valor total del contrato', 'top center');
+      return;
+    }
+
+    if (this.contrato.nombreArchivo == '') {
+      this.showPDFValidation = true;
+      return;
+    }
+
+    this.contrato.iD_EstadoContrato = ID_ESTADO_EN_APROBACION;
+    this.GuardarContrato(false);
+    //this._messageService.showInfo('Contrato guardado y finalizado', 'top center');
+    this._messageService.showInfo('Se guardo el contrato.', 'top center');
+    this.router.navigate(['/registro-contratos']);
+  }
+
+  GuardarContrato(msg: boolean) {
+
+    if (this.contrato.id > 0) {
+      this.idContrato = this.contrato.id;
+      this.contrato.idOperador = this.contrato.iD_Operador;
+      this.contrato.idEtc =this.contrato.iD_ETC;
+      this.contrato.idContrato =this.contrato.id
+
+ 
+      this._contratosApiService.put_UpdateContratos(this.contrato)
+        .subscribe(response => {
+
+          if (response.success) {
+            if (msg) {
+              this._messageService.showInfo('Información guardada para continuar más tarde', 'top center');
+            }
+          }
+          else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+        });
+
+    } else {
+      this._contratosApiService.post_AddContratos(this.contrato)
+        .subscribe(response => {
+          if (response.success) {
+            this.idContrato = response.result;
+            this.contrato.id = response.result;
+            if (msg) {
+              this._messageService.showInfo('Información guardada para continuar más tarde', 'top center');
+            }
+          }
+          else { this._messageService.showError('ERROR: ' + response.error, 'top center'); }
+        });
+    }
+
+  }
+
+  public anticipoContrato: any = {
+    id: 0,
+    ID_Contrato: 0,
+    ID_tipoperiodicidad: 0,
+    ValorAnticipo: 0,
+    PorcentajeAnticipo: 0,
+    TipoPeriodicidadld: 0,
+    NumeroPagos: 0,
+    Estado: true,
+    auditoria: LocalStorage.getAuditoria('')
+  };
+  //cambios contratos
+  public contrato: any = {
+    id: 0,
+    iD_TipoContratoCHIP: 1,
+    iD_ETC: this.iD_ETC,
+    TipoContratoId: ID_TIPOCONTRATO,
+    iD_TipoConceptoGasto: 0,
+    iD_ET: 0,
+    iD_MinutaPatronAlimento: 0,
+    iD_Operador: 0,
+    iD_TipoCategoriaContrato: 0,
+    iD_EstadoContrato: 0,
+    iD_UTConsorcio: 0,
+    iD_PlanAlistamiento: 0,
+    iD_Vigencia: this.itemVigencia?.id,
+    subTipoContratoId: 0,
+    numeroContrato: '',
+    objetoContrato: '',
+    conAnticipo: false,
+    fechalnicioContrato: null,
+    fechaFinalContrato: null,
+    estado: true,
+    auditoria: LocalStorage.getAuditoria(''),
+    valorTotalContrato: 0,
+    nombreArchivo: '',
+    archivo: '',
+    accion:'Crear',
+    fechaAprobacion: null,
+  };
+
+  public detallesProcesoContratos: any = {
+    id: 0,
+    ID_Contrato: 0,
+    ID_TipoContratacion: 0,
+    ID_PlataformaContrato: 0,
+    PublicadorSECOP: true,
+    NumeroProcesoRegistradoSECOP: 0,
+    LinkContratoSECOP: '',
+    FechaAdjudicacion: '1900-01-01',
+    Estado: true,
+    auditoria: LocalStorage.getAuditoria(''),
+    FechaSuscripcion: '1900-01-01'
+  }
+
+  public Polizas: any = {
+    id: 0,
+    iD_Contrato: 0,
+    iD_TipoPoliza: 0,
+    fechaPoliza: "1900-01-01",
+    fechaAprobacion: "1900-01-01",
+    numero: 0,
+    valorTotal: 0,
+    estado: true,
+    auditoria: ""
+  }
+
+  dosDigitosFecha(n: number): string {
+    //
+    var resultado = '';
+    if (n < 10) {
+      resultado = '0' + n;
+    } else {
+      resultado = n.toString();
+    }
+    return resultado;
+  }
+
+}
+
+
+
+

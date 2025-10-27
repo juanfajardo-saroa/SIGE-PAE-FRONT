@@ -1,0 +1,589 @@
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active w-down-fit-content" style="width: 30%;">
+      <div style="color: #00A9AB ;">Asignación de complementos</div>
+    </div>
+    <div class="tab-item nothing w-down-fit-content" style="width: 70%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="resumenPanel"
+  [expanded]="resumenPanel" disabled>
+  <mat-expansion-panel-header class="h-down-100">
+    <mat-panel-title (click)="expandPanel()">
+      <div class="d-flex d-xl-block pt-3 pt-xl-0" style="float: left;">
+        <div style="float: left; background-color: #00A9AB ; padding: 10px;">
+          <div style="height: 24px; width: 24px; background-color: #ffffff;
+          border-radius: 50%; text-align: center; color: #00A9AB ; font-weight: 500; padding-top: 3px;
+          ">1</div>
+        </div>
+        <div class="margin-etiquetas-izq"
+          style="display: inline-block; background-color: #00A9AB; height: 44px; padding: 8px 0px 8px 0px; color: #ffffff;">
+          Resumen
+          <mat-icon style="color: #ffffff;" *ngIf="!panelOpenState">expand_more</mat-icon>
+          <mat-icon style="color: #ffffff;" *ngIf="panelOpenState">expand_less</mat-icon>
+        </div>
+        <div style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+        margin-left: -26px;float: right;"></div>
+      </div>
+    </mat-panel-title>
+    <mat-panel-description class="d-flex">
+      <button class="BordeRedondoAgregar ml-lg-down-0" style="margin-left: 10px; margin-top:6px;"
+        (click)="exporter.exportTable('xlsx', {fileName:'Resultados de asignación de complementos'})" mat-raised-button>
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4.png" alt="" height="20px" width="auto">
+        Descargar Excel completo</button>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="d-flex flex-auto">
+    <div class="d-flex align-items-center" style="float: left;">
+      <div style="float: left; padding: 10px;">
+        <div style="text-align: center; padding-top: 3px;">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-35.png" alt="" height="20px" width="auto">
+        </div>
+      </div>
+      <div style="display: inline-block; padding: 12px 0px 13px 0px; color: #005ACA;font-size: 13px;">
+        Resumen de la asignación de complementos entre las sedes beneficiarias de la ETC
+      </div>
+    </div>
+  </div>
+  <hr class="linea2">
+
+  <div class="row w-down-100" style="width: 50%;">
+    <div>
+      <mat-card>
+        <mat-card-content>
+          <div class="table-responsive bordesRedondos">
+            <div style="width: 100%; float: right;">
+              <div class="titletable">Municipios beneficiarios de la ETC</div>
+            </div>
+            <table mat-table [dataSource]="dataSourceMunicipios" class="left-radius bordeNone"
+              style="border-bottom: 0!important;" matSort>
+              <ng-container matColumnDef="nombre">
+                <td mat-cell *matCellDef="let element" style="padding-left: 24px;border-left: 0!important;">
+                  {{element.nombre}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="valor">
+                <td mat-cell *matCellDef="let element"
+                  style="padding-left: 24px; text-align: center;border-left: 1px solid #005ACA;border-right: 0px!important;min-width: 70px!important;">
+                  {{element.valor}}
+                </td>
+              </ng-container>
+              <tr mat-row *matRowDef="let myRowData; columns: columnNames;"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="w-down-100" style="width: 50%; float: left;">
+      <mat-card>
+        <mat-card-content>
+          <div class="table-responsive bordesRedondos">
+            <div style="width: 100%; float: right;">
+              <div class="titletable">Sedes beneficiarias de la ETC</div>
+            </div>
+            <table mat-table [dataSource]="dataSourceSedes" class="left-radius bordeNone"
+              style="border-bottom: 0!important;" matSort>
+              <ng-container matColumnDef="nombre">
+                <td mat-cell *matCellDef="let element" style="padding-left: 24px;border-left: 0!important;">
+                  {{element.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="valor">
+                <td mat-cell *matCellDef="let element"
+                  style="padding-left: 24px; text-align: center;border-left: 1px solid #005ACA;border-right: 0px!important;min-width: 70px!important;">
+                  {{element.valor}} </td>
+              </ng-container>
+              <tr mat-row *matRowDef="let myRowData; columns: columnNames;"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col2 d-flex align-items-xl-end">
+      <div class="text-left my-lg-down-0" style="font-size: 10px; margin: 20px;">
+        <p>*Completo: Todos los grados escolares tienen los complementos asignadas.
+        </p>
+        <p>**Incompleto: Hay por lo menos un grado en el que no se ha completado la asignación de complementos.
+        </p>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>
+<!-- nivel2 -->
+<br>
+<mat-expansion-panel class="tab-responsive" (opened)="panelOpenState2 = true" (closed)="panelOpenState2 = false"
+  [expanded]="sedesPanel" disabled>
+  <mat-expansion-panel-header class="h-down-100">
+    <mat-panel-title (click)="expandPanel2()">
+      <div class="d-flex d-xl-block" style="float: left;">
+        <div style="float: left; background-color: #00A9AB ; padding: 10px;">
+          <div style="  height: 24px; width: 24px; background-color: #ffffff;
+          border-radius: 50%; text-align: center; color: #00A9AB ; font-weight: 500; padding-top: 3px;
+          ">2</div>
+        </div>
+        <div class="margin-etiquetas-izq"
+          style="display: inline-block; background-color: #00A9AB ; height: 44px; padding: 8px 0px 8px 0px; color: #ffffff;">
+          Asignación de complementos
+          <mat-icon style="color: #ffffff;" *ngIf="!panelOpenState2">expand_more</mat-icon>
+          <mat-icon style="color: #ffffff;" *ngIf="panelOpenState2">expand_less</mat-icon>
+        </div>
+        <div style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+        margin-left: -26px;float: right;"></div>
+      </div>
+    </mat-panel-title>
+    <mat-panel-description>
+      <div class="col2 d-xl-block d-flex fd-down-column" [ngClass]="{'linkdisable':!getModulePermission(89,'crear')}">
+        <button class="ButtonBlue w-down-fit-content" style="margin-left: 10px; margin-top:6px;" *ngIf="!isEdit"
+          (click)="onPriorizacionAutomatizada()" mat-raised-button>
+          <mat-icon class="espaciobutton" style="color: #fff;">settings</mat-icon>
+          Priorización automatizada
+        </button>
+        <div class="text-left " style="font-size: small !important; margin: 2px; overflow: auto;">
+          <p style="font-weight: 500;">
+            La herramienta "Priorización automatizada" permite asignarle
+            complementos a varias sedes simultáneamente. Pero también
+            puede hacer el proceso sede por sede usando los filtros y la tabla.
+          </p>
+        </div>
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <br>
+
+  <div class="BordeRedondo" [formGroup]="sedesForm">
+    <div class="row BordeBottomDashed">
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Tipo de municipio</mat-card-title>
+          <mat-select class="tablaform control-md" id="tipoMunicipio" formControlName="tipoMunicipio"
+            (selectionChange)="onTipoMunicipioClick($event.value)" required placeholder="Todos">
+            <mat-option *ngFor="let item of tipoMunicipioList" [value]="item.id">{{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Municipio</mat-card-title>
+          <mat-select class="tablaform control-md" id="municipio" formControlName="municipio"
+            (selectionChange)="onMunicipioClick($event.value)" required placeholder="Todos">
+            <mat-option *ngFor="let item of divipolaList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Institución Educativa</mat-card-title>
+          <mat-select class="tablaform control-md" id="institucionEducativa" formControlName="institucionEducativa"
+            (selectionChange)="onInstitucionClick($event.value)" required placeholder="Todas">
+            <mat-option *ngFor="let item of institucionList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row BordeBottomDashed">
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Sede</mat-card-title>
+          <mat-select class="tablaform control-md" id="sede" formControlName="sede"
+            (selectionChange)="onSedeClick($event.value)" required placeholder="Todas">
+            <mat-option *ngFor="let item of sedesList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Jornada</mat-card-title>
+          <mat-select class="tablaform control-md" id="jornada" formControlName="jornada"
+            (selectionChange)="onJornadaClick($event.value)" required placeholder="Todas">
+            <mat-option *ngFor="let item of sedesJornadaList" [value]="item.id"> {{item.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Nivel educativo</mat-card-title>
+          <mat-select class="tablaform control-md" id="nivelEducativo" formControlName="nivelEducativo"
+            (selectionChange)="onNivelClick($event.value)" required placeholder="Todos">
+            <mat-option *ngFor="let item of nivelEducativoList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Zona</mat-card-title>
+          <mat-select class="tablaform control-md" id="zona" formControlName="zona"
+            (selectionChange)="onZonaClick($event.value)" required placeholder="Todas">
+            <mat-option *ngFor="let item of zonasList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Criterios de vulnerabilidad</mat-card-title>
+          <mat-select class="tablaform control-md grand" id="criteriosDeVulnerabilidad"
+            formControlName="criteriosDeVulnerabilidad"
+            (selectionChange)="onCriteriosDeVulnerabilidadClick($event.value)" required placeholder="Ninguno">
+            <mat-option *ngFor="let item of criteriosDeVulnerabilidadList" [value]="item.id"> {{item.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+      <div class="col-12 col-xl">
+        <mat-card>
+          <mat-card-title>Estado de la priorización</mat-card-title>
+          <mat-select class="tablaform control-md" id="estadoPriorizacion" formControlName="estadoPriorizacion"
+            (selectionChange)="onTipoEstadoPriorizacionClick($event.value)" required placeholder="Todos">
+            <mat-option *ngFor="let item of tipoEstadoPriorizacionList" [value]="item.id"> {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+    </div>
+    <button class="ButtonBlue2 CenterButton" mat-raised-button (click)="cleanFilters()">
+      <mat-icon class="espaciobutton" height="30px" width="auto" style="margin-right: 10px;color:#ffffff;height: 20px;
+      width: 20px;">description
+      </mat-icon>
+      Limpiar
+      filtros
+    </button>
+    <br>
+  </div>
+  <br>
+  <div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2">
+    <div style="float: left;">
+      <div style="float: left; padding: 10px;">
+        <div style="text-align: center; padding-top: 3px;">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-35.png" alt="" height="20px" width="auto">
+        </div>
+      </div>
+      <div style="display: inline-block; padding: 15px 0px 0px 0px; color: #005ACA;font-size: 13px;">
+        Resultados
+      </div>
+    </div>
+  </div>
+  <hr class="lineaR">
+  <div *ngIf="atLeastOneAlert">
+    <div style="float: left; padding: 10px; margin-top: 6px;">
+      <div style="text-align: center; padding-top: 3px;">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="30px" width="auto">
+      </div>
+    </div>
+    <div style="display: inline-block; padding: 15px 0px 0px 0px; color: red;font-size: 13px;">
+      <p> Su asignación de complementos presenta alertas. Haga click en "Ver <br> detalle" para consultar en qué
+        jornadas y
+        grados escolares se presentan las alertas. </p>
+    </div>
+  </div>
+
+  <div *ngIf="atLeastOneAlertYellow">
+    <div style="float: left; padding: 10px; margin-top: 6px;">
+      <div style="text-align: center; padding-top: 3px;">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-20.png" alt="" height="30px" width="auto">
+      </div>
+    </div>
+    <div style="display: inline-block; padding: 15px 0px 0px 0px; color: #005ACA ;font-size: 13px;">
+      <p> La matricula de la sede se ha actualizado en el SIMAT. <br>Ingrese a la sede hacer cambios en la asignación de
+        complementos </p>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+      <mat-card>
+        <mat-card-content>
+          <div class="table-responsive responsive-table-pae">
+            <table mat-table matSort matTableExporter #exporter="matTableExporter" [dataSource]="dataSourceResultados"
+              class="left-radius table-hover-disabled">
+              <ng-container matColumnDef="municipio">
+                <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; border-right: 0;">
+                  Municipio
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                  data-label="Municipio">
+                  {{element.municipio}} </td>
+              </ng-container>
+              <ng-container matColumnDef="institucionEducativa">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding-left: 0px;border-left: 1px solid #005ACA!important; "> Institución <br> Educativa
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;min-width: 290px;"
+                  data-label="I. Educativa">
+                  {{element.institucionEducativa}} </td>
+              </ng-container>
+              <ng-container matColumnDef="sede">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; min-width: 290px; ">
+                  Sede </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Sede">
+                  {{element.sede}} </td>
+              </ng-container>
+              <ng-container matColumnDef="matriculaSimat">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> Matricula <br>SIMAT
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                  data-label="M. SIMAT">
+                  {{element.matriculaSIMAT}} </td>
+              </ng-container>
+              <ng-container matColumnDef="modeloTradicional">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> Modelo de <br>
+                  operación </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                  data-label="M. operación">
+                  {{element.modeloOperacionTradicional==null?'NA': element.modeloOperacionTradicional}} </td>
+              </ng-container>
+              <ng-container matColumnDef="modeloEmergencia">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                  Modelo de operación
+                  de emergencia
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                  data-label="M. emergencia">
+                  {{element.modeloOperacionEmergencia}} </td>
+              </ng-container>
+              <ng-container matColumnDef="modalidadSugerida" style="padding-left: 0px; ">
+
+                <th mat-header-cell *matHeaderCellDef style="min-width: 190px;    padding: 0px !important;">
+                  <div class="grupo_input">
+                    <div style="float: left;padding-left: 30px;
+                    padding-top: 25px;"> Modalidad
+                      sugerida <br> según riesgo: </div>
+                    <button class="figure" mat-icon-button
+                      matTooltip="“Sugerencia basada en el diagnóstico de condiciones operativas en SiGEPAE. Sin embargo, la ETC tiene autonomía en escoger la modalidad.”"
+                      style="border: 0px !important; background: transparent !important; " matTooltipPosition="above">
+                      <!-- <mat-icon>info</mat-icon> -->
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-292.png" alt="" height="20px"
+                        width="auto">
+                    </button>
+
+                  </div>
+
+                  <br>
+
+
+
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; min-width: 190px;"
+                  data-label="M. riesgo">
+                  {{element.modalidadSugerida==null?'-':element.modalidadSugerida}} </td>
+              </ng-container>
+              <ng-container matColumnDef="racionesDiarias">
+                <th class="RightUpCorner" mat-header-cell *matHeaderCellDef style=" border-left: 0;padding-left: 0px; ">
+                  Complementos <br> diarios
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                  data-label="C. diarios">
+                  <div *ngIf="element.haveYellowAlert">
+                    Actualizar
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-20.png" alt="" height="14px" width="auto">
+                  </div>
+
+                  <div
+                    *ngIf="element.haveAlert && !element.haveYellowAlert && element.estadoPriorizacion != 'Incompleto' && element.estadoPriorizacion != 'Pendiente' && element.estadoPriorizacion != 'Aprobado' && element.estadoPriorizacion != 'Rechazado'"
+                    style="color: red;">
+                    {{element.estadoPriorizacion==null?'-': element.estadoPriorizacion}}
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px" width="auto">
+                  </div>
+
+                  <mat-icon
+                    *ngIf="!element.haveYellowAlert && (element.estadoPriorizacion == 'Incompleto' || element.estadoPriorizacion == 'Pendiente' || element.estadoPriorizacion == 'Aprobado' || element.estadoPriorizacion == 'Rechazado')"
+                    [ngStyle]="{'color': element.estadoPriorizacion == 'Incompleto' ? 'orange' : element.estadoPriorizacion == 'Pendiente' ? 'red' : element.estadoPriorizacion == 'Rechazado' ? 'red':element.estadoPriorizacion == 'Aprobado' ? 'green': 'transparent' }">
+                    circle</mat-icon>
+
+                  <div
+                    *ngIf="(!element.haveAlert && !element.haveYellowAlert) || (element.haveAlert && !element.haveYellowAlert && (element.estadoPriorizacion == 'Incompleto' || element.estadoPriorizacion == 'Pendiente' || element.estadoPriorizacion == 'Aprobado' || element.estadoPriorizacion == 'Rechazado'))">
+                    {{element.estadoPriorizacion==null?'-': element.estadoPriorizacion}}
+                  </div>
+
+
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action">
+                <th class="RightUpCorner" mat-header-cell *matHeaderCellDef> Acción </th>
+                <td mat-cell *matCellDef="let element" class="text-center">
+                  <a *ngIf="element.id_EstadoPrio ==3" [ngClass]="{'linkdisable':!getModulePermission(89,'aprobar')}"
+                    (click)="openDialog('Enviar solicitud',element)" class="m-r-10 cursor-pointer">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-32.png" alt="" height="30px"
+                      width="auto"></a>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="resultadosColumnNames"></tr>
+              <tr mat-row (click)="clickedSede(myRowData)" *matRowDef="let myRowData; columns: resultadosColumnNames;">
+              </tr>
+            </table>
+            <mat-paginator style="color:#005ACA ;" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
+              showFirstLastButtons>
+            </mat-paginator>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+</mat-expansion-panel>
+<br>
+<br>
+
+
+
+<!--
+aprobaciones -->
+<div *ngIf="getModulePermission(89,'aprobar')">
+  <div style="float: left;" [matBadge]="cantAprobaciones" [matBadgeHidden]="cantAprobaciones===0">
+    <div style="float: left; background-color: #00A9AB ; padding: 10px;">
+      <div style="  height: 24px; width: 24px; background-color: #ffffff;
+    border-radius: 50%; text-align: center; color: #00A9AB ; font-weight: 500; padding-top: 3px;
+    ">3</div>
+    </div>
+    <div class="margin-etiquetas-izq"
+      style="display: inline-block; background-color: #00A9AB ; height: 44px; padding: 8px 0px 8px 0px; color: #ffffff;">
+      Aprobaciones
+    </div>
+    <div style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+  margin-left: -26px;float: right;"></div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class="sub">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-168.png " height="30px" width="auto">
+    <span style="color:#00A9AB; font-weight: bold;">Aprobaciones pendientes</span>
+  </div>
+  <hr class="linea">
+  <br>
+  <div>
+
+    <div *ngIf="!yaCargoAprobaciones">
+
+      <div style="display: flex;">
+        <div style="padding-left:10px;">
+          <span class="textoinformativo">No hay aprobaciones pendientes</span>
+        </div>
+      </div>
+    </div>
+
+    <div [formGroup]="form" fxLayout="row wrap" *ngIf="yaCargoAprobaciones">
+
+      <div class="BordeRedondo">
+        <div class="BordeadoSup">
+          <span>Decisión de aprobación</span>
+        </div>
+        <div class="d-flex flex-lg-row flex-column-reverse">
+          <div class="borderRight border-down-md-none d-flex flex-column justify-content-center">
+            <div *ngFor="let item of AccionesAprobacionesList" style="text-align: center;">
+              <button id="accionAprobacion{{item.id}}"
+                [class]="idaccion === 0  ? 'buttonAprobar' : idaccion ===1 ? (idaccion === item.id  ? 'btverde':'buttonAprobar') :idaccion ===7 ? (idaccion === item.id   ? 'btrojo' :'buttonAprobar'):'buttonAprobar' "
+                (click)="joinRoom(item)">{{item.nombre}}</button>
+            </div>
+          </div>
+          <div class="w-100 mt-3 ml-xl-1 ml-0">
+            <div class="form-group m-0 px-lg-down-10-px">
+              <label class="TextosBlueLeft" for="formControlObservaciones">Observaciones / Justificaciones*</label>
+              <input id="observaciones" formControlName="observaciones" class="inputFull2 mx-sm-down-0 w-down-sm-100"
+                type="text" required />
+              <div
+                *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+                class="invalid-feedback">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div fxFlex="100">
+        <br>
+
+        <div fxLayout="row wrap ">
+
+          <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+            <div class="text-right ">
+              <button [ngClass]="{'linkdisable':!getModulePermission(89,'aprobar')}" [disabled]="!form.valid "
+                style="margin-left: 20px; height: 40px;" class="butonApro" (click)="mensaje()">
+
+                <span>Enviar resultado</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
+<div class="sub">
+  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-168.png " height="30px" width="auto">
+  <span style="color: #00A9AB; font-weight: bold; ">Histórico de aprobaciones</span>
+</div>
+<hr class="linea">
+<br>
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="table-responsive responsive-table-pae">
+          <div style="width: 100%; float: right;">
+            <!-- <div class="titletable">Histórico de aprobaciones</div> -->
+          </div>
+          <table mat-table [dataSource]="dataSourceAprobaciones" class="tab-responsive" matSort>
+            <ng-container matColumnDef="fecha">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                Fecha
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Fecha">
+                {{element.fecha==null?'-': (element.fecha)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="responsable">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                Responsable
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Responsable">
+                {{element.responsable==null?'-': (element.responsable)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="rol">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> Rol del
+                responsable
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Rol. Responsable">
+                {{element.rol==null?'-': (element.rol)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="accion">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> Acción
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="Acción">
+                {{element.accion==null?'-': (element.accion)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="observaciones">
+              <th class="RightUpCorner" mat-header-cell *matHeaderCellDef style=" border-left: 0;padding-left: 0px; ">
+                Observaciones / Justificaciones
+              </th>
+              <td class="p-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"
+                data-label="O. / Justificaciones">
+                {{element.observaciones==null?'-': (element.observaciones)}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsAprobaciones"></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsAprobaciones;"></tr>
+
+          </table>
+          <mat-paginator style="color:#005ACA ;" #paginator2 [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
+            showFirstLastButtons>
+          </mat-paginator>
+          <!-- <div *ngIf="isLoading"
+              style="display: flex; justify-content: center; align-items: center; background: white;">
+              <mat-progress-spinner color="primary" mode="indeterminate">
+              </mat-progress-spinner>
+            </div> -->
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

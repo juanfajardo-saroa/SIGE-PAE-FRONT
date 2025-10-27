@@ -1,0 +1,43 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Angular build output
+/dist
+/out-tsc
+/build
+
+# Node dependencies
+/node_modules
+
+# Environment files
+/src/environments/environment*.ts
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.log
+
+# Misc
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Compiled output
+*.js.map
+
+# Angular cache
+.angular/
+
+# Temporary files
+tmp/
+temp/
+
+# Local environment overrides
+.env
+.env.*

@@ -1,0 +1,172 @@
+<div class="row">
+  <div class="col-12">
+    <div class="tab-control-items d-flex">
+      <div class="tab-item" *ngFor="let item of dataPestanas">
+        <h3>{{ item.descripcion }}</h3>
+      </div>
+      <div class="flex-grow-1 tab-item-blank"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="mostrarForms.formRegistro">
+  <div class="col-12">
+    <app-registro-unico-suministro-rural [data]="dataContrato" (onSubmitEvent)="onSubmitEvent($event)">
+    </app-registro-unico-suministro-rural>
+  </div>
+</div>
+
+<div class="row" *ngIf="mostrarForms.formDetalleProceso">
+  <div class="col-12">
+    <app-detalle-proceso-contractual-suministro-rural [dataContrato]="dataContrato"
+      (finalizarEvent)="onSubmitEvent($event)" (regresarEvent)="onRegresarEvent($event)"
+      (onSubmitEvent)="onSubmitEvent($event)">
+    </app-detalle-proceso-contractual-suministro-rural>
+  </div>
+</div>
+
+<div class="row" *ngIf="mostrarForms.formCaracteristicas">
+  <div class="col-12">
+    <app-caracteristicas-financieras-suministro-rural [dataContrato]="dataContrato"
+      (finalizarEvent)="onSubmitEvent($event)" (regresarEvent)="onRegresarEvent($event)"
+      (onSubmitEvent)="onSubmitEvent($event)">
+    </app-caracteristicas-financieras-suministro-rural>
+  </div>
+</div>
+
+
+<ng-container *ngIf="mostrarForms.formInfPresupuestal">
+  <!-- <div class="panel-body">
+    <div class="pt-xxl pb-md">
+      <div class="row">
+        <div class="col clearfix" style="padding-left: 3px">
+          <app-chapterblue [numberChapter]="5" [titleChapter]="'Información presupuestal'"></app-chapterblue>
+          <br />
+        </div>
+        <div class="col clearfix text-right" style="padding: 20px">
+          <div class="msg-alerta">
+            <div>
+              <img src="./assets/images/Iconos/suministro/paso5-5.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <form class="form-default-inline">
+    <div class="panel panel-blue">
+      <div class="panel-header no-border-bottom text-center">
+        <h4 class="panel-title">
+          Registro único de Contratos - Suministro Rural
+        </h4>
+      </div>
+      <div class="panel-body nb-r">
+        <div style="padding: 20px 0 15px 0;">
+          <app-chapter-azul-bg [numberChapter]="5" [titleChapter]="'Información presupuestal'"></app-chapter-azul-bg>
+        </div>
+        <div class="form-item" style="padding-left: 15px">
+          <label class="form-label">
+            1. Fuentes de financiaci&oacute;n presupuestal destinadas a
+            cubrir el costo del contrato:
+          </label>
+          <app-informacion-presupuestal [iD_Contrato]="dataContrato.id" [TipoFuncionalida]="1"
+            (finalizarEvent)="onSubmitEvent($event)" (regresarEvent)="onRegresarEvent($event)"
+            (onSubmitEvent)="onSubmitEvent($event)" (data)="actualizarGranTotal($event)">
+          </app-informacion-presupuestal>
+        </div>
+
+        <div class="form-item">
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label class="form-label width-titulo-suma-totales">
+                2. Suma total de las fuentes de financiaci&oacute;n
+                registradas:
+              </label>
+              <input type="text" class="col-3 input-text disabledWithoutOpacity" name="txtSumaTotalFuentesFinanciacion"
+                [ngModel]="dataTotalGeneralContratado.totalFuentesFinanciacion | currency: '$' : 'symbol' : '1.0-2'"
+                placeholder="Autom&aacute;tico" />
+            </div>
+
+            <div class="col-12 d-flex">
+              <div class="warning-container">
+                <div class="d-flex align-items-center container-icon">
+                  &nbsp;&nbsp;
+                  <img style="width: 50px; height: 50px" src="../assets/images/Iconos/alert.png" /> &nbsp;&nbsp;
+                  <br>
+                  <label for="exampleFormControlInput1" class="labelred" style="color: rgb(228, 52, 102)">
+                    Aseg&uacute;rese de que el valor total de las fuentes de
+                    financiaci&oacute;n coincida con el valor total del
+                    contrato.
+                  </label>
+                </div>
+              </div>
+              <div class="col-3 px-0 ml-2">
+                <div style="border-bottom: 1px solid rgb(228, 52, 102);
+                              border-left: 1px solid rgb(228, 52, 102);
+                              border-right: 1px solid rgb(228, 52, 102);
+                              border-radius: 10px 10px 0px 0px;">
+                  <div class="text-center" style="border-radius: 10px 10px 0px 0px;
+                                                    background-color: rgb(228, 52, 102);">
+                    <h6 class="panel-title" style="color: white">
+                      COSTO TOTAL
+                    </h6>
+                  </div>
+                  <div class="text-center">
+                    <h6 class="panel-title" id="lblCostoTotal" style="color: rgb(228, 52, 102)">
+                      {{ dataTotalGeneralContratado.valorTotal | currency: '$' : 'symbol' : '1.0-2' }}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-item col-6">
+          <label for="exampleFormControlInput1" class="form-label float-left">
+            3. PDF del contrato: &nbsp;&nbsp;&nbsp;
+          </label>
+          <div style="display: inline-block; overflow: hidden;">
+            <div class="btn-fileUpload" (click)="uploadPDF()">
+              <span>Adjunte el archivo</span>
+              <img class="float-right ml-3" src="../assets/images/Iconos/input-file.png">
+              <input class="" type="file" id="fileUpload" name="fileUpload" accept="application/pdf">
+            </div>
+            <a class="visorPDF" (click)="abrirPDF(modalPDF)"
+              *ngIf="dataContrato.nombreArchivoContrato && dataContrato.nombreArchivoContrato != ''">
+              {{dataContrato.nombreArchivoContrato}}
+            </a>
+            <!-- <label *ngIf="dataContrato.nombreArchivoContrato.touched" class=" label"
+            style="color:red">El pdf del contrato es requerido</label> -->
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer pt-xxl pb-xxl">
+        <div class="row">
+          <div class="col-12 col-md-6 text-left">
+            <a class="btn btn-blue" (click)="guardarContinuar()">Guardar y continuar más tarde</a>
+          </div>
+          <div class="col-12 col-md-6 text-right">
+            <a class="btn btn-blue" (click)="onRegresarEvent($event)">Anterior</a>
+            <a class="btn btn-blue ml-3" (click)="guardarSiguiente7()">Finalizar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>
+
+<ng-template #modalPDF>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>
+<!-- (data)="actualizarGranTotal($event)" -->

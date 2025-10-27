@@ -1,0 +1,220 @@
+<style>
+	.table-row-expand tbody tr td {
+		border-right: none !important;
+	}
+
+	.table-row-expand tbody tr td:last-child {
+		border-right: 1px solid #005ACA !important;
+	}
+</style>
+<div [ngClass]="{'linkdisable':!getModulePermission(98,'ver')}">
+	<app-titulo-tab [titulo]="'Programa Anual de Caja (PAC)'"></app-titulo-tab>
+
+	<div class="row">
+		<div class="col-12">
+			<div style="margin-top: 20px; float: left;">
+				<table class="table-fuentefinanciacion-resumen">
+					<tr>
+						<th class="th-title" width="40%" rowspan="2">Presupuesto General de la Naci&oacute;n</th>
+						<th width="30%">Ingresos asignados</th>
+					</tr>
+					<tr>
+						<td>{{ ingresosAsignados | currency: '$' : 'symbol' : '1.0-2' }}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="ml-lg-down-0" style="margin-top: 23px; margin-left: 20px; float: left;">
+				<button class="btn-consultar-resoluciones" (click)="consultarResoluciones()">
+					<div style="float: left; margin-right: 5px;"><img
+							src="../../../../../../assets/images/Iconos/consulta_blue.png"></div>
+					<div>Consultar<br> Resoluciones</div>
+				</button>
+			</div>
+		</div>
+	</div><br /><br />
+
+	<div *ngIf="editar==false" class="row">
+		<div class="col-12 pr-down-0">
+			<div class="text-right">
+				<button class="btn pr-down-0" (click)="EditarPac()" *ngIf="getModulePermission(98,'editar')"
+					style="border: 0px;">
+					<div class="mr-lg-down-0" style="margin-right: 5px;"><img
+							src="../../../../../../assets/images/Iconos/editarPac.png"></div>
+				</button>&nbsp;&nbsp;&nbsp;
+				<button class="btn pr-down-0" style="border: 0px;">
+					<div class="mr-lg-down-0" style="margin-right: 5px;"><img
+							src="../../../../../../assets/images/Iconos/notificarUAPA.png"></div>
+				</button>&nbsp;&nbsp;&nbsp;
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div *ngIf="editar==true" class="row">
+		<div class="col-12 pr-down-0">
+			<div class="text-right">
+				<button class="btn pr-down-0" (click)="cancelarPac()" style="border: 0px;">
+					<div class="mr-lg-down-0" style="margin-right: 5px;"><img
+							src="../../../../../../assets/images/Iconos/cancelar.png"></div>
+				</button>&nbsp;&nbsp;
+				<button class="btn pr-down-0" (click)="guardarPac()" *ngIf="getModulePermission(98,'crear')"
+					style="border: 0px;">
+					<div class="mr-lg-down-0" style="margin-right: 5px;"><img
+							src="../../../../../../assets/images/Iconos/guardar1.png"></div>
+				</button>&nbsp;&nbsp;
+				<button class="btn px-lg-down-0" style="border: 0px;">
+					<div class="mr-lg-down-0" style="margin-right: 5px;" (click)="guardarNotificar()"
+						*ngIf="getModulePermission(98,'crear')"><img
+							src="../../../../../../assets/images/Iconos/guardarNotificarUAPA1.png"></div>
+				</button>&nbsp;&nbsp;
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="editar==false" class="col-12 responsive-table-pae" style="margin-top: 20px;">
+		<table class="table-row-expand">
+			<thead>
+				<ng-container>
+					<tr>
+						<th width="10%">Mes</th>
+						<th width="20%">Solicitado por ETC</th>
+						<th width="20%">Transferido por UAPA</th>
+						<th width="10%">Fecha de transferencia</th>
+						<th width="10%">No. orden de pago</th>
+						<th width="30%">Diferencia <br> (Transferido – solicitado) </th>
+					</tr>
+				</ng-container>
+			</thead>
+			<tbody>
+				<ng-container *ngFor="let item of dataSource">
+					<tr *ngIf="item.giroConfirmado == 0 && item.giroProyectado > 0" class="color-base-SiGEPAE">
+						<td data-label="Mes" class="text-center color-base-SiGEPAE">{{ item.mesTexto }}</td>
+						<td data-label="Sol. ETC" class="text-center color-base-SiGEPAE">{{ item.giroProyectado |
+							currency:
+							'$' : 'symbol' : '1.0-2'}}</td>
+						<td data-label="Transf. UAPA" class="text-center color-base-SiGEPAE">Pendiente</td>
+						<td data-label="F. transferencia" class="text-center color-base-SiGEPAE">Pendiente</td>
+						<td data-label="No. orden de pago" class="text-center color-base-SiGEPAE">Pendiente</td>
+						<td data-label="Diferencia (TRANS - SOL)"
+							class="text-center color-base-SiGEPAE border-right-down-none">Pendiente</td>
+					</tr>
+
+					<tr *ngIf="item.giroConfirmado > 0 && item.giroProyectado > 0 ">
+						<td data-label="Mes" class="text-center">{{ item.mesTexto }}</td>
+						<td data-label="Sol. ETC" *ngIf="item.giroProyectado == 0" class="text-center">Pendiente</td>
+						<td data-label="Sol. ETC" *ngIf="item.giroProyectado > 0" class="text-center">{{
+							item.giroProyectado
+							| currency: '$' : 'symbol' :
+							'1.0-2'}}</td>
+						<td data-label="Transf. UAPA" class="text-center">{{ item.giroConfirmado | currency: '$' :
+							'symbol'
+							: '1.0-2'}}</td>
+						<td data-label="F. transferencia" class="text-center">{{ item.fechaGiro }}</td>
+						<td data-label="No. orden de pago" class="text-center">{{ item.documentoGiro }}</td>
+						<td data-label="Diferencia (TRANS - SOL)" class="text-center border-right-down-none">{{
+							(item.diferencia ) | currency: '$' : 'symbol' : '1.0-2'}}</td>
+					</tr>
+
+					<tr *ngIf="item.giroProyectado == 0 ">
+						<td data-label="Mes" class="text-center">{{ item.mesTexto }}</td>
+						<td data-label="Sol. ETC" class="text-center">Pendiente</td>
+						<td data-label="Transf. UAPA" class="text-center">-</td>
+						<td data-label="F. transferencia" class="text-center">-</td>
+						<td data-label="No. orden de pago" class="text-center">-</td>
+						<td data-label="Diferencia (TRANS - SOL)" class="text-center border-right-down-none">-</td>
+					</tr>
+
+				</ng-container>
+			</tbody>
+			<tfoot>
+
+				<tr>
+					<td>Total</td>
+					<td>{{ totalSolicitado | currency: '$' : 'symbol' : '1.0-2' }}</td>
+					<td>{{ totalTransferido | currency: '$' : 'symbol' : '1.0-2' }}</td>
+					<td></td>
+					<td></td>
+					<td>{{ totalDiferencia | currency: '$' : 'symbol' : '1.0-2' }}</td>
+				</tr>
+
+			</tfoot>
+		</table>
+	</div>
+
+
+	<div *ngIf="editar==true" class="col-12 responsive-table-pae" style="margin-top: 20px;">
+		<table class="table-row-expand">
+			<thead>
+				<ng-container>
+					<tr>
+						<th width="10%">Mes</th>
+						<th width="20%">Solicitado por ETC</th>
+						<th width="20%">Transferido por UAPA</th>
+						<th width="10%">Fecha de transferencia</th>
+						<th width="10%">No. orden de pago</th>
+						<th width="30%">Diferencia <br> (Transferido – solicitado) </th>
+					</tr>
+				</ng-container>
+			</thead>
+			<tbody>
+				<ng-container *ngFor="let item of dataSource">
+					<tr *ngIf="item.giroConfirmado == 0 && item.giroProyectado >= 0 && item.estado == 1"
+						class="color-base-SiGEPAE">
+						<td data-label="Mes" class="text-center color-base-SiGEPAE">{{ item.mesTexto }}</td>
+						<td data-label="Sol. ETC" class="text-center color-base-SiGEPAE">{{ item.giroProyectado |
+							currency:
+							'$' : 'symbol' : '1.0-2'}}</td>
+						<td data-label="Transf. UAPA" class="text-center color-base-SiGEPAE">Pendiente</td>
+						<td data-label="F. transferencia" class="text-center color-base-SiGEPAE">Pendiente</td>
+						<td data-label="No. orden de pago" class="text-center color-base-SiGEPAE">Pendiente</td>
+						<td data-label="Diferencia (TRANS - SOL)" class="text-center color-base-SiGEPAE">Pendiente</td>
+					</tr>
+					<tr *ngIf="item.estado == 0 && item.editar == true">
+						<td data-label="Mes" class="text-center">{{ item.mesTexto }}</td>
+						<td data-label="Sol. ETC" class="text-center">
+							<input type="number" (keypress)="soloNumeros($event)" placeholder="Ingrese cantidad"
+								[(ngModel)]="item.giroProyectado" style="min-width:80px; border:1px solid"
+								class="form-label-input">
+						</td>
+						<td data-label="Transf. UAPA" class="text-center">-</td>
+						<td data-label="F. transferencia" class="text-center">-</td>
+						<td data-label="No. orden de pago" class="text-center">-</td>
+						<td data-label="Diferencia (TRANS - SOL)" class="text-center">-</td>
+					</tr>
+					<tr *ngIf="item.estado == 0 && item.editar == false">
+						<td data-label="Mes" class="text-center">{{ item.mesTexto }}</td>
+						<td data-label="Sol. ETC" class="text-center">{{ item.giroProyectado | currency: '$' : 'symbol'
+							:
+							'1.0-2'}}</td>
+						<td data-label="Transf. UAPA" class="text-center">{{ item.giroConfirmado | currency: '$' :
+							'symbol'
+							: '1.0-2'}}</td>
+						<td data-label="F. transferencia" class="text-center">{{ item.fechaGiro }}</td>
+						<td data-label="No. orden de pago" class="text-center">{{ item.documentoGiro }}</td>
+						<td data-label="Diferencia (TRANS - SOL)" class="text-center">{{ item.diferencia | currency: '$'
+							:
+							'symbol' : '1.0-2'}}</td>
+					</tr>
+
+
+				</ng-container>
+			</tbody>
+			<tfoot>
+
+				<tr>
+					<td>Total</td>
+					<td>{{ totalSolicitado | currency: '$' : 'symbol' : '1.0-2' }}</td>
+					<td>{{ totalTransferido | currency: '$' : 'symbol' : '1.0-2' }}</td>
+					<td></td>
+					<td></td>
+					<td>{{ totalDiferencia | currency: '$' : 'symbol' : '1.0-2' }}</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div></div>
+
+	<app-spinner *ngIf="loadingVisible"></app-spinner>
+</div>

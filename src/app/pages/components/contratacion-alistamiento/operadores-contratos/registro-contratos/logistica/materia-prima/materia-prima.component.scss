@@ -1,0 +1,41 @@
+@import '/src/assets/styles/variable.scss';
+@import '../../../../../../../../assets/sass/theme/table-sigepae';
+
+#input-nombre-producto {
+    width: 100% !important;
+}
+
+#input-unidades-compradas {
+    width: 100% !important;
+}
+
+#input-valor-unitario {
+    width: 100% !important;
+}
+
+#input-valor-total {
+    width: 100% !important;
+}
+
+.container_cell{
+  display: inline-block;
+  min-width: 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 5px
+}
+
+.div-label{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+
+td[data-label="Valor total"] {
+  border-right: 1px solid $base-color;
+}
+
+

@@ -1,0 +1,242 @@
+<style>
+  .tableFiltroRolpermiso {
+    border-spacing: 0;
+    color: #005ACA;
+  }
+
+  .tableFiltroRolpermiso td {
+    text-align: center;
+    font-size: 13px !important;
+    color: #005ACA !important;
+    padding: 2.5px 10px;
+    border-top: 1px solid #005ACA;
+    border-right: 1px solid #005ACA;
+    border-bottom: 1px solid #005ACA;
+  }
+
+  .tableFiltroRolpermiso td b {
+    color: #005ACA;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroRolpermiso td div {
+    color: #005ACA;
+    font-weight: 500;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroRolpermiso td:first-child {
+    border-left: 1px solid #005ACA;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .tableFiltroRolpermiso td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .tableRolpermisos th,
+  .tableRolpermisos td {
+    font-size: 13px;
+  }
+
+  table.tableRolpermisos thead th:last-child {
+    border-top-right-radius: 20px !important;
+  }
+
+
+  table.tableFormRolpermisos tr td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: #005ACA;
+    font-size: 14px;
+  }
+
+  table.tableFormRolpermisos tr td:first-child {
+    padding-left: 35px;
+  }
+
+  table.tableFormRolpermisos tr td:last-child {
+    padding-right: 35px;
+  }
+
+  input,
+  select {
+    border: 1px #005ACA solid;
+    padding: 3px 10px;
+    width: 100%;
+    color: #005ACA;
+  }
+
+  input:not(.noRadius),
+  select:not(.noRadius) {
+    border-radius: 5px;
+  }
+
+  .cssForm {
+    font-size: 12px;
+  }
+
+  i {
+    font-style: normal;
+  }
+
+  .tableFiltroRolpermiso i {
+    font-size: 25px;
+  }
+
+  .btn.btn-middle {
+    background-color: aliceblue;
+    border: 1px solid aliceblue;
+  }
+
+  .btn.btn-high {
+    background-color: #005ACA !important;
+    border: 1px solid #005ACA !important;
+  }
+
+  .title-busqueda-rolpermiso {
+    padding: 0;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #E23465;
+  }
+
+  .title-busqueda-rolpermiso label {
+    color: #E23465;
+    margin-bottom: 2px;
+  }
+
+  .btn-registrar {
+    color: #005ACA;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .linkdisable{
+    pointer-events: none;
+    visibility: hidden;
+}
+
+</style>
+
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #E23465;">Rol Permiso</div>
+    </div>
+    <div class="tab-item nothing" style="width: 69.5%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="col-12" style="margin-top: 20px; padding: 0%;">
+  <div>
+    <table class="tableFiltroRolpermiso">
+      <tr class="text-center">
+        <td>
+          Utilice cualquier campo de la tabla para buscar Rolpermisos. Si no aparecen, <b>regístrelos</b> en el
+          sistema.
+        </td>
+        <td>
+          Filtro
+          <input (keyup)="applyFilter($any($event).target.value)" type="text" class="">
+        </td>
+        <td>
+          <a (click)="applyFilter('')">
+            <img src="../../../../../../assets/images/Iconos/eye_blue.png">
+            <div>Ver listado completo</div>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col-12 title-busqueda-rolpermiso">
+    <label><img src="../../../../../../assets/images/Iconos/user_red.png"> Resultados de la b&uacute;squeda de
+      Rolpermisos</label>
+  </div>
+
+  <div class="col-12" style=" padding: 0%;">
+    <table mat-table [dataSource]="dataSource" class="tableRolpermisos left-radius right-radius">
+      <ng-container matColumnDef="sid_Rol">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Rol</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+          {{element.sid_Rol}} </td>
+      </ng-container>
+      <ng-container matColumnDef="sid_Modulo">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Modulo</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+          {{element.sid_Modulo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ver">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Ver</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+          <mat-checkbox disabled [checked]="element.ver">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="crear">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Crear</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+          <mat-checkbox disabled [checked]="element.crear">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="editar">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Editar</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+          <mat-checkbox disabled [checked]="element.editar">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="eliminar">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Eliminar</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+          <mat-checkbox disabled [checked]="element.eliminar">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="aprobar">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Aprobar</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+          <mat-checkbox disabled [checked]="element.aprobar">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="imprimir">
+        <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Imprimir</b></th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+          <mat-checkbox disabled [checked]="element.imprimir">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" style="text-align: center; padding: 0 5px;">
+          <a (click)="openDialog('Actualizar',element)">
+            <img src="../../../../../../assets/images/Iconos/edit_blue.png">
+          </a>
+          <a (click)="openDialog('Eliminar',element)" style="margin-left: 3px;">
+            <img src="../../../../../../assets/images/Iconos/delete_blue.png">
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let myRowData; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+  <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+    <div class="text-right ">
+
+      <a class="btn-registrar" (click)="openDialog('Adicionar',{})"  [ngClass]="{'linkdisable':!getModulePermission(21,'crear')}"><img
+          src="../../../../../../assets/images/Iconos/add_blue.png"> Registrar Rolpermiso</a>
+    </div>
+  </div>
+</div>

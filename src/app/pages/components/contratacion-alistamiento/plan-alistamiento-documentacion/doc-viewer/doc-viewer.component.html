@@ -1,0 +1,179 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>Revisar archivo</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="marginDialog">
+  <pdf-viewer [src]="pdfSrc" [render-text]="true" [original-size]="false" [fit-to-page]="true"
+    style="width: 100%; height: 500px"></pdf-viewer>
+  <div class="AlingTitle">
+    <div class="FloatL">
+      <div class="NumeroPendienteColor">
+        <div class="NumeroPendiente"> 1 </div>
+      </div>
+      <div class="FondoR"> Versiones anteriores </div>
+      <div class="FinalRedondo"></div>
+    </div>
+  </div>
+  <div class="sizeTableDoc">
+    <table [dataSource]="dataSource" class="table-default" mat-table matSort>
+      <ng-container matColumnDef="FechaArchivo">
+        <th mat-header-cell *matHeaderCellDef>Fecha en la que se <br> subió al sistema</th>
+        <td mat-cell *matCellDef="let element"> {{ (element.fechaVersion | date:'dd-MMM-yyyy' |
+          uppercase | withoutDots)}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Archivo">
+        <th mat-header-cell *matHeaderCellDef>Archivo adjunto</th>
+        <td mat-cell *matCellDef="let element">
+          <button class="buttonImg btn-file" (click)="downloadFile(element.pathDocumento, element.nombreArchivo)">
+            Revisar archivo
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-87.png " height="15px" width="auto">
+            <p class="textButtonImg">{{element.nombreArchivo}}</p>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <div *ngIf="showAprobaciones" [ngClass]="{'linkdisable':!getModulePermission(73,'aprobar')}">
+    <div class="AlingTitle2">
+      <div style="float: left;" [matBadge]="cantAprobaciones" [matBadgeHidden]="cantAprobaciones===0">
+        <div fxLayout="row wrap" style="margin-bottom: 7%;">
+          <div class="FloatL">
+            <div class="NumeroPendienteColor">
+              <div class="NumeroPendiente"> 2 </div>
+            </div>
+            <div class="FondoR">Aprobaciones</div>
+            <div class="FinalRedondo"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>
+      <br>
+      <br>
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-131.png" height="30px" width="auto">
+      <span class="SizeImgText">Aprobaciones pendientes</span>
+    </div>
+    <hr class="lineR">
+    <div *ngIf="!yaCargoAprobaciones">
+      <div style="display: flex;">
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-21.png" height="30px" width="auto" class="sizeImg">
+        <span style="width: 45% !important;">El documento estará listo para ser aprobado / rechazado una vez
+          haya diligenciado el formulario y se encuentre en estado “Por Aprobar”.
+        </span>
+      </div>
+    </div>
+    <div *ngIf="yaCargoAprobaciones">
+      <div [formGroup]="form" fxLayout="row wrap">
+        <div fxFlex="100">
+          <table class="bordeado">
+            <ng-container>
+              <tr>
+                <td colspan="2" class="BordeadoSup">Decisión de aprobación</td>
+              </tr>
+              <tr class="TablaObservacion BordeadoInf">
+                <td class="BordeNone">
+                  <div *ngFor="let item of AccionesAprobacionesList" style="text-align: center;">
+                    <button id="accionAprobacion{{item.id}}" value="{{item.id}}"
+                      [class]="idaccion === 0  ? 'buttonAprobar' : idaccion ===1 ? (idaccion === item.id  ? 'btverde':'buttonAprobar') :idaccion ===7 ? (idaccion === item.id   ? 'btrojo' :'buttonAprobar'):'buttonAprobar' "
+                      (click)="joinRoom(item)">{{item.nombre}}</button>
+                  </div>
+                </td>
+                <td class="inputFull">
+                  <div>
+                    <div class="TextosBlueLeft3"> Observaciones / Justificaciones:</div>
+                  </div>
+                  <input id="observaciones" formControlName="observaciones" class="form-control inputFull2" type="text"
+                    required />
+                  <div
+                    *ngIf="form.get('observaciones').invalid && (form.get('observaciones').dirty || form.get('observaciones').touched)"
+                    class="invalid-feedback">
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+          <br>
+          <div fxLayout="row wrap">
+            <div style="width: 100%; float: right;" class="align-items-center textagregar">
+              <div class="text-right">
+                <button [disabled]="!form.valid " style="margin-left: 20px; height: 40px;" (click)="mensaje()">
+                  <span>Enviar resultado</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-131.png" height="30px" width="auto">
+      <span class="SizeImgText">Histórico de aprobaciones</span>
+    </div>
+    <hr class="lineR">
+    <div fxLayout="row wrap">
+      <div fxFlex="100">
+        <mat-card>
+          <mat-card-content>
+            <table mat-table [dataSource]="dataSourceAprobaciones" class="left-radius" matSort>
+              <ng-container matColumnDef="fecha">
+                <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Fecha
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.fecha==null?'-': (element.fecha) }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="responsable">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Responsable </th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.responsable==null?'-': (element.responsable)}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="rol">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Rol del responsable
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.rol==null?'-': (element.rol)}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Acción
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.accion==null?'-': (element.accion)}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="observaciones">
+                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; ">
+                  Observaciones / Justificaciones
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.observaciones==null?'-': (element.observaciones)}}
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsAprobaciones"></tr>
+              <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsAprobaciones;"></tr>
+            </table>
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+            </mat-paginator>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

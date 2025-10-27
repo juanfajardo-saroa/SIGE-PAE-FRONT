@@ -1,0 +1,165 @@
+<form class="form-default-inline" [formGroup]="myForm" (ngSubmit)="onSubmit($event)" autocomplete="off">
+    <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+            <h4 class="panel-title">
+                Registro único de Contratos - Suministro Rural
+            </h4>
+        </div>
+        <div class="panel-body nb-r">
+            <div style="padding: 20px 0 15px 0;">
+                <app-chapter-azul-bg [numberChapter]="2" [titleChapter]="'Características financieras'">
+                </app-chapter-azul-bg>
+            </div>
+
+            <div class="form-item" style="padding-left: 15px">
+                <label class="form-label" style="margin-left: 6px">
+                    1. Valor total del contrato:
+                </label>
+                <div class="inline-block">
+                    <input class="input-text" name="txtValorTotalContrato" style="width: 180px !important;"
+                        formControlName="valorTotalContrato" required   />
+                    <div class="color-invalid" *ngIf="!getValid('valorTotalContrato')">Seleccione una opción</div>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="form-label mr-2">
+                    2. Precios acordados por tipo de complemento y modalidad:
+                </label>
+                <div class="text-center mt-sm">
+                    <div class="flex-h border-dashed">
+                        <div class="flex-h-item">
+                            Estado del diligenciamiento:
+                        </div>
+                        <div class="flex-h-item">
+                            <span class="bg-circle bg-grey-light"></span>
+                            Pendiente por diligenciar
+                        </div>
+                        <div class="flex-h-item">
+                            <span class="bg-circle bg-yellow"></span>
+                            Incompleto
+                        </div>
+                        <div class="flex-h-item">
+                            <span class="bg-circle bg-green"></span>
+                            Completo
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-control-3 mt-md">
+                    <div class="tab-control-header">
+                        <div class="tab-item selected" style="width: 45%">
+                            <div class="flex align-items-center justify-content-center">
+                                <div>
+                                    <span *ngIf="myForm.get('iD_EstadoContrato').value == 0"
+                                        class="bg-circle bg-grey-light"></span>
+                                    <span *ngIf="myForm.get('iD_EstadoContrato').value == 1"
+                                        class="bg-circle bg-yellow"></span>
+                                    <span *ngIf="myForm.get('iD_EstadoContrato').value == 2"
+                                        class="bg-circle bg-green"></span>
+                                </div>
+                                <label class="form-label mx-2">
+                                    <img style="width: 20px; height: 20px;" src="./assets/iconos_PAE/PNG/Iconos_PAE-204.png">
+                                    MAER
+                                  </label>
+                            </div>
+                        </div>
+                        <div class="tab-item" style="width: 55%"></div>
+                    </div>
+                    <div class="tab-control-body">
+                        <div class="form-item">
+                            <label class="mb-xs">2.1. Precios acordados por tipo de complemento y modalidad:</label>
+                            <div class="row mt-sm">
+                                <div class="col-12">
+                                  <button class="btn btn-blue" [disabled]="editRacPrecio" (click)="editarRacPrecio()">Editar</button>
+                                </div>
+                              </div>
+                            <app-table-jornada-ps-cct-cualificado [dataSource]="dataPreciosAcordados" [editar]="editRacPrecio">
+                            </app-table-jornada-ps-cct-cualificado>
+                            <label class="mt-xs">* Si el contrato NO incluye complementos para alguna modalidad, ingrese el valor “cero” 0</label>
+                            <div class="row mt-xs pl-xxl">
+                                <div class="col-12 text-right" *ngIf="editRacPrecio" [class]="itemUtil.col_CSS_Rac">
+                                  <button class="btn btn-white" (click)="cancelarEditRacPrecio()">Cancelar</button>
+                                  <button class="btn btn-blue ml-sm" (click)="guardarEditRacPrecio(2)">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <label class="text-basered">
+                                De acuerdo con la cantidad de complementos establecida en el contrato y el precio de los mismos, el costo total del suministro Rural para las sedes beneficiarias es:
+                            </label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <app-table-jornada-costo
+                                        [dataSource]="dataJornadaCosto"
+                                        [editar]="false">
+                                    </app-table-jornada-costo>
+                                </div>
+                            </div>
+                            <div class="form-item row d-flex" *ngIf="sumtotalcontratomaer != dataTotalGeneralContratado.valorTotal || valTotalRubros!=0" >
+                                <div class="col flex align-items-center">
+                                  <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                                    [textColor]="'text-basered'" [message]="'El valor total del contrato ingresado en el formulario NO coincide con el valor total calculado por el sistema. ¿Desea agregar rubros adicionales?'">
+                                  </app-alert-message>
+                                </div>
+                                <div class="col">
+                                  <div class="inline-block form-checkbox-red ml-xs">
+                                    <label id="RubrosAddSi" class="check-si-red" [class]="rubroAdd ? 'active' : ''"
+                                        (click)="disableRubrosAdd($event, 'rubroAdd', true)">
+                                        Si
+                                    </label>
+                                    <label id="RubrosAddNo" class="check-no-red" [class]="!rubroAdd ? 'active' : ''"
+                                        (click)="disableRubrosAdd($event, 'rubroAdd', false)">
+                                        No
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div *ngIf="rubroAdd" class="form-item">
+                                <label class="form-label">
+                                   3. Rubros adicionales:
+                                </label>
+                                <app-rubros-adicionales [ValorTotalServicios]="sumtotalcontratomaer"
+                                   [ValorContrato]="myForm.get('valorTotalContrato').value" [IdContrato]="dataContrato.id"
+                                   (ValRubros)="validaRespuestaRubros($event,rubroAdd)">
+                                </app-rubros-adicionales>
+                             </div>
+                             <div  class="form-item row">
+                                <div  class="row" style="padding: 5px 10px 0 0px;">
+                                    <div class="col-4">
+                                      <app-costo-total-tab [Titulo]="rubroAdd ? 'VALOR TOTAL DEL CONTRATO\n(Total + Rubros Adicionales)' : 'VALOR TOTAL DEL CONTRATO'"
+                                          [TotalGeneral]="sumtotalcontratomaer + valTotalRubros" [Orientacion]="'H'">
+                                      </app-costo-total-tab>
+                                    </div>
+                                    <div class="col-4">
+                                      <app-alert-message
+                                          [imgSize]="'sm'" [textSize]="'sm'"  [aligment]="'H'"                         [textColor]="'text-basered'"
+                                          [message]="'Asegurese que el valor del contrato ingresado en el formulario, coincida con el valor total calculado por el sistema.'">
+                                      </app-alert-message>
+                                    </div>
+                                </div>
+                               </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col clearfix">
+                    <button class="btn btn-blue" (click)="finalizar()">
+                        Guardar y continuar m&aacute;s tarde
+                    </button>
+                </div>
+                <div class="col clearfix">
+                    <button class="btn btn-blue" (click)="regresar()">
+                        Anterior
+                    </button>
+                    <button class="btn btn-blue ml-sm" (click)="onSubmitSig($event)" value="Siguiente" [disabled]="sumtotalcontratomaer + valTotalRubros!=  myForm.get('valorTotalContrato').value" >
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

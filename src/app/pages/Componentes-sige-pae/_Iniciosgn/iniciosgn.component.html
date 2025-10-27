@@ -1,0 +1,52 @@
+<body *ngIf="validaInicio == 'false'">
+  <div class="row">
+    <div class="col-xl-5 col-lg-12 imagensubsistemas TitleBlue">
+      <!-- <br>
+            Unidad Administrativa Especial de Alimentación Escolar
+            <br>
+            <br>-->
+      <img src="../../../../../../assets/images/FotosPAE-03.png" alt="systemspage"
+        style="background-position: center;width: 100%;height: 100%;" class="imagensubsistemas">
+      <!-- <img src="../../../../../../assets/images/subsistemas.jpg" alt="systemspage"
+        style="width:-webkit-fill-available !important;background-size: 60% 100%; background-position: unset;"
+        class="imagensubsistemas"> -->
+    </div>
+    <div class="col-xl-7 col-12">
+      <div class="ImageMapa">
+        <img class="mapa" src="../../../../assets/iconos_PAE/PNG/Iconos_PAE-1.png" alt="systemspage" height="10%"
+          width="15%" style="margin-top: 5%;">
+      </div>
+      <div class="TextCenterBlue text-size-lg-down-1_2">
+        Bienvenido(a) al módulo administrativo <br> del SiPAE, ¿Qué desea hacer?
+        <br>
+      </div>
+      <div class="row">
+        <div class="col-sm col-12">
+          <mat-card (click)="onConsultarClick()">
+            <mat-card-header class="TitleDialogMiPAE">
+              <div class="TextCenter">
+                Consultar
+              </div>
+            </mat-card-header>
+            <mat-card-content class="TextCenterPAE BorderCardPAE">
+              Información detallada y consolidada sobre la ejecución del PAE en las ETCs y ETs
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-sm col-12">
+          <mat-card (click)="onCGestionarClick()">
+            <mat-card-header class="TitleDialogSIGEPAE ">
+              <div class="TextCenter">
+                Gestionar
+              </div>
+            </mat-card-header>
+            <mat-card-content class="TextCenterSIGEPAE BorderCardSIGEPAE">
+              Usuarios, vigencias, documentos, canales de comunicación, recursos y aprobaciones
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+</body>

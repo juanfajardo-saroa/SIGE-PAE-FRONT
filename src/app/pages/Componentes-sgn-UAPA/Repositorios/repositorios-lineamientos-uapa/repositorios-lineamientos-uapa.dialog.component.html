@@ -1,0 +1,542 @@
+<div class="SizeDialog2">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td style="font-size:13px ;">
+            Nuevo Recurso
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div>
+      <div class="SizeDialog">
+        <div>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+              <br />
+              <div *ngIf="action == 'Adicionar'">
+                <div *ngIf="viewActiva == 0">
+                  <form (ngSubmit)="onSubmit()" #ResolucionForm="ngForm" autocomplete="off">
+
+                    <div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">Tipo de recurso:<span style="color:red;">* </span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0" *ngIf="!mesajesalert " >
+                            <select class="tablaform " name="idCategoria" [value]="RepositoriosObject.idCategoria" [(ngModel)]="RepositoriosObject.idCategoria"
+                              #idCategoria="ngModel" required>
+                              <option value="" selected>Elija una opci&oacute;n</option>
+                              <option *ngFor="let i of CategoriasList" [ngValue]="i.id">{{ i.nombre }}</option>
+                            </select>
+                          </div>
+                          <div class=" margenadentro2 pr-down-0" *ngIf="mesajesalert " >
+                          <select   class="tablaform aletainput " name="idCategoria" [value]="RepositoriosObject.idCategoria" [(ngModel)]="RepositoriosObject.idCategoria"
+                          #idCategoria="ngModel" required>
+                          <option value="" selected>Elija una opci&oacute;n</option>
+                          <option *ngFor="let i of CategoriasList" [ngValue]="i.id">{{ i.nombre }}</option>
+                        </select>
+                        </div>
+                          <label *ngIf="mesajesalert" class="label" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">Nombre:<span style="color:red;">* </span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0" *ngIf="!mesajesalert2 ">
+                            <input id="nombre" type="text" [ngModel]="RepositoriosObject.nombre" name="nombre"
+                              (ngModelChange)="changeItemNombre('nombre', $event)" #nombre="ngModel" required
+                              class="form-control" />
+                          </div>
+                          <div class=" margenadentro2 pr-down-0" *ngIf="mesajesalert2">
+                            <input  id="nombre" type="text" [ngModel]="RepositoriosObject.nombre" name="nombre"
+                              (ngModelChange)="changeItemNombre('nombre', $event)" #nombre="ngModel" required
+                              class="form-control aletainput" />
+                          </div>
+                          <label *ngIf="mesajesalert2" class="label" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">Modelo de operación:<span style="color:red;">*</span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <select class="tablaform" name="idModeloOperador" *ngIf="!mesajesalert3"
+                            [(ngModel)]="RepositoriosObject.id_TipoModeloOperacion" (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)" #idModeloOperador="ngModel"
+                              required>
+                              <option value="" selected>Elija una opci&oacute;n</option>
+                              <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                            </select>
+                          </div>
+                          <div class=" margenadentro2 pr-down-0">
+                            <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                            [(ngModel)]="RepositoriosObject.id_TipoModeloOperacion" (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)" #idModeloOperador="ngModel"
+                              required>
+                              <option value="" selected>Elija una opci&oacute;n</option>
+                              <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                            </select>
+                          </div>
+                          <label *ngIf="mesajesalert3" class="label" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+                        </div>
+                      </div>
+
+                      <!-- ITEM 1 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="1" [titleChapter]="'Resolución'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">1. Nombre:<span style="color:red;">* </span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <input *ngIf="!mesajesalert4" id="nombreResolucion" type="text" [ngModel]="RepositoriosObject.nombreResolucion"
+                              name="nombreResolucion" (ngModelChange)="changeItemRe('nombreResolucion', $event)"
+                              #nombreResolucion="ngModel" required class="form-control" placeholder="Resolución..." />
+                          </div>
+                          <div class=" margenadentro2 pr-down-0" >
+                            <input *ngIf="mesajesalert4" id="nombreResolucion" type="text" [ngModel]="RepositoriosObject.nombreResolucion"
+                              name="nombreResolucion" (ngModelChange)="changeItemRe('nombreResolucion', $event)"
+                              #nombreResolucion="ngModel" required class="form-control aletainput" placeholder="Resolución..." />
+                          </div>
+                          <label *ngIf="mesajesalert4" class="label" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">2. Descripción:<span style="color:red;">* </span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <input *ngIf="!mesajesalert5" id="descripcion" type="text" [ngModel]="RepositoriosObject.descripcion"
+                              name="descripcion" (ngModelChange)="changeItemDes('descripcion', $event)"
+                              #descripcion="ngModel" required class="formcontrol2"
+                              placeholder="Este documento contiene..." />
+                          </div>
+                          <div class=" margenadentro2 pr-down-0">
+                            <input *ngIf="mesajesalert5" id="descripcion" type="text" [ngModel]="RepositoriosObject.descripcion"
+                              name="descripcion" (ngModelChange)="changeItemDes('descripcion', $event)"
+                              #descripcion="ngModel" required class="formcontrol2 aletainput"
+                              placeholder="Este documento contiene..." />
+                          </div>
+                          <label *ngIf="mesajesalert5" class="label" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">3. Fecha de expedición:<span style="color:red;">*</span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <input *ngIf="!mesajesalert6" id="fechaArchivo" type="date"
+                              [ngModel]="RepositoriosObject.fechaArchivo|date:'yyyy-MM-dd'" name="fechaArchivo"
+                              (ngModelChange)="changeItemFec('fechaArchivo', $event)" #fechaArchivo="ngModel"
+                              required class="fechaText" placeholder="Este documento contiene..." />
+                          </div>
+                          <div class=" margenadentro2 pr-down-0">
+                            <input *ngIf="mesajesalert6" id="fechaArchivo" type="date"
+                              [ngModel]="RepositoriosObject.fechaArchivo|date:'yyyy-MM-dd'" name="fechaArchivo"
+                              (ngModelChange)="changeItemFec('fechaArchivo', $event)" #fechaArchivo="ngModel"
+                              required class="fechaText aletainput" placeholder="Este documento contiene..." />
+                          </div>
+                          <label *ngIf="mesajesalert6" class="label2" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">4. Archivo Adjunto <span style="color:red;">*</span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class="container">
+                            <div class="button-wrap">
+
+                              <div class=" margenadentro2 pr-down-0">
+                               <!--  <button *ngIf="!mesajesalert7"class="buttonAr text-center btn-file CenterAll" required>
+                                  <p style="float: left; margin-right: 2px;">Adjuntar archivo</p>
+                                  <p style="float: left; margin-right: 2px">{{contenidoRespuesta}}</p>
+                                  <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description
+                                  </mat-icon>
+                                  <input name="pahtArchivo" [ngModel]="RepositoriosObject.pahtArchivo" type="file"
+                                    data-max-size="3064" required #pahtArchivo="ngModel"
+                                    (change)="onFileSelected($any($event).currentTarget.files)"
+                                    accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                      'application/vnd.rar', 'application/zip', 'application/msword',
+                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                      'application/pdf', 'application/vnd.ms-excel',
+                                      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                      'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                                </button> -->
+                                <button *ngIf="!mesajesalert7" class="buttonImg btn-file w-down-100 h-auto"  required>Adjuntar archivo
+                                  <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                                  <input id="file-upload" name="file-upload" type="file" data-max-size="3064" requerid
+                                      (change)="onFileSelected($any($event).currentTarget.files)"
+                                      accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                      'application/vnd.rar', 'application/zip', 'application/msword',
+                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                      'application/pdf', 'application/vnd.ms-excel',
+                                      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                      'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                                  <p class="textButtonImg">{{contenidoRespuesta}}</p>
+                              </button>
+                             <!--    <button *ngIf="mesajesalert7" class="buttonAr text-center btn-file CenterAll aletainput" required>
+                                  <p style="float: left; margin-right: 2px;">Adjuntar archivo</p>
+                                  <p style="float: left; margin-right: 2px">{{contenidoRespuesta}}</p>
+                                  <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description
+                                  </mat-icon>
+                                  <input name="pahtArchivo" [ngModel]="RepositoriosObject.pahtArchivo" type="file"
+                                    data-max-size="3064" required #pahtArchivo="ngModel"
+                                    (change)="onFileSelected($any($event).currentTarget.files)"
+                                    accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                      'application/vnd.rar', 'application/zip', 'application/msword',
+                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                      'application/pdf', 'application/vnd.ms-excel',
+                                      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                      'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                                </button> -->
+                                <button *ngIf="mesajesalert7" class="buttonImg btn-file w-down-100 h-auto aletainput"  required>Adjuntar archivo
+                                  <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                                  <input id="file-upload" name="file-upload" type="file" data-max-size="3064" requerid
+                                      (change)="onFileSelected($any($event).currentTarget.files)"
+                                      accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                      'application/vnd.rar', 'application/zip', 'application/msword',
+                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                      'application/pdf', 'application/vnd.ms-excel',
+                                      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                      'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                                  <p class="textButtonImg">{{contenidoRespuesta}}</p>
+                              </button>
+                                <label *ngIf="mesajesalert7" class="label2" style="color: red">
+                                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                                 Complete este campo
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="closeDialog()">Anterior</button>
+                            </div>
+                            <div>
+                              <button type="submit">Siguiente
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+
+                  </form>
+                </div>
+                <div *ngIf="viewActiva == 1">
+                  <form (ngSubmit)="onSubmit()" #AnexosForm="ngForm" autocomplete="off">
+                    <div>
+                      <!-- ITEM 2 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="2" [titleChapter]="'Anexos y cajas de herramientas'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                        </div>
+                      </div>
+                      <app-repositorios-anexos-uapa [idRepositorio]="RepositoriosObject.id" [active]="1" [accion]="1"
+                        (anexos)="anexosServicio($event)">
+                      </app-repositorios-anexos-uapa>
+
+                    </div>
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="set_ViewActiva(0)">Anterior</button>
+                            </div>
+                            <div>
+                              <button (click)="finalizar()">Finalizar
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+                  </form>
+                </div>
+              </div>
+              <div *ngIf="action == 'Actualizar'">
+                <div *ngIf="viewActiva == 0">
+                  <form (ngSubmit)="onSubmit()" #ResolucionForm="ngForm" autocomplete="off">
+                    <div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">Tipo de recurso:<span style="color:red;">* </span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0" >
+                            <select class="tablaform" name="idCategoria" [(ngModel)]="RepositoriosObject.idCategoria"
+                              #idCategoria="ngModel" required>
+                              <option value="" selected>Elija una opci&oacute;n</option>
+                              <option *ngFor="let i of CategoriasList" [ngValue]="i.id">{{ i.nombre }}</option>
+                            </select>
+                          </div>
+                          <label class="label" style="color: red"
+                              [hidden]="idCategoria.valid || idCategoria.pristine">
+                              El campo de tipo de recurso es requerido
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">Nombre:<span style="color:red;">* </span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <input id="nombre" type="text" [ngModel]="RepositoriosObject.nombre" name="nombre"
+                              (ngModelChange)="changeItemNombre('nombre', $event)" #nombre="ngModel" required
+                              class="form-control" />
+                          </div>
+                          <label class="label" style="color: red" [hidden]="nombre.valid || nombre.pristine">
+                            El campo de tipo de recurso es requerido
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">Modelo de operación:<span style="color:red;">*</span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <select class="tablaform" name="idModeloOperador"
+                              [(ngModel)]="RepositoriosObject.id_TipoModeloOperacion" #idModeloOperador="ngModel"
+                              required>
+                              <option value="" selected>Elija una opci&oacute;n</option>
+                              <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                            </select>
+                            </div>
+                            <label class="label" style="color: red"
+                              [hidden]="idModeloOperador.valid || idModeloOperador.pristine">
+                              El campo de tipo de recurso es requerido
+                            </label>
+                        </div>
+                      </div>
+
+                      <!-- ITEM 1 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="1" [titleChapter]="'Resolución'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">1. Nombre:<span style="color:red;">* </span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <input id="nombreResolucion" type="text" [ngModel]="RepositoriosObject.nombreResolucion"
+                              name="nombreResolucion" (ngModelChange)="changeItemNombre('nombreResolucion', $event)"
+                              #nombreResolucion="ngModel" required class="form-control" placeholder="Resolución..." />
+                          </div>
+                          <label class="label" style="color: red"
+                            [hidden]="nombreResolucion.valid || nombreResolucion.pristine">
+                            El campo de tipo de recurso es requerido
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">2. Descripción:<span style="color:red;">* </span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <input id="descripcion" type="text" [ngModel]="RepositoriosObject.descripcion"
+                              name="descripcion" (ngModelChange)="changeItemNombre('descripcion', $event)"
+                              #descripcion="ngModel" required class="formcontrol2"
+                              placeholder="Este documento contiene..." />
+                          </div>
+                          <label class="label" style="color: red"
+                            [hidden]="descripcion.valid || descripcion.pristine">
+                            El campo de tipo de recurso es requerido
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">3. Fecha de expedición:<span style="color:red;">*</span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class=" margenadentro2 pr-down-0">
+                            <input id="fechaArchivo" type="date"
+                              [ngModel]="RepositoriosObject.fechaArchivo|date:'yyyy-MM-dd'" name="fechaArchivo"
+                              (ngModelChange)="RepositoriosObject.fechaArchivo=$event" #fechaArchivo="ngModel" required
+                              class="fechaText" placeholder="Este documento contiene..." />
+                          </div>
+                          <label class="label" style="color: red"
+                            [hidden]="fechaArchivo.valid || fechaArchivo.pristine">
+                            El campo de tipo de recurso es requerido
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+                        <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">4. Archivo Adjunto <span style="color:red;">*</span></div>
+                        <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+                          <div class="container">
+                            <div class="button-wrap">
+
+                              <div class=" margenadentro2 pr-down-0">
+                               <!--  <button class="buttonAr text-center btn-file CenterAll" required>
+                                  <p style="float: left; margin-right: 2px;">Adjuntar archivo</p>
+                                  <p style="float: left; margin-right: 2px">{{contenidoRespuesta}}</p>
+                                  <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description
+                                  </mat-icon>
+                                  <input name="pahtArchivo" [ngModel]="RepositoriosObject.pahtArchivo" type="file"
+                                    data-max-size="3064" required #pahtArchivo="ngModel"
+                                    (change)="onFileSelected($any($event).currentTarget.files)"
+                                    accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                      'application/vnd.rar', 'application/zip', 'application/msword',
+                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                      'application/pdf', 'application/vnd.ms-excel',
+                                      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                      'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                                </button> -->
+                                <button  class="buttonImg CenterAll btn-file w-down-100 h-auto">Adjuntar archivo
+                                  <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                                  <input id="file-upload" name="pahtArchivo"  type="file" data-max-size="3064" requerid
+                                      (change)="onFileSelected($any($event).currentTarget.files)"
+                                      accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                      'application/vnd.rar', 'application/zip', 'application/msword',
+                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                      'application/pdf', 'application/vnd.ms-excel',
+                                      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                      'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                                  <p class="textButtonImg">{{RepositoriosObject.pahtArchivo}}</p>
+                              </button>
+                                <br>
+                               <!--  <label class="label" style="color: red"
+                                  [hidden]="pahtArchivo.valid || pahtArchivo.pristine">
+                                  El campo de tipo de recurso es requerido
+                                </label> -->
+                                <!-- <mat-error>
+                                  <mat-error class="error-message errorM"
+                                      *ngIf="ResolucionForm.value('pahtArchivo').invalid ">
+                                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt=""
+                                          height="10px" width="auto">  El campo de tipo de recurso es requerido
+                                  </mat-error>
+                              </mat-error> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="closeDialog()">Anterior</button>
+                            </div>
+                            <div>
+                              <button type="submit">Siguiente
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+
+                  </form>
+                </div>
+                <div *ngIf="viewActiva == 1">
+                  <!-- viewActiva == 1 -->
+                  <form (ngSubmit)="onSubmit()" #AnexosForm="ngForm" autocomplete="off">
+                    <table>
+                      <!-- ITEM 2 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="2" [titleChapter]="'Anexos y cajas de herramientas'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                        </div>
+                      </div>
+                      <app-repositorios-anexos-uapa [idRepositorio]="RepositoriosObject.id" [active]="1" [accion]="2"
+                        (anexos)="anexosServicio($event)">
+                      </app-repositorios-anexos-uapa>
+
+                    </table>
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="set_ViewActiva(0)">Anterior</button>
+                            </div>
+                            <div>
+                              <button (click)="finalizar()">Finalizar
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+                  </form>
+                </div>
+              </div>
+            </mat-dialog-content>
+
+
+            <ng-template #elseTemplate>
+              ¿Está Seguro de Eliminar el Registro?
+            </ng-template>
+
+
+
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</div>

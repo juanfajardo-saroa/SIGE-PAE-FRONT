@@ -1,0 +1,105 @@
+
+
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>{{ action }} Zona ETC</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div>
+      <div class="SizeDialog">
+        <div>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+              <br />
+              <div [formGroup]="form" (ngSubmit)="doAction()">
+                <div *ngIf="action !='Agregar'" style="display: none;">
+                  <div>
+                    <br />
+                    <input id="id" formControlName="id" readonly="true" class=" form-control" />
+                  </div>
+                </div>
+                <table>
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador" >
+                        <div class="TextosBlueLeft">1. ETC<span style="color:red;">* </span></div>
+                      </td>
+
+                      <td class="BordeSeparador">
+                       
+                          <mat-select id="iD_ETC" formControlName="iD_ETC" class="tablaform">
+                            <mat-option *ngFor="let item of ETCList" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador" >
+                        <div class="TextosBlueLeft">2. Centro Acopio<span style="color:red;">* </span></div>
+                      </td>
+
+                      <td class="BordeSeparador">
+                        
+                          <mat-select id="iD_CentroAcopio" formControlName="iD_CentroAcopio" class="tablaform">
+                            <mat-option *ngFor="let item of CentroDeAcopioList" [value]="item.id">{{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container>
+                    <tr>
+                      <td >
+                        <div class="TextosBlueLeft">3. Nombre<span style="color:red;">* </span></div>
+                      </td>
+
+                      <td>
+                        <input id="nombre" formControlName="nombre" required type="text"
+                          class="tablaform" />
+                      </td>
+                    </tr>
+                  </ng-container>
+                  
+                  <br>
+                </table>
+              </div>
+            </mat-dialog-content>
+            <ng-template #elseTemplate>
+              <div style="text-align: center; color: #005ACA;padding: 10px;">
+                ¿Está seguro de eliminar el registro?
+              </div>
+            </ng-template>
+
+            <table class="BordeSuperior">
+              <ng-container>
+                <div>
+                  <div class="CenterButton text-center">
+                    <div class="AlignRight">
+                      <button [disabled]="!form.valid && action !='Eliminar'" (click)="doAction()">{{action}}
+                      </button>
+                    </div>
+                    <div>
+                      <button (click)="closeDialog()">Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </table>
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</div>

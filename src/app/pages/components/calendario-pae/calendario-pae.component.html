@@ -1,0 +1,124 @@
+<div class="row">
+    <div class="col-12">
+      <div class="tab-control-secondary">
+        <div class="tab-item"
+             [ngStyle]="{'width': (100 / dataPestanas.length) + '%' }"
+             [class]="item.active ? 'active': ''"
+             *ngFor="let item of dataPestanas"
+             (click)="seleccionarTab(item)">
+          <div>{{ item.descripcion }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mt-md">
+    <div class="col-12 pl-xl pr-xl text-center">
+      <h4 class="text-basecolor text-base-fontsize text-normal">
+        Para cada mes, seleccione únicamente los días en los cuales tiene previsto que opere el PAE Regular o Mayoritario en su ETC. Verifique que solo está seleccionando días hábiles y no días festivos, sábados o domingos. Este calendario se empleará para validar la información de seguimiento, por tanto, cualquier inconsistencia afectará la calidad de la información de su ETC en el SiPAE.
+      </h4>
+    </div>
+  </div>
+  
+  <div class="row mt-md">
+    <div class="col-12 flex align-items-center">
+      <app-chapter-img [chapterIcon]="itemPestana.icono" [chapterText]="itemPestana.texto + ' - Año ' + anio"></app-chapter-img>
+      <!-- <div class="flex" style="background-color: #f54a62; padding: 10px 15px; height: 44px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; color: #ffffff;">
+        
+      </div> -->
+      <div *ngIf="permisos.editar" class="flex ml-xxl">
+        <div>
+          <button class="btn btn-blue"
+                  [disabled]="!esDisabled"
+                  (click)="editarCalendario()">
+            <mat-icon>edit</mat-icon>
+            Editar
+          </button>
+        </div>
+      </div>
+       
+    <!--   <div class="flex align-items-center ml-xxl">
+        <div class="flex">
+          <img style="width: 30px; height: 30px;" src="../assets/images/Iconos/admiracion.png">
+        </div>
+        <div class="flex ml-xs">
+          <span class="text-basecolor text-base-fontsize">
+            Por favor tener en cuenta y no señalar los d&iacute;as que sean festivos
+          </span>
+        </div> 
+      </div> -->
+    </div>
+  </div>
+  
+  <div class="row mt-sm" style="padding: 0 40px;">
+    <ng-container *ngFor="let item of dataSource">
+      <div class="col-12 col-sm-6 col-lg-3 mt-md">
+        <table class="table-calendar">
+          <thead>
+            <tr class="encabezado-mes">
+              <th colspan="7">{{ item.nombreMes }}</th>
+            </tr>
+            <tr class="encabezado-dias">
+              <th *ngFor="let dia of dataDias">{{ dia }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let semana of item.semanas">
+              <tr class="tbodytd">
+                <td *ngFor="let dia of semana"
+                    (click)="seleccionarDia(dia, item.numeroMes)"
+                    [class]="dia.esFeriado ? 'feriado' : dia.dia == null ? 'nohabil' : esDisabled ? 'disabled' : ''">
+                  <mat-icon *ngIf="dia.esSelect" class="mat-icon-calendar">done</mat-icon>
+                  {{ dia.dia }}
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="7">
+                <span>D&iacute;as PAE - {{ item.nombreMes }}:</span>
+                <span>{{ item.totalMes }}</span>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </ng-container>
+  </div>
+  
+  <div class="row mt-lg mb-lg">
+    <div class="col-12 text-center">
+      <div style="display: inline-block;
+                  background-color: #f54a62;
+                  font-size: 14px;
+                  padding: 5px 15px;
+                  border-top-left-radius: 50px;
+                  border-bottom-left-radius: 50px;
+                  color: #ffffff;">
+        Total d&iacute;as de operaci&oacute;n PAE
+      </div>
+      <div style="display: inline-block;
+                  background-color: #005ACA;
+                  font-size: 14px;
+                  padding: 5px 15px;
+                  border-top-right-radius: 50px;
+                  border-bottom-right-radius: 50px;
+                  color: #ffffff;">
+        {{ totalMeses }}
+      </div>
+      <div *ngIf="!esDisabled"
+            class="inline-block ml-lg">
+        <button class="btn btn-blue" (click)="guardarCalendario()">Guardar</button>
+        <button class="btn btn-white ml-sm" (click)="cancelarCalendario()">Cancelar</button>
+      </div>
+      <div *ngIf="iD_TipoModeloOperacion > 1 && esDisabled"
+            class="inline-block ml-lg">
+        <button class="btn btn-blue" (click)="replicarDiasCalendario()">
+          Replicar Calendario desde Modelo de Operaci&oacute;n MAEM
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <app-spinner *ngIf="loadingVisible"></app-spinner>

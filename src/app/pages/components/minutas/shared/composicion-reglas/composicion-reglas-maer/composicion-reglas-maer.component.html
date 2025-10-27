@@ -1,0 +1,235 @@
+<table class="table-default table-border-dashed-vertical">
+  <thead>
+    <tr class="text-center">
+      <th colspan="2">Grupo de <br> alimentos</th>
+      <th>Subgrupo de <br> alimentos</th>
+      <th>Tamaño de la porci&oacute;n<br>diaria en intercambios<br>estandarizados</th>
+      <th>Frecuencia<br>sugerida</th>
+      <th>Total intercambios<br>estandarizados a<br>la semana</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="itemComponent != null">
+    </ng-container>
+    <ng-container *ngIf="dataSourceComponents">
+      <ng-container *ngFor="let grupo of dataSourceComponents; let i = index">
+        <ng-container *ngIf="grupo.listSubGrupo.length > 0">
+          <tr>
+            <td [attr.rowspan]="grupo.totalRows" class="text-center">
+              <img style="width: 45px; height: 45px;"
+                src="../../../../../../assets/images/minutas/MAER/{{ grupo.imagen }}" />
+            </td>
+            <td [attr.rowspan]="grupo.totalRows" width="15%">{{ grupo.nombre }}</td>
+            <td> {{ grupo.listSubGrupo[0].nombre }} </td>
+            <td class="text-center">
+              <ng-container *ngIf="ItemsDisabled">
+                <ng-container *ngIf="grupo.listSubGrupo[0].iD_TipoSentidoValidacion == 1">
+                  {{ grupo.listSubGrupo[0].numIntercambios | number }}
+                </ng-container>
+                <ng-container *ngIf="grupo.listSubGrupo[0].iD_TipoSentidoValidacion == 2">
+                  {{ grupo.listSubGrupo[0].numIntercambiosMax | number }}
+                </ng-container>
+                <ng-container *ngIf="grupo.listSubGrupo[0].iD_TipoSentidoValidacion == 3">
+                  {{ grupo.listSubGrupo[0].numIntercambios | number }} - {{ grupo.listSubGrupo[0].numIntercambiosMax | number }}
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="!ItemsDisabled">
+                  <input type="number" style="width: 50px; display: inline-block;"
+                  *ngIf="grupo.listSubGrupo[0].iD_TipoSentidoValidacion == 1 || grupo.listSubGrupo[0].iD_TipoSentidoValidacion == 3"
+                  class="control-md text-center noUpDown" [(ngModel)]="grupo.listSubGrupo[0].numIntercambios"
+                  (ngModelChange)="setTotalIntercambios()">
+                <input type="number" style="width: 50px; display: inline-block;"
+                  *ngIf="grupo.listSubGrupo[0].iD_TipoSentidoValidacion == 2 || grupo.listSubGrupo[0].iD_TipoSentidoValidacion == 3"
+                  class="control-md text-center noUpDown" [(ngModel)]="grupo.listSubGrupo[0].numIntercambiosMax"
+                  (ngModelChange)="setTotalIntercambios()">
+              </ng-container>
+            </td>
+            <td class="text-center">
+              <ng-container *ngIf="ItemsDisabled">
+                {{ grupo.listSubGrupo[0].nombreFrecuencia }}
+              </ng-container>
+              <ng-container *ngIf="!ItemsDisabled">
+                <select class="control-md text-center" id="disabledFrecuencia{{grupo.listSubGrupo[0].id}}"
+                  [(ngModel)]="grupo.listSubGrupo[0].frecuencia"
+                  (ngModelChange)="changeModelMinuta('frecuencia', $event, grupo.listSubGrupo[0])">
+                  <option value="0">Elija una opción</option>
+                  <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{item.nombre}}</option>
+                </select>
+              </ng-container>
+            </td>
+            <td [attr.rowspan]="grupo.totalRows" class="text-center">
+              {{ grupo.totalIntercambios | number }}
+            </td>
+          </tr>
+          <ng-container *ngFor="let subGrupo of grupo.listSubGrupo; let o = index">
+            <tr *ngIf="o != 0">
+              <td class="dinamic-table-border-left-dashed"> {{ subGrupo.nombre }} </td>
+              <td class="text-center border-rigth-none">
+                <ng-container *ngIf="ItemsDisabled">
+                  <ng-container *ngIf="subGrupo.iD_TipoSentidoValidacion == 1">
+                    {{ subGrupo.numIntercambios | number }}
+                  </ng-container>
+                  <ng-container *ngIf="subGrupo.iD_TipoSentidoValidacion == 2">
+                    {{ subGrupo.numIntercambiosMax | number }}
+                  </ng-container>
+                  <ng-container *ngIf="subGrupo.iD_TipoSentidoValidacion == 3">
+                    {{ subGrupo.numIntercambios | number }} - {{ subGrupo.numIntercambiosMax | number }}
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!ItemsDisabled">
+                  <input type="number" style="width: 50px; display: inline-block;"
+                    *ngIf="subGrupo.iD_TipoSentidoValidacion == 1 || subGrupo.iD_TipoSentidoValidacion == 3"
+                    class="control-md text-center noUpDown" [(ngModel)]="subGrupo.numIntercambios"
+                    (ngModelChange)="setTotalIntercambios()">
+                  <input type="number" style="width: 50px; display: inline-block;"
+                    *ngIf="subGrupo.iD_TipoSentidoValidacion == 2 || subGrupo.iD_TipoSentidoValidacion == 3"
+                    class="control-md text-center noUpDown" [(ngModel)]="subGrupo.numIntercambiosMax"
+                    (ngModelChange)="setTotalIntercambios()">
+                </ng-container>
+              </td>
+              <td *ngIf="mostrarFrecuenciaPorSubgrupo(subGrupo) && TipoComplementoId == 1"
+                [attr.rowspan]="obtenerNumeroDeFilasFrecuenciaPorSubgrupo(subGrupo)"
+                class="text-center border-rigth-none">
+                <ng-container *ngIf="ItemsDisabled">
+                  {{ subGrupo.nombreFrecuencia }}
+                </ng-container>
+                <ng-container *ngIf="!ItemsDisabled">
+                  <select class="control-md text-center" id="disabledFrecuencia{{subGrupo.id}}"
+                    [(ngModel)]="subGrupo.frecuencia"
+                    (ngModelChange)="changeModelMinuta('frecuencia', $event, subGrupo)">
+                    <option value="0">Elija una opción</option>
+                    <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{item.nombre}}</option>
+                  </select>
+                </ng-container>
+              </td>
+              <td *ngIf="TipoComplementoId == 4" class="text-center border-rigth-none">
+                <ng-container *ngIf="ItemsDisabled">
+                  {{ subGrupo.nombreFrecuencia }}
+                </ng-container>
+                <ng-container *ngIf="!ItemsDisabled">
+                  <select class="control-md text-center" id="disabledFrecuencia{{subGrupo.id}}"
+                    [(ngModel)]="subGrupo.frecuencia"
+                    (ngModelChange)="changeModelMinuta('frecuencia', $event, subGrupo)">
+                    <option value="0">Elija una opción</option>
+                    <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{item.nombre}}</option>
+                  </select>
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <tr>
+      <td colspan="6" class="pt-3 pb-3 noborder-right"
+        style="border-left: none !important;">
+        Grúpos de alimentos incluidos en las preparaciones:
+      </td>
+    </tr>
+    <ng-container *ngIf="dataComponentInPreparations">
+      <ng-container *ngFor="let grupoCIP of dataComponentInPreparations; let i = index">
+        <ng-container *ngIf="grupoCIP.listSubGrupo.length > 0">
+          <tr>
+            <td [attr.rowspan]="grupoCIP.totalRows" class="text-center">
+              <img style="width: 45px; height: 45px;"
+                src="../../../../../../assets/images/minutas/MAER/{{ grupoCIP.imagen }}" />
+            </td>
+            <td [attr.rowspan]="grupoCIP.totalRows" width="15%">{{ grupoCIP.nombre }}</td>
+            <td> {{ grupoCIP.listSubGrupo[0].nombre }} </td>
+            <td class="text-center" [attr.rowspan]="grupoCIP.id == grupoMinutaMAER.GRASAS ? grupoCIP.listSubGrupo.length : 1">
+              <ng-container *ngIf="ItemsDisabled">
+                <ng-container *ngIf="grupoCIP.listSubGrupo[0].iD_TipoSentidoValidacion == 1">
+                  {{ grupoCIP.listSubGrupo[0].numIntercambios | number }}
+                </ng-container>
+                <ng-container *ngIf="grupoCIP.listSubGrupo[0].iD_TipoSentidoValidacion == 2">
+                  {{ grupoCIP.listSubGrupo[0].numIntercambiosMax | number }}
+                </ng-container>
+                <ng-container *ngIf="grupoCIP.listSubGrupo[0].iD_TipoSentidoValidacion == 3">
+                  {{ grupoCIP.listSubGrupo[0].numIntercambios | number }} - {{ grupoCIP.listSubGrupo[0].numIntercambiosMax | number }}
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="!ItemsDisabled">
+                  <input type="number" style="width: 50px; display: inline-block;"
+                    *ngIf="grupoCIP.listSubGrupo[0].iD_TipoSentidoValidacion == 1 || grupoCIP.listSubGrupo[0].iD_TipoSentidoValidacion == 3"
+                    class="control-md text-center noUpDown" [(ngModel)]="grupoCIP.listSubGrupo[0].numIntercambios"
+                    (ngModelChange)="setTotalIntercambios()">
+                  <input type="number" style="width: 50px; display: inline-block;"
+                    *ngIf="grupoCIP.listSubGrupo[0].iD_TipoSentidoValidacion == 2 || grupoCIP.listSubGrupo[0].iD_TipoSentidoValidacion == 3"
+                    class="control-md text-center noUpDown" [(ngModel)]="grupoCIP.listSubGrupo[0].numIntercambiosMax"
+                    (ngModelChange)="setTotalIntercambios()">
+              </ng-container>
+            </td>
+            <td class="text-center" [attr.rowspan]="grupoCIP.id == grupoMinutaMAER.GRASAS ? grupoCIP.listSubGrupo.length : 1">
+              <ng-container *ngIf="ItemsDisabled">
+                {{ grupoCIP.listSubGrupo[0].nombreFrecuencia }}
+              </ng-container>
+              <ng-container *ngIf="!ItemsDisabled">
+                <select class="control-md text-center" id="disabledFrecuencia{{grupoCIP.listSubGrupo[0].id}}"
+                  [(ngModel)]="grupoCIP.listSubGrupo[0].frecuencia"
+                  (ngModelChange)="changeModelMinuta('frecuencia', $event, grupoCIP.listSubGrupo[0])">
+                  <option value="0">Elija una opción</option>
+                  <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{item.nombre}}</option>
+                </select>
+              </ng-container>
+            </td>
+            <td [attr.rowspan]="grupoCIP.totalRows" class="text-center">{{ grupoCIP.totalIntercambios | number }}</td>
+          </tr>
+          <ng-container *ngFor="let subGrupo of grupoCIP.listSubGrupo; let o = index">
+            <tr *ngIf="o != 0">
+              <td class="border-rigth-none dinamic-table-border-left-dashed"> {{ subGrupo.nombre }} </td>
+              <td class="text-center border-rigth-none" *ngIf="subGrupo.iD_Grupo != grupoMinutaMAER.GRASAS">
+                <ng-container *ngIf="ItemsDisabled">
+                  <ng-container *ngIf="subGrupo.iD_TipoSentidoValidacion == 1">
+                    {{ subGrupo.numIntercambios | number }}
+                  </ng-container>
+                  <ng-container *ngIf="subGrupo.iD_TipoSentidoValidacion == 2">
+                    {{ subGrupo.numIntercambiosMax | number }}
+                  </ng-container>
+                  <ng-container *ngIf="subGrupo.iD_TipoSentidoValidacion == 3">
+                    {{ subGrupo.numIntercambios | number }} - {{ subGrupo.numIntercambiosMax | number }}
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!ItemsDisabled">
+                  <input type="number" style="width: 50px; display: inline-block;"
+                    *ngIf="subGrupo.iD_TipoSentidoValidacion == 1 || subGrupo.iD_TipoSentidoValidacion == 3"
+                    class="control-md text-center noUpDown" [(ngModel)]="subGrupo.numIntercambios"
+                    (ngModelChange)="setTotalIntercambios()">
+                  <input type="number" style="width: 50px; display: inline-block;"
+                    *ngIf="subGrupo.iD_TipoSentidoValidacion == 2 || subGrupo.iD_TipoSentidoValidacion == 3"
+                    class="control-md text-center noUpDown" [(ngModel)]="subGrupo.numIntercambiosMax"
+                    (ngModelChange)="setTotalIntercambios()">
+                </ng-container>
+              </td>
+              <td class="text-center border-rigth-none" *ngIf="subGrupo.iD_Grupo != grupoMinutaMAER.GRASAS">
+                <ng-container *ngIf="ItemsDisabled">
+                  {{ subGrupo.nombreFrecuencia }}
+                </ng-container>
+                <ng-container *ngIf="!ItemsDisabled">
+                  <select class="control-md text-center" id="disabledFrecuencia{{subGrupo.id}}"
+                    [(ngModel)]="subGrupo.frecuencia"
+                    (ngModelChange)="changeModelMinuta('frecuencia', $event, subGrupo)">
+                    <option value="0">Elija una opción</option>
+                    <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{item.nombre}}</option>
+                  </select>
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <tr>
+      <td colspan="6" class="border-none">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class=" pl-0 py-3"
+        style="border: none !important;">
+        Total intercambios estandarizados a la semana
+      </td>
+      <td class="text-center columna-total-intercambios">
+        {{obtenerTotalIntercambios() | number }}
+      </td>
+    </tr>
+  </tbody>
+</table>

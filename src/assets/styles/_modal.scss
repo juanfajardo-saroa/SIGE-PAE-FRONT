@@ -1,0 +1,35 @@
+.modal-content{
+    box-shadow: 0 4px 17px rgb(0 0 0 / 35%);
+    // margin-top: 14%;
+}
+
+.modal-header{
+    background-color: $base-color;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    display: initial;
+    text-align: center;
+    border-radius: 10px 10px 0px 0px;
+    margin-top: -1px;
+}
+
+.modal .pae-modal-footer{
+    border-top: 1px solid $base-color !important;
+    padding: 20px;
+    text-align: center;
+    position: inherit;
+}
+
+.modal .pae-modal-footer .btn-pae{
+    border-radius: 50px;
+    padding: 3px 20px;
+    background-color: $base-color;
+    color: white;
+    border: none;
+}
+
+h4.modal-title{
+    font-size: 16px;
+    color: #fff;
+}

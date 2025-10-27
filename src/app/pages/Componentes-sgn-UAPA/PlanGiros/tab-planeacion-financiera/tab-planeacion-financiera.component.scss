@@ -1,0 +1,90 @@
+@import '/src/assets/styles/variable.scss';
+
+
+/* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label{
+    font-family: "Montserrat",sans-serif;
+    border-radius: 20px 20px 0px 0px !important;
+    color: $base-color !important;
+    font-size: 15px;
+    background-color: #E2ECFD !important;
+    width: 30%;
+  }
+  
+  :host ::ng-deep .mat-tab-label-active{
+    font-family: "Montserrat",sans-serif;
+    font-size: 15px;
+    border-width: 2px;
+    border-color: $base-color;
+    border-bottom-color:white;
+    border-style: solid solid hidden solid;
+    border-radius: 20px 20px 0px 0px !important;
+    color: $base-azulPAE !important;
+    background-color: white !important;
+    //width: 25%;
+  }
+  :host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none!important;
+    display: none!important;
+  }
+  :host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none!important;
+    display: none!important;
+    /* background-color: #1e88e5; */
+  }
+  :host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar, .blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none!important;
+    display: none!important;
+    /* background-color: #1e88e5; */
+  
+  }
+  /* --------------------------- FIN TABS */
+  ::ng-deep .mat-menu-panel.CambioVigencia {
+    background-color: $base-azulClaroPAE;
+    border-radius: 1px 1px 20px 20px !important;
+    padding: 0 5px 5px 5px;
+    width: 220px !important;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    overflow: hidden !important;
+    box-shadow: none;
+}
+
+::ng-deep .mat-menu-panel.CambioVigencia button.mat-menu-item:hover {
+    background-color: $base-azulPAE !important;
+    color: $gov-white !important;
+}
+
+.LineaAzul {
+  border-top: $base-azulPAE solid 1px;
+}
+.botonVig {
+  border: none;
+  background-color: $base-azulClaroPAE  !important;
+  color: $base-azulPAE  !important;
+  border-radius: 20px 20px 0 0;
+  padding: 5px 20px;
+  width: 220px !important;
+  font-size: 18px;
+}
+button.mat-menu-item {
+  background-color: $gov-white !important;
+  color: $base-azulPAE !important;
+  width: 100%;
+  height: 30px;
+  margin: 5px 0;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.tab-control-secondary .tab-item.active div {
+  background-color: #ffffff;
+  color: $base-azulPAE !important;
+  border: 1px solid #005ACA;
+  border-bottom: none;
+}

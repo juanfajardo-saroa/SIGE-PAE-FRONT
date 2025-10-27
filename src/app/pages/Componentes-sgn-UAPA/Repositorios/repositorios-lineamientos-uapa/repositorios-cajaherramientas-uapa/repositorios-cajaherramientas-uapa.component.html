@@ -1,0 +1,180 @@
+<div fxLayout="row wrap">
+    <div fxFlex="100">
+      <div class="example-form" >
+        <mat-card style="margin: 0px;">
+          <mat-card-content>
+            <div class="table-responsive responsive-table-pae" >
+                <table class="table table-sm ">
+                    <thead>
+                      <tr class="text-center">
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Fecha de actualización</th>
+                        <th>Archivo adjunto</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of dataSourceCajaHerramienta; let indice = index">
+                        <td data-label="Nombre" class="text-center">
+                          <input *ngIf="!mesajesalert" class=" inputSelect" type="text" name="nombreAnexo_{{ indice }}"
+                          [ngModel]="item.nombre | titlecase" [disabled]="item.readonly"
+                          (ngModelChange)="ItemNombre($event, indice, 'nombre')" >
+                          <input *ngIf="mesajesalert&& !item.readonly" class=" inputSelect aletaimput" type="text" name="nombreAnexo_{{ indice }}"
+                          [ngModel]="item.nombre | titlecase" [disabled]="item.readonly"
+                          (ngModelChange)="ItemNombre($event, indice, 'nombre')" >
+                          <input *ngIf="mesajesalert && item.readonly" class=" inputSelect" type="text" name="nombreAnexo_{{ indice }}"
+                          [ngModel]="item.nombre | titlecase" [disabled]="item.readonly"
+                          (ngModelChange)="ItemNombre($event, indice, 'nombre')" >
+                          <label *ngIf="mesajesalert && !item.readonly" class="label" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+                        </td>
+                        <td data-label="Descripción" class="text-center">
+                          <input *ngIf="!mesajesalert2 " class=" inputSelect" type="text" name="descripcion_{{ indice}}"
+                          [ngModel]="item.descripcion | titlecase" [disabled]="item.readonly"
+                          (ngModelChange)="ItemDescripcion($event, indice, 'descripcion')" >
+                          <input *ngIf="mesajesalert2 && !item.readonly " class=" inputSelect aletaimput" type="text" name="descripcion_{{ indice}}"
+                          [ngModel]="item.descripcion | titlecase" [disabled]="item.readonly"
+                          (ngModelChange)="ItemDescripcion($event, indice, 'descripcion')" >
+                          <input *ngIf="mesajesalert2 && item.readonly " class=" inputSelect " type="text" name="descripcion_{{ indice}}"
+                          [ngModel]="item.descripcion | titlecase" [disabled]="item.readonly"
+                          (ngModelChange)="ItemDescripcion($event, indice, 'descripcion')" >
+                          <label *ngIf="mesajesalert2 && !item.readonly " class="label" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+
+                        </td>
+                        <td data-label="Fecha act." class="text-center">
+                          <input  *ngIf="!mesajesalert3 " class=" inputSelect3"
+                          type="date" id="start" name="fecha_{{ indice }}"
+                          [ngModel]="item.fechaActualizacion|date:'yyyy-MM-dd'" [disabled]="item.readonly"
+                            (ngModelChange)="ItemFecha($event, indice, 'fechaActualizacion')" >
+                            <input  *ngIf="mesajesalert3 && !item.readonly " class=" inputSelect3 aletaimput"
+                          type="date" id="start" name="fecha_{{ indice }}"
+                          [ngModel]="item.fechaActualizacion|date:'yyyy-MM-dd'" [disabled]="item.readonly"
+                            (ngModelChange)="ItemFecha($event, indice, 'fechaActualizacion')" >
+                            <input  *ngIf="mesajesalert3 && item.readonly " class=" inputSelect3 "
+                          type="date" id="start" name="fecha_{{ indice }}"
+                          [ngModel]="item.fechaActualizacion|date:'yyyy-MM-dd'" [disabled]="item.readonly"
+                            (ngModelChange)="ItemFecha($event, indice, 'fechaActualizacion')" >
+                            <label *ngIf="mesajesalert3 && !item.readonly " class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                             Complete este campo
+                            </label>
+                        </td>
+                        <td data-label="Arch. adj." class="text-center w-down-100" style="width: 30%;">
+                          <!-- <button *ngIf="!mesajesalert4 " class="  buttonAr text-center btn-file CenterAll">
+                            <p style="float: left; margin-right: 2px;">Adjuntar archivo</p>
+
+                            <p style="float: left; margin-right: 2px;">{{item.pathArchivo}}</p>
+                            <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description
+                            </mat-icon>
+                            <input name="archivo_{{ indice }}" type="file" data-max-size="3064" [disabled]="item.readonly"
+                              (change)="onFileSelected($any($event).currentTarget.files , indice, 'pathArchivo',item)" [ngModel]="item.pathArchivo"
+                              accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                'application/vnd.rar', 'application/zip', 'application/msword',
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/pdf', 'application/vnd.ms-excel',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                          </button> -->
+                          <button *ngIf="!mesajesalert4 " class="buttonImg CenterAll btn-file w-down-100 h-auto ">Adjuntar archivo
+                            <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                            <input id="file-upload" name="archivo_{{ indice }}"  type="file" data-max-size="3064" requerid [disabled]="item.readonly"
+                                (change)="onFileSelected($any($event).currentTarget.files, indice, 'pathArchivo',item)"
+                                accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                'application/vnd.rar', 'application/zip', 'application/msword',
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/pdf', 'application/vnd.ms-excel',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                            <p class="textButtonImg">{{item.pathArchivo}}</p>
+                        </button>
+                         <!--  <button *ngIf="mesajesalert4 && !item.readonly " class="  buttonAr text-center btn-file CenterAll aletaimput">
+                            <p style="float: left; margin-right: 2px;">Adjuntar archivo</p>
+
+                            <p style="float: left; margin-right: 2px;">{{item.pathArchivo}}</p>
+                            <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description
+                            </mat-icon>
+                            <input name="archivo_{{ indice }}" type="file" data-max-size="3064" [disabled]="item.readonly"
+                              (change)="onFileSelected($any($event).currentTarget.files , indice, 'pathArchivo',item)" [ngModel]="item.pathArchivo"
+                              accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                'application/vnd.rar', 'application/zip', 'application/msword',
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/pdf', 'application/vnd.ms-excel',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                          </button>
+                          
+
+                          <button *ngIf="mesajesalert4 && item.readonly" class="  buttonAr text-center btn-file CenterAll ">
+                            <p style="float: left; margin-right: 2px;">Adjuntar archivo</p>
+
+                            <p style="float: left; margin-right: 2px;">{{item.pathArchivo}}</p>
+                            <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description
+                            </mat-icon>
+                            <input name="archivo_{{ indice }}" type="file" data-max-size="3064" [disabled]="item.readonly"
+                              (change)="onFileSelected($any($event).currentTarget.files , indice, 'pathArchivo',item)" [ngModel]="item.pathArchivo"
+                              accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                'application/vnd.rar', 'application/zip', 'application/msword',
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/pdf', 'application/vnd.ms-excel',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                          </button> -->
+                          <button *ngIf="mesajesalert4 && !item.readonly" class="buttonImg CenterAll btn-file w-down-100 h-auto ">Adjuntar archivo
+                            <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>./assets/iconos_PAE/PNG/Iconos_PAE-87.png " height="15px"
+                                width="auto">
+                            <input id="file-upload" name="archivo_{{ indice }}"  type="file" data-max-size="3064" requerid [disabled]="item.readonly"
+                                (change)="onFileSelected($any($event).currentTarget.files, indice, 'pathArchivo',item)"
+                                accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                'application/vnd.rar', 'application/zip', 'application/msword',
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                'application/pdf', 'application/vnd.ms-excel',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                            <p class="textButtonImg">{{item.pathArchivo}}</p>
+                        </button>
+                        <button *ngIf="mesajesalert4 && item.readonly" class="buttonImg CenterAll btn-file w-down-100 h-auto aletaimput ">Adjuntar archivo
+                          <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon>
+                          <input id="file-upload" name="archivo_{{ indice }}"  type="file" data-max-size="3064" requerid [disabled]="item.readonly"
+                              (change)="onFileSelected($any($event).currentTarget.files, indice, 'pathArchivo',item)"
+                              accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                              'application/vnd.rar', 'application/zip', 'application/msword',
+                              'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                              'application/pdf', 'application/vnd.ms-excel',
+                              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                              'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                          <p class="textButtonImg">{{item.pathArchivo}}</p>
+                      </button>
+
+                          <label *ngIf="mesajesalert4 && !item.readonly " class="label" style="color: red">
+                            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"style="height: 13px; margin-right: 2px;">
+                           Complete este campo
+                          </label>
+                        </td>
+                        <td data-label="Opciones" class="text-center">
+                          <img *ngIf="!item.readonly" (click)="guardarCaja(indice) " class="BordeRedondoEliminar" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-54.png" alt="" width="auto">
+                          <img  *ngIf="!item.readonly"(click)="cancelarCaja(indice) " class="BordeRedondoEliminar" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" alt="" width="auto">
+                          <img *ngIf="item.readonly"(click)="editarCaja(indice) " class="BordeRedondoEliminar" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-52.png" alt="" width="auto">
+                          <img *ngIf="item.readonly " (click)="eliminarCaja(item.id,item.pathArchivo,indice) " class="BordeRedondoEliminar" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-53.png" alt="" width="auto">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="col-12 text-right">
+    <a class="btn-link" (click)="addCajaHerramienta()"><img src="../assets/images/Iconos/add_blue.png"> Agregar herramienta</a>
+  </div>
+  <br>

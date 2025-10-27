@@ -1,0 +1,158 @@
+<div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+      <mat-card>
+        <mat-card-content>
+          <!-- <div style="width: 100%; float: right;">
+            <div class="espaciotable titletable" style="text-align: center;">Areas físicas disponibles</div>
+            <div class=" titletable" style="width: 37.5%;text-align: center;">Riesgo agregado de prestación de servicios
+              del PAE</div>
+          </div> -->
+          <table mat-table [dataSource]="dataSource" class="LeftUpCorner">
+
+            <!-- <ng-container matColumnDef="municipio">
+            <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px;" colspan="3">Municipio</th>
+          </ng-container> -->
+            <!-- Nombre del documento Column -->
+            <!-- <ng-container matColumnDef="select">
+            <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">select </th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+              <div fxFlex.gt-md="75" class="text-right">
+                <a class="btn-registrar" (click)="openSedesMatriz({{element.id}})">
+                  <img src="../.././../assets/images//Iconos/add_blue.png"> Registrar SedesBeneficiarias</a>
+              </div>
+            </td>
+          </ng-container> -->
+            <!-- --------------------ID------------ -->
+            <ng-container matColumnDef="id_sede" class="Invisible">
+              <th class="LeftUpCorner Invisible" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> </th>
+              <td class="Invisible" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <a class="btn-agregar ">
+                  <img src="../.././../assets/images//Iconos/add_blue.png ">
+                </a>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="union">
+              <th class="NoVer" mat-header-cell *matHeaderCellDef [attr.colspan]="5"><b>Jornada</b></th>
+            </ng-container>
+            
+            <ng-container matColumnDef="municipio">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Municipio</b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " class="bordeCompleto">
+                {{element.municipio}} </td>
+            </ng-container>
+
+            <!-- Fecha de actualización Column -->
+            <ng-container matColumnDef="instEducativa">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Institución Educativa</b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                {{element.instEducativa}} </td>
+            </ng-container>
+            <!-- Descripción Column -->
+            <ng-container matColumnDef="sede">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; min-width: 250px;"><b>Sede</b> </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                {{element.sede}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="titulo">
+              <th class="LeftUpCorner paddingCell titletable" style="background-color:#005ACA!important;" mat-header-cell *matHeaderCellDef [attr.colspan]="3">
+                <b style="color:#FFF!important">Riesgo agregado de prestación de servicios del PAE</b>
+              </th>
+            </ng-container>
+
+            <ng-container matColumnDef="priorizadaPAE">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Priorizada para PAE</b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <!-- <img class="circulo"
+                src="https://i0.wp.com/significadodeloscolores.info/wp-content/uploads/2014/08/color-rojo.png?fit=400%2C400"
+                alt=""> -->
+                <mat-icon
+                  [ngStyle]="{'color': element.priorizadaPAE == null ? '#E6EFFD' : (element.priorizadaPAE ? 'green' : 'red')}">
+                  {{element.priorizadaPAE == null ? 'minimize' :(element.priorizadaPAE ? 'circle' : 'circle')}}
+                  <!-- {{element.priorizadaPAE ? 'rectangle' : 'rectangle'}} -->
+                </mat-icon>
+                {{element.priorizadaPAE == null ? 'minimize' :(element.priorizadaPAE ? 'Sí':'No')}}
+              </td>
+
+
+
+            </ng-container>
+
+            <ng-container matColumnDef="paeRural">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Elegible para PAE rural</b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <!-- <img class="circulo"
+                src="https://i0.wp.com/significadodeloscolores.info/wp-content/uploads/2014/08/color-rojo.png?fit=400%2C400"
+                alt=""> -->
+                <mat-icon
+                  [ngStyle]="{'color': element.paeRural == null ? '#E6EFFD' : (element.paeRural ? 'green' : 'red')}">
+                  {{element.paeRural == null ? '' :(element.paeRural ? 'circle' : 'circle')}}
+                  <!-- {{element.PAERural ? 'rectangle' : 'rectangle'}} -->
+                </mat-icon>
+                {{element.paeRural == null ? 'Pendiente' :(element.paeRural ? 'Sí':'No')}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="racPreparadaSitio">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b>PS</b> <p class="smallLetter">(Preparado en sitio)</p>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon [style.color]="element.colorRacPreparadaSitio" class="iconLargo alignRight">
+                  circle</mat-icon>{{ element.racPreparadaSitio == null || element.racPreparadaSitio == 0 ? '-' :(element.racPreparadaSitio |
+                number:'1.1-2') }} %
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="racIndustrializada">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>IND</b> <p class="smallLetter">(Industrializado)</p>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon [style.color]="element.colorRacIndustrializada" class="iconLargo alignRight">
+                  circle</mat-icon>
+                {{element.racIndustrializada == null || element.racIndustrializada == 0 ? '-' :(element.racIndustrializada | number:'1.1-2') }} %
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="catering">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b>CCT</b> <br>
+                <p class="smallLetter">(Comida caliente transportada)</p>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                <mat-icon [style.color]="element.colorCatering" class="iconLargo alignRight">
+                  circle</mat-icon>
+                {{element.catering == null || element.catering == 0  ? '-' :(element.catering | number:'1.1-2') }} %
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['union', 'titulo']"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "
+              (click)="VerDetalle(myRowData.id_sede, myRowData.sede, myRowData.municipio, myRowData.instEducativa)">
+            </tr>
+          </table>
+          <mat-paginator #paginator [pageSize]="10 " [pageSizeOptions]="[5, 10, 50, 100] " showFirstLastButtons>
+          </mat-paginator>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+
+  <div fxLayout="row wrap ">
+
+    <div style="width: 100%; float: right;" class="align-items-center textagregar ">
+      <div class="text-right ">
+        <!-- <a class="btn-agregar " [routerLink]="['../MatrizRiesgoDetalle']" (click)="VerDetalle(element.id_sede)"><img src="../.././../assets/images//Iconos/add_blue.png ">
+        Ver Detalle</a> -->
+      </div>
+    </div>
+
+  </div>
+</div>

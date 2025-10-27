@@ -1,0 +1,131 @@
+@import '/src/assets/styles/variable.scss';
+col-12 {
+    padding: 0px !important;
+}
+
+mat-card,
+mat-card-title,
+mat-card-content,
+div {
+    color: #005ACA;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text {
+    color: #005ACA !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-panel {
+    max-width: 100% !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-placeholder {
+    font-size: 13px !important;
+}
+
+input {
+    color: #005ACA;
+    background-color: transparent;
+    border: #005ACA 1px solid !important;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+div.col {
+    padding: 0px 0px 0px 0px !important;
+}
+
+td {
+    text-align: center !important;
+}
+
+.tablaForm3 {
+    width: 100%;
+    color: #005ACA;
+    border-color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 20px !important;
+}
+
+.tablaForm {
+    width: 100%;
+    border-color: #005ACA;
+    color: #005ACA;
+    border: 1px solid #005ACA;
+    font-size: 13px !important;
+}
+
+.bordeIzq {
+    border-left: 1px solid #005ACA !important;
+    border-radius: 20px !important;
+}
+
+.bordeDer {
+    border-right: 1px solid #005ACA;
+}
+
+.sizeIconSearch {
+    position: absolute;
+    bottom: 0.8rem;
+    right: 1rem;
+}
+
+.imgFilter {
+    cursor: pointer;
+    top: 50px;
+    text-align: center !important;
+    padding-left: 2px;
+}
+
+.textF {
+    padding-top: 5px;
+    text-align: center;
+    font-weight: 500;
+    color: #005ACA;
+    cursor: pointer;
+    font-size: 10px !important
+}
+
+.pRelarive {
+    position: relative;
+}
+
+.pAbsolute {
+    position: absolute;
+}
+
+.spaceCol {
+    margin-right: -5px;
+}
+
+.lineR {
+    background-color: #E23465;
+    margin-top: -0.5% !important;
+}
+
+.iconR {
+    color: #E23465;
+    padding: 0px !important;
+}
+
+.sizeImgR {
+    margin-bottom: 1% !important;
+}
+.mat-row:hover .mat-cell {
+    background-color: $base-color;
+    color: #ffffff !important;
+  }
+
+
+.text-size-10-px {
+  font-size: 10px !important;
+}
+
+.line-h-15-px {
+  line-height: 15px;
+}

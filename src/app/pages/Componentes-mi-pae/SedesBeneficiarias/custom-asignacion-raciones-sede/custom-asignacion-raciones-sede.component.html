@@ -1,0 +1,207 @@
+<div class="d-flex flex-xl-row flex-column">
+
+  <div class="d-flex btnBack ml-3 py-3 w-down-100">
+    <div class="d-flex flex-column justify-content-center bordeAtras" (click)="back()" role="button">
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png" style="width:50px; height: 50px;">
+      <span class="text-center">Atrás</span>
+    </div>
+  </div>
+
+  <div class="tablaform w-down-100 align-self-center">
+
+    <div class="d-flex flex-column flex-xl-row">
+      <div class="d-flex flex-column flex-xl-row w-100">
+
+          <mat-card class="spaceCol w-100 mx-lg-down-0 my-lg-down-05-rem m-4">
+            <mat-card-title>Municipio</mat-card-title>
+            <mat-select class="control-md " id="municipio" placeholder="seleccione"
+                (selectionChange)="onMunicipioClick($event.value)" [(value)]="selMunicipio">
+                <mat-option [value]="-1">Todos
+                </mat-option>
+                <mat-option *ngFor="let item of selectDivipolaList" [value]="item.id">
+                  {{item.nombre}}
+                </mat-option>
+              </mat-select>
+          </mat-card>
+
+          <mat-card class="spaceCol w-100 mx-lg-down-0 my-lg-down-05-rem m-4">
+            <mat-card-title>Institución Educativa</mat-card-title>
+            <mat-select class="control-md " id="institucionEducativa" placeholder="seleccione"
+                [(value)]="selInst" (selectionChange)="onInstitucionClick($event.value)">
+                <mat-option [value]="-1">Todos
+                </mat-option>
+                <mat-option *ngFor="let item of selectInstitucionList" [value]="item.id">
+                  {{item.nombre}}
+                </mat-option>
+              </mat-select>
+          </mat-card>
+
+          <mat-card class="spaceCol w-100 mx-lg-down-0 my-lg-down-05-rem m-4">
+            <mat-card-title>Sede educativa</mat-card-title>
+            <mat-select class="control-md " id="sede" placeholder="seleccione" [(value)]="selsede"
+                (selectionChange)="onSedeClick($event.value)">
+                <mat-option [value]="-1">Todos
+                </mat-option>
+                <mat-option *ngFor="let item of selectSedesList" [value]="item.id">
+                  {{item.nombre}}
+                </mat-option>
+              </mat-select>
+          </mat-card>
+      </div>
+      <div class="d-flex justify-content-center align-items-center p-0 px-3 bordetd border-down-none">
+        <mat-card class="text-center">
+          <div fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100" (click)="buscarInfo(selMunicipio,selInst,selsede)">
+            <a class="btn-agregar">
+              <img class="imgFilter" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png" height="50px"
+                width="auto">
+            </a>
+            <div class="textF">Filtrar</div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<br>
+<!--titulo año actualizacion-->
+
+<div class="container-fluid content-wrapper">
+  <div class="row">
+    <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 banner-breadcrumbs">
+      <div class="flex-wrap flex-md-nowrap mt-3">
+        <app-menadminuautorizado>
+          <ng-container autorizado>
+            <div class="row">
+              <div class="col-md-10">
+                <label class="banner-text">
+                  <strong class="strongheader">{{nombreMunicipio}} | {{nombreInstitucion}} |
+                     {{nombreSede}}</strong>
+                </label>
+              </div>
+              <!-- <div class="col-md-2 text-right">
+                <label class="anio-text">Año | <strong class="strongheader"></strong>{{ currentYear }}</label>
+              </div> -->
+            </div>
+            <!-- <hr style="margin: 0; color: red!important;" /> -->
+            <!-- <div class="row LineaAzul">
+              <div class="col-12 text-right">
+                <label class="last-update-text">Ultima actualizaci&oacute;n
+                  <span> {{ dateToday | date: "longDate" }}</span></label>
+              </div>
+            </div> -->
+          </ng-container>
+        </app-menadminuautorizado>
+      </div>
+      <div class="mt-2">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="tab-responsive overflow-auto">
+          <table mat-table [dataSource]="dataSourceInformacionService.dataSourceInformacion" matSort>
+            <ng-container matColumnDef="modelo">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                Modelo(s) de<br> operación PAE*:</th>
+              <td mat-cell *matCellDef="let element" class="BorderBottom"
+                style="padding-left: 0px; text-align: center;">
+                <div *ngIf="element.modeloOperativo=='MAEM'">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-207.png" alt="" height="24px" width="auto"
+                    style="border-right: 10px;"> {{element.modeloOperativo}}
+                </div>
+                <div *ngIf="element.modeloOperativo=='MAER'">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-208.png" alt="" height="24px" width="auto"
+                    style="border-right: 10px;"> {{element.modeloOperativo}}
+                </div>
+                <div *ngIf="element.modeloOperativo=='PAEPI'">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-209.png" alt="" height="24px" width="auto"
+                    style="border-right: 10px;"> {{element.modeloOperativo}}
+                </div>
+                <div *ngIf="element.modeloOperativo=='Ninguno'">
+                  {{element.modeloOperativo}}
+                </div>
+
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="poblacionVulnerable">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> Población vulnerable <br> (étnica, con
+                discapacidad <br> o indígena):
+              </th>
+              <td mat-cell *matCellDef="let element" class="BorderBottom"
+                style="padding-left: 0px; text-align: center;">
+                {{element.poblacionVul}}% </td>
+            </ng-container>
+            <ng-container matColumnDef="estudiantesSisben">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                Estudiantes en <br> SISBEN A o B: </th>
+              <td mat-cell *matCellDef="let element" class="BorderBottom"
+                style="padding-left: 0px; text-align: center;">
+                {{element.estudianteSisbenAB}}% </td>
+            </ng-container>
+            <ng-container matColumnDef="municipioPdet">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                Localizada en <br>Municipio PDET: </th>
+              <td mat-cell *matCellDef="let element" class="BorderBottom"
+                style="padding-left: 0px; text-align: center;">
+                {{element.tipoMunicipio == "PDET"?"Si":"No"}} </td>
+            </ng-container>
+            <ng-container matColumnDef="modalidad">
+              <th mat-header-cell *matHeaderCellDef style="padding: 0px !important; ">
+                <div class="grupo_input">
+                  <div style="float: left;padding-left: 50px;
+                    padding-top: 25px;"> Modalidad
+                    sugerida <br> según riesgo: </div>
+                  <button class="figure" mat-icon-button
+                    matTooltip="“Sugerencia basada en el diagnóstico de condiciones operativas en SiGEPAE. Sin embargo, la ETC tiene autonomía en escoger la modalidad.”"
+                    style="border: 0px !important; background: transparent !important; " matTooltipPosition="above">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-293.png" alt="" height="20px"
+                    width="auto">
+                  </button>
+                </div>
+              </th>
+              <td mat-cell *matCellDef="let element" class="BorderBottom"
+                style="padding-left: 0px; text-align: center;">
+                {{element.modalidaSugerida == ''?'-':element.modalidaSugerida}} </td>
+            </ng-container>
+            <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                Estado de
+                la asignación<br> de complementos: </th>
+              <td mat-cell *matCellDef="let element" class="BorderBottom"
+                style="padding-left: 0px; text-align: center;">
+
+                <!--              1	Pendiente rojo y null
+                                    2	Incompleta amarilla
+                              3	Completa verde
+                                  4	Aprobada verde 5.rechazada rojo-->
+                <mat-icon
+                  [ngStyle]="{'color': element.estadoAsignacion== null ? 'red' : element.estadoAsignacion == 'Pendiente' ? 'red':element.estadoAsignacion == 'Rechazado' ?'red': element.estadoAsignacion=='Incompleto'?'orange':element.estadoAsignacion=='Completo'?'yellow':'green'}">
+                  {{element.estadoAsignacion == null ? 'circle' : element.estadoAsignacion == 'Pendiente' ?
+                  'circle':element.estadoAsignacion == 'Rechazado' ?'circle':
+                  element.estadoAsignacion=='Incompleto'?'circle':element.estadoAsignacion=='Completo'?'circle':'circle'
+                  }}
+                </mat-icon>
+                {{element.estadoAsignacion==null?'Pendiente':element.estadoAsignacion}}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: columnNames;"></tr>
+          </table>
+        </div>
+        <br>
+        * Para cambiar el modelo de operación de la sede, o retirarla del listado de priorizadas, ingrese a la
+        sección "Sedes beneficiarias".
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<br>
+<app-asignacion-raciones-detalle></app-asignacion-raciones-detalle>

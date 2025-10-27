@@ -1,0 +1,193 @@
+<div class="content-detail">
+
+  <div *ngIf="active == 1">
+    <div class="row my-2" *ngFor="let item of dataProductos; let indice=index">
+      <div class="col-2 text-center" style=" margin-right: 0px; padding-right: 0px;">
+        <div style="border-radius: 10px 0px 0px 10px;
+                    border-bottom: 1px solid rgb(51, 102, 204);
+                    border-top: 1px solid rgb(51, 102, 204);
+                    border-left: 1px solid rgb(51, 102, 204);
+                    background: rgb(194, 209, 238);">
+          <label class="card-title" style="padding: 5px 10px 5px 10px;">Producto Nº {{ indice + 1 }}. </label>
+        </div>
+      </div>
+      <div class="col-10 py-1" style="border-radius: 0px 10px 10px 10px;
+                                border: 1px solid rgb(51, 102, 204);">
+        <div class="row">
+          <div class="col-10">
+            <div class="col-12 p-1">
+              <div class="row">
+                <label class="col-3 col-form-label">
+                  Nombre del producto:
+                </label>
+                <input class="col-9 input-text fullWidth noMargin"
+                      type="text" 
+                      name="nombreProducto_{{ indice }}" 
+                      [ngModel]="item.nombreProducto | titlecase"
+                      (ngModelChange)="ChangeItem($event, indice, 'nombreProducto')" 
+                      [disabled]="item.readonly">
+              </div>
+            </div>
+            
+            <div class="col-12 p-1">
+              <div class="row">
+                <label class="col-3 col-form-label">
+                  Unidades contratadas:
+                </label>
+                <input class="col-1 input-text noMargin" 
+                      type="number" 
+                      name="unidadesContratadas_{{ indice }}" 
+                      [(ngModel)]="item.unidadesContratadas"
+                      (ngModelChange)="ChangeItemProductoCalculo($event, indice)" 
+                      [disabled]="item.readonly">
+
+                <label class="col-2 col-form-label">
+                  Valor unitario:
+                </label>
+                <input class=" col-2 input-text noMargin"
+                      type="number"
+                      name="valorUnitario_{{ indice }}"
+                      [(ngModel)]="item.valorUnitario"
+                      (ngModelChange)="ChangeItemProductoCalculo($event, indice)" 
+                      [disabled]="item.readonly">
+
+                <label class="col-2 col-form-label">
+                  Valor total:
+                </label>
+                <input class="col-2 input-text noMargin"
+                      type="number" 
+                      name="valorTotal_{{ indice }}"
+                      placeholder="Automático" 
+                      [ngModel]="item.valorTotal"
+                      style="pointer-events: none;"> 
+              </div>
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="row">
+              <a class="card-link" 
+                (click)="editItem(indice)" 
+                *ngIf="item.readonly">
+                <img style="width: 25px; height: 25px; margin-right: 5px;" 
+                    src="../assets/images/Iconos/editar_mini.png">
+                <span class="step-text">Editar</span>
+              </a>
+
+              <a class="card-link" 
+                (click)="deleteItem(item.id, indice)" 
+                *ngIf="item.readonly">
+                <img style="width: 25px; height: 25px; margin-right: 5px;" 
+                      src="../assets/images/Iconos/eliminar_mini.png">
+                <span class="step-text">Eliminar</span>
+              </a>
+
+              <a class="card-link" 
+                (click)="saveProducto(indice)" 
+                *ngIf="!item.readonly">
+                <img style="width: 25px; height: 25px; margin-right: 5px;" 
+                    src="../assets/images/Iconos/save_mini.png">
+                <span class="step-text">Guardar</span>
+              </a>
+
+              <a class="card-link" 
+                (click)="cancelItem(indice)" 
+                *ngIf="!item.readonly">
+                <img style="width: 25px; height: 25px; margin-right: 5px;" 
+                    src="../assets/images/Iconos/eliminar_mini.png">
+                <span class="step-text">Cancelar</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="active == 2">
+    <div class="card m-2" *ngFor="let item of dataServicios; let indice=index" style="border: 1px solid rgb(51, 102, 204);">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12" >
+          <label class="card-title col-md-auto text-nowrap py-2" style="border-radius: 10px 0px 0px 10px;
+          border-bottom: 1px solid rgb(51, 102, 204);
+          border-top: 1px solid rgb(51, 102, 204);
+          border-left: 1px solid rgb(51, 102, 204);
+          background: rgb(194, 209, 238);">Servicio Nº {{ indice + 1 }}. </label>
+          <label class="mx-2 col-form-label">
+            Nombre del servicio:
+          </label>
+            <input class="col-3 input-text fullWidth noMargin"
+                  type="text" 
+                  name="nombreServicio_{{ indice }}" 
+                  [ngModel]="item.nombreServicio | titlecase"
+                  (ngModelChange)="ChangeItem($event, indice, 'nombreServicio')" 
+                  [disabled]="item.readonly">
+         <label class="mx-2 col-form-label">
+            Valor total:
+          </label>
+            <input class="col-2 input-text fullWidth noMargin"
+                  type="number" 
+                  name="valorTotal_{{ indice }}"
+                  placeholder="Ingrese la cifra" 
+                  [(ngModel)]="item.valorTotal">
+        
+            <a class="card-link ml-4" 
+              (click)="editItem(indice)" 
+              *ngIf="item.readonly">
+              <img style="width: 25px; height: 25px; margin-right: 5px;" 
+                  src="../assets/images/Iconos/editar_mini.png">
+              <span class="step-text">Editar</span>
+            </a>
+
+            <a class="card-link" 
+              (click)="deleteItem(item.id, indice)" 
+              *ngIf="item.readonly">
+              <img style="width: 25px; height: 25px; margin-right: 5px;" 
+                    src="../assets/images/Iconos/eliminar_mini.png">
+              <span class="step-text">Eliminar</span>
+            </a>
+
+            <a class="card-link" 
+              (click)="saveServicio(indice)" 
+              *ngIf="!item.readonly">
+              <img style="width: 25px; height: 25px; margin-right: 5px;" 
+                  src="../assets/images/Iconos/save_mini.png">
+              <span class="step-text">Guardar</span>
+            </a>
+
+            <a class="card-link" 
+              (click)="cancelItem(indice)" 
+              *ngIf="!item.readonly">
+              <img style="width: 25px; height: 25px; margin-right: 5px;" 
+                  src="../assets/images/Iconos/eliminar_mini.png">
+              <span class="step-text">Cancelar</span>
+            </a>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="active == 1" class="row">
+    <div class="col-12">
+      <div class="text-right" 
+           (click)="addProducto()">
+        <img class="mr-2" 
+             src="../assets/images/Iconos/add_blue.png">
+        <label for="">Agregar producto</label>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="active == 2" class="row">
+    <div class="col-12">
+      <div class="text-right" 
+           (click)="addServicio()">
+        <img class="mr-2" 
+             src="../assets/images/Iconos/add_blue.png">
+        <label for="">Agregar servicio</label>
+      </div>
+    </div>
+  </div>
+  <!--<pre>{{ dataSource | json }}</pre>-->

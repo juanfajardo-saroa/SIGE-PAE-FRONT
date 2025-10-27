@@ -1,0 +1,1597 @@
+<div class="SizeDialog2">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td style="font-size:13px ;">
+            Registro de preparación
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div>
+      <div class="SizeDialog">
+        <div>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+              <br />
+              <div *ngIf="action == 'Adicionar'">
+                <!-----Registro de preparacion fase 1-------->
+                <div *ngIf="viewActiva == 0">
+                  <form (ngSubmit)="onSubmit()" #ResolucionForm="ngForm" autocomplete="off">
+                    <table>
+
+                      <ng-container>
+                        <tr>
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">1. Nombre de la preparación:<span
+                                style="color:red;">* </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2" *ngIf="!mesajesalert ">
+                              <input id="nombre" type="text" [ngModel]="PreparacionObject.nombre" name="nombre"
+                              (ngModelChange)="changeItemNombre('nombre', $event)" #nombre="ngModel"  required class="form-control" />
+                            </div>
+                            <div class=" margenadentro2" *ngIf="mesajesalert">
+                              <input id="nombre" type="text" [ngModel]="PreparacionObject.nombre" name="nombre"
+                              (ngModelChange)="changeItemNombre('nombre', $event)" #nombre="ngModel"  required class="form-control  aletainput" />
+                            </div>
+                            <label *ngIf="mesajesalert" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container>
+                        <tr>
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">2. ¿A qué modelo de operación pertenece la
+                              preparación?<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2">
+                              <select class="tablaform" name="idModeloOperador" *ngIf="!mesajesalert2"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert2"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert2" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <!---------------preguntas de MAEM------------>
+                      <ng-container *ngIf="preg">
+                        <tr>
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">3. ¿Para qúe tipo(s) de complemeto aplica la
+                              preparación?<br>Seleccione todas las que apliquen.<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2" *ngIf="!mesajesalert3">
+                              <section class="example-section checktipo" id="idModeloOperador{{item.id}}"
+                                *ngFor="let item of tipoRacionList; let indice=index " required>
+                                <mat-checkbox class="example-margin" [checked]="item.activo"  [value]="item.id"  (change)="selectionChange($event, indice)">{{item.nombre}}</mat-checkbox>
+                              </section>
+                            </div>
+                            <div class=" margenadentro2" *ngIf="mesajesalert3">
+                              <section class="example-section checktipo aletainput" id="idModeloOperador{{item.id}}"
+                                *ngFor="let item of tipoRacionList; let indice=index " required>
+                                <mat-checkbox class="example-margin" [checked]="item.activo"  [value]="item.id"  (change)="selectionChange($event, indice)">{{item.nombre}}</mat-checkbox>
+                              </section>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg">
+                        <tr>
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">4. ¿la preparación es una bebida?<span
+                                style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2">
+                              <div class="inline-block form-checkbox ml-xs" *ngIf="!mesajesalert3">
+                                <label id="ckbebidaSi" class="check-si"
+                                [class]="PreparacionObject.preparacionBebida ? 'active' : ''"
+                                (click)="changeItemDetalleBebida('preparacionBebida', true)">
+                                  Si
+                                </label>
+                                <label id="ckbebidaNo" class="check-no"
+                                [class]="!PreparacionObject.preparacionBebida ? 'active' : ''"
+                                (click)="changeItemDetalleBebida('preparacionBebida', false)">
+                                  No
+                                </label>
+                              </div>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg">
+                        <tr [ngClass]="{ disabled: PreparacionObject.preparacionBebida }">
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">5. ¿la preparación es mixta (incluye varios grupos
+                              de alimentos)?<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2"  *ngIf="!mesajesalert3">
+                              <mat-button-toggle-group class="buttontog " required
+                              aria-label="seleccion" >
+                              <div *ngFor="let escala of escala"
+                                style="border-left: 1px solid #005ACA; width: 50px;">
+                                <mat-button-toggle [value]="escala.id"
+                                  (click)="changeItemDetalleMixta('preparacionMixta', escala.id)">
+                                  {{escala.respuesta}}
+                                </mat-button-toggle>
+                              </div>
+                            </mat-button-toggle-group>
+                            </div>
+
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg3" >
+                        <tr >
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro subtitulo">5.1. ¿A qué componentes contribuye la
+                              preparación?<br>Agregue todos los que apliquen<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2">
+                              <select class="tablaform" name="id_TipoComponente" *ngIf="!mesajesalert3"
+                                [(ngModel)]="dataComponentes.id_TipoComponente"
+                                (ngModelChange)="changeItemComponente('id_TipoComponente', $event)"
+                                #id_TipoComponente="ngModel">
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of TiposComponentesList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <div class=" margenadentro2">
+
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg4" >
+                        <tr >
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro subtitulo">5.1. ¿A qué componentes contribuye la
+                              preparación?<br>Agregue todos los que apliquen<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td   class="BordeSeparador">
+                            <div *ngFor="let item of dataComponentesMas; let indice=index" class=" margenadentro2">
+                              <select class="tablaform" name="id_TipoComponente_{{ indice }}" *ngIf="!mesajesalert3"
+                                [ngModel]="item.id_TipoComponente"
+                                (ngModelChange)="changeItemComponenteMas('id_TipoComponente', $event, indice)">
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of TiposComponentesList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                            <div style="width: 100%; float: right; color: #005ACA; margin-right: 20px;"
+                              class="align-items-center textagregar ">
+                              <div class="text-right " (click)="addComponentes()">
+                                <img src="../.././../assets/images//Iconos/add_blue.png " /> Agregar
+                                componente
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <!---------------preguntas de MAER------------>
+
+                      <ng-container *ngIf="preg1">
+                        <tr>
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">3. ¿la preparación es una bebida?<span
+                                style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2">
+                              <div class="inline-block form-checkbox ml-xs" *ngIf="!mesajesalert3">
+                                <label id="ckBebidaSi" class="check-si"
+                                [class]="!PreparacionObject.preparacionBebida ? 'active' : ''"
+                                (click)="changeItemDetalleBebida('preparacionBebida', false)">
+                                  Si
+                                </label>
+                                <label id="ckBwbidaNo" class="check-no"
+                                [class]="PreparacionObject.preparacionBebida ? 'active' : ''"
+                                (click)="changeItemDetalleBebida('preparacionBebida', true)">
+                                  No
+                                </label>
+                              </div>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg1">
+                        <tr  [ngClass]="{ disabled: !PreparacionObject.preparacionBebida }">
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">4. ¿la preparación es mixta (incluye varios grupos
+                              de alimentos)?<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2"  *ngIf="!mesajesalert3">
+                              <mat-button-toggle-group class="buttontog " required
+                              aria-label="seleccion" >
+                              <div *ngFor="let escala of escala"
+                                style="border-left: 1px solid #005ACA; width: 50px;">
+                                <mat-button-toggle [value]="escala.id"
+                                  (click)="changeItemDetalleMixtaMAER('preparacionMixta', escala.id)">
+                                  {{escala.respuesta}}
+                                </mat-button-toggle>
+                              </div>
+                            </mat-button-toggle-group>
+                            </div>
+
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg5">
+                        <tr [ngClass]="{ disabled: !PreparacionObject.preparacionBebida }">
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro subtitulo">4.1. ¿A qué componentes contribuye la
+                              preparación?<br>Agregue todos los que apliquen<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div *ngFor="let item of dataComponentesMAER; let indice=index" class=" margenadentro2">
+                              <select class="tablaform" name="idModeloOperador" *ngIf="!mesajesalert3"
+                                [ngModel]="item.nombre"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of TiposComponentesList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                            <div style="width: 100%; float: right; color: #005ACA; margin-right: 20px;"
+                              class="align-items-center textagregar ">
+                              <div class="text-right " (click)="addComponentesMAER()">
+                                <img src="../.././../assets/images//Iconos/add_blue.png " /> Agregar
+                                componente
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg6">
+                        <tr  [ngClass]="{ disabled: !PreparacionObject.preparacionBebida }">
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro subtitulo">4.1. ¿A qué componentes contribuye la
+                              preparación?<br>Agregue todos los que apliquen<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2">
+                              <select class="tablaform" name="idModeloOperador" *ngIf="!mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of TiposComponentesList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+
+                      <!---------------preguntas de PAEPI------------>
+                      <ng-container *ngIf="preg2">
+                        <tr>
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">3. ¿A qué minuta diferencial PAEPI quiere asociar
+                              la preparación?<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2">
+                              <select class="tablaform" name="idModeloOperador" *ngIf="!mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg2">
+                        <tr>
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">4. ¿Para qúe tipo(s) de complemeto aplica la
+                              preparación?<br>Seleccione todas las que apliquen.<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2" *ngIf="!mesajesalert3">
+                              <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                              [(ngModel)]="favoriteSeason">
+                              <mat-radio-button class="example-radio-button"  *ngFor="let season of tipoRacionList" [value]="season.id">
+                                {{season.nombre}}
+                              </mat-radio-button>
+                            </mat-radio-group>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg2">
+                        <tr>
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">5. ¿la preparación es una bebida?<span
+                                style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2">
+                              <div class="inline-block form-checkbox ml-xs" *ngIf="!mesajesalert3">
+                                <label id="ckContratoPublicadoSi" class="check-si"
+                                [class]="!PreparacionObject.preparacionBebida ? 'active' : ''"
+                                (click)="changeItemDetalleBebida('preparacionBebida', false)">
+                                  Si
+                                </label>
+                                <label id="ckContratoPublicadoNo" class="check-no"
+                                [class]="PreparacionObject.preparacionBebida ? 'active' : ''"
+                                (click)="changeItemDetalleBebida('preparacionBebida', true)">
+                                  No
+                                </label>
+                              </div>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg2">
+                        <tr  [ngClass]="{ disabled: !PreparacionObject.preparacionBebida }">
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro">6. ¿la preparación es mixta (incluye varios grupos
+                              de alimentos)?<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2"  *ngIf="!mesajesalert3">
+                              <mat-button-toggle-group class="buttontog " required
+                              aria-label="seleccion" >
+                              <div *ngFor="let escala of escala"
+                                style="border-left: 1px solid #005ACA; width: 50px;">
+                                <mat-button-toggle [value]="escala.id"
+                                  (click)="changeItemDetalleMixtaPAEPI('preparacionMixta', escala.id)">
+                                  {{escala.respuesta}}
+                                </mat-button-toggle>
+                              </div>
+                            </mat-button-toggle-group>
+                            </div>
+
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg7">
+                        <tr  [ngClass]="{ disabled: !PreparacionObject.preparacionBebida }">
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro subtitulo">6.1. ¿A qué componentes contribuye la
+                              preparación?<br>Agregue todos los que apliquen<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div *ngFor="let item of dataComponentes; let indice=index" class=" margenadentro2">
+                              <select class="tablaform" name="idModeloOperador" *ngIf="!mesajesalert3"
+                                [ngModel]="item.nombre"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of TiposComponentesList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                            <div style="width: 100%; float: right; color: #005ACA; margin-right: 20px;"
+                              class="align-items-center textagregar ">
+                              <div class="text-right " (click)="addComponentes()">
+                                <img src="../.././../assets/images//Iconos/add_blue.png " /> Agregar
+                                componente
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="preg8">
+                        <tr  [ngClass]="{ disabled: !PreparacionObject.preparacionBebida }">
+                          <td class="BordeSeparador">
+                            <div class="TextosBlueLeft margenadentro subtitulo">6.1. ¿A qué componentes contribuye la
+                              preparación?<br>Agregue todos los que apliquen<span style="color:red;">*
+                              </span></div>
+                          </td>
+                          <td class="BordeSeparador">
+                            <div class=" margenadentro2">
+                              <select class="tablaform" name="idModeloOperador" *ngIf="!mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of TiposComponentesList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <div class=" margenadentro2">
+                              <select class="tablaform aletainput" name="idModeloOperador" *ngIf="mesajesalert3"
+                                [(ngModel)]="PreparacionObject.id_TipoModeloOperacion"
+                                (ngModelChange)="changeItemOpe('id_TipoModeloOperacion', $event)"
+                                #idModeloOperador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of ModeloOperadorList" [ngValue]="i.id">{{ i.nombre }}</option>
+                              </select>
+                            </div>
+                            <label *ngIf="mesajesalert3" class="label" style="color: red">
+                              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                                style="height: 13px; margin-right: 2px;">
+                              Complete este campo
+                            </label>
+                          </td>
+                        </tr>
+                      </ng-container>
+
+                    </table>
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="closeDialog()">Anterior</button>
+                            </div>
+                            <div>
+                              <button type="submit">Siguiente
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+
+                  </form>
+                </div>
+
+                <!------Registro de ingredientes------->
+                <div *ngIf="viewActiva == 1">
+                  <form (ngSubmit)="onSubmit()" #AnexosForm="ngForm" autocomplete="off">
+                    <table>
+                      <!-- ITEM 2 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="1" [titleChapter]="'Ingredientes'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                          <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                              <div>
+                                <img src="../../../../../../assets/images/Iconos/dotacion-equipos/item1activo.png" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col ">
+
+                            <mat-card style="width: 50%; float: left; margin-left: 60px;">
+                              <mat-card-content>
+                                <table mat-table [dataSource]="dataSource " class="left-radius" matSort>
+                                  <!-- Nombre del documento Column -->
+                                  <ng-container matColumnDef="Nombre">
+                                    <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Ingrediente </b>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; "> {{element.nombre}}
+                                    </td>
+                                  </ng-container>
+                                  <!-- Fecha de actualización Column -->
+                                  <ng-container matColumnDef="Caracteristicas">
+                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Registro</b></th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; ">
+                                      <mat-icon
+                                        [ngStyle]="{'color': element.estado == 'pendiente' ?'#E2E6FE': element.estado == null ?'#E2E6FE':  element.estado =='incompleto'? 'yellow' :'green '}">
+                                        {{element.estado == null ?'circle':'circle' }}
+                                      </mat-icon>
+                                      {{element.estado}}
+                                    </td>
+                                  </ng-container>
+
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+                                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
+                                </table>
+                                <!-- <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+                                      <mat-progress-spinner color="primary" mode="indeterminate">
+                                      </mat-progress-spinner>
+                                    </div> -->
+                              </mat-card-content>
+                            </mat-card>
+
+                            <div (click)="openDialogIngredientes('Adicionar',{})" style="    float: left;
+                                    margin-top: 40px;" class="align-items-center textagregar ">
+                              <div class="text-right ">
+                                <a class="btn-agregar "><img src="../.././../assets/images//Iconos/add_blue.png " />
+                                  Agregar
+                                  Ingrediente</a>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                    </table>
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="set_ViewActiva(0)">Anterior</button>
+                            </div>
+                            <div>
+                              <button type="submit">Siguiente
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+                  </form>
+                </div>
+
+                <!------Registro de ingredientes con nutricional neto------->
+                <div *ngIf="viewActiva == 2">
+                  <form (ngSubmit)="onSubmit()" #AnexosForm="ngForm" autocomplete="off">
+                    <table>
+                      <!-- ITEM 2 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="2"
+                              [titleChapter]="'Información nutricional, por ingredientes'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                          <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                              <div>
+                                <img src="../../../../../../assets/images/Iconos/dotacion-equipos/item2activo.png" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col ">
+
+                            <mat-card style="margin-left: 60px;">
+                              <mat-card-content>
+                                <table mat-table [dataSource]="dataSource " class="left-radius" matSort>
+                                  <!-- Nombre del documento Column -->
+                                  <ng-container matColumnDef="Nombre">
+                                    <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px;     min-width: 220px; "><b>Ingrediente </b>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; ">
+                                        {{element.nombre}}
+                                    </td>
+                                  </ng-container>
+                                  <!-- Fecha de actualización Column -->
+                                  <ng-container matColumnDef="Caracteristicas">
+                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px;     min-width: 220px;  "><b>Registro</b></th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; border-right: 1px solid; ">
+                                      <mat-icon
+                                        [ngStyle]="{'color': element.estado == 'pendiente' ?'#E2E6FE': element.estado == null ?'#E2E6FE':  element.estado =='incompleto'? 'yellow' :'green '}">
+                                        {{element.estado == null ?'circle':'circle' }}
+                                      </mat-icon>
+                                      {{element.estado}}
+                                    </td>
+                                  </ng-container>
+                                  accion
+                                  <ng-container matColumnDef="accion">
+                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                      style="    padding-left: 0px;
+                                      padding-right: 0px;
+                                      border: 0px;
+                                      background: white !important;">
+                                      <div (click)="openDialogIngredientes('Adicionar',{})" class="align-items-center" style="    float: left;
+                                      margin-left: 20px;">
+                                        <div class="text-right ">
+                                          <a class="btn-agregar "><img src="../.././../assets/images//Iconos/add_blue.png " />
+                                            Agregar
+                                            Ingrediente</a>
+                                        </div>
+                                      </div>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" class="hoverbutton"
+                                      style="padding-left: 0px; text-align: center; border-right: 0px solid;
+                                      border-bottom: 0px solid !important;    float: left;  margin-left: 20px; ">
+                                      <div class="align-items-center ">
+                                        <img src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-53.png"
+                                          height="20px" width="auto" />
+                                      </div>
+                                    </td>
+                                  </ng-container>
+
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumnsIn "></tr>
+                                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsIn; "
+                                    (click)="openingredienteDetalle(myRowData)"></tr>
+                                </table>
+                                <!-- <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+                                      <mat-progress-spinner color="primary" mode="indeterminate">
+                                      </mat-progress-spinner>
+                                    </div> -->
+                              </mat-card-content>
+                            </mat-card>
+
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                        <mat-card-header class="TituloDialog2">
+                          <ng-container>
+                            <div mat-dialog-actions>
+                              <tr class="CenterButton">
+                                <td style="font-size:13px ;">
+                                  Aporte nutricional y de energía para una porción de "{{nombreIngrediente}}"
+                                </td>
+                              </tr>
+                            </div>
+                          </ng-container>
+                        </mat-card-header>
+
+                        <mat-card-content class="TituloDialog3">
+                          <div>
+                            <div class="SizeDialog">
+                              <div>
+                                <mat-card-content class="text-center">
+                                  <mat-dialog-content class="mat-typography">
+                                    <br />
+                                    <div class="col2">
+                                      <mat-selection-list #modeloTList [multiple]="false"
+                                        (selectionChange)="onNivelEducativoChange(modeloTList.selectedOptions.selected)">
+                                        <mat-list-option *ngFor="let element of NivelEducativoList"
+                                          [value]="element.id">
+                                          <div class="center-vertically">
+                                            <mat-icon
+                                              [ngStyle]="{'color': element.estado == 'pendiente' ?'#E2E6FE': element.estado == null ?'#E2E6FE':  element.estado =='incompleto'? 'yellow' :'green '}">
+                                              {{element.estado == null ?'circle':'circle' }}
+                                            </mat-icon> {{element.nombre}}
+                                          </div>
+                                        </mat-list-option>
+                                      </mat-selection-list>
+                                    </div>
+                                    <br>
+                                    <div class="pesoneto">
+                                      <span class="tamaño">Tamaño de la porción en peso neto(g): </span>
+                                      <input matInput id="descripcionDiagnostico" require placeholder="xx" type="number" min="0"
+                                        class="form-control2" />
+                                      <br>
+
+                                    </div>
+                                    <br>
+                                    <div class="container">
+                                      <div class="row2">
+                                        <div class="col3">
+                                          <div class="row">
+                                            <!---Equivalencia---->
+                                            <div class="col4 mini-box margen1">
+                                              <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                                                <mat-card-header class="TituloDialog4">
+                                                  <ng-container>
+                                                    <div mat-dialog-actions class="tituloneto">
+                                                      <tr class="CenterButton">
+                                                        <td style="font-size:13px ;">
+                                                          Equivalencia
+                                                        </td>
+                                                      </tr>
+                                                    </div>
+                                                  </ng-container>
+                                                </mat-card-header>
+                                                <mat-card-content class="TituloDialog5">
+                                                  <div>
+                                                    <div class="SizeDialog">
+                                                      <div>
+                                                        <mat-card-content class="text-center">
+                                                          <mat-dialog-content class="mat-typography">
+                                                            <table mat-table [dataSource]="equivalencia "
+                                                              class="left-radius" matSort>
+                                                              <!-- Nombre del documento Column -->
+                                                              <ng-container matColumnDef="Nombre">
+                                                                <td mat-cell *matCellDef="let element"
+                                                                  style="padding-left: 10px; text-align: left; ">
+                                                                  {{element.nombre}}
+                                                                </td>
+                                                              </ng-container>
+                                                              <!-- Fecha de actualización Column -->
+                                                              <ng-container matColumnDef="Valor">
+                                                                <td mat-cell *matCellDef="let element"
+                                                                  style="padding-left: 0px; text-align: center; ">
+                                                                  {{element.valor | number:'1.2-2'}}
+                                                                </td>
+                                                              </ng-container>
+                                                              <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                                              <tr mat-row
+                                                                *matRowDef="let myRowData; columns: displayedColumnsNeto; "
+                                                                (click)="openingredienteDetalle(myRowData)"></tr>
+                                                            </table>
+                                                          </mat-dialog-content>
+                                                        </mat-card-content>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </mat-card-content>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <!---Energía---->
+                                            <div class="col4 mini-box margen1">
+                                              <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                                                <mat-card-header class="TituloDialog4">
+                                                  <ng-container>
+                                                    <div mat-dialog-actions class="tituloneto">
+                                                      <tr class="CenterButton">
+                                                        <td style="font-size:13px ;">
+                                                          Energía
+                                                        </td>
+                                                      </tr>
+                                                    </div>
+                                                  </ng-container>
+                                                </mat-card-header>
+                                                <mat-card-content class="TituloDialog5">
+                                                  <div>
+                                                    <div class="SizeDialog">
+                                                      <div>
+                                                        <mat-card-content class="text-center">
+                                                          <mat-dialog-content class="mat-typography">
+                                                            <table mat-table [dataSource]="energia" class="left-radius"
+                                                              matSort>
+                                                              <!-- Nombre del documento Column -->
+                                                              <ng-container matColumnDef="Nombre">
+                                                                <td mat-cell *matCellDef="let element"
+                                                                  style="padding-left: 10px; text-align: left; ">
+                                                                  {{element.nombre}}
+                                                                </td>
+                                                              </ng-container>
+                                                              <!-- Fecha de actualización Column -->
+                                                              <ng-container matColumnDef="Valor">
+                                                                <td mat-cell *matCellDef="let element"
+                                                                  style="padding-left: 0px; text-align: center; ">
+                                                                  {{element.valor | number:'1.2-2'}}
+                                                                </td>
+                                                              </ng-container>
+                                                              <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                                              <tr mat-row
+                                                                *matRowDef="let myRowData; columns: displayedColumnsNeto; "
+                                                                (click)="openingredienteDetalle(myRowData)"></tr>
+                                                            </table>
+                                                          </mat-dialog-content>
+                                                        </mat-card-content>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </mat-card-content>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!---Macronutrientes---->
+                                        <div class="col4 big-box">
+                                          <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                                            <mat-card-header class="TituloDialog4">
+                                              <ng-container>
+                                                <div mat-dialog-actions class="tituloneto">
+                                                  <tr class="CenterButton">
+                                                    <td style="font-size:13px ;">
+                                                      Macronutrientes
+                                                    </td>
+                                                  </tr>
+                                                </div>
+                                              </ng-container>
+                                            </mat-card-header>
+                                            <mat-card-content class="TituloDialog5">
+                                              <div>
+                                                <div class="SizeDialog">
+                                                  <div>
+                                                    <mat-card-content class="text-center">
+                                                      <mat-dialog-content class="mat-typography">
+                                                        <table mat-table [dataSource]="macro" class="left-radius"
+                                                          matSort>
+                                                          <!-- Nombre del documento Column -->
+                                                          <ng-container matColumnDef="Nombre">
+                                                            <td mat-cell *matCellDef="let element"
+                                                              style="padding-left: 10px; text-align: left; ">
+                                                              {{element.nombre}}
+                                                            </td>
+                                                          </ng-container>
+                                                          <!-- Fecha de actualización Column -->
+                                                          <ng-container matColumnDef="Valor">
+                                                            <td mat-cell *matCellDef="let element"
+                                                              style="padding-left: 0px; text-align: center; ">
+                                                              {{element.valor | number:'1.2-2'}}
+                                                            </td>
+                                                          </ng-container>
+                                                          <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                                          <tr mat-row
+                                                            *matRowDef="let myRowData; columns: displayedColumnsNeto; "
+                                                            (click)="openingredienteDetalle(myRowData)"></tr>
+                                                        </table>
+                                                      </mat-dialog-content>
+                                                    </mat-card-content>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </mat-card-content>
+                                          </div>
+                                        </div>
+
+                                        <!---Micronutrientes---->
+                                        <div class="col4 big-box margenbox">
+                                          <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                                            <mat-card-header class="TituloDialog4">
+                                              <ng-container>
+                                                <div mat-dialog-actions class="tituloneto">
+                                                  <tr class="CenterButton">
+                                                    <td style="font-size:13px ;">
+                                                      Micronutrientes
+                                                    </td>
+                                                  </tr>
+                                                </div>
+                                              </ng-container>
+                                            </mat-card-header>
+                                            <mat-card-content class="TituloDialog5">
+                                              <div>
+                                                <div class="SizeDialog">
+                                                  <div>
+                                                    <mat-card-content class="text-center">
+                                                      <mat-dialog-content class="mat-typography">
+                                                        <table mat-table [dataSource]="micro" class="left-radius"
+                                                          matSort>
+                                                          <!-- Nombre del documento Column -->
+                                                          <ng-container matColumnDef="Nombre">
+                                                            <td mat-cell *matCellDef="let element"
+                                                              style="padding-left: 10px; text-align: left; ">
+                                                              {{element.nombre}}
+                                                            </td>
+                                                          </ng-container>
+                                                          <!-- Fecha de actualización Column -->
+                                                          <ng-container matColumnDef="Valor">
+                                                            <td mat-cell *matCellDef="let element"
+                                                              style="padding-left: 0px; text-align: center; ">
+                                                              {{element.valor | number:'1.2-2'}}
+                                                            </td>
+                                                          </ng-container>
+                                                          <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                                          <tr mat-row
+                                                            *matRowDef="let myRowData; columns: displayedColumnsNeto; "
+                                                            (click)="openingredienteDetalle(myRowData)"></tr>
+                                                        </table>
+                                                      </mat-dialog-content>
+                                                    </mat-card-content>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </mat-card-content>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                    <br>
+                                  </mat-dialog-content>
+                                </mat-card-content>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-card-content>
+                      </div>
+                      <br>
+
+
+                    </table>
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="set_ViewActiva(1)">Anterior</button>
+                            </div>
+                            <div>
+                              <button type="submit">Siguiente
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+                  </form>
+                </div>
+
+                <!------Registro de peso servido------->
+                <div *ngIf="viewActiva == 3">
+                  <form (ngSubmit)="onSubmit()" #AnexosForm="ngForm" autocomplete="off">
+                    <table>
+                      <!-- ITEM 2 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="3" [titleChapter]="'Peso servido'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                          <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                              <div>
+                                <img src="../../../../../../assets/images/Iconos/dotacion-equipos/item3activo.png" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col ">
+
+                            <mat-card style="width: 85%; margin: auto;">
+                              <mat-card-content>
+                                <table mat-table [dataSource]="peso " class="left-radius" matSort>
+                                  <!-- Nombre del documento Column -->
+                                  <ng-container matColumnDef="Nivel">
+                                    <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Nivel educativo </b>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; "> {{element.nivel}}
+                                    </td>
+                                  </ng-container>
+                                  <!-- Fecha de actualización Column -->
+                                  <ng-container matColumnDef="pesoal">
+                                    <th  mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Peso servido en <br> complemento almuerzo (g)</b></th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; ">
+                                      <input matInput type="number"
+                                      min="0" id="giroConfirmado" value={{element.pesoAl}} placeholder="ingrese cantidad"
+                                      class="inputPesoServido" />
+                                    </td>
+                                  </ng-container>
+                                  <ng-container matColumnDef="pesoampm">
+                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Peso servido en <br> complemento AM/PM (g)</b></th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; ">
+                                      <input matInput type="number"
+                                      min="0" id="giroConfirmado" value={{element.pesoAMPM}} placeholder="ingrese cantidad"
+                                      class="inputPesoServido" />
+                                    </td>
+                                  </ng-container>
+
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumnsDos "></tr>
+                                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsDos; "></tr>
+                                </table>
+                              </mat-card-content>
+                            </mat-card>
+                            <br>
+                            <mat-card style="width: 85%; margin: auto;">
+                              <mat-card-content>
+                                <table mat-table [dataSource]="peso2 " class="left-radius" matSort>
+                                  <!-- Nombre del documento Column -->
+                                  <ng-container matColumnDef="Nivel">
+                                    <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Nivel educativo </b>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; "> {{element.nivel}}
+                                    </td>
+                                  </ng-container>
+                                  <!-- Fecha de actualización Column -->
+                                  <ng-container matColumnDef="peso">
+                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Peso servido en <br>complemento almuerzo (g)</b></th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; ">
+                                      <input matInput type="number"
+                                      min="0" id="giroConfirmado" value={{element.pesoAl}} placeholder="ingrese cantidad"
+                                      class="inputPesoServido" />
+                                    </td>
+                                  </ng-container>
+
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumnsUna "></tr>
+                                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsUna; "></tr>
+                                </table>
+                              </mat-card-content>
+                            </mat-card>
+                            <br>
+                            <mat-card style="width: 85%; margin: auto;">
+                              <mat-card-content>
+                                <table mat-table [dataSource]="peso2 " class="left-radius" matSort>
+                                  <!-- Nombre del documento Column -->
+                                  <ng-container matColumnDef="Nivel">
+                                    <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Nivel educativo </b>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; "> {{element.nivel}}
+                                    </td>
+                                  </ng-container>
+                                  <!-- Fecha de actualización Column -->
+                                  <ng-container matColumnDef="peso">
+                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Peso servido en <br>complemento AM/PM (g)</b></th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; ">
+                                      <input matInput type="number"
+                                      min="0" id="giroConfirmado" value={{element.pesoAl}} placeholder="ingrese cantidad"
+                                      class="inputPesoServido" />
+                                    </td>
+                                  </ng-container>
+
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumnsUna "></tr>
+                                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsUna; "></tr>
+                                </table>
+                              </mat-card-content>
+                            </mat-card>
+                            <br>
+                            <mat-card style="width: 30%; margin-left: 68.031px;">
+                              <mat-card-content>
+                                <table mat-table [dataSource]="peso3 " class="left-radius" matSort>
+                                  <ng-container matColumnDef="peso">
+                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
+                                      style="padding-left: 0px; "><b>Peso servido en <br>complemento almuerzo (g)</b></th>
+                                    <td mat-cell *matCellDef="let element"
+                                      style="padding-left: 0px; text-align: center; ">
+                                      <input matInput type="number"
+                                      min="0" id="giroConfirmado" value={{element.pesoAl}} placeholder="ingrese cantidad"
+                                      class="inputPesoServido" />
+                                    </td>
+                                  </ng-container>
+
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumnsMAER "></tr>
+                                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsMAER; "></tr>
+                                </table>
+                              </mat-card-content>
+                            </mat-card>
+                            <br>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                    </table>
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="set_ViewActiva(2)">Anterior</button>
+                            </div>
+                            <div>
+                              <button type="submit">Siguiente
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+                  </form>
+                </div>
+
+                <!------Registro de Guia de preparacion------->
+                <div *ngIf="viewActiva == 4">
+                  <form (ngSubmit)="onSubmit()" #AnexosForm="ngForm" autocomplete="off">
+                    <table>
+                      <!-- ITEM 2 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="4" [titleChapter]="'Guía de preparación'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                          <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                              <div>
+                                <img src="../../../../../../assets/images/Iconos/dotacion-equipos/item4activo.png" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="coljus ">
+                            <div class="TextosBlueLeft">Describa cómo se hace la preparación y/o ajuste un archivo con
+                              las instrucciones: </div>
+                            <textarea matInput id="justificacion" required class="tablaform3 control-md"></textarea>
+                            <button class="buttonAr3 btn-file" requerid>
+                              <p style="float: left; margin-right: 2px; font-weight: 500;">Adjuntar archivo</p>
+                              <p style="float: left; margin-right: 2px; font-weight: 500;">{{contenidoRespuesta1}}</p>
+                              <mat-icon class="espaciobutton" style="color: #005ACA;float: left;">description</mat-icon>
+                              <input id="file-upload" name="file-upload" type="file" data-max-size="3064" requerid
+                                (change)="onFileSelectedGuiaPreparacion($any($event).currentTarget.files)"
+                                accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                                      'application/vnd.rar', 'application/zip', 'application/msword',
+                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                      'application/pdf', 'application/vnd.ms-excel',
+                                      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                                      'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'">
+                            </button>
+
+                          </div>
+                        </div>
+                      </div>
+                    </table>
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="set_ViewActiva(3)">Anterior</button>
+                            </div>
+                            <div>
+                              <button type="submit">Siguiente
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+                  </form>
+                </div>
+
+                <!------Registro de informacion nutrocional de la preparacion------->
+                <div *ngIf="viewActiva == 5">
+                  <form (ngSubmit)="onSubmit()" #AnexosForm="ngForm" autocomplete="off">
+                    <table>
+                      <!-- ITEM 2 -->
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="5"
+                              [titleChapter]="'Información nutricional de la preparación'">
+                            </app-chapterblue>
+                            <br />
+                          </div>
+                          <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                              <div>
+                                <img src="../../../../../../assets/images/Iconos/dotacion-equipos/item5activo.png" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="panel-body">
+                            <div class="BordeTotal TituloDialogN">
+                              <mat-tab-group class="RegistroCiclo" style="margin: -25px 0 0 0!important" [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+                                <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+                                  <div>
+                                    <mat-card-content class="text-center">
+                                      <mat-dialog-content class="mat-typography">
+                                        <br />
+                                        <div class="col2">
+                                          <mat-selection-list #modeloTList [multiple]="false"
+                                            (selectionChange)="onNivelEducativoChange(modeloTList.selectedOptions.selected)">
+                                            <mat-list-option *ngFor="let element of NivelEducativoList" [value]="element.id">
+                                              <div class="center-vertically">
+                                                {{element.nombre}}
+                                              </div>
+                                            </mat-list-option>
+                                          </mat-selection-list>
+                                        </div>
+                                        <br>
+                                        <div class="pesoneto">
+                                          <span class="tamaño1">Tamaño de la porción por componente PAE: </span>
+                                        </div>
+                                        <br>
+                                        <div fxLayout="row wrap">
+                                          <div fxFlex="100" style="width: 50%;">
+                                            <mat-card>
+                                              <mat-card-content>
+                                                <table mat-table [dataSource]="dataSourceComponentePAE" class="left-radius" matSort>
+
+                                                  <ng-container matColumnDef="Componente">
+                                                    <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>
+                                                        componente
+                                                      </b></th>
+                                                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                                      {{element.fecha==null?'-': (element.fecha | date:'dd-MMM-yyyy' | uppercase | withoutDots)}}
+                                                    </td>
+                                                  </ng-container>
+
+                                                  <ng-container matColumnDef="peso">
+                                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                                                      <b>Peso neto aportado<br>en la preparación</b></th>
+                                                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                                      {{element.tipo}}</td>
+                                                  </ng-container>
+
+
+                                                  <tr mat-header-row *matHeaderRowDef="displayedColumnsComponentePAE "></tr>
+                                                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsComponentePAE; "></tr>
+                                                </table>
+                                                <!-- <div *ngIf="isLoading"
+                                                  style="display: flex; justify-content: center; align-items: center; background: white;">
+                                                  <mat-progress-spinner color="primary" mode="indeterminate">
+                                                  </mat-progress-spinner>
+                                                </div> -->
+                                              </mat-card-content>
+                                            </mat-card>
+                                          </div>
+                                        </div>
+                                        <br>
+                                        <div class="pesoneto">
+                                          <span class="tamaño1">Tamaño de la porción por grupo de alimento GABA: </span>
+                                        </div>
+                                        <br>
+                                        <div fxLayout="row wrap">
+                                          <div fxFlex="100">
+                                            <mat-card>
+                                              <mat-card-content>
+                                                <table mat-table [dataSource]="dataSourceComponentePAE" class="left-radius" matSort>
+                                                  <!-- Nombre del documento Column -->
+                                                  <ng-container matColumnDef="grupo">
+                                                    <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                                                      <b>Grupo</b>
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                                      {{element.nombre}}
+                                                    </td>
+                                                  </ng-container>
+                                                  <!-- Fecha de actualización Column -->
+                                                  <ng-container matColumnDef="subgrupo">
+                                                    <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Subgrupo</b></th>
+                                                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                                      {{element.fecha==null?'-': (element.fecha | date:'dd-MMM-yyyy' | uppercase | withoutDots)}}
+                                                    </td>
+                                                  </ng-container>
+
+                                                  <ng-container matColumnDef="peso">
+                                                    <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                                                      <b>Peso neto aportado<br>en la preparación</b></th>
+                                                    <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                                      {{element.tipo}}</td>
+                                                  </ng-container>
+
+
+                                                  <tr mat-header-row *matHeaderRowDef="displayedColumnsComponenteGABA "></tr>
+                                                  <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsComponenteGABA; "></tr>
+                                                </table>
+                                                <!-- <div *ngIf="isLoading"
+                                                  style="display: flex; justify-content: center; align-items: center; background: white;">
+                                                  <mat-progress-spinner color="primary" mode="indeterminate">
+                                                  </mat-progress-spinner>
+                                                </div> -->
+                                              </mat-card-content>
+                                            </mat-card>
+                                          </div>
+                                        </div>
+                                        <br>
+                                      </mat-dialog-content>
+                                    </mat-card-content>
+                                  </div>
+                                </mat-tab>
+                              </mat-tab-group>
+
+                            </div>
+                            <br>
+                            <div>
+                              <div class="pesoneto">
+                                <span class="tamaño1">Tamaño de la porción por grupo de alimento GABA: </span>
+                              </div>
+                              <br>
+                              <div fxLayout="row wrap">
+                                <div fxFlex="100">
+                                  <mat-card class="diseGABA">
+                                    <mat-card-content>
+                                      <table mat-table [dataSource]="dataSourceComponentePAE" class="left-radius" matSort>
+                                        <!-- Nombre del documento Column -->
+                                        <ng-container matColumnDef="grupo">
+                                          <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                                            <b>Grupo</b>
+                                          </th>
+                                          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                            {{element.nombre}}
+                                          </td>
+                                        </ng-container>
+                                        <!-- Fecha de actualización Column -->
+                                        <ng-container matColumnDef="subgrupo">
+                                          <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Subgrupo</b></th>
+                                          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                            {{element.fecha==null?'-': (element.fecha | date:'dd-MMM-yyyy' | uppercase | withoutDots)}}
+                                          </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="peso">
+                                          <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                                            <b>Peso neto aportado<br>en la preparación</b></th>
+                                          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                            {{element.tipo}}</td>
+                                        </ng-container>
+
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsComponenteGABA "></tr>
+                                        <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsComponenteGABA; "></tr>
+                                      </table>
+                                      <!-- <div *ngIf="isLoading"
+                                        style="display: flex; justify-content: center; align-items: center; background: white;">
+                                        <mat-progress-spinner color="primary" mode="indeterminate">
+                                        </mat-progress-spinner>
+                                      </div> -->
+                                    </mat-card-content>
+                                  </mat-card>
+                                </div>
+                              </div>
+                              <br>
+
+                            </div>
+                      </div>
+                      <br>
+
+
+                    </table>
+                    <!-- ---------------------------------Botones----------------------------- -->
+                    <table class="BordeSuperior">
+                      <ng-container>
+                        <div>
+                          <div class="CenterButton text-center">
+                            <div class="AlignRight">
+                              <button (click)="set_ViewActiva(4)">Anterior</button>
+                            </div>
+                            <div>
+                              <button type="submit">Siguiente
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </table>
+                  </form>
+                </div>
+              </div>
+
+
+
+
+            </mat-dialog-content>
+
+
+            <ng-template #elseTemplate>
+              ¿Está Seguro de Eliminar el Registro?
+            </ng-template>
+
+
+
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</div>

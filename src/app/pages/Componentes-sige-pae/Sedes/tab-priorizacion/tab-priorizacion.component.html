@@ -1,0 +1,117 @@
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card *ngIf="!inDetail">
+      <div>
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" style="width:30px; height: 30px; float:left;">
+        <p style="display: inline-block; margin-left: 5px; color: red;">
+          <b>Su asignación de complementos presenta alertas. <br>
+            Ingrese al Sistema MiPAE para consultar en qué jornadas y grados escolares se presentan las alertas</b>
+        </p>
+      </div>
+      <div>
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-20.png" style="width:30px; height: 30px; float:left;">
+        <p style="display: inline-block; margin-left: 5px; color:#005ACA;">
+          <b>La matrícula de la sede se ha actualizado en el SIMAT.
+            <br>Ingrese al Sistema MiPAE. si desea hacer cambios en la asignación de complementos.</b>
+        </p>
+      </div>
+      <mat-card-content>
+        <div class="table-responsive">
+          <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="dataSourceResultados"
+            class="left-radius" matSort>
+            <ng-container matColumnDef="municipio">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b>Municipio</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.municipio}} </td>
+            </ng-container>
+            <ng-container matColumnDef="institucionEducativa">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "> <b>Institución<br> educativa</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.institucionEducativa}} </td>
+            </ng-container>
+            <ng-container matColumnDef="sede">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; min-width: 290px; "> <b>Sede </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.sede}} </td>
+            </ng-container>
+            <ng-container matColumnDef="matriculaSimat">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b> Matrícula SIMAT</b> </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.matriculaSIMAT}} </td>
+            </ng-container>
+            <ng-container matColumnDef="modeloTradicional">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b> Modelo de operación</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.modeloOperacionTradicional}} </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="modeloEmergencia">
+              <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; ">
+               <b> Modelo de operación
+                de emergencia </b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.modeloOperacionEmergencia}} </td>
+            </ng-container> -->
+            <ng-container matColumnDef="modalidadSugerida">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;  width: 100px;"> <b>Modalidad <br>sugerida
+                  <br>según riesgo</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                {{element.modalidadSugerida}} </td>
+            </ng-container>
+            <ng-container matColumnDef="racionesDiarias">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                <b>Complementos<br> diarios</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                <div *ngIf="element.haveYellowAlert ">
+                  Actualizar
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-20.png" alt="" height="14px" width="auto">
+                </div>
+                <!--              <div *ngIf=" element.haveAlert || !element.haveYellowAlert && element.racionesDiarias< element.matriculaSIMAT" style="color: red;">
+                  {{element.racionesDiarias}}
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px" width="auto">
+                </div>
+                <div *ngIf=" element.haveAlert || !element.haveYellowAlert && element.racionesDiarias >= element.matriculaSIMAT||element.racionesDiarias == element.matriculaSIMAT ">
+                  {{element.racionesDiarias}}
+                  
+                </div> -->
+
+                <div
+                  *ngIf="element.haveAlert || !element.haveYellowAlert  && element.racionesDiarias < element.matriculaSIMAT"
+                  style="color:red;">
+                  {{element.racionesDiarias==null?'-':element.racionesDiarias}}
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px" width="auto">
+                </div>
+                <div
+                  *ngIf="(!element.haveAlert && !element.haveYellowAlert && (element.racionesDiarias >= element.matriculaSIMAT))">
+                  {{element.racionesDiarias==null?'-':element.racionesDiarias}}
+                </div>
+
+                <!--  <div *ngIf="!element.haveAlert && element.racionesDiarias > element.matriculaSIMAT*2"  >
+                  {{element.racionesDiarias==null?'-':element.racionesDiarias}}
+                </div> -->
+
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="resultadosColumnNames"></tr>
+            <tr mat-row (click)="clickedSede(myRowData)" *matRowDef="let myRowData; columns: resultadosColumnNames;">
+            </tr>
+          </table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+          </mat-paginator>
+          <div *ngIf="isLoading"
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

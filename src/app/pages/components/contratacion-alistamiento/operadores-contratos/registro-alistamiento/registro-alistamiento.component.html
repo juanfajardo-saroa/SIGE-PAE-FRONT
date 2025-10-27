@@ -1,0 +1,348 @@
+<div [ngClass]="{'linkdisable':!getModulePermission(73,'ver')}">
+  <div *ngIf="displaySearch != true" class="row mb-3">
+    <div class="col-12 col-xl-10">
+      <div class="d-flex flex-column flex-xl-row">
+        <table class="tableFiltroUsuario mr-3 mb-3" style="max-width: 100px">
+          <tr class="text-center">
+            <td width="10%">
+              <a (click)="noVerContrato()">
+                <img src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-50.png" alt="atras" style="width: 30px;" />
+                <div>Atrás</div>
+              </a>
+            </td>
+          </tr>
+        </table>
+
+        <div class="d-flex flex-column flex-xl-row mx-xl-2 mx-0 table-filter table-filter-border w-down-100 mb-3" style="width: 83%;">
+
+          <div class="px-3 py-2 w-down-100" style="width: 35%;">
+            <span>Modelo de Operación</span>
+            <select id="ModeloOperacion" [(ngModel)]="idMOperacion">
+              <option selected value="0">Todos</option>
+              <option *ngFor="let i of dsModeloOperacion" [ngValue]="i.id">
+                {{ i.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="px-3 py-2 w-down-100" style="width: 45%;">
+            <span>Operador</span>
+            <select id="tipoContrato" [(ngModel)]="idOperador" disabled="{{ sinoperador }}">
+              <option selected value="0">Todos</option>
+              <option *ngFor="let i of operadoresList" [ngValue]="i.id">
+                {{ i.nombreRazonSocial }}
+              </option>
+            </select>
+          </div>
+
+          <div class="table-filter-border-right px-3 py-2 w-down-100" style="width: 20%;">
+            <span>No. de Contrato</span>
+            <select id="idContrato" [ngModel]="numeroContrato" (ngModelChange)="changeSearch('contrato', $event)">
+              <option selected value="0">Todos</option>
+              <option *ngFor="let contrato of dataContratoSelect" [ngValue]="contrato.numeroContrato">
+                {{ contrato.numeroContrato }}
+              </option>
+            </select>
+          </div>
+
+          <div class="d-flex justify-content-center w-down-100" style="width: 5%;">
+            <a (click)="consultaContratos()">
+              <img src="../assets/images/Iconos/search_blue.png" />
+              <div>Filtrar</div>
+            </a>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row col-12">
+    <div *ngIf="displaySearch != true" class="text-basered">
+      <label *ngFor="let item of listSedesContratosHojaContrato">
+        <img src="../assets/images/Iconos/Resultado_contrato.png" />
+        Contrato No. {{ item.numeroContrato }}
+      </label>
+    </div>
+  </div>
+
+
+
+  <div class="row mb-3" *ngIf="displaySearch != true">
+    <div class="col-12 responsive-table">
+      <table class="table-default table-red">
+        <thead>
+          <tr class="text-center">
+            <th style="border-radius: 0px !important; width: 15% !important;">
+              <img width="45" height="45" class="mr-2 setMiddleTd" src="../assets/iconos_PAE/SVG/Iconos_PAE-109.svg" />
+              <span class="text-basered text-left setMiddleTd">Operador:</span>
+            </th>
+            <th style="width: 15% !important;">
+              <img width="30" height="30" class="mr-2 setMiddleTd" src="../assets/iconos_PAE/SVG/Iconos_PAE-128.svg" />
+              <span class="text-basered text-left setMiddleTd">Fecha de<br>Adjudicación:</span>
+            </th>
+            <th style="width: 15% !important;">
+              <img width="30" height="30" class="mr-2 setMiddleTd" src="../assets/iconos_PAE/SVG/Iconos_PAE-129.svg" />
+              <span class="text-basered text-left setMiddleTd">Fecha estimada<br>de finalización:</span>
+            </th>
+            <th style="width: 20% !important;">
+              <img width="30" height="30" class="mr-2 setMiddleTd"
+                src="../../../../../../assets/iconos_PAE/PNG/Íconos_PAE-149.png" />
+              <span class="text-basered text-left setMiddleTd">Modelo(s)<br>de Operacion:</span>
+            </th>
+            <th style="border-radius: 0px !important; width: 30%;">
+              <img width="30" height="30" class="mr-2 setMiddleTd"
+                src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-291.png" />
+              <span class="text-basered text-left setMiddleTd">Plazo para completar<br> el alistamiento:</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contratoHoja of listSedesContratosHojaContrato" class="text-center">
+            <td style="border-right: dotted; border-right-width: 1px !important">
+              {{ contratoHoja.nomOperador }}
+            </td>
+            <td style="border-right: dotted; border-right-width: 1px !important">
+              {{ contratoHoja.fechalnicioContrato | dateFormat | uppercase }}
+            </td>
+            <td style="border-right: dotted; border-right-width: 1px !important">
+              {{ contratoHoja.fechaFinalContrato | dateFormat | uppercase }}
+            </td>
+            <td style="border-right: dotted; border-right-width: 1px !important">
+              {{contratoHoja.modeloOperacion}}
+            </td>
+            <td>
+              <div style="border-right: dotted; border-right-width: 1px !important"></div>
+              {{ contratoHoja.fechaAlistamiento | dateFormat | uppercase }}
+              <img style="width: 45px; height: 45px;" src="../../../../../../assets/images/Iconos/admiracion.png">
+              Quedan {{ contratoHoja.plazoRestante }} días
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-container *ngIf="displaySearch != true">
+    <mat-tab-group [selectedIndex]="selectedTabIndex" style="width: 100%; display: flex"
+      (selectedIndexChange)="myTabFocusChange($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="d-flex align-items-center">
+            <div [ngClass]="
+              getState(docState)
+            "></div>
+            <label class="form-label mx-2" [ngClass]="{ 'text-basered' : selectedTabIndex === 0 }">
+              Documentación
+            </label>
+          </div>
+        </ng-template>
+        <div>
+          <app-plan-alistamiento-documentacion
+            (stateDocChanged)="stateDocChange($event)"></app-plan-alistamiento-documentacion>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="d-flex align-items-center">
+            <div [ngClass]="
+          getState(cicState)
+            "></div>
+            <label class="form-label mx-2" [ngClass]="{ 'text-basered' : selectedTabIndex === 1 }"> Ciclos de Menús
+            </label>
+          </div>
+        </ng-template>
+        <app-plan-alistamiento-menu (stateCicChanged)="stateCicChange($event)"
+          [idContrato]="idContrato"></app-plan-alistamiento-menu>
+      </mat-tab>
+      <mat-tab *ngIf="idMOperacion && idMOperacion!=2">
+        <ng-template mat-tab-label>
+          <div class="d-flex align-items-center">
+            <div [ngClass]="obtenerClaseEstadoDiligenciamiento([dataDetalleAlistamiento.estadoDiligenciamientoRutas])">
+            </div>
+            <label class="form-label mx-2" [ngClass]="{ 'text-basered' : selectedTabIndex === 2 }"> Plan de
+              rutas</label>
+          </div>
+        </ng-template>
+        <app-plan-rutas [idPlanAlistamiento]="idPlanAlistamiento" [idMOperacion]="idMOperacion" [idEtc]="idEtc"
+          [idRowAprobacion]="idRowAprobacion" [idMOperacion1]="idMOperacion1" [idEstadoRuta]="idEstadoRuta"
+          (estado)="actualizarEstado($event)" [idOperador]="idOperadorContrato">
+        </app-plan-rutas>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="d-flex align-items-center">
+            <div [ngClass]="
+          getState(inicioState)
+            "></div>
+            <label class="form-label mx-2" [ngClass]="{ 'text-basered' : selectedTabIndex === 3 }"> Inicio de la
+              operación </label>
+          </div>
+        </ng-template>
+        <app-plan-alistamiento-inicio-operacion
+          (stateIniChanged)="stateIniChange($event)"></app-plan-alistamiento-inicio-operacion>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>
+
+  <div class="row">
+    <div *ngIf="displaySearch" class="col-12">
+      <div class="tab-control-items d-flex">
+        <div class="tab-item">
+          <h3>Contratos en Alistamiento</h3>
+        </div>
+        <div class="flex-grow-1 tab-item-blank"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="displaySearch" class="d-flex flex-column flex-xl-row mx-2 table-filter table-filter-border w-down-100 mb-3" style="width: 83%;">
+
+    <div class="px-3 py-2 w-down-100" style="width: 35%;">
+      <span>Modelo de Operación</span>
+      <select id="ModeloOperacion" [(ngModel)]="idMOperacion">
+        <option selected value="0">Todos</option>
+        <option *ngFor="let i of dsModeloOperacion" [ngValue]="i.id">
+          {{ i.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="px-3 py-2 w-down-100" style="width: 45%;">
+      <span>Operador</span>
+      <select id="tipoContrato" [(ngModel)]="idOperador" disabled="{{ sinoperador }}">
+        <option selected value="0">Todos</option>
+        <option *ngFor="let i of operadoresList" [ngValue]="i.id">
+          {{ i.nombreRazonSocial }}
+        </option>
+      </select>
+    </div>
+
+    <div class="table-filter-border-right px-3 py-2 w-down-100" style="width: 20%;">
+      <span>No. de Contrato</span>
+      <select id="idContrato" [ngModel]="numeroContrato" (ngModelChange)="changeSearch('contrato', $event)">
+        <option selected value="0">Todos</option>
+        <option *ngFor="let contrato of dataContratoSelect" [ngValue]="contrato.numeroContrato">
+          {{ contrato.numeroContrato }}
+        </option>
+      </select>
+    </div>
+
+    <div class="d-flex justify-content-center w-down-100" style="width: 5%;">
+      <a (click)="consultaContratos()">
+        <img src="../assets/images/Iconos/search_blue.png" />
+        <div>Filtrar</div>
+      </a>
+    </div>
+
+  </div>
+
+
+  <!-- LIST BUSQUEDA CONTRATOS -->
+  <div *ngIf="displaySearch" class="rsow">
+    <div class="col-12">
+      <div *ngIf="displaySearch" class="encabezado-text-underline">
+        <label>
+          <img src="../assets/images/Iconos/Resultado_contrato.png">
+          Resultados de la b&uacute;squeda de Contratos
+        </label>
+      </div>
+    </div>
+
+    <div *ngIf="displaySearch" class="col-12 mt-sm responsive-table-pae">
+      <table class="table-default table-hover">
+        <thead>
+          <tr class="text-center">
+            <th *ngFor="let item of displayedColumnsContratos">
+              {{ item.descripcion }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" *ngFor="let item of dataTabla">
+            <td class="w-down-100" width="15%" (click)="verContrato(item)" [attr.data-label]="displayedColumnsContratos[0].descripcion">{{ item.numeroContrato }}</td>
+            <td class="w-down-100" width="20%" (click)="verContrato(item)"[attr.data-label]="displayedColumnsContratos[1].descripcion">{{ item.nombreRazonSocial }}</td>
+            <td class="w-down-100" width="10%" (click)="verContrato(item)"[attr.data-label]="displayedColumnsContratos[2].descripcion">{{ item.modeloOperacion }}</td>
+            <td class="w-down-100" width="18%" (click)="verContrato(item)"[attr.data-label]="displayedColumnsContratos[3].descripcion">
+              {{ item.fechalnicioContratoString | dateFormat | uppercase }}
+            </td>
+            <td class="w-down-100" width="5%" (click)="verContrato(item)" [attr.data-label]="displayedColumnsContratos[4].descripcion">
+              {{ item.plazoRestante }}
+            </td>
+            <td class="w-down-100" *ngIf="item.modeloOperacion == 'MAER'" width="5%" (click)="verContrato(item)" [attr.data-label]="displayedColumnsContratos[5].descripcion">
+              N/A
+            </td>
+            <td class="w-down-100" *ngIf="item.modeloOperacion != 'MAER'" width="5%" (click)="verContrato(item)" [attr.data-label]="displayedColumnsContratos[5].descripcion">
+              <div [outerHTML]="item.estadoBodegas | semaforoContratos"></div>
+            </td>
+
+            <td class="w-down-100" width="5%" (click)="verContrato(item)" [attr.data-label]="displayedColumnsContratos[6].descripcion">
+              <div [outerHTML]="item.estadoDocumentacion | semaforoContratos"></div>
+            </td>
+
+            <td class="w-down-100" width="5%" (click)="verContrato(item)" [attr.data-label]="displayedColumnsContratos[7].descripcion">
+              <div [outerHTML]="item.estadoMenus | semaforoContratos"></div>
+            </td>
+
+            <td class="w-down-100" width="5%" (click)="verContrato(item)" [attr.data-label]="displayedColumnsContratos[8].descripcion">
+              <div [outerHTML]="item.estadoRutas | semaforoContratos"></div>
+            </td>
+
+            <td class="w-down-100" width="15%" (click)="verContrato(item)" [attr.data-label]="displayedColumnsContratos[9].descripcion">
+              <div [outerHTML]="item.tipoEstadoAlistamiento | semaforoContratos"></div>
+              {{ item.tipoEstadoAlistamiento }}
+            </td>
+
+          </tr>
+        </tbody>
+
+        <tfoot class="table-paginator">
+          <tr>
+            <td colspan="10">
+              <div>
+                <span>Items:</span>
+                <span>
+                  <select [(ngModel)]="itemCant" (ngModelChange)="changeCantItems($event)">
+                    <option *ngFor="let item of itemsPerPages" [ngValue]="item">
+                      {{ item }}
+                    </option>
+                  </select>
+                </span>
+                <span>
+                  {{ itemIni }} - {{ itemFin }} de {{ dataContratos.length }}
+                </span>
+                <span>
+                  <mat-icon class="first-last" [class]="disabledFirstPage ? 'disabled' : ''"
+                    (click)="changePage(1, -1, disabledFirstPage)">first_page</mat-icon>
+                  <mat-icon class="previous-next" [class]="disabledPreviousPage ? 'disabled' : ''"
+                    (click)="changePage(2, -1, disabledPreviousPage)">arrow_back_ios</mat-icon>
+                  <mat-icon class="previous-next" [class]="disabledNextPage ? 'disabled' : ''"
+                    (click)="changePage(2, 1, disabledNextPage)">arrow_forward_ios</mat-icon>
+                  <mat-icon class="first-last" [class]="disabledLastPage ? 'disabled' : ''"
+                    (click)="changePage(1, 1, disabledLastPage)">last_page</mat-icon>
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div *ngIf="displayDD != true" class="col-12 mt-sm">
+      <div class="container-sin-registros">
+        <div class="container-body">
+          <div class="container-icon">
+            <img style="width: 41px; height: 41px" src="../assets/images/Iconos/alert.png" />
+          </div>
+          <div class="container-text">
+            No hay resultados disponibles. Si el Operador que busca no aparece, dé
+            click en “Registrar Operador” e inscríbalo llenando el “Registro Único
+            de Operadores”.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

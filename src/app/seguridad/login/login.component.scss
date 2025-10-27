@@ -1,0 +1,486 @@
+@import '/src/assets/styles/variable.scss';
+
+/* body {
+  padding-left: 3rem !important;
+} */
+.Acomodar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+::ng-deep.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  height: 100vh;
+  width: min-content;
+}
+
+img.imagenPrincipal {
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* background-image: url( ../.././../assets/images/ecosistema3.png);
+  background-color: red; */
+}
+
+.tablaform {
+  width: 100%;
+  border-color: $base-azulPAE  !important;
+  color: $base-azulPAE;
+  border: 1px solid;
+  border-radius: 12px 12px 12px 12px !important;
+  font-size: 17px;
+}
+
+.form-control {
+  padding: 11px 10px !important;
+  border-color: $base-azulPAE  !important;
+  border-radius: 20px !important;
+}
+
+::ng-deep.ms-sm-auto {
+  margin-left: 0 !important;
+}
+
+.ImagenMinEduc {
+  margin-top: 60px;
+  margin-left: -62px;
+  /* position: absolute;
+  top: 5%;
+  left: -62px;
+  margin-top: 15px; */
+}
+
+.espacioPeque {
+  padding-left: 10px;
+}
+
+/*
+@media screen and (max-width: 1440px) {
+  .ImagenMinEduc {
+    position: absolute;
+    top: 2%;
+    left: -55px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .ImagenMinEduc {
+    position: absolute;
+    top: 2%;
+    left: -58px;
+  }
+} */
+
+::ng-deep.mat-card {
+  margin: 0px !important;
+  box-shadow: none !important;
+}
+
+.All {
+  display: flex;
+  justify-content: flex-end;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* Right or Left */
+  margin: 0px !important;
+  width: 100vw !important;
+  padding: 0% !important;
+}
+
+.login {
+  display: flex;
+  justify-content: flex-end;
+  background-repeat: no-repeat;
+  /* Right or Left */
+  margin: 0px 0px 0px 0px !important;
+  width: 100vw !important;
+  padding: 27px 40px 0px 0px !important;
+  background-position: unset;
+}
+
+.card-body {
+  flex: 0 1 auto;
+  padding: 7px !important;
+}
+
+.mat-card-content {
+  padding: 0 5%;
+}
+
+.mat-card {
+  background: #ffffff00;
+}
+
+.LoginPrincipal {
+  padding: 3% 0% 0 6%;
+}
+
+.TextBienvenidaBlue {
+  color: $base-azulPAE;
+  text-align: center;
+  font-weight: 450;
+  padding-bottom: 13%;
+  padding-top: 5%;
+  font-size: 12px;
+}
+
+.letraDocum {
+  color: $base-azulPAE;
+  font-size: 12px;
+}
+
+.Texto {
+  color: $base-azulPAE;
+  font-size: 12px !important;
+  padding-left: 10px;
+}
+
+.TextoOlvido {
+  color: $base-azulPAE;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.TextCenterBlue {
+  color: $base-azulPAE;
+  text-align: center;
+  font-weight: 400;
+  padding-bottom: 0%;
+  font-size: 12px;
+}
+
+.ImagenSistema {
+  margin-top: -25px;
+}
+
+.BoxLogin {
+  background-color: #E2ECFD;
+  color: $base-azulPAE;
+  border-radius: 20px;
+  margin-bottom: 2%;
+}
+
+.BordeBoton {
+  border-radius: 20px;
+  border: $base-azulPAE solid 1px;
+  background-color: $base-azulPAE;
+  color: #fff;
+  margin: auto;
+  display: block;
+  padding: 2%;
+}
+
+mat-card-content {
+  padding: 5% 8%;
+}
+
+mat-form-field {
+  border-radius: 20px;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff;
+  color: $base-azulPAE;
+  margin: 2%;
+}
+
+input {
+  background-color: #fff;
+}
+
+
+input[pw-show-hide]+span {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: .5ch;
+  text-transform: uppercase;
+  width: 4.5ch;
+  text-align: left;
+  line-height: 1;
+  vertical-align: middle;
+
+  small {
+    font-size: .7em;
+    opacity: .5;
+  }
+}
+
+// boring
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  font-size: calc(1em + 1.5vmin)
+}
+
+input {
+  font: inherit;
+  // padding: .5ch;
+  border-radius: 1.4ch;
+  border: 2px solid #999;
+}
+
+mat-input[pw-show-hide]+span {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: .5ch;
+  text-transform: uppercase;
+  width: 4.5ch;
+  text-align: left;
+  line-height: 1;
+  vertical-align: middle;
+
+  small {
+    font-size: .7em;
+    opacity: .5;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+}
+
+::ng-deep.px-md-5 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+::ng-deep.mt-2 {
+  margin-top: 40 !important;
+}
+
+::ng-deep.mt-3 {
+  margin-top: 0 !important;
+}
+
+::ng-deep.my-3 {
+  margin-top: 0 !important;
+}
+
+::ng-deep.container-fluid,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  /* width: 100%; */
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* ::ng-deep.mat-drawer-content {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100%;
+  overflow: scroll !important;
+} */
+/* ::ng-deep.navbar-container {
+  padding: 0;
+  display: none!important;
+} */
+::ng-deep.hr {
+  margin-top: 1rem;
+  margin-bottom: 0px !important;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ::ng-deep.tp-container[_ngcontent-uox-c314] {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  display: contents;
+} */
+
+::ng-deep.tp-containerppal {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding-top: 0px !important;
+  padding-left: 0px !important;
+}
+
+::ng-deep.mat-drawer.mat-drawer-side {
+  z-index: 2;
+  display: none;
+}
+
+::ng-deep.mat-drawer-content {
+  margin-left: 0px !important;
+}
+
+::ng-deep.col-xl,
+.col-xl-auto,
+.col-xl-12,
+.col-xl-11,
+.col-xl-10,
+.col-xl-9,
+.col-xl-8,
+.col-xl-7,
+.col-xl-6,
+.col-xl-5,
+.col-xl-4,
+.col-xl-3,
+.col-xl-2,
+.col-xl-1,
+.col-lg,
+.col-lg-auto,
+.col-lg-12,
+.col-lg-11,
+.col-lg-10,
+.col-lg-9,
+.col-lg-8,
+.col-lg-7,
+.col-lg-6,
+.col-lg-5,
+.col-lg-4,
+.col-lg-3,
+.col-lg-2,
+.col-lg-1,
+.col-md,
+.col-md-auto,
+.col-md-12,
+.col-md-11,
+.col-md-10,
+.col-md-9,
+.col-md-8,
+.col-md-7,
+.col-md-6,
+.col-md-5,
+.col-md-4,
+.col-md-3,
+.col-md-2,
+.col-md-1,
+.col-sm,
+.col-sm-auto,
+.col-sm-12,
+.col-sm-11,
+.col-sm-10,
+.col-sm-9,
+.col-sm-8,
+.col-sm-7,
+.col-sm-6,
+.col-sm-5,
+.col-sm-4,
+.col-sm-3,
+.col-sm-2,
+.col-sm-1,
+.col,
+.col-auto,
+.col-12,
+.col-11,
+.col-10,
+.col-9,
+.col-8,
+.col-7,
+.col-6,
+.col-5,
+.col-4,
+.col-3,
+.col-2,
+.col-1 {
+  position: relative;
+  width: 100%;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+::ng-deep.container,
+.container-fluid,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  width: 100%;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+::ng-deep button {
+  margin-bottom: 10px !important;
+  margin-top: 10px !important;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  justify-self: center;
+  font-size: 12px;
+  border-radius: 12px !important;
+  background-image: url(../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+  background-size: cover !important;
+  padding: 0% 0%;
+  width: 30% !important;
+  color: $base-color  !important;
+  background-position: top !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  display: inline-block ;
+  object-fit: contain !important;
+}
+
+::ng-deep.swal2-html-container {
+  margin: 0em 1.6em 0.3em !important;
+}
+
+::ng-deep.swal2-close {
+  color: #fff;
+  margin-top: 0% !important;
+  box-shadow: none !important;
+  background-color: transparent;
+  font-size: 2em;
+}
+
+::ng-deep.swal2-styled.swal2-cancel,
+::ng-deep.swal2-styled.swal2-confirm {
+  border-radius: 5em !important;
+  padding: 0.2em 2em !important;
+  margin-top: 0% !important;
+  font-size: 12px !important;
+}
+
+::ng-deep.swal2-actions {
+  margin-top: 0% !important;
+}
+
+::ng-deep.swal2-styled.swal2-confirm {
+  background-color: #E2ECFD !important;
+  color: #005ACA !important;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  .LoginPrincipal {
+    padding: 3% !important;
+  }
+
+  .ImagenMinEduc {
+    margin-left: 0 !important;
+  }
+}

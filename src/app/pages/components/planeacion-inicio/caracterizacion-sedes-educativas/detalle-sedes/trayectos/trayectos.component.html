@@ -1,0 +1,255 @@
+<div fxLayout="row wrap">
+  <div class="row pr-lg-down-2">
+    <div class="col-12 col-xl" style="max-width: 8% !important; margin-left: 1% !important">
+      <table class="tablaform2">
+        <div class="bordeAtras">
+          <a class="btn-agregar " (click)="RegresarInfraestura()">
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png " style="width:50px; height: 50px;">
+            Atrás
+          </a>
+        </div>
+      </table>
+    </div>
+    <div class="col-12 col-xl wmx-down-lg-100"
+      style="max-width: 87%; border: 1px solid #005ACA; padding: 0% 2%; border-radius: 20px; margin-right: 2%; margin-left: 2%">
+      <table [formGroup]="filterForm" class="tablaForm">
+        <div class="row">
+          <div class="col-12 col-xl">
+            <mat-card class="spaceCol2 m-down-0">
+              <mat-card-title>Municipio</mat-card-title>
+              <mat-select class="tablaForm3 control-md" id="municipio"
+                (selectionChange)="onMunicipioClick($event.value)" placeholder="Seleccione">
+                <mat-option *ngFor="let item of divipolaList" [value]="item.id">
+                  {{item.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="col-12 col-xl">
+            <mat-card class="spaceCol3 m-down-0">
+              <mat-card-title>Institución</mat-card-title>
+              <mat-select class="tablaForm3 control-md" id="institucionEducativa" formControlName="institucionEducativa"
+                (selectionChange)="onInstitucionClick($event.value)" placeholder="Seleccione">
+                <mat-option *ngFor="let item of selectInstitucionList" [value]="item.id"> {{item.nombre}} </mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="col-12 col-xl">
+            <mat-card class="spaceCol3 m-down-0 mt-lg-down-1">
+              <mat-card-title>Sede</mat-card-title>
+              <mat-select class="tablaForm3 control-md" id="sede" formControlName="sede" placeholder="Seleccione"
+              (selectionChange)="onSedeClick($event.value)">
+                <mat-option *ngFor="let item of selectSedesList" [value]="item.id"> {{item.nombre}} </mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="col-12 col-xl bordeizq">
+            <mat-card class="spaceCol m-down-0">
+              <mat-card-title>Priorizada PAE</mat-card-title>
+              <mat-select class="tablaForm3 control-md" id="PriorizadaPae" placeholder="Seleccione">
+                <mat-option *ngFor="let item of PriorizadaPAEList" [value]="item.id"> {{item.nombre}} </mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="bordetd bordeizq border-down-none w-down-100">
+            <mat-card class="d-flex justify-content-center">
+              <div fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100">
+                <a class="btn-agregar" (click)="BuscarSede()">
+                  <img class="imgFilter" src="../.././../../../../assets/iconos_PAE/PNG/Iconos_PAE-49.png" height="35px"
+                    width="auto">
+                </a>
+                <div class="textF">Filtrar</div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="itemInfo">
+  <br>
+  <div class="mb-md">
+    <div class="row" style="border-bottom: 1px solid #36c;">
+      <div class="col-md-6">
+        <label class="banner-text">
+          <strong class="strongheader">{{itemInfo.nombreUbicacion}}</strong>
+          <strong class="strongheader ml-sm mr-sm">|</strong>
+          <strong class="strongheader">{{itemInfo.municipio}}</strong>
+          <strong class="strongheader ml-sm mr-sm">|</strong>
+          <strong class="strongheader">{{itemInfo.institucion}}</strong>
+          <strong class="strongheader ml-sm mr-sm">|</strong>
+          <strong class="strongheader">{{itemInfo.sede}}</strong>
+        </label>
+      </div>
+      <div class="col-md-6 text-right">
+        <label class="anio-text"><strong class="strongheader"></strong>{{ currentVigNom }}</label>
+      </div>
+    </div>
+    <!-- <hr style="margin: 0; color: red!important;" /> -->
+    <!-- <div class="row" style="border-top: 1px solid #36c;">
+    <div class="col-12 text-right">
+      <label class="last-update-text">Ultima actualizaci&oacute;nnnnnn
+        <span> {{ itemInfo.dateToday | date: "longDate" }}</span></label>
+    </div>
+  </div> -->
+  </div>
+</ng-container>
+<app-maem-detalle-formulario></app-maem-detalle-formulario>
+
+<br>
+
+<!--Tab Sede-->
+<app-tabsedesinterno></app-tabsedesinterno>
+
+<div class="content" role="main">
+  <div class="mt-lg mb-lg text-center">
+    <strong class="content-desription">
+      Ruta de transporte de los alimentos del PAE, desde el centro del acopio del operador hasta la sede educativa.
+      Los trayectos en transporte convencional se miden en distancia, los trayectos en transporte no convencional se
+      miden en tiempo.
+    </strong>
+  </div>
+
+  <div class="content-detail">
+
+    <div class="line-trayecto" [ngStyle]="{ 'height': (alturaTrayecto * dataSource.length) + 'px'}"></div>
+    <div class="step-trayecto" *ngFor="let item of dataSource">
+      <div class="steps-form steps-form-header">
+        <div class="steps-row setup-panel">
+          <div class="steps-step step-header">
+            <div class="step-header-text">
+              <span *ngIf="item.readonly || !item.editInfo">{{item.destino}}</span>
+              <textarea *ngIf="!item.readonly && item.editInfo" class="css-control" rows="2"
+                [(ngModel)]="item.destino"></textarea>
+            </div>
+            <div class="step-header-cicle"></div>
+          </div>
+          <div class="steps-step step-header-option">
+            <a style="height: 32px !important;" (click)="addTrayecto(item.trayectoId)"
+              *ngIf="item.readonly && item.addInfo && getModulePermission('crear')">
+              <!--&& getModulePermission(96,'crear')-->
+              <!--<i class="govco-icon govco-icon-plus-cn"></i>-->
+              <img style="width: 30px; height: 30px;" src="../assets/iconos_PAE/SVG/Iconos_PAE-51.svg"> Agregar trayecto
+              debajo
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="steps-form steps-form-content">
+        <div class="steps-row setup-panel">
+          <div class="steps-step step-enum">
+            <p class="step-text">{{item.numPosicion}}</p>
+          </div>
+          <div class="steps-step step-icon text-center bg-color-rosa">
+            <img style="width: 50px; height: 50px;"
+              [src]="'../assets/iconos_PAE/SVG/' + (item.iconName ?? 'Iconos_PAE-222.svg')">
+          </div>
+          <div class="steps-step step-transport-type">
+            <p class="step-text">Tipo Transporte</p>
+            <select class="css-control" [ngModel]="item.tipoTransporteId"
+              (ngModelChange)="changeSelectModel('tipoTransporteId', $event, item)" [disabled]="item.readonly"
+              #tpTransporte="ngModel">
+              <option [ngValue]="elementSeleccione.id" disabled>{{elementSeleccione.nombre}}</option>
+              <option *ngFor="let i of dataTiposTransportes" [ngValue]="i.tipoTransporteId">{{i.nombre}}</option>
+            </select>
+          </div>
+          <div class="steps-step step-vehicle">
+            <p class="step-text">Veh&iacute;culo</p>
+            <select class="css-control" [ngModelOptions]="{standalone: true}" [ngModel]="item.medioTransporteId"
+              (ngModelChange)="changeSelectModel('medioTransporteId', $event, item)" [disabled]="item.readonly">
+              <option [ngValue]="elementSeleccione.id" disabled>{{elementSeleccione.nombre}}</option>
+              <option *ngFor="let i of dataVehiculos" [hidden]="item.tipoTransporteId==i.tipoTransporteId?false:true"
+                [ngValue]="i.medioTransporteId">{{i.nombre}}</option>
+            </select>
+          </div>
+          <div class="steps-step step-distance" [class]="item.readonlyKilometros ? 'disabledAtributo' : ''">
+            <p class="step-text">Distancia (Km)</p>
+            <input [hidden]="!item.readonly" type="text" class="css-control"
+              [ngModel]="item.kilometros | number: '1.0-2'" [disabled]="item.readonly || item.readonlyKilometros">
+            <input [hidden]="item.readonly" type="number" class="css-control" [ngModel]="item.kilometros"
+              (ngModelChange)="changeSelectModel('kilometros', $event, item)"
+              [disabled]="item.readonly || item.readonlyKilometros">
+          </div>
+          <div class="steps-step step-time" [class]="item.readonlyHoras ? 'disabledAtributo' : ''">
+            <p class="step-text">Tiempo (h)</p>
+            <input type="number" class="css-control" [ngModel]="item.horas"
+              (ngModelChange)="changeSelectModel('horas', $event, item)"
+              [disabled]="item.readonly || item.readonlyHoras">
+          </div>
+          <div class="steps-step step-cost" [class]="item.readonlyCosto ? 'disabledAtributo' : ''">
+            <p class="step-text">Costo en pesos</p>
+            <input [hidden]="!item.readonly" type="text" class="css-control" [ngModelOptions]="{standalone: true}"
+              [ngModel]="item.costo|currency:'$':'symbol':'1.0-2'" [disabled]="item.readonly || item.readonlyCosto">
+            <input [hidden]="item.readonly" type="number" class="css-control" ngModel={{item.costo}}
+              (ngModelChange)="changeSelectModel('costo', $event, item)"
+              [disabled]="item.readonly || item.readonlyCosto">
+          </div>
+          <div class="steps-step step-option">
+            <div>
+              <a (click)="editTrayecto(item.trayectoId)" *ngIf="item.readonly && getModulePermission('editar')">
+                <img style="width: 25px; height: 25px;" src="../assets/images/Iconos/edit_blue.png">
+                <span class="step-text ml-xs">Editar</span>
+              </a>
+            </div>
+            <div class="mt-xs">
+              <a (click)="deleteTrayecto(item.trayectoId)"
+                *ngIf="item.readonly && item.editInfo && getModulePermission('eliminar')">
+                <img style="width: 25px; height: 25px;" src="../assets/images/Iconos/eliminar_mini.png">
+                <span class="step-text ml-xs">Eliminar</span>
+              </a>
+            </div>
+            <div>
+              <a (click)="saveTrayecto()" *ngIf="!item.readonly && getModulePermission('crear')">
+                <img style="width: 25px; height: 25px;" src="../assets/images/Iconos/save_mini.png">
+                <span class="step-text ml-xs">Guardar</span>
+              </a>
+            </div>
+            <div class="mt-xs">
+              <a (click)="cancelTrayecto()" *ngIf="!item.readonly">
+                <img style="width: 25px; height: 25px;" src="../assets/images/Iconos/cancel_mini.png">
+                <span class="step-text ml-xs">Cancelar</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="steps-form steps-form-header">
+      <div class="steps-row setup-panel">
+        <div class="steps-step step-header">
+          <div class="step-header-text">
+            <span>{{ dataTrayectoSede.sede }}</span>
+          </div>
+          <div class="step-header-cicle"></div>
+        </div>
+        <div class="steps-step step-header-option">
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="steps-form steps-form-footer">
+      <div class="steps-row setup-panel">
+        <div class="steps-step step-footer-td1">
+          Total trayectos
+        </div>
+        <div class="steps-step step-footer-td2">
+          {{ totalTrayectos }}
+        </div>
+        <div class="steps-step step-footer-td3">
+          Clasificación de acceso
+        </div>
+        <div class="steps-step"
+          [class]="dataTrayectoSede.tipoAcceso == 'Facil' ? 'step-footer-td4-green' : dataTrayectoSede.tipoAcceso == 'Medio' ? 'step-footer-td4-yellow' : dataTrayectoSede.tipoAcceso == 'Dificil' ? 'step-footer-td4-red' : 'step-footer-td4'">
+          {{dataTrayectoSede.tipoAcceso}}
+        </div>
+      </div>
+    </div>
+    <!-- <div class="text-center">
+            <button class="btn btn-primary my-2" type="button" routerLink="/Sedes?tab=2">Regresar</button>
+        </div> -->
+  </div>

@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #E23465;">Repositorios </div>
+    </div>
+    <div class="tab-item nothing" style="width: 70%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="FullSize" fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card class="BorderNone">
+      <mat-card-content>
+        <div class="acomodarAll align-items-center">
+          <div class="BordeRedondoFiltroAvanzado ">
+
+            <div class="FullSize">
+              <mat-label class="busqAva">Búsqueda General</mat-label>
+              <div>
+                <input id="idBusqueda" class="buscar control-md tablaform" matInput (keyup)="applyFilter($any($event).target.value)" [(ngModel)]="searchValue"
+                  placeholder="Buscar... Repositorios" />
+              </div>
+            </div>
+            <div>
+              <div class="text-center">
+                <a class="iconoBuscar">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " height="50px" width="auto">
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="BordeRedondoFiltroAvanzado2 ">
+
+            <div class="FullSize2">
+              <mat-label class="busqAva">Búsqueda Avanzada</mat-label>
+              <br>
+              <mat-select class="control-md tablaform" [value]="selectedCategory" 
+                (selectionChange)="ddlChange($event.value)">
+                <mat-option value="0" selected>Seleccione una opción</mat-option>
+                <mat-option value="titulo" selected>Título</mat-option>
+                <mat-option value="descripcion" selected>Descripción</mat-option>
+                <mat-option value="fecha" selected>Fecha</mat-option>
+                <mat-option value="categoria" selected>Categoría</mat-option>
+                <mat-option value="Vigencia" selected>Vigencia</mat-option>
+              </mat-select>
+              
+            </div>
+
+            <ng-container *ngIf="seMuestra">
+              
+              <br />
+              <input class="btn-file" style="width:0px;" matInput [matDatepicker]="fechaConsulta" id="fechaConsulta"
+                (dateChange)="aplicarfiltrofecha($event.value)">
+              <mat-datepicker-toggle matSuffix [for]="fechaConsulta">
+                <mat-icon style="color: rgb(14, 92, 235);" matDatepickerToggleIcon>calendar_month</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #fechaConsulta></mat-datepicker>
+            </ng-container>
+
+            <td class="acomodarAll">
+              <div class="text-center acomodarAll">
+                <a class="iconoBuscar">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " height="50px" width="auto">
+                  <!-- Filtrar -->
+                </a>
+              </div>
+            </td>
+          </div>
+
+          <div fxFlex.gt-md="15" fxFlex.gt-lg="15" class="BordeRedondoAgregar" [ngClass]="{'linkdisable':!getModulePermission(17,'crear')}">
+            <div class="text-center">
+              <a class="btn-registrar" 
+                (click)="openDialog('Adicionar',{})">
+                <img src="../.././../assets/images//Iconos/add_blue.png" height="40px">
+                <p class="LetraRegistro">Registrar Repositorios</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<br>
+
+
+
+<div class="sub">
+  <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-125.png" height="25px">
+  <span style=" color: #E23465  !important;"> Resultados de la búsqueda de recursos</span>
+</div>
+<hr class="linea">
+<br>
+<div fxLayout="row wrap">
+  <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100" *ngFor='let repo of RepositoriosListFilt'>
+    <mat-card fxLayout="row wrap" class="acomodarAll">
+      <!-- <mat-card-header class="course-header {{repo.extension}}">
+          </mat-card-header> -->
+      <div class="text-center CenterImg LeftPart">
+        <div class="PaddingIcon">
+          <img src="../../../../../assets/iconos_PAE/PNG/{{repo.imagen}} " height="80px" width="auto">
+        </div>
+        <mat-card-actions class=" text-center">
+
+          <a class="TextBlue btn-registrar" (click)="downloadFile(repo.pahtArchivo)">
+            <mat-icon class="TextBlue IconDescarga">archive</mat-icon>
+            <!-- <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4b.png " height="18px" width="auto"> -->
+            <strong class="TextBlue">DESCARGAR</strong>
+          </a>
+        </mat-card-actions>
+      </div>
+      <div class="RightPart">
+        <mat-card-content class="TextBlue">
+          <p>Lineamientos anexos y cajas de herramientas</p>
+          <p class="LetraSpacing"><strong> Nombre: {{repo.nombre}}</strong></p>
+          <p class="LetraSpacing"><strong>Tipo archivo :</strong> {{repo.idTipoArchivo}}</p>
+          <p class="LetraSpacing"><strong>Descripci&oacute;n:</strong> {{repo.descripcion}}</p>
+          <p class="LetraSpacing"><strong>Categor&iacute;a:</strong> {{repo.sidCategoria}}</p>
+        </mat-card-content>
+        <mat-card-actions class="EspacioAction">
+          <!-- <mat-card-actions class="EspacioAction LetraBlanca course-header {{repo.extension}}"> -->
+          <i style="color: #005ACA;"><strong >Vigencia:</strong> {{repo.sidVigencia}} ||
+            <strong>Fecha:</strong> {{repo.fechaArchivo}}</i>
+        </mat-card-actions>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->

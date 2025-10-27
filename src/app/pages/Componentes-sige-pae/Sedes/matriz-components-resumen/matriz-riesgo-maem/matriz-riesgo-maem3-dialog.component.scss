@@ -1,0 +1,109 @@
+@import '/src/assets/styles/variable.scss';
+.LeftUpCorner2{
+  border-radius: 0 20px 0 0;
+}
+.botondeim{
+  float: right;
+}
+.mat-dialog-content {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    max-height: 65vh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+.BordeSuperior{
+    border-top: 1px solid $base-azulPAE;
+  }
+  .imgroter{
+    transform: rotate(270deg);
+  }
+  .form-control{
+    border: none!important;
+  }
+  .Invisible{
+    display: none;
+  }
+  button{
+    background-color: #fff;
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: #fff 1px solid;
+  }
+  button:hover {
+    cursor: pointer;
+  }
+  .CancelButton{
+    background-color: $base-azulPAE;
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: $base-azulPAE 1px solid;
+  }
+/*   .SizeDialog{
+    width: 50vw!important;
+  } */
+  table{
+    width: 100%;
+    padding: 0px 30px;
+  }
+  .TextosBlueLeft{
+    text-align: left;
+    color: $base-azulPAE;
+  }
+  td{
+    width: 50%;
+  }
+  .CenterButton{  
+    margin: auto;
+    display: -webkit-inline-box;
+  }
+  .mat-dialog-content {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    max-height: 65vh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  ::ng-deep.button{
+    background-color: $base-azulPAE!important;
+    color: #fff!important;
+    border-radius: 20px;
+    border: $base-azulPAE 1px solid;
+    margin: auto;
+    display: block;
+  }
+  
+  ::ng-deep.mat-dialog-container {
+    padding: 0px !important;
+    border-radius:30px 30px 30px 30px !important;
+    border: $base-azulPAE 1px dotted;
+    box-shadow: none;
+    min-width: 50%;
+  }
+  mat-form-field{
+    border-radius:20px 20px 20px 20px !important;
+    border: $base-azulPAE solid 1px;
+    background-color: #fff!important;
+    padding: 2%!important;
+    
+  }
+  mat-card-header{
+    padding-bottom: 20px;
+  }
+  .TituloDialog{
+    background-color: #E6EFFD;
+    /* padding: 10px 20px; */
+    text-align: center;
+    color: $base-azulPAE;
+    display: block;
+    margin: auto;
+    width: 100%;
+  }
+  mat-card{
+    box-shadow: none!important;
+  }

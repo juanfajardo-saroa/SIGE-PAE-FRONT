@@ -1,0 +1,398 @@
+<style>
+  .tableFiltroUsuario {
+    border-spacing: 0;
+    color: #36c;
+  }
+
+  .tableFiltroUsuario td {
+    text-align: center;
+    font-size: 13px !important;
+    color: #36c !important;
+    padding: 2.5px 10px;
+    border-top: 1px solid #36c;
+    border-right: 1px solid #36c;
+    border-bottom: 1px solid #36c;
+  }
+
+  .tableFiltroUsuario td b {
+    color: #36c;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroUsuario td div {
+    color: #36c;
+    font-weight: 500;
+    font-size: 13px !important;
+  }
+
+  .tableFiltroUsuario td:first-child {
+    border-left: 1px solid #36c;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .tableFiltroUsuario td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .disabledWithOpacity {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+</style>
+
+<label class="form-label">
+  1. Fuente de financiaci&oacute;n presupuestal destinadas a
+  cubrir el costo del contrato:
+</label>
+
+<div *ngFor="let FuenteFinanciacion of dataFuenteFinanciacion; let iniceFF=index">  
+
+  <div class="d-flex justify-content-left">
+    <table class="tableFiltroUsuario col-8">
+      <tbody>
+        <tr>
+          <td style="background-color: rgb(226, 236, 253)">
+            Fuente
+            <br /> N° 1
+          </td>
+          <td class="row text-left">
+            <div class="col-12 form-inline my-1">
+              <div class="form-group">
+                <label>
+                    Fuente:
+                </label>
+                <select class="form-control"
+                        name="fuente_{{ iniceFF }}"
+                        [(ngModel)]="FuenteFinanciacion.iD_FuenteFinanciacion"
+                        (ngModelChange)="changeFuentePresupuestal($event)"
+                        [ngClass]="{disabledWithOpacity: FuenteFinanciacion.readonly}">
+                  <option value>
+                    Elija una opci&oacute;n
+                  </option>
+                  <option *ngFor="let item of listFuentePresupuestal" 
+                          [ngValue]="item.id">
+                    {{ item.nombre }}
+                  </option>
+                </select>                
+              </div>
+            </div>
+
+            <div class="col-12 form-inline my-1">
+              <div class="form-group">
+                <label>Tipo:</label>
+                <select class="form-control"
+                        name="tipoFuente_{{ iniceFF }}"
+                        [(ngModel)]="FuenteFinanciacion.iD_FuenteIngresos"
+                        [ngClass]="{disabledWithOpacity: FuenteFinanciacion.readonly}">
+                  <option value>
+                    Elija una opci&oacute;n
+                  </option>
+                  <option *ngFor="let item of listTipoFuentePresupuestal" 
+                          [ngValue]="item.iD_FuenteIngreso">
+                    {{ item.nombre }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-12 form-inline my-1">
+              <div class="form-group">
+                <label>Valor:</label>
+                <input class="form-control"
+                        name="txtDigVerfi" 
+                        type="number"
+                        style="max-width: 250px; margin-right: 15px;" 
+                        [(ngModel)]="FuenteFinanciacion.valor"
+                        [ngClass]="{disabledWithOpacity: FuenteFinanciacion.readonly}"/>
+              </div>
+
+              <a class="card-link"  
+                 *ngIf="FuenteFinanciacion.readonly"
+                 (click)="editFuenteFinanciacion(iniceFF)">                
+                <img style="width: 20px; height: 20px;" 
+                      src="../assets/images/Iconos/editar_mini.png">
+              </a>
+        
+              <a class="card-link"  
+                 *ngIf="FuenteFinanciacion.readonly"
+                 (click)="eliminarFuenteFinanciacion(FuenteFinanciacion.id, iniceFF)">
+                  <img style="width: 20px; height: 20px;" 
+                        src="../assets/images/Iconos/eliminar_mini.png">
+              </a>
+        
+              <a class="card-link" 
+                 (click)="saveFuenteFinanciacion(iniceFF)" 
+                 *ngIf="!FuenteFinanciacion.readonly">
+                  <img style="width: 20px; height: 20px;" 
+                       src="../assets/images/Iconos/save_mini.png">
+              </a>
+        
+              <a class="card-link" 
+                 (click)="cancelFuenteFinanciacion(iniceFF)" 
+                 *ngIf="!FuenteFinanciacion.readonly">
+                  <img style="width: 20px; height: 20px;" 
+                       src="../assets/images/Iconos/cancel_mini.png">
+              </a>
+
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <br />
+
+  <label class="form-label" 
+         *ngIf="!FuenteFinanciacion.addInfo">
+    &nbsp;&nbsp;&nbsp; Certificados de dispónibilidad presupuestal
+    (CDP) y certificados de registro presupuestal(CRP) asociados a
+    la fuente N° 1:
+  </label>
+
+  <div class="row"
+       *ngIf="!FuenteFinanciacion.addInfo">
+    <!--<pre>{{ FuenteFinanciacion.cdps | json }}</pre>-->
+    <div class="col-10">
+      <div class="table-responsive">
+        <table class="table table-sm table-info-llenado">
+          <thead>
+            <tr>
+              <th>Nº CDP</th>
+              <th>Fecha CDP</th>
+              <th>Valor CDP</th>
+              <th>Archivo CDP</th>
+              <th>Acci&oacute;n</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let cdp of FuenteFinanciacion.cdps; let indiceCdp=index">
+              <td>
+                <input name="numCdp_{{ indiceCdp }}"
+                        class="form-control text-center"
+                        type="number" 
+                        [(ngModel)]="cdp.numeroCDP"
+                        placeholder="Ingrese Nº" 
+                        [ngClass]="{disabledWithOpacity: cdp.readonly}"/>
+              </td>
+              <td>
+                <input name="fechaCdp{{ indiceCdp }}"
+                        class="form-control text-center"
+                        type="date" 
+                        [(ngModel)]="cdp.fechaCDP"
+                        placeholder="Elija fecha" 
+                        [ngClass]="{disabledWithOpacity: cdp.readonly}"/>
+              </td>
+              <td>
+                <input name="cifraCdp_{{ indiceCdp }}"
+                        class="form-control text-center"
+                        type="number"
+                        [(ngModel)]="cdp.valorCDP"
+                        placeholder="Ingrese cifra" 
+                        [ngClass]="{disabledWithOpacity: cdp.readonly}"/>
+              </td>
+              <td>
+                <input name="archivoCdp_{{ indiceCdp }}"
+                        class="form-control text-center"
+                        type="file" 
+                        [(ngModel)]="cdp.pahtArchivoCDP"
+                        placeholder="Adjuntar" 
+                        [ngClass]="{disabledWithOpacity: cdp.readonly}"/>
+              </td>
+              <td class="text-center" 
+                  style="min-width: 150px !important;
+                  padding-top: 3px !important;
+                  padding-bottom: 3px !important;">
+
+                <a class="card-link"  
+                   *ngIf="cdp.readonly"
+                   (click)="editItemData(iniceFF, indiceCdp, 'cdps')">                
+                  <img style="width: 20px; height: 20px;" 
+                        src="../assets/images/Iconos/editar_mini.png">
+                </a>
+ 
+                <a class="card-link"                    
+                   *ngIf="cdp.readonly">
+                  <img style="width: 20px; height: 20px;" 
+                        src="../assets/images/Iconos/eliminar_mini.png">
+                </a>   
+
+                <a class="card-link" 
+                  (click)="saveCdpFuente(iniceFF, indiceCdp)" 
+                  *ngIf="!cdp.readonly">
+                  <img style="width: 20px; height: 20px;" 
+                        src="../assets/images/Iconos/save_mini.png">                    
+               </a>
+         
+               <a class="card-link" 
+                   (click)="cancelItemData(iniceFF, indiceCdp, 'cdps')" 
+                   *ngIf="!cdp.readonly">
+                  <img style="width: 20px; height: 20px;" 
+                        src="../assets/images/Iconos/cancel_mini.png">
+                </a>
+
+                <a class="card-link" 
+                   (click)="addCrpCdpFuente(iniceFF, cdp.id)" 
+                   *ngIf="!cdp.addInfo">
+                  <img style="width: 20px; height: 20px;" 
+                        src="../assets/images/Iconos/crp_mini.png">
+                </a>
+              </td>                  
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="mt-2"
+           (click)="addCdpFuente(iniceFF)">
+        <img class="mr-2" src="../assets/images/Iconos/add_blue.png" />
+        <label>Agregar CDP</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row"
+       *ngIf="!FuenteFinanciacion.addInfo">
+    <div class="col-10">
+      <div class="table-responsive">
+        <table class="table table-sm table-info-llenado">
+          <thead>
+            <tr>
+              <!--<th>CRPs asociados</th>-->
+              <th>Nº CRP</th>
+              <th>Fecha CRP</th>
+              <th>Valor CRP</th>
+              <th>Archivo CRP</th>
+              <th>Acci&oacute;n</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let crp of FuenteFinanciacion.crps; let indiceCrp=index">
+              <!--<td>
+                <select class="form-control"
+                        name="crpAsociado_{{ indiceCrp }}"
+                        [ngClass]="{disabledWithOpacity: crp.readonly}">
+                  <option value>
+                    Elija una opci&oacute;n
+                  </option>
+                </select>
+              </td>-->
+              <td>
+                <input class="form-control text-center"
+                        name="crpNumero_{{ indiceCrp }}"
+                        type="number"
+                        [(ngModel)]="crp.numeroCRP"
+                        [ngClass]="{disabledWithOpacity: crp.readonly}"
+                        placeholder="Ingrese Nº" />
+              </td>
+              <td>
+                <input class="form-control text-center"
+                        name="crpFecha_{{ indiceCrp }}"
+                        type="date" 
+                        [(ngModel)]="crp.fechaCRP"
+                        [ngClass]="{disabledWithOpacity: crp.readonly}"
+                        placeholder="Ingrese fecha" />
+              </td>
+              <td>
+                <input class="form-control text-center" 
+                        name="crpValor_{{ indiceCrp }}" 
+                        type="number" 
+                        [(ngModel)]="crp.valorCRP"
+                        [ngClass]="{disabledWithOpacity: crp.readonly}"
+                        placeholder="Ingrese cifra" />
+              </td>
+              <td>
+                <input class="form-control text-center"
+                        name="crpFile_{{ indiceCrp }}" 
+                        type="file"
+                        [(ngModel)]="crp.pathArchivoCRP"
+                        [ngClass]="{disabledWithOpacity: crp.readonly}"
+                        placeholder="Adjuntar" />
+              </td>
+              <td class="text-center" 
+                  style="min-width: 150px !important;
+                        padding-top: 5px !important;
+                        padding-bottom: 5px !important;">
+                  
+                <a class="card-link"  
+                  *ngIf="crp.readonly"
+                  (click)="editItemData(iniceFF, indiceCrp, 'crps')">                
+                  <img style="width: 20px; height: 20px;" 
+                      src="../assets/images/Iconos/editar_mini.png">
+                </a>
+
+                <a class="card-link"                    
+                   *ngIf="crp.readonly">
+                  <img style="width: 20px; height: 20px;" 
+                        src="../assets/images/Iconos/eliminar_mini.png">
+                </a>
+
+                <a class="card-link" 
+                   (click)="saveCrpCdpFuente(iniceFF, indiceCrp)" 
+                   *ngIf="!crp.readonly">
+                    <img style="width: 20px; height: 20px;" 
+                         src="../assets/images/Iconos/save_mini.png">
+                    
+                </a>
+
+                <a class="card-link" 
+                   (click)="cancelItemData(iniceFF, indiceCrp, 'crps')" 
+                   *ngIf="!crp.readonly">
+                    <img style="width: 20px; height: 20px;" 
+                         src="../assets/images/Iconos/cancel_mini.png">
+                </a>
+   
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>  
+
+</div>
+
+<br />
+
+<div>
+  <hr style="border-top: 1px dashed rgb(51, 102, 204);
+              margin-left: 10px;" />
+              
+  <label class="form-label">
+    &nbsp;&nbsp;&nbsp; Valor total en CRPs:
+  </label>
+  <input class="form-control" 
+          type="text" 
+          name=""
+          style="width: 110px" 
+          placeholder="Autom&aacute;tico" />
+
+  <div class="container-icon">
+    &nbsp;&nbsp;
+    <img style="width: 50px; height: 50px" src="../assets/images/Iconos/alert.png" />
+    &nbsp;&nbsp;
+    <label class="labelred">
+      Asegurate de que el monto total en CRPs coincida
+      <br />
+      con el valor de la fuente de financiaci&oacute;n
+    </label>
+  </div>
+</div>
+
+<div class="text-right" 
+     (click)="addFuenteFinanciacion()">
+  <img class="mr-2" 
+        src="../assets/images/Iconos/add_blue.png" />
+  <label>Agregar fuente de financiaci&oacute;n</label>
+</div>
+
+<!--<pre>{{ dataFuenteFinanciacion | json }}</pre>-->
+    
+
+
+

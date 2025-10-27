@@ -1,0 +1,504 @@
+<div class="row">
+  <div class="col-12">
+    <div class="tab-control-items d-flex">
+      <div class="tab-item" *ngFor="let item of dataPestanas">
+        <h3>{{ item.descripcion }}</h3>
+      </div>
+      <div class="flex-grow-1 tab-item-blank"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-2" *ngIf="viewActiva == 0">
+  <div class="col-12">
+    <form class="form-default-inline" (ngSubmit)="onSubmit()" #convenioForm="ngForm" autocomplete="off">
+
+      <ng-container>
+        <div class="panel panel-blue">
+          <div class="panel-header no-border-bottom text-center py-n1">
+            <h4 class="panel-title">
+              Formulario de registro - Mecanismo de Bolsa Común
+            </h4>
+          </div>
+          <div class="panel-body" style="border-radius: 0px !important;">
+            <div class="form-item">
+              <label for="exampleFormControlInput1" class="form-label">
+                1. Número del mecanismo de Bolsa Común:
+              </label>
+              <input type="number" class="input-text" name="numeroMecanismo"
+                [ngModel]="bolsa.numeroMecanismo"
+                (ngModelChange)="changeItemConvenio('numeroMecanismo', $event)" maxlength="10" #numeroContrato="ngModel"
+                required />
+              <br />
+              <label class="label" *ngIf="formularioEnviado && (numeroContrato.invalid || numeroContrato.pristine)" style="color: red">
+                El número del mecanismo es requerido
+              </label>
+            </div>
+            <div class="form-item">
+              <label class="form-label">
+                2. Tipo de convenio:
+              </label>
+              <select name="ID_TipoConvenio" class="input-text" [ngModel]="bolsa.iD_TipoConvenio"
+                (ngModelChange)="bolsa.iD_TipoConvenio=$event" #SubTipoContratoId="ngModel" required>
+                <option value="">Elija una opci&oacute;n</option>
+                <option *ngFor="let i of tipoConvenio" [ngValue]="i.id">{{ i.nombre }}
+                </option>
+              </select><br>
+              <label class="label" style="color: red" *ngIf="formularioEnviado && (!bolsa.iD_TipoConvenio)">
+                El campo tipo convenio es requerido
+              </label>
+            </div>
+
+            <div class="form-item">
+              <div class="flex-row">
+                <div clas="d-flex">
+                  <label class="form-label float-left">
+                    3. Objeto del mecanismo:
+                    <br />
+                    (Tal y como aparece
+                    <br />
+                    en la versión firmada)
+                  </label>
+                </div>
+
+                <div class="d-flex"  style="display: flex; flex-direction: row; align-items: center;">
+                  <textarea name="txtobjetoMecanismo" class="input-textarea" rows="3"
+                    [ngModel]="bolsa.objetoMecanismo"
+                    (ngModelChange)="changeItemConvenio('objetoMecanismo', $event)" #objetoContrato="ngModel" required>
+                                    </textarea>
+                  <label class="label" style="color: red" *ngIf="formularioEnviado && (!bolsa.objetoMecanismo)">
+                    El campo objeto del mecanismo es requerido
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="form-label">4. Fecha de suscripción :</label>
+              <input type="date" class="input-text" name="txtFechaAdjudicacion"
+                [ngModel]="bolsa.fechaSuscripcion|date:'yyyy-MM-dd'" (ngModelChange)="bolsa.fechaSuscripcion=$event"
+                #fechaAdjudicacion="ngModel" required /><br>
+              <label class="form-label" style="color: red !important;"
+              *ngIf="formularioEnviado && (!bolsa.fechaSuscripcion)">
+                El campo fecha de suscripción es requerido
+              </label>
+            </div>
+            <div class="form-item">
+              <label class="form-label">
+                5. Plazo (en meses):
+              </label>
+              <input class="input-text col-1" type="number" name="txtplazo" [(ngModel)]="bolsa.plazo"
+                (ngModelChange)="bolsa.plazo=$event" required />
+              <label class="form-label" style="color: red !important; margin-left: 9px;"
+              *ngIf="formularioEnviado && (!bolsa.plazo)">
+                  El campo Plazo es requerido
+              </label>
+            </div>
+            <div class="form-item">
+              <label class="form-label">
+                6. Días de atención del PAE:
+              </label>
+              <input class="input-text col-1" type="number" name="txtdiasAtencionPae"
+                [(ngModel)]="bolsa.diasAtencionPae" #totalRacionesDiarias="ngModel"
+                (ngModelChange)="bolsa.diasAtencionPae=$event" required />
+              <label class="form-label" style="color: red !important; margin-left: 9px;"
+              *ngIf="formularioEnviado && (!bolsa.diasAtencionPae)">
+                  El campo Días de Atención es requerido
+              </label>
+            </div>
+
+            <div class="form-item">
+              <div class="flex-row">
+                <div class="align-middle">
+                  <label class="form-label float-left mr-3">7. Elija la opción que<br>le corresponda a<br>
+                    este mecanismo:</label>
+                </div>
+                <div class="d-flex" style="display: flex; flex-direction: row; align-items: center;">
+                  <table id="tabla-categoria" class="table col-8">
+                    <tr class="tabla-suministro-entrega" *ngFor="let item of tipoMecanismo">
+                      <td id="td-tabla-categoria{{item.id}}">
+                        <input id="ck{{item.id}}" name="ck" type="radio" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="bolsa.iD_TipoMecanismo" #tipoDeMecanismo="ngModel" (ngModelChange)="bolsa.iD_TipoMecanismo=$event"
+                          [value]="item.id">
+                        {{item.nombre}}
+                      </td>
+                    </tr>
+                  </table>
+                  <div class="form-label" style="color: red; margin-left: 9px;" *ngIf="formularioEnviado && (!bolsa.iD_TipoMecanismo)">
+                    Debe seleccionar una opción en el mecanismo.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <button class="btn btn-blue" (click)="cancelar()">
+              Cancelar
+            </button> &nbsp;&nbsp;
+            <button class="btn btn-blue" type="submit">
+              Siguiente
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+</div>
+
+
+
+<!-- ITEM 2 -->
+
+<div class="row" *ngIf="viewActiva == 1">
+  <div class="col-12 mb-3">
+    <form class="form-default-inline">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+          <h4 class="panel-title">
+            Formulario de registro - Mecanismo de Bolsa Común
+          </h4>
+        </div>
+        <div class="panel-body" style="border-radius: 0px !important;">
+          <div class="row">
+            <div *ngIf="bolsa.iD_TipoMecanismo == 1" class="col clearfix" style="padding-left: 3px">
+              <app-chapterblue [numberChapter]="1"
+                [titleChapter]="'A. La Gobernación transfiere y el Municipio cofinancia'" [stringChapter]="'A'">
+              </app-chapterblue>
+              <br />
+            </div>
+            <div *ngIf="bolsa.iD_TipoMecanismo == 2" class="col clearfix" style="padding-left: 3px">
+              <app-chapterblue [numberChapter]="1"
+                [titleChapter]="'B. El Municipio transfiere y la Gobernación cofinancia'" [stringChapter]="'B'">
+              </app-chapterblue>
+              <br />
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="row">
+              <div class="col-12">
+
+                <div class="form-item">
+                  <div class="col flex align-items-center">
+                    <label class="form-label">1. Valor total del mecanismo de Bolsa Común:</label>
+                    <input style="width: 150px;" type="number" class="form-control text-center"
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="bolsa.valorTotalMecanismo"
+                      (click)="changeItemTotal('valorTotalMecanismo', $event)">
+                    <img style="width: 45px; height: 45px;" src="../../../../../../assets/images/Iconos/admiracion.png">
+                    <label>No puede sobrepasar los 20 SMMLV.</label>
+                    <label class="label" *ngIf="formularioEnviado2 && (!bolsa.valorTotalMecanismo || bolsa.valorTotalMecanismo === 0)" style="color: red">
+                      Complete este campo
+                    </label>
+                  </div>
+                </div>
+                <div class="form-item">
+                  <div class="col flex align-items-center">
+                    <label class="form-label">2. Gobernación que cofinancia:</label>
+                    <select class="form-control" [(ngModel)]="bolsa.iD_DiviPola"
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="bolsa.iD_DiviPola=$event">
+                      <option value="0" selected disabled>
+                        Elija una opci&oacute;n
+                      </option>
+                      <option *ngFor="let i of listMunicipios" [ngValue]="i.id">
+                        {{ i.nombre }}
+                      </option>
+                    </select>
+                    <label class="label" *ngIf="formularioEnviado2 && (!bolsa.iD_DiviPola || bolsa.iD_DiviPola === 0)" style="color: red">
+                      Elija una opcion
+                    </label>
+                  </div>
+                </div>
+                <td>
+
+                </td>
+
+                <div class="table-responsive-xl mt-4">
+                  <table class="table table-info-llenado">
+                    <thead>
+                      <tr class="text-center">
+                        <th>Municipio<br>que recibe </th>
+                        <th *ngIf="bolsa.iD_TipoMecanismo == 1">Aporte de la <br>gobiernación</th>
+                        <th *ngIf="bolsa.iD_TipoMecanismo == 2">Aporte del <br>municipio</th>
+                        <th>Fuente de<br>financiación<br>del aporte </th>
+                        <th *ngIf="bolsa.iD_TipoMecanismo == 1">Cofinanciación del <br>municipio</th>
+                        <th *ngIf="bolsa.iD_TipoMecanismo == 2">Cofinanciación de la<br>gobiernación</th>
+                        <th>Fuente de<br>financiación de la <br>Cofinanciación </th>
+                        <th>Total</th>
+                        <th>Acci&oacute;n</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="form-item" *ngFor="let item of dataMunicipios; let i=index">
+                        <!-- Municipio -->
+                        <td>
+                          <select name="davipola_{{ i }}" class="form-control text-left"
+                            [(ngModel)]="item.iD_DiviPola" [disabled]="!item.addInfo">
+                            <option value="0" selected disabled>
+                              Elija una opci&oacute;n
+                            </option>
+                            <option *ngFor="let i of listMunicipios" [ngValue]="i.id">
+                              {{ i.nombre }}
+                            </option>
+                          </select>
+                          <label class="label" *ngIf="showValidationTable && (!item.iD_DiviPola || item.iD_DiviPola === 0)" style="color: red">
+                            Elija una opcion
+                          </label>
+                        </td>
+                        <!-- Aporte Gobernación -->
+                        <td *ngIf="bolsa.iD_TipoMecanismo == 1">
+                          <label *ngIf="item.id!=0" class="form-label">
+                            {{item.aporteGobiernacion|currency:'$':'symbol':'1.0-2'}}
+                          </label>
+                          <input *ngIf="item.id==0" class="form-control text-center" type="number"
+                            name="aporteGobiernacion_{{ i }}" [(ngModel)]="item.aporteGobiernacion"
+                            (ngModelChange)="calculoValorTotal(item)" placeholder="Ingrese la cifra" />
+                            <label class="label" *ngIf="showValidationTable && (!item.aporteGobiernacion || item.aporteGobiernacion <= 0)" style="color: red">
+                              Complete este campo
+                            </label>
+                        </td>
+                        <td *ngIf="bolsa.iD_TipoMecanismo == 2">
+                          <label *ngIf="item.id!=0" class="form-label">
+                            {{item.aporteMunicipio|currency:'$':'symbol':'1.0-2'}}
+                          </label>
+                          <input *ngIf="item.id==0" class="form-control text-center" type="number"
+                            name="AporteMunicipio_{{ i }}" [(ngModel)]="item.aporteMunicipio"
+                            (ngModelChange)="calculoValorTotal(item)" placeholder="Ingrese la cifra" />
+                        </td>
+                        <!-- Fuente Financiación -->
+                        <td>
+                          <select name="fuenteFinanciacion_{{ i }}" class="form-control text-left" disabled="{{ !item.addInfo }}"
+                            [(ngModel)]="item.iD_FuenteFinanciacionAporte" >
+                            <option value="0" selected disabled>
+                              Elija una opci&oacute;n
+                            </option>
+                            <option *ngFor="let j of fuentes" [ngValue]="j.id">
+                              {{ j.nombre }}
+                            </option>
+                          </select>
+                          <label class="label" *ngIf="showValidationTable && (!item.iD_FuenteFinanciacionAporte || item.iD_FuenteFinanciacionAporte === 0)" style="color: red">
+                            Elija una opcion
+                          </label>
+                        </td>
+                        <!-- Confinanciación -->
+                        <td *ngIf="bolsa.iD_TipoMecanismo == 1">
+                          <label *ngIf="item.id!=0" class="form-label">
+                            {{item.cofinanciacionGobernacion|currency:'$':'symbol':'1.0-2'}}
+                          </label>
+                          <input *ngIf="item.id==0" class="form-control text-center" type="number"
+                            name="cofinanciacionGobernacion_{{ i }}" [(ngModel)]="item.cofinanciacionGobernacion"
+                            (ngModelChange)="calculoValorTotal(item)" placeholder="Ingrese la cifra" />
+                            <label class="label" *ngIf="showValidationTable && (!item.cofinanciacionGobernacion || item.cofinanciacionGobernacion <= 0)" style="color: red">
+                              Complete este campo
+                            </label>
+                        </td>
+                        <td *ngIf="bolsa.iD_TipoMecanismo == 2">
+                          <label *ngIf="item.id!=0" class="form-label">
+                            {{item.cofinanciacionMunicipio|currency:'$':'symbol':'1.0-2'}}
+                          </label>
+                          <input *ngIf="item.id==0" class="form-control text-center" type="number"
+                            name="cofinanciacionMunicipio_{{ i }}" [(ngModel)]="item.cofinanciacionMunicipio"
+                            (ngModelChange)="calculoValorTotal(item)" placeholder="Ingrese la cifra" />
+                        </td>
+                        <!-- Fuente Financiación Cofinanciación -->
+                        <td>
+                          <select name="fuenteFinConfinanciacion_{{ i }}" class="form-control text-left"
+                            [(ngModel)]="item.iD_FuenteFinanciacionCofinanciacion" [disabled]="!item.addInfo">
+                            <option value="0" selected disabled>
+                              Elija una opci&oacute;n
+                            </option>
+                            <option *ngFor="let j of fuentes" [ngValue]="j.id">
+                              {{ j.nombre }}
+                            </option>
+                          </select>
+                          <label class="label" *ngIf="showValidationTable && (!item.iD_FuenteFinanciacionCofinanciacion || item.iD_FuenteFinanciacionCofinanciacion === 0)" style="color: red">
+                            Elija una opcion
+                          </label>
+                        </td>
+                        <!-- Total -->
+                        <td>
+                          <input id="input-valor-total" type="text" style="pointer-events: none;"
+                            class="input-text text-center" name="valorTotalMecanismo{{i}}" *ngIf="item.id == VALOR_CERO"
+                            [ngModel]="item.valorTotalMecanismo | currency: '$': 'symbol' : '1.0-2'"
+                            placeholder="Ingrese cifra" />
+                          <label *ngIf="item.id != VALOR_CERO">{{item.valorTotalMecanismo}}</label>
+                        </td>
+                        <!-- Acción -->
+                        <td>
+                          <a class="card-link" (click)="eliminarMunicipio(item.id, i)" *ngIf="!item.addInfo">
+                            <img style="width: 20px; height: 20px" src="../assets/images/Iconos/eliminar_mini.png" />
+                          </a>
+
+                          <a class="card-link" (click)="validarMunicipio(item)" *ngIf="item.addInfo">
+                            <img style="width: 20px; height: 20px" src="../assets/images/Iconos/save_mini.png" />
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="text-right" (click)="addMunicipio()">
+              <img class="mr-2" src="../assets/images/Iconos/add_blue.png" />
+              <label>Agregar fila</label>
+            </div>
+
+            <div class="form-item">
+              <label class="form-label">
+                3. Rubros adicionales:
+              </label>
+              <app-rubros-adicionales [ValorTotalServicios]="1" [ValorContrato]="bolsa.valorTotalMecanismo"
+                [IdContrato]="bolsa.id" (ValRubros)="validaRespuestaRubros($event,rubroAdd)">
+              </app-rubros-adicionales>
+            </div>
+            <div class="form-item" style="margin-left: 20px !important;">
+              <div class="row" style="padding: 5px 10px 0 0px;">
+                <div class="col-4">
+                  <app-costo-total-tab [Titulo]="'VALOR TOTAL DEL MECANISMO\n(Transferencias + Rubros Adicionales)'"
+                    [TotalGeneral]="sumBolsaValorTotal  + valTotalRubros" [Orientacion]="'H'">
+                  </app-costo-total-tab>
+                </div>
+
+                <div class="col-4">
+                  <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'" [textColor]="'text-basered'"
+                    [message]="'Asegúrese de que el valor del mecanismo de Bolsa
+                                    Común ingresado en el formulario, coincida con el
+                                    valor total calculado por el sistema'">
+                  </app-alert-message>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col clearfix">
+              <button class="btn btn-blue" (click)="finalizar(1)" [ngClass]="{'linkdisable':!getModulePermission(112,'editar')}">
+                Guardar y continuar m&aacute;s tarde
+              </button>
+            </div>
+            <div class="col clearfix">
+              <button class="btn btn-blue" (click)="set_ViewActiva(0)">
+                Anterior
+              </button> &nbsp;&nbsp;
+              <button class="btn btn-blue" (click)="finalizar(2)" [ngClass]="{'linkdisable':!getModulePermission(112,'aprobar')}">
+                Finalizar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ITEM 3  revisar -->
+
+<div *ngIf="viewActiva == 3">
+  <div class="row">
+    <div class="col-12 mb-3">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+          <h4 class="panel-title">
+            Formulario de registro - Mecanismo de Bolsa Común
+          </h4>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col clearfix" style="padding-left: 3px">
+              <app-chapterblue [numberChapter]="3" [titleChapter]="'Informaci&oacute;n presupuestal'">
+              </app-chapterblue>
+              <br />
+            </div>
+          </div>
+          <form class="form-default-inline">
+            <div class="form-item" style="padding-left: 15px">
+
+              <label class="form-label">
+                1. Fuentes de financiaci&oacute;n presupuestal destinadas a
+                cubrir el costo del contrato:
+              </label>
+              <app-informacion-presupuestal [iD_Contrato]="contrato.id" (data)="actualizarGranTotal($event)">
+              </app-informacion-presupuestal>
+            </div>
+            <div class="form-item">
+              <div class="row mb-3">
+                <div class="col-12">
+                  <label for="exampleFormControlInput1" class="form-label" style="margin-left: 6px">
+                    2. Suma total de las fuentes de financiaci&oacute;n
+                    registradas:
+                  </label>
+                  <input type="text" class="ml-3 form-control width-totales-fuentes-financiacion"
+                    name="txtSumaTotalFuentesFinanciacion"
+                    [ngModel]="dataTotalGeneralContratado.totalFuentesFinanciacion | currency: '$' : 'symbol' : '1.0-2'"
+                    placeholder="Autom&aacute;tico" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="flex align-items-center width-warning-title">
+                  <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'" [textColor]="'text-basered'"
+                    [message]="' Aseg&uacute;rese de que el valor total de las fuentes de financiaci&oacute;n coincida con el valor total del contrato.'">
+                  </app-alert-message>
+                </div>
+                <div class="width-totales-fuentes-financiacion">
+                  <app-costo-total-tab [Titulo]="'VALOR CONTRATO'"
+                    [TotalGeneral]="dataTotalGeneralContratado.valorTotal"></app-costo-total-tab>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div class="form-item">
+              <label for="exampleFormControlInput1" class="form-label float-left">
+                3. PDF del contrato: &nbsp;&nbsp;&nbsp;
+              </label>
+              <div class="btn-fileUpload" (click)="uploadPDF('fileRutUpload', contrato, 'nombreArchivo','archivo')">
+                <span>Adjunta el archivo</span>
+                <mat-icon>check</mat-icon>
+                <img src="../assets/images/Iconos/input-file.png" />
+                <input class type="file" id="fileRutUpload" name="fileRutUpload" accept="application/pdf" />
+              </div>
+              <a class="visorPDF" (click)="abrirPDF(modalPDF, contrato, 'archivo')">
+                {{ contrato.nombreArchivo }}
+              </a>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col clearfix">
+              <button class="btn btn-blue" (click)="finalizar(1)" [ngClass]="{'linkdisable':!getModulePermission(112,'editar')}">
+                Guardar y continuar m&aacute;s tarde
+              </button>
+            </div>
+            <div class="col clearfix">
+              <button class="btn btn-blue" (click)="set_ViewActiva(2)">
+                Anterior
+              </button> &nbsp;&nbsp;
+              <button (click)="onSubmit()" class="btn btn-blue" [ngClass]="{'linkdisable':!getModulePermission(112,'aprobar')}">
+                Finalizar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalPDF>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>

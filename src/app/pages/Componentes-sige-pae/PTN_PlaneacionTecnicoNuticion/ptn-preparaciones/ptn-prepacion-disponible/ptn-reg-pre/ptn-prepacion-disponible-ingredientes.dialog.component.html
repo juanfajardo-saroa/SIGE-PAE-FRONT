@@ -1,0 +1,128 @@
+<div class="positionTable">
+  <div class="SizeDialog">
+    <mat-card-header class="TituloDialog">
+      <ng-container>
+        <div mat-dialog-actions>
+          <tr class="CenterButton">
+            <td>
+              <span>Agregar ingrediente</span>
+            </td>
+          </tr>
+        </div>
+      </ng-container>
+    </mat-card-header>
+  </div>
+  <div class="course-app">
+    <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+      <mat-card-content>
+        <div fxLayout="row wrap" class="course-app">
+          <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+            <div>
+              <mat-card-content class="text-center">
+                <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                  <div *ngIf="action !='Adicionar'">
+                    <div class="example-full-width">
+                      <input matInput id="id" readonly="true" class=" form-control" style="display: none;" />
+                    </div>
+                  </div>
+                  <div class="px-3 px-xl-0 d-flex flex-column gap-down-10-px">
+                    <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                      <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">Grupo de alimentos:</div>
+                      </div>
+                      <div class="flex-grow-1 marginB">
+                        <mat-select class="tablaForm control-md" id="" required [(value)]="selGrupo"
+                          (selectionChange)="selectionGrupo($event.value)" placeholder=" Grupo...">
+                          <mat-option [value]=-1> Todos</mat-option>
+                          <mat-option *ngFor="let i of GrupoAlimentoList" [value]="i.id">{{i.nombre}}</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                    <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                      <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">Subgrupo de alimentos:</div>
+                      </div>
+                      <div class="flex-grow-1 marginB">
+                        <mat-select class="tablaForm control-md" id="" required [(value)]="selSubGrupo"
+                          placeholder="Subgrupo...">
+                          <mat-option [value]=-1> Todos</mat-option>
+                          <mat-option *ngFor="let i of SubGrupoAlimentoList"
+                            [value]="i.iD_SubGrupoAlimento">{{i.subGrupoAlimento}}</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                    <div class="BordeSeparador d-flex flex-column flex-xl-row">
+                      <div class="alignTd w-down-100 d-flex align-items-center">
+                        <div class="TextosBlueLeft">Alimento:</div>
+                      </div>
+                      <div class="flex-grow-1 marginB">
+                        <input matInput id="descripcionDiagnostico" #BusqAlimento required
+                          placeholder="Alimento tal de materia prima" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                  <div style="width: 100%; float: right; color: #005ACA;" class="align-items-center textagregar ">
+                    <div class="text-right ">
+                      <button (click)="Buscar(selGrupo,selSubGrupo,BusqAlimento.value)">Buscar
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Resultados de busqueda -->
+
+                  <div class="sub">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-285.png " height="30px" width="auto">
+                    <span style="color:#E43466 !important; margin-left: 10px; ">Materia prima: {{cantIngredientes}}
+                      resultados disponibles
+                    </span>
+                  </div>
+                  <hr class="linea">
+
+                  <!-- fin Resultados de busqueda -->
+
+                  <div class="mx-lg-down-0" style="margin-left: 20%; margin-right: 20%;">
+                    <div *ngIf="!mensaje" class="flex-grow-1">
+                      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                        formControlName="iD_Producto" (change)="aler($event.value)">
+                        <mat-radio-button class="example-radio-button" *ngFor="let season of tipoRacionList"
+                          [value]="season.id">
+                          {{season.nombre}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div *ngIf="mensaje" class="aletainput flex-grow-1">
+                      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group2"
+                        formControlName="iD_Producto" (change)="aler($event.value)">
+                        <mat-radio-button class="example-radio-button" *ngFor="let season of tipoRacionList"
+                          [value]="season.id">
+                          {{season.nombre}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <label *ngIf="mensaje" class="label" style="color: red">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
+                        style="height: 13px; margin-right: 2px;">
+                      Complete este campo
+                    </label>
+                  </div>
+                </mat-dialog-content>
+                <ng-template #elseTemplate>
+                  <div style="text-align: center;">
+                    ¿Está seguro de eliminar el registro?
+                  </div>
+                </ng-template>
+                <div class="BordeSuperior">
+                  <div
+                    class="CenterButton text-center alignCenter flex-column-reverse flex-xl-row gap-down-10-px mx-lg-down-1">
+                    <button class="BordeRedondoAgregar m-down-0" (click)="closeDialog()">Cancelar</button>
+                    <button class="BordeRedondoAgregar marginIzq m-down-0" (click)="doAction()">Agregar</button>
+                  </div>
+                </div>
+              </mat-card-content>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+.checkbox-red {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    input[type="checkbox"] {
+        width: 17px;
+        margin-right: 5px;
+        accent-color: $base-colorred;
+    }
+
+    input[type="checkbox"]+label {
+        margin: 0;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,92 @@
+<div>
+    <div class="sub">Las sedes de la ETC cuentan con los siguientes servicios públicos:</div>
+    <br>
+    <div class="BordeRedondoUno"  id="chart-luz" *ngIf="yaCargoChartOptions" >
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-62.png "> <span class="titulo">  Electricidad(Luz):</span>
+      <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [stroke]="chartOptions.stroke"
+      [plotOptions]="chartOptions.plotOptions"
+      [fill]="chartOptions.fill"
+      [legend]="chartOptions.legend"
+      [yaxis]="chartOptions.yaxis"
+      [xaxis]="chartOptions.xaxis"
+      [colors]="chartOptions.colors"
+      [dataLabels]="chartOptions.dataLabels"
+      [grid]="chartOptions.grid"
+      [tooltip]="chartOptions.tooltip"
+    ></apx-chart>
+    </div>
+    <div class="BordeRedondoTres"  id="chart-agua" *ngIf="yaCargoChartOptions2" >
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-63.png "> <span class="titulo">  Acceso a agua:</span>
+      <apx-chart
+      [series]="chartOptions1.series"
+      [chart]="chartOptions1.chart"
+      [stroke]="chartOptions1.stroke"
+      [plotOptions]="chartOptions1.plotOptions"
+      [fill]="chartOptions1.fill"
+      [legend]="chartOptions1.legend"
+      [yaxis]="chartOptions1.yaxis"
+      [xaxis]="chartOptions1.xaxis"
+      [colors]="chartOptions1.colors"
+      [dataLabels]="chartOptions1.dataLabels"
+      [grid]="chartOptions1.grid"
+      [tooltip]="chartOptions1.tooltip"
+    ></apx-chart>
+    </div>
+    <div class="BordeRedondoTres"  id="chart-alcantarillado" *ngIf="yaCargoChartOptions3" >
+      <img src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-25-01.png "> <span class="titulo">  Alcantarillado:</span>
+      <apx-chart
+      [series]="chartOptions2.series"
+      [chart]="chartOptions2.chart"
+      [stroke]="chartOptions2.stroke"
+      [plotOptions]="chartOptions2.plotOptions"
+      [fill]="chartOptions2.fill"
+      [legend]="chartOptions2.legend"
+      [yaxis]="chartOptions2.yaxis"
+      [xaxis]="chartOptions2.xaxis"
+      [colors]="chartOptions2.colors"
+      [dataLabels]="chartOptions2.dataLabels"
+      [grid]="chartOptions2.grid"
+      [tooltip]="chartOptions2.tooltip"
+    ></apx-chart>
+    </div>
+    <div class="BordeRedondoTres"  id="chart-gas" *ngIf="yaCargoChartOptions4">
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-65.png "> <span class="titulo"> Gas (pipeta o cilindro):</span>
+      <apx-chart
+      [series]="chartOptions3.series"
+      [chart]="chartOptions3.chart"
+      [stroke]="chartOptions3.stroke"
+      [plotOptions]="chartOptions3.plotOptions"
+      [fill]="chartOptions3.fill"
+      [legend]="chartOptions3.legend"
+      [yaxis]="chartOptions3.yaxis"
+      [xaxis]="chartOptions3.xaxis"
+      [colors]="chartOptions3.colors"
+      [dataLabels]="chartOptions3.dataLabels"
+      [grid]="chartOptions3.grid"
+      [tooltip]="chartOptions3.tooltip"
+    ></apx-chart>
+    </div>
+    <div class="BordeRedondoDos"  id="chart-basura" *ngIf="yaCargoChartOptions5" >
+      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-69.png "> <span class="titulo">  Recolección de basuras:</span>
+      <apx-chart
+      [series]="chartOptions4.series"
+      [chart]="chartOptions4.chart"
+      [stroke]="chartOptions4.stroke"
+      [plotOptions]="chartOptions4.plotOptions"
+      [fill]="chartOptions4.fill"
+      [legend]="chartOptions4.legend"
+      [yaxis]="chartOptions4.yaxis"
+      [xaxis]="chartOptions4.xaxis"
+      [colors]="chartOptions4.colors"
+      [dataLabels]="chartOptions4.dataLabels"
+      [grid]="chartOptions4.grid"
+      [tooltip]="chartOptions4.tooltip"
+    ></apx-chart>
+    </div>
+    
+    </div>
+    <br>
+    

@@ -1,0 +1,342 @@
+@import '/src/assets/styles/variable.scss';
+*{
+    font-size: $base-fontSize!important;
+}
+:host ::ng-deep .mat-tab-label {
+
+    border-radius: 50px 50px 0px 0px !important;
+    color: $base-azulPAE !important;
+    font-size: 20px;
+    background-color: #E2ECFD !important;
+    width: 30%;
+    margin: 1px;
+}
+.mat-select-value{
+    color: $base-azulPAE;
+}
+.strongheader{
+    color: $base-azulPAE;
+    font-style: $base-azulPAE;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+    border-width: 2px;
+    border-color: $base-azulPAE;
+    border-style: solid;
+    border-radius: 12px 12px 0px 0px !important;
+    color: $base-colorverde !important;
+    font-size: 20px;
+    background-color: white !important;
+}
+.tablaform {
+    width: 100%;
+    border-color: $base-azulPAE;
+    color: $base-azulPAE;
+    border: 1px solid;
+    border-radius: 12px 12px 12px 12px !important;
+    font-size: 17px;
+  }
+.AcomodarAll{
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.CeldaAzulOscuro{
+    background-color: $base-azulPAE;
+    color: #fff!important;
+}
+.CeldaAzul{
+    background-color: #E2E6FE;
+    color: $base-azulPAE;
+    border: 1px $base-azulPAE solid;
+}
+
+.CeldaVerde {
+    background-color: #00A9AB;
+    color: #fff !important;
+    font-weight: 800;
+}
+
+.TituloOperador {
+    color: #00A9AB;
+}
+
+.CenterButton {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    /* border: $base-azulPAE 1px solid;
+    border-radius: 20px; */
+    margin: 0px 1%;
+}
+
+mat-card {
+    box-shadow: none !important;
+}
+
+.ClickCursor {
+    cursor: pointer;
+}
+
+.EspacioField {
+    padding: 0px !important;
+}
+
+.lineaAzulX {
+    border-right: 1px solid $base-azulPAE;
+}
+
+mat-form-field {
+    border-radius: 20px 20px 20px 20px !important;
+    border: $base-azulPAE solid 1px;
+    background-color: #fff !important;
+    padding: 0%;
+}
+
+.Redondeado {
+    border: 1px solid #005aca;
+    border-radius: 20px !important;
+    padding: 0px !important;
+    width: 100%;
+    display: inline-table;
+}
+
+.BotonAzul {
+    background-color: $base-azulPAE;
+    color: #fff;
+    border: 1px solid #005aca;
+    border-radius: 20px !important;
+    padding: 8px;
+    cursor: pointer;
+    margin-left: 1%;
+}
+
+/* .centerIcon {
+    //margin-top: 5%;
+    //inline-size: min-content;
+} */
+
+.alinearIcon {
+    padding: auto;
+
+}
+
+.bordeAtras2{
+    text-align: center !important;
+   padding: 5px;
+  }
+
+.BordeRedondoLeft {
+    border-radius: 20px;
+    border: $base-azulPAE solid 1px;
+    padding: 0px 0px;
+}
+
+.BordeRedondoRight {
+    border-radius: 0px 20px 20px 1px;
+    border: $base-azulPAE solid 1px;
+    padding: 0px 0px;
+}
+
+.SizeFilter {
+    /* width: 35%; */
+    margin-left: 1%;
+    padding: 0px 10px;
+}
+
+.SizeBotones {
+    width: auto;
+    height: 100%;
+}
+
+.MarginSepara {
+    margin-left: 1%;
+}
+
+.separaIcon {
+    padding-right: 0px;
+    margin-right: 10px;
+}
+
+.BotonLeft {
+    background-color: #E2E6FE;
+    color: $base-azulPAE;
+    min-height: 100%;
+    min-width: 100%;
+    padding: 15% 4%;
+    border-radius: 20px 1px 1px 20px;
+    margin: 0% 0% 0% 2px;
+    text-align: left;
+    min-inline-size: max-content !important;
+    cursor: pointer;
+}
+
+.BotonRight {
+    background-color: $base-azulPAE;
+    color: #fff;
+    min-height: 100%;
+    min-width: 100%;
+    padding: 15% 4%;
+    border-radius: 1px 20px 20px 1px;
+    /* margin: 0% 20%; */
+    text-align: left;
+    min-inline-size: max-content !important;
+}
+
+.CenterAll {
+    display: block;
+    margin: auto;
+}
+
+mat-icon {
+    color: #E2E6FE;
+}
+
+.Invisible {
+    display: none;
+}
+
+.Invisible2 {
+    height: 1px!important;
+    visibility: hidden;
+    padding: -10px !important;
+}
+.SobreponerTabla{
+    margin-bottom: 0% ;
+}
+.iconLargo {
+    border-radius: 10px;
+}
+
+.titletable {
+    float: right;
+    background-color: $base-azulPAE !important;
+    color: #fff !important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border-radius: 5px 10px $base-azulPAE;
+    -webkit-border-radius: 5px 10px;
+}
+
+/* .itemPorcentaje{
+    margin-right: auto;
+    display: block;
+} */
+.rectangle {
+    background-color: blue;
+    width: 60px;
+    height: 15px;
+    border-radius: 40%;
+}
+
+.circulo {
+    background-color: #E2ECFD !important;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /*     margin: auto;
+    display: block; */
+}
+
+.smallLetter {
+    font-size: 10px;
+    margin: 0px;
+    letter-spacing: 0px;
+}
+
+.LeftUpCorner {
+    border-top-left-radius: 20px;
+
+}
+
+.RightUpCorner {
+    border-top-right-radius: 20px;
+
+}
+
+
+table {
+    width: auto;
+    border-collapse: separate;
+    box-shadow: none !important;
+    /* border: $base-azulPAE 1px solid;
+    border-style: hidden solid solid solid;
+    border-radius: 20px 20px 1px 1px; */
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-azulPAE;
+    font-size: 14px;
+    text-align: center;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+    border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 24px;
+    border-right: 1px solid;
+}
+
+
+.titletable {
+    float: right;
+    background-color: $base-azulPAE !important;
+    color: #fff !important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border-radius: 12px 12px 0px 0px !important;
+}
+
+.buttonAr {
+    color: $base-azulPAE;
+    border-color: $base-azulPAE;
+    padding: 14px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 12px 12px 12px 12px !important;
+}
+
+.espaciobutton {
+    margin-left: 5px !important;
+}
+
+// .mat-table::ng-deep {
+//   border: 1px solid $base-azulPAE;
+// }
+th.mat-header-cell {
+    text-align: center !important;
+    background-color: #E2ECFD !important;
+    //color: #fff!important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    /* border: 1px solid $base-azulPAE; */
+    padding: 20px !important;
+}
+
+.mat-row:hover .mat-cell {
+    background-color: $base-azulPAE;
+    color: #ffffff;
+}
+
+.mat-column-select {
+    overflow: initial;
+}
+
+.card {
+    border: none;
+}

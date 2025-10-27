@@ -1,0 +1,1472 @@
+<div *ngIf="viewActiva == 0">
+  <!--------------------- inicio Filtro por palabras claves ------------------------------>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-xl-4">
+        <!-- <p>Bucar por palabra(s) clave</p>
+      <div class="grupo_input">
+        <mat-icon>search icon</mat-icon>
+        <input matInput (keyup)="applyFilter($any($event).target.value)" type="text" class="tablaform" />
+      </div> -->
+      </div>
+      <div class="col-12 col-lg-6 col-xl-5 px-lg-down-0">
+        <div class="alert d-xl-block d-flex align-items-center float-left float-lg-right">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-20.png" alt=""
+            style="width:30px; height: 30px; float:left; ">
+          <p class="alertText my-lg-down-0 ml-lg-down-1">Si la preparación que busca no aparece,<br
+              class="d-none d-xl-inline"> por favor
+            regístrelo en el sistema.</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 col-xl-3 px-lg-down-0" style="padding-right: 0px !important"
+        [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}">
+        <div (click)="openDialog('Adicionar',{})" style="width: 100%; float: right;"
+          class="align-items-center textagregar ">
+          <div class="text-left text-lg-right mt-md-down-0" style="margin-top: 20px;">
+            <a class="btn-agregar "><img src="../.././../assets/images//Iconos/add_blue.png " /> Registrar
+              preparación</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <!--------------------- fin  Filtro por palabras claves ------------------------------>
+  <!--------------------- inicio Filtro por Mes y ETC------------------------------>
+
+  <div fxLayout="row wrap">
+    <div>
+      <div class="tablaform3 bordeIzq2">
+        <div class="row" style="
+        margin: 0px 0px;">
+          <div class="col-12 col-xl">
+            <mat-card class="spaceCol mx-lg-down-0" style="padding-left: 5px !important;">
+              <mat-card-title>Grupo de alimentos</mat-card-title>
+              <mat-select class="tablaForm control-md" id="" required [(value)]="selGrupo"
+                (selectionChange)="selectionGrupo($event.value)" placeholder=" Todos">
+                <mat-option [value]=-1> Todos</mat-option>
+                <mat-option *ngFor="let i of GrupoAlimentoList" [value]="i.id">{{i.nombre}}</mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="col-12 col-xl">
+            <mat-card class="spaceCol mx-lg-down-0">
+              <mat-card-title>Subgrupo de alimentos</mat-card-title>
+              <mat-select class="tablaForm control-md" id="" required [(value)]="selSubGrupo" placeholder="Todos">
+                <mat-option [value]=-1> Todos</mat-option>
+                <mat-option *ngFor="let i of SubGrupoAlimentoList"
+                  [value]="i.iD_SubGrupoAlimento">{{i.subGrupoAlimento}}</mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="col-12 col-xl bordeDer border-right-down-none">
+            <mat-card class="mx-lg-down-0">
+              <mat-card-title class="color">Tipo</mat-card-title>
+              <mat-select class="tablaForm control-md" id="" required [(value)]="selTipo" placeholder="Todos">
+                <mat-option [value]=-1> Todos</mat-option>
+                <mat-option *ngFor=" let i of tipoPreparacion" [value]="i.estado">{{i.nombre}}</mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="w-down-100">
+            <mat-card style="padding-right: 5px !important;">
+              <div class="bordetd text-center-lg-down" fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100">
+                <a class="btn-agregar">
+                  <img (click)="onchangeGrupoAlimentos(selGrupo, selSubGrupo, selTipo)" class="imgFilter"
+                    src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png" height="30px" width="auto">
+                </a>
+                <div class="textF">Buscar</div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--------------------- Fin Filtro por Mes y ETC------------------------------>
+
+  <!-- Resultados de busqueda -->
+  <div class="sub">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-114.png " height="30px" width="auto">
+    <span style="color:#E43466 !important; margin-left: 10px; ">Resultados de la búsqueda de Preparaciones </span>
+  </div>
+  <hr class="linea">
+  <br>
+  <!-- fin Resultados de busqueda -->
+
+  <!------------inicio de la tabla-------------------->
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+      <mat-card class="mx-lg-down-0" style="    margin-left: 190px;
+      margin-right: 190px;">
+        <mat-card-content>
+          <div>
+            <table mat-table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="Nombre">
+                <th class="LeftUpCorner bordeBottom" mat-header-cell *matHeaderCellDef
+                  style="padding-left: 0px; padding-top: 10PX;">
+                  Nombre de la
+                  <br>preparación
+                  <div style="position: relative">
+                    <input (keyup)="applyFilter($any($event).target.value)"
+                      oninput="this.value = this.value.replace(/[^a-zA-Z0-9 ,;.áéíóúÁÉÍÓÚñÑüÜ]/,'')" type="text"
+                      class="inputFilter control-md">
+                    <mat-icon class="sizeIconSearch">
+                      search icon
+                    </mat-icon>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                  {{element.nombrePreparacion}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Caracteristicas">
+                <th class="LeftUpCorner2 p-lg-down-1" mat-header-cell *matHeaderCellDef style="padding-left: 0px;">
+                  Características
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                  <div class="verDetalle" target="_blank" (click)="direccionar(element)">
+                    ver detalles</div>
+                </td>
+              </ng-container>
+
+
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+              <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; ">
+              </tr>
+            </table>
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+            </mat-paginator>
+            <!-- <div *ngIf="isLoading"
+              style="display: flex; justify-content: center; align-items: center; background: white;">
+              <mat-progress-spinner color="primary" mode="indeterminate">
+              </mat-progress-spinner>
+            </div> -->
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <!------------fin de la tabla-------------------->
+
+</div>
+
+<div *ngIf="viewActiva == 1">
+  <!-- Resultados de preparacion -->
+  <div class="sub2">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-114.png " height="30px" width="auto">
+    <span style="color:#E43466 !important; margin-left: 10px; ">Preparación mixta: {{nombreProducto}}</span>
+    <div class="float-xl-right float-none d-flex my-2 my-xl-0">
+      <button (click)="RegresarAprobaciones()" class="BordeRedondoAgregar w-down-50"
+        style="margin-left: 10px; margin-top:9px; float: right;" mat-raised-button>
+        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-295.png" alt="" height="20px" width="auto"
+          style="margin-right: 10px; ">Regresar al listado
+      </button>
+    </div>
+  </div>
+  <hr class="linea">
+  <!-- fin Resultados de preparacion -->
+  <!------inicio nombre del estado -->
+  <div>
+    <span style="color:#E43466 !important; margin-left: 10px; ">
+      <mat-icon [ngStyle]="{'color': colorEstado}">
+        {{ nombreEstado ? 'circle' : 'circle'}}
+      </mat-icon>
+      {{nombreEstado}}
+    </span>
+  </div>
+  <!------fin nombre del estado -->
+
+  <!--------inicio informacion general----------->
+
+  <div class="row">
+    <div class="d-flex flex-row AlingTitle2 col" fxLayout="row wrap">
+      <div class="d-flex">
+        <div class="NumeroPendienteColor">
+          <div class="NumeroPendiente">
+            1
+          </div>
+        </div>
+        <div class="FondoR">
+          Información general
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+      <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">1. Nombre de la
+        preparación:</div>
+      <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+        <div class=" margenadentro2 pr-down-0">
+          <input matInput id="pathDocumentoContrato" [readonly]=true value={{nombreProducto}} class="tablaform5" />
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+      <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">2. Modelo de operación:
+      </div>
+      <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+        <div class=" margenadentro2 pr-down-0">
+          <input matInput id="pathDocumentoContrato" value="{{nombreModelo}}" [readonly]=true class="tablaform5" />
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-xl-row BordeSeparador align-items-xl-center m-0">
+      <div class="TextosBlueLeft margenadentro flex-basis-0 flex-grow-1 px-lg-down-1">3. Tipos de complemento a
+        los que aplica:</div>
+      <div class="flex-basis-0 flex-grow-2 px-lg-down-1">
+        <div class=" margenadentro2 pr-down-0">
+          <input matInput id="pathDocumentoContrato" value="{{nombreComplemento}}" [readonly]=true class="tablaform5" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--------fin informacion general----------->
+
+  <!--------inicio informacion nutricional ingredientes----------->
+
+  <div class="row">
+    <div class="d-flex flex-row AlingTitle2 col" fxLayout="row wrap">
+      <div class="d-flex">
+        <div class="NumeroPendienteColor">
+          <div class="NumeroPendiente">
+            2
+          </div>
+        </div>
+        <div class="FondoR">
+          Información nutricional, por ingrediente
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <span class="TextosBlueLeft2">1. Ingredientes (seleccione un ingrediente para ver la información nutricional
+    correspondiente): </span>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col ">
+
+        <mat-card style="float: left;margin-left: 35px;">
+          <mat-card-content>
+            <mat-list class="bordeingre">
+              <mat-list-item *ngFor="let folder of dataSourceIngredientes; last as last"
+                (click)="openingredienteDetalle(folder)">
+                <div class="mat-list-text"> {{folder.nombreIngrediente }}</div>
+                <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+    <mat-card-header class="TituloDialog2">
+      <ng-container>
+        <div mat-dialog-actions>
+          <tr class="CenterButton">
+            <td style="font-size:13px ;">
+              Aporte nutricional y de energía para una porción de "{{nombreIngrediente}}"
+            </td>
+          </tr>
+        </div>
+      </ng-container>
+    </mat-card-header>
+
+    <mat-card-content class="TituloDialog3">
+      <div>
+        <div *ngIf="TipoModelos == 1 && cantModelo==1">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography">
+                <br />
+                <div class="col2">
+                  <mat-selection-list class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+                    [(ngModel)]="selectedPizzas"
+                    (selectionChange)="onNivelEducativoChange1(modeloTList.selectedOptions.selected)">
+                    <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList"
+                      [value]="element.id">
+                      <div class="center-vertically">
+                        {{element.nombre}}
+                      </div>
+                    </mat-list-option>
+                  </mat-selection-list>
+                </div>
+                <br>
+                <div class="pesoneto" *ngIf="PesoNeto1">
+                  <span class="tamaño1">Tamaño de la porción en peso neto(g): </span>
+                  {{pesoNetoText}}
+                  <br>
+
+                </div>
+                <br>
+                <div class="container" *ngIf="PesoNeto1">
+                  <div class="row2">
+                    <div class="col3">
+                      <div class="row">
+                        <!---Equivalencia---->
+                        <div class="col4 mini-box margen1">
+                          <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                            <mat-card-header class="TituloDialog4">
+                              <ng-container>
+                                <div mat-dialog-actions class="tituloneto">
+                                  <tr class="CenterButton">
+                                    <td style="font-size:13px ;">
+                                      Equivalencia
+                                    </td>
+                                  </tr>
+                                </div>
+                              </ng-container>
+                            </mat-card-header>
+                            <mat-card-content class="TituloDialog5">
+                              <div>
+                                <div>
+                                  <div>
+                                    <mat-card-content class="text-center">
+                                      <mat-dialog-content class="mat-typography">
+                                        <table mat-table [dataSource]="equivalencia " class="left-radius" matSort>
+                                          <!-- Nombre del documento Column -->
+                                          <ng-container matColumnDef="Nombre">
+                                            <td mat-cell *matCellDef="let element"
+                                              style="padding-left: 10px; text-align: left; height: 60px;">
+                                              {{element.nombre}}
+                                            </td>
+                                          </ng-container>
+                                          <!-- Fecha de actualización Column -->
+                                          <ng-container matColumnDef="Valor">
+                                            <td mat-cell *matCellDef="let element"
+                                              style="padding-right: 20px; text-align: center; height: 60px; ">
+                                              {{element.valor | number:'1.2-2' }}
+                                            </td>
+                                          </ng-container>
+                                          <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                          <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; "></tr>
+                                        </table>
+                                      </mat-dialog-content>
+                                    </mat-card-content>
+                                  </div>
+                                </div>
+                              </div>
+                            </mat-card-content>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <!---Energía---->
+                        <div class="col4 mini-box margen1">
+                          <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                            <mat-card-header class="TituloDialog4">
+                              <ng-container>
+                                <div mat-dialog-actions class="tituloneto">
+                                  <tr class="CenterButton">
+                                    <td style="font-size:13px ;">
+                                      Energía
+                                    </td>
+                                  </tr>
+                                </div>
+                              </ng-container>
+                            </mat-card-header>
+                            <mat-card-content class="TituloDialog5">
+                              <div>
+                                <div>
+                                  <div>
+                                    <mat-card-content class="text-center">
+                                      <mat-dialog-content class="mat-typography">
+                                        <table mat-table [dataSource]="energia" class="left-radius" matSort>
+                                          <!-- Nombre del documento Column -->
+                                          <ng-container matColumnDef="Nombre">
+                                            <td mat-cell *matCellDef="let element"
+                                              style="padding-left: 10px; text-align: left;height: 60px; ">
+                                              {{element.nutriente}}
+                                            </td>
+                                          </ng-container>
+                                          <!-- Fecha de actualización Column -->
+                                          <ng-container matColumnDef="Valor">
+                                            <td mat-cell *matCellDef="let element"
+                                              style="padding-right: 20px; text-align: center;height: 60px; ">
+                                              {{element.aporteNutricional | number:'1.2-2'}}
+                                            </td>
+                                          </ng-container>
+                                          <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                          <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; "></tr>
+                                        </table>
+                                      </mat-dialog-content>
+                                    </mat-card-content>
+                                  </div>
+                                </div>
+                              </div>
+                            </mat-card-content>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!---Macronutrientes---->
+                    <div class="col4 big-box">
+                      <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                        <mat-card-header class="TituloDialog4">
+                          <ng-container>
+                            <div mat-dialog-actions class="tituloneto">
+                              <tr class="CenterButton">
+                                <td style="font-size:13px ;">
+                                  Macronutrientes
+                                </td>
+                              </tr>
+                            </div>
+                          </ng-container>
+                        </mat-card-header>
+                        <mat-card-content class="TituloDialog5">
+                          <div>
+                            <div>
+                              <div>
+                                <mat-card-content class="text-center">
+                                  <mat-dialog-content class="mat-typography">
+                                    <table mat-table [dataSource]="macro" class="left-radius" matSort>
+                                      <!-- Nombre del documento Column -->
+                                      <ng-container matColumnDef="Nombre">
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 10px; text-align: left; height: 60px; height: 60px; ">
+                                          {{element.nutriente}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- Fecha de actualización Column -->
+                                      <ng-container matColumnDef="Valor">
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-right: 20px; text-align: center; height: 60px; height: 60px; ">
+                                          {{element.aporteNutricional | number:'1.2-2'}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                      <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; "></tr>
+                                    </table>
+                                  </mat-dialog-content>
+                                </mat-card-content>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-card-content>
+                      </div>
+                    </div>
+
+                    <!---Micronutrientes---->
+                    <div class="col4 big-box margenbox">
+                      <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                        <mat-card-header class="TituloDialog4">
+                          <ng-container>
+                            <div mat-dialog-actions class="tituloneto">
+                              <tr class="CenterButton">
+                                <td style="font-size:13px ;">
+                                  Micronutrientes
+                                </td>
+                              </tr>
+                            </div>
+                          </ng-container>
+                        </mat-card-header>
+                        <mat-card-content class="TituloDialog5">
+                          <div>
+                            <div>
+                              <div>
+                                <mat-card-content class="text-center">
+                                  <mat-dialog-content class="mat-typography">
+                                    <table mat-table [dataSource]="micro" class="left-radius" matSort>
+                                      <!-- Nombre del documento Column -->
+                                      <ng-container matColumnDef="Nombre">
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 10px; text-align: left; ">
+                                          {{element.nutriente}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- Fecha de actualización Column -->
+                                      <ng-container matColumnDef="Valor">
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-right: 20px; text-align: center; ">
+                                          {{element.aporteNutricional | number:'1.2-2'}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                      <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; "></tr>
+                                    </table>
+                                  </mat-dialog-content>
+                                </mat-card-content>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-card-content>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <br>
+              </mat-dialog-content>
+            </mat-card-content>
+          </div>
+        </div>
+        <div *ngIf="TipoModelos == 1 && cantModelo==2">
+          <br><br>
+          <div class="BordeTotal TituloDialogN2">
+            <mat-tab-group class="RegistroCiclo" style="margin: -25px 0 0 0!important"
+              [selectedIndex]="selectedTabIndex" (selectedIndexChange)="myTabFocusChange($event)">
+              <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+                <div>
+                  <mat-card-content class="text-center">
+                    <mat-dialog-content class="mat-typography">
+                      <br />
+                      <div class="col2">
+                        <mat-selection-list class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+                          [(ngModel)]="selectedPizzas"
+                          (selectionChange)="onNivelEducativoChange(modeloTList.selectedOptions.selected)">
+                          <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList"
+                            [value]="element.id">
+                            <div class="center-vertically">
+                              {{element.nombre}}
+                            </div>
+                          </mat-list-option>
+                        </mat-selection-list>
+                      </div>
+                      <br>
+                      <div class="pesoneto" *ngIf="PesoNeto1">
+                        <span class="tamaño1">Tamaño de la porción en peso neto(g): </span>
+                        {{pesoNetoText}}
+                        <br>
+
+                      </div>
+                      <br>
+                      <div class="container" *ngIf="PesoNeto1">
+                        <div class="row2">
+                          <div class="col3">
+                            <div class="row">
+                              <!---Equivalencia---->
+                              <div class="col4 mini-box margen1">
+                                <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                                  <mat-card-header class="TituloDialog4">
+                                    <ng-container>
+                                      <div mat-dialog-actions class="tituloneto">
+                                        <tr class="CenterButton">
+                                          <td style="font-size:13px ;">
+                                            Equivalencia
+                                          </td>
+                                        </tr>
+                                      </div>
+                                    </ng-container>
+                                  </mat-card-header>
+                                  <mat-card-content class="TituloDialog5">
+                                    <div>
+                                      <div>
+                                        <div>
+                                          <mat-card-content class="text-center">
+                                            <mat-dialog-content class="mat-typography">
+                                              <table mat-table [dataSource]="equivalencia " class="left-radius" matSort>
+                                                <!-- Nombre del documento Column -->
+                                                <ng-container matColumnDef="Nombre">
+                                                  <td mat-cell *matCellDef="let element"
+                                                    style="padding-left: 10px; text-align: left; height: 60px;">
+                                                    {{element.nombre}}
+                                                  </td>
+                                                </ng-container>
+                                                <!-- Fecha de actualización Column -->
+                                                <ng-container matColumnDef="Valor">
+                                                  <td mat-cell *matCellDef="let element"
+                                                    style="padding-left: 0px; text-align: center; height: 60px; ">
+                                                    {{element.valor | number:'1.2-2'}}
+                                                  </td>
+                                                </ng-container>
+                                                <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                                <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; ">
+                                                </tr>
+                                              </table>
+                                            </mat-dialog-content>
+                                          </mat-card-content>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </mat-card-content>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <!---Energía---->
+                              <div class="col4 mini-box margen1">
+                                <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                                  <mat-card-header class="TituloDialog4">
+                                    <ng-container>
+                                      <div mat-dialog-actions class="tituloneto">
+                                        <tr class="CenterButton">
+                                          <td style="font-size:13px ;">
+                                            Energía
+                                          </td>
+                                        </tr>
+                                      </div>
+                                    </ng-container>
+                                  </mat-card-header>
+                                  <mat-card-content class="TituloDialog5">
+                                    <div>
+                                      <div>
+                                        <div>
+                                          <mat-card-content class="text-center">
+                                            <mat-dialog-content class="mat-typography">
+                                              <table mat-table [dataSource]="energia" class="left-radius" matSort>
+                                                <!-- Nombre del documento Column -->
+                                                <ng-container matColumnDef="Nombre">
+                                                  <td mat-cell *matCellDef="let element"
+                                                    style="padding-left: 10px; text-align: left; height: 60px; ">
+                                                    {{element.nutriente}}
+                                                  </td>
+                                                </ng-container>
+                                                <!-- Fecha de actualización Column -->
+                                                <ng-container matColumnDef="Valor">
+                                                  <td mat-cell *matCellDef="let element"
+                                                    style="padding-left: 0px; text-align: center; height: 60px; ">
+                                                    {{element.aporteNutricional | number:'1.2-2'}}
+                                                  </td>
+                                                </ng-container>
+                                                <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                                <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; ">
+                                                </tr>
+                                              </table>
+                                            </mat-dialog-content>
+                                          </mat-card-content>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </mat-card-content>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!---Macronutrientes---->
+                          <div class="col4 big-box">
+                            <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                              <mat-card-header class="TituloDialog4">
+                                <ng-container>
+                                  <div mat-dialog-actions class="tituloneto">
+                                    <tr class="CenterButton">
+                                      <td style="font-size:13px ;">
+                                        Macronutrientes
+                                      </td>
+                                    </tr>
+                                  </div>
+                                </ng-container>
+                              </mat-card-header>
+                              <mat-card-content class="TituloDialog5">
+                                <div>
+                                  <div>
+                                    <div>
+                                      <mat-card-content class="text-center">
+                                        <mat-dialog-content class="mat-typography">
+                                          <table mat-table [dataSource]="macro" class="left-radius" matSort>
+                                            <!-- Nombre del documento Column -->
+                                            <ng-container matColumnDef="Nombre">
+                                              <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 10px; text-align: left; height: 60px; ">
+                                                {{element.nutriente}}
+                                              </td>
+                                            </ng-container>
+                                            <!-- Fecha de actualización Column -->
+                                            <ng-container matColumnDef="Valor">
+                                              <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 0px; text-align: center; height: 60px; ">
+                                                {{element.aporteNutricional | number:'1.2-2'}}
+                                              </td>
+                                            </ng-container>
+                                            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                            <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; ">
+                                            </tr>
+                                          </table>
+                                        </mat-dialog-content>
+                                      </mat-card-content>
+                                    </div>
+                                  </div>
+                                </div>
+                              </mat-card-content>
+                            </div>
+                          </div>
+
+                          <!---Micronutrientes---->
+                          <div class="col4 big-box margenbox">
+                            <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                              <mat-card-header class="TituloDialog4">
+                                <ng-container>
+                                  <div mat-dialog-actions class="tituloneto">
+                                    <tr class="CenterButton">
+                                      <td style="font-size:13px ;">
+                                        Micronutrientes
+                                      </td>
+                                    </tr>
+                                  </div>
+                                </ng-container>
+                              </mat-card-header>
+                              <mat-card-content class="TituloDialog5">
+                                <div>
+                                  <div>
+                                    <div>
+                                      <mat-card-content class="text-center">
+                                        <mat-dialog-content class="mat-typography">
+                                          <table mat-table [dataSource]="micro" class="left-radius" matSort>
+                                            <!-- Nombre del documento Column -->
+                                            <ng-container matColumnDef="Nombre">
+                                              <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 10px; text-align: left; ">
+                                                {{element.nutriente}}
+                                              </td>
+                                            </ng-container>
+                                            <!-- Fecha de actualización Column -->
+                                            <ng-container matColumnDef="Valor">
+                                              <td mat-cell *matCellDef="let element"
+                                                style="padding-left: 0px; text-align: center; ">
+                                                {{element.aporteNutricional | number:'1.2-2'}}
+                                              </td>
+                                            </ng-container>
+                                            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                            <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; ">
+                                            </tr>
+                                          </table>
+                                        </mat-dialog-content>
+                                      </mat-card-content>
+                                    </div>
+                                  </div>
+                                </div>
+                              </mat-card-content>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <br>
+                    </mat-dialog-content>
+                  </mat-card-content>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+
+          </div>
+          <br><br>
+        </div>
+
+        <div *ngIf="TipoModelos == 2">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography">
+                <br />
+
+                <div class="pesoneto">
+                  <span class="tamaño1">Tamaño de la porción en peso neto(g): </span>
+                  {{ pesoNetoText}}
+                  <br>
+
+                </div>
+                <br>
+                <div class="container">
+                  <div class="row2">
+                    <div class="col3">
+                      <div class="row">
+                        <!---Equivalencia---->
+                        <div class="col4 mini-box margen1">
+                          <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                            <mat-card-header class="TituloDialog4">
+                              <ng-container>
+                                <div mat-dialog-actions class="tituloneto">
+                                  <tr class="CenterButton">
+                                    <td style="font-size:13px ;">
+                                      Equivalencia
+                                    </td>
+                                  </tr>
+                                </div>
+                              </ng-container>
+                            </mat-card-header>
+                            <mat-card-content class="TituloDialog5">
+                              <div>
+                                <div>
+                                  <div>
+                                    <mat-card-content class="text-center">
+                                      <mat-dialog-content class="mat-typography">
+                                        <table mat-table [dataSource]="equivalencia " class="left-radius" matSort>
+                                          <!-- Nombre del documento Column -->
+                                          <ng-container matColumnDef="Nombre">
+                                            <td mat-cell *matCellDef="let element"
+                                              style="padding-left: 10px; text-align: left; height: 60px; ">
+                                              {{element.nombre}}
+                                            </td>
+                                          </ng-container>
+                                          <!-- Fecha de actualización Column -->
+                                          <ng-container matColumnDef="Valor">
+                                            <td mat-cell *matCellDef="let element"
+                                              style="padding-left: 0px; text-align: center; height: 60px;">
+                                              {{element.valor | number:'1.2-2'}}
+                                            </td>
+                                          </ng-container>
+                                          <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                          <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; "></tr>
+                                        </table>
+                                      </mat-dialog-content>
+                                    </mat-card-content>
+                                  </div>
+                                </div>
+                              </div>
+                            </mat-card-content>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <!---Energía---->
+                        <div class="col4 mini-box margen1">
+                          <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                            <mat-card-header class="TituloDialog4">
+                              <ng-container>
+                                <div mat-dialog-actions class="tituloneto">
+                                  <tr class="CenterButton">
+                                    <td style="font-size:13px ;">
+                                      Energía
+                                    </td>
+                                  </tr>
+                                </div>
+                              </ng-container>
+                            </mat-card-header>
+                            <mat-card-content class="TituloDialog5">
+                              <div>
+                                <div>
+                                  <div>
+                                    <mat-card-content class="text-center">
+                                      <mat-dialog-content class="mat-typography">
+                                        <table mat-table [dataSource]="energia" class="left-radius" matSort>
+                                          <!-- Nombre del documento Column -->
+                                          <ng-container matColumnDef="Nombre">
+                                            <td mat-cell *matCellDef="let element"
+                                              style="padding-left: 10px; text-align: left; height: 60px;">
+                                              {{element.nutriente}}
+                                            </td>
+                                          </ng-container>
+                                          <!-- Fecha de actualización Column -->
+                                          <ng-container matColumnDef="Valor">
+                                            <td mat-cell *matCellDef="let element"
+                                              style="padding-left: 0px; text-align: center; height: 60px;">
+                                              {{element.aporteNutricional | number:'1.2-2'}}
+                                            </td>
+                                          </ng-container>
+                                          <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                          <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; "></tr>
+                                        </table>
+                                      </mat-dialog-content>
+                                    </mat-card-content>
+                                  </div>
+                                </div>
+                              </div>
+                            </mat-card-content>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!---Macronutrientes---->
+                    <div class="col4 big-box">
+                      <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                        <mat-card-header class="TituloDialog4">
+                          <ng-container>
+                            <div mat-dialog-actions class="tituloneto">
+                              <tr class="CenterButton">
+                                <td style="font-size:13px ;">
+                                  Macronutrientes
+                                </td>
+                              </tr>
+                            </div>
+                          </ng-container>
+                        </mat-card-header>
+                        <mat-card-content class="TituloDialog5">
+                          <div>
+                            <div>
+                              <div>
+                                <mat-card-content class="text-center">
+                                  <mat-dialog-content class="mat-typography">
+                                    <table mat-table [dataSource]="macro" class="left-radius" matSort>
+                                      <!-- Nombre del documento Column -->
+                                      <ng-container matColumnDef="Nombre">
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 10px; text-align: left; height: 60px; ">
+                                          {{element.nutriente}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- Fecha de actualización Column -->
+                                      <ng-container matColumnDef="Valor">
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 0px; text-align: center; height: 60px; ">
+                                          {{element.aporteNutricional | number:'1.2-2'}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                      <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; "></tr>
+                                    </table>
+                                  </mat-dialog-content>
+                                </mat-card-content>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-card-content>
+                      </div>
+                    </div>
+
+                    <!---Micronutrientes---->
+                    <div class="col4 big-box margenbox">
+                      <div class="SizeDialog2" *ngIf="aporteNutrcional">
+
+                        <mat-card-header class="TituloDialog4">
+                          <ng-container>
+                            <div mat-dialog-actions class="tituloneto">
+                              <tr class="CenterButton">
+                                <td style="font-size:13px ;">
+                                  Micronutrientes
+                                </td>
+                              </tr>
+                            </div>
+                          </ng-container>
+                        </mat-card-header>
+                        <mat-card-content class="TituloDialog5">
+                          <div>
+                            <div>
+                              <div>
+                                <mat-card-content class="text-center">
+                                  <mat-dialog-content class="mat-typography">
+                                    <table mat-table [dataSource]="micro" class="left-radius" matSort>
+                                      <!-- Nombre del documento Column -->
+                                      <ng-container matColumnDef="Nombre">
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 10px; text-align: left; ">
+                                          {{element.nutriente}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- Fecha de actualización Column -->
+                                      <ng-container matColumnDef="Valor">
+                                        <td mat-cell *matCellDef="let element"
+                                          style="padding-left: 0px; text-align: center; ">
+                                          {{element.aporteNutricional | number:'1.2-2'}}
+                                        </td>
+                                      </ng-container>
+                                      <!-- <tr mat-header-row *matHeaderRowDef="displayedColumnsNeto "></tr> -->
+                                      <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsNeto; "></tr>
+                                    </table>
+                                  </mat-dialog-content>
+                                </mat-card-content>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-card-content>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <br>
+              </mat-dialog-content>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+  <!--------fin informacion nutricional ingredientes----------->
+
+  <!--------inicio peso servido----------->
+
+  <div class="row">
+    <div class="d-flex flex-row AlingTitle2 col" fxLayout="row wrap">
+      <div class="d-flex">
+        <div class="NumeroPendienteColor">
+          <div class="NumeroPendiente">
+            3
+          </div>
+        </div>
+        <div class="FondoR">
+          Peso servido
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col ">
+
+          <mat-card style="width: 85%; margin-left: 36px;" *ngIf="maem2">
+            <mat-card-content>
+              <table mat-table [dataSource]="peso " class="left-radius" matSort>
+                <!-- Nombre del documento Column -->
+                <ng-container matColumnDef="Nivel">
+                  <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Nivel
+                    educativo
+                  </th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                    {{element.nivelEducativo }}
+                  </td>
+                </ng-container>
+                <!-- Fecha de actualización Column -->
+                <ng-container matColumnDef="pesoal">
+                  <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Peso servido en <br> complemento
+                    almuerzo (g)</th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                    {{element.complementoAlmuerzo == null ? '-':element.complementoAlmuerzo}}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="pesoampm">
+                  <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Peso servido
+                    en <br> complemento AM/PM (g)</th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                    {{element.complementoAM_PM == null ? '-':element.complementoAM_PM}}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsDos "></tr>
+                <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsDos; "></tr>
+              </table>
+            </mat-card-content>
+          </mat-card>
+          <br>
+          <mat-card style="width: 85%; margin-left: 36px;" *ngIf="maem1a">
+            <mat-card-content>
+              <table mat-table [dataSource]="peso2 " class="left-radius" matSort>
+                <!-- Nombre del documento Column -->
+                <ng-container matColumnDef="Nivel">
+                  <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Nivel
+                    educativo
+                  </th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                    {{element.nivelEducativo}}
+                  </td>
+                </ng-container>
+                <!-- Fecha de actualización Column -->
+                <ng-container matColumnDef="peso">
+                  <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Peso servido
+                    en <br>complemento almuerzo (g)</th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                    {{element.complementoAlmuerzo== null ? '-':element.complementoAlmuerzo}}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsUna "></tr>
+                <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsUna; "></tr>
+              </table>
+            </mat-card-content>
+          </mat-card>
+          <br>
+          <mat-card style="width: 85%; margin-left: 36px;" *ngIf="maem1b">
+            <mat-card-content>
+              <table mat-table [dataSource]="peso2 " class="left-radius" matSort>
+                <!-- Nombre del documento Column -->
+                <ng-container matColumnDef="Nivel">
+                  <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Nivel
+                    educativo
+                  </th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                    {{element.nivelEducativo}}
+                  </td>
+                </ng-container>
+                <!-- Fecha de actualización Column -->
+                <ng-container matColumnDef="peso">
+                  <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Peso servido
+                    en <br>complemento AM/PM (g)</th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                    {{element.complementoAM_PM== null ? '-':element.complementoAM_PM}}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsUna "></tr>
+                <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsUna; "></tr>
+              </table>
+            </mat-card-content>
+          </mat-card>
+          <br>
+          <mat-card style="width: 30%; margin-left: 36px;" *ngIf="maer1">
+            <mat-card-content>
+              <table mat-table [dataSource]="peso3 " class="left-radius" matSort>
+                <ng-container matColumnDef="peso">
+                  <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Peso servido
+                    del <br>complemento (g)</th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                    {{element.sinComplemento== null ? '-':element.sinComplemento}}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsMAER "></tr>
+                <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsMAER; "></tr>
+              </table>
+            </mat-card-content>
+          </mat-card>
+          <br>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--------fin peso servido----------->
+  <!--------inicio guia de preparacion----------->
+  <div>
+    <div class="row">
+      <div class="d-flex flex-row AlingTitle2 col" fxLayout="row wrap">
+        <div class="d-flex">
+          <div class="NumeroPendienteColor">
+            <div class="NumeroPendiente">
+              4
+            </div>
+          </div>
+          <div class="FondoR">
+            Guía de preparación
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <div class="row">
+      <div class="coljus ">
+        <textarea matInput id="justificacion" value={{guiaPreparacion}} rows="10" cols="40" required
+          class="justi control-md"></textarea>
+        <br>
+        <span class="TextosBlueLeft3">Guía de preparación: </span>
+        <button class="buttonAr" (click)="downloadFile(pathguia)">Ver archivo{{pathguia}}
+          <!--  <mat-icon class="espaciobutton" style="color: #005ACA;">description</mat-icon> -->
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-87.png " height="15px" width="auto">
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--------fin guia de preparacion----------->
+
+  <!--------inicio informacion nutricional de la preparacion ----------->
+  <div>
+    <div class="row">
+      <div class="d-flex flex-row AlingTitle2 col" fxLayout="row wrap">
+        <div class="d-flex">
+          <div class="NumeroPendienteColor">
+            <div class="NumeroPendiente">
+              5
+            </div>
+          </div>
+          <div class="FondoR">
+            Información nutricional de la preparación
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="BordeTotal TituloDialogN" *ngIf="ComponenteN == 1 ">
+    <!-- (selectedTabChange)="myTabFocusChange($event)" -->
+    <div>
+      <mat-card-content class="text-center">
+        <mat-dialog-content class="mat-typography">
+          <br />
+          <div class="col2">
+            <mat-selection-list class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+              (selectionChange)="onNivelEducativoChange2(modeloTList.selectedOptions.selected)">
+              <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList"
+                [value]="element.id">
+                <div class="center-vertically">
+                  {{element.nombre}}
+                </div>
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+          <br>
+          <div class="pesoneto" *ngIf="componente">
+            <span class="tamaño1">Tamaño de la porción por componente PAE: </span>
+          </div>
+          <br>
+          <div fxLayout="row wrap" *ngIf="componente">
+            <div fxFlex="100" style="width: 50%;">
+              <mat-card>
+                <mat-card-content>
+                  <table mat-table [dataSource]="dataSourceComponentePAE" class="left-radius" matSort>
+
+                    <ng-container matColumnDef="Componente">
+                      <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                        componente
+                      </th>
+                      <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                        {{element.componente==null?'-': (element.componente)}}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="peso">
+                      <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                        Peso neto aportado<br>en la preparación</th>
+                      <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                        {{element.pesoNeto | number:'1.2-2'}}</td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsComponentePAE "></tr>
+                    <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsComponentePAE; "></tr>
+                  </table>
+                  <div *ngIf="isLoading"
+                    style="display: flex; justify-content: center; align-items: center; background: white;">
+                    <mat-progress-spinner color="primary" mode="indeterminate">
+                    </mat-progress-spinner>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+          <br>
+          <div class="pesoneto" *ngIf="Gaba">
+            <span class="tamaño1">Tamaño de la porción por grupos de alimento GABA: </span>
+          </div>
+          <br>
+          <div fxLayout="row wrap" *ngIf="Gaba">
+            <div fxFlex="100">
+              <mat-card>
+                <mat-card-content>
+                  <table mat-table [dataSource]="dataSourceGABA" class="left-radius" matSort>
+                    <!-- Nombre del documento Column -->
+                    <ng-container matColumnDef="grupo">
+                      <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef>
+                        Grupo
+                      </th>
+
+                      <td mat-cell *matCellDef="let element; let i = index" class="grupoc"
+                        [attr.rowspan]="getRowSpan('grupoAlimentos', i)"
+                        [style.display]="getRowSpan('grupoAlimentos', i) ? '' : 'none'">
+                        {{element.grupoAlimentos}}
+                      </td>
+
+
+
+                    </ng-container>
+                    <!-- Fecha de actualización Column -->
+                    <ng-container matColumnDef="subgrupo">
+                      <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Subgrupo</th>
+                      <td mat-cell *matCellDef="let element; let i = index" class="grupoc"
+                      [attr.rowspan]="getRowSpan('subGrupoAlimentos', i)"
+                      [style.display]="getRowSpan('subGrupoAlimentos', i) ? '' : 'none'" style="padding-left: 0px; text-align: center; ">
+                        {{element.subGrupoAlimentos}}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="peso">
+                      <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                        Peso neto aportado<br>en la preparación</th>
+                      <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                        {{element.pesoNetoPreparacion | number:'1.2-2'}}</td>
+                    </ng-container>
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsComponenteGABA "></tr>
+                    <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsComponenteGABA; "></tr>
+                  </table>
+                  <div *ngIf="isLoading"
+                    style="display: flex; justify-content: center; align-items: center; background: white;">
+                    <mat-progress-spinner color="primary" mode="indeterminate">
+                    </mat-progress-spinner>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+          <br>
+        </mat-dialog-content>
+      </mat-card-content>
+    </div>
+
+  </div>
+
+  <div class="BordeTotal TituloDialogN" *ngIf="ComponenteN == 2 ">
+    <!-- (selectedTabChange)="myTabFocusChange($event)" -->
+    <mat-tab-group [selectedIndex]="selectedTabIndex" class="RegistroCiclo" style="margin: -25px 0 0 0!important"
+      (selectedIndexChange)="myTabFocusChange2($event)">
+      <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+        <div>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography">
+              <br />
+              <div class="col2">
+                <mat-selection-list class="d-xl-block d-flex flex-column" #modeloTList [multiple]="false"
+                  (selectionChange)="onNivelEducativoChange2(modeloTList.selectedOptions.selected)">
+                  <mat-list-option class="border-radius-list-option" *ngFor="let element of NivelEducativoList"
+                    [value]="element.id">
+                    <div class="center-vertically">
+                      {{element.nombre}}
+                    </div>
+                  </mat-list-option>
+                </mat-selection-list>
+              </div>
+              <br>
+              <div class="pesoneto" *ngIf="componente">
+                <span class="tamaño1">Tamaño de la porción por componente PAE: </span>
+              </div>
+              <br>
+              <div fxLayout="row wrap" *ngIf="componente">
+                <div fxFlex="100" style="width: 50%;">
+                  <mat-card>
+                    <mat-card-content>
+                      <table mat-table [dataSource]="dataSourceComponentePAE" class="left-radius" matSort>
+
+                        <ng-container matColumnDef="Componente">
+                          <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                            componente
+                          </th>
+                          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                            {{element.componente==null?'-': (element.componente)}}
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="peso">
+                          <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                            Peso neto aportado<br>en la preparación</th>
+                          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                            {{element.pesoNeto | number:'1.2-2'}}</td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsComponentePAE "></tr>
+                        <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsComponentePAE; "></tr>
+                      </table>
+                      <div *ngIf="isLoading"
+                        style="display: flex; justify-content: center; align-items: center; background: white;">
+                        <mat-progress-spinner color="primary" mode="indeterminate">
+                        </mat-progress-spinner>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+              <br>
+              <div class="pesoneto" *ngIf="Gaba">
+                <span class="tamaño1">Tamaño de la porción por grupos de alimento GABA: </span>
+              </div>
+              <br>
+              <div fxLayout="row wrap" *ngIf="Gaba">
+                <div fxFlex="100">
+                  <mat-card>
+                    <mat-card-content>
+                      <table mat-table [dataSource]="dataSourceGABA" class="left-radius" matSort>
+                        <!-- Nombre del documento Column -->
+                        <ng-container matColumnDef="grupo">
+                          <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                            Grupo
+                          </th>
+                          <td mat-cell *matCellDef="let element; let i = index" class="grupoc"
+                            [attr.rowspan]="getRowSpan('grupoAlimentos', i)"
+                            [style.display]="getRowSpan('grupoAlimentos', i) ? '' : 'none'">
+                            {{element.grupoAlimentos}}
+                          </td>
+                        </ng-container>
+                        <!-- Fecha de actualización Column -->
+                        <ng-container matColumnDef="subgrupo">
+                          <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Subgrupo</th>
+                          <td mat-cell *matCellDef="let element; let i = index" class="grupoc"
+                          [attr.rowspan]="getRowSpan('subGrupoAlimentos', i)"
+                          [style.display]="getRowSpan('subGrupoAlimentos', i) ? '' : 'none'"
+                           style="padding-left: 0px; text-align: center; ">
+                            {{element.subGrupoAlimentos}}
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="peso">
+                          <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                            Peso neto aportado<br>en la preparación</th>
+                          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                            {{element.pesoNetoPreparacion | number:'1.2-2'}}</td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsComponenteGABA "></tr>
+                        <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsComponenteGABA; "></tr>
+                      </table>
+                      <div *ngIf="isLoading"
+                        style="display: flex; justify-content: center; align-items: center; background: white;">
+                        <mat-progress-spinner color="primary" mode="indeterminate">
+                        </mat-progress-spinner>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+              <br>
+            </mat-dialog-content>
+          </mat-card-content>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+  </div>
+
+  <div *ngIf="ComponenteN == 3">
+    <div class="pesoneto">
+      <span class="tamaño1">Tamaño de la porción por grupos de alimento GABA: </span>
+    </div>
+    <br>
+    <div fxLayout="row wrap">
+      <div fxFlex="100">
+        <mat-card class="diseGABA">
+          <mat-card-content>
+            <table mat-table [dataSource]="dataSourceGABA" class="left-radius" matSort>
+              <!-- Nombre del documento Column -->
+              <ng-container matColumnDef="grupo">
+                <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                  Grupo
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index" class="grupoc"
+                  [attr.rowspan]="getRowSpan('grupoAlimentos', i)"
+                  [style.display]="getRowSpan('grupoAlimentos', i) ? '' : 'none'">
+                  {{element.grupoAlimentos}}
+                </td>
+              </ng-container>
+              <!-- Fecha de actualización Column -->
+              <ng-container matColumnDef="subgrupo">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">Subgrupo</th>
+                <td mat-cell *matCellDef="let element; let i = index" class="grupoc"
+                [attr.rowspan]="getRowSpan('subGrupoAlimentos', i)"
+                [style.display]="getRowSpan('subGrupoAlimentos', i) ? '' : 'none'"
+                 style="padding-left: 0px; text-align: center; ">
+                  {{element.subGrupoAlimentos}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="peso">
+                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                  Intercambio estanderizados<br>en la preparación</th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                  {{element.pesoNetoPreparacion | number:'1.2-2' }}</td>
+              </ng-container>
+
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsComponenteGABA "></tr>
+              <tr mat-row *matRowDef="let myRowData; columns: displayedColumnsComponenteGABA; "></tr>
+            </table>
+            <!-- <div *ngIf="isLoading"
+                                        style="display: flex; justify-content: center; align-items: center; background: white;">
+                                        <mat-progress-spinner color="primary" mode="indeterminate">
+                                        </mat-progress-spinner>
+                                      </div> -->
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <br>
+
+  </div>
+  <!--------fin informacion nutricional de la preparacion----------->
+  <br>
+  <br>
+  <br>

@@ -1,0 +1,852 @@
+<style>
+    .tableFiltroUsuario {
+        border-spacing: 0;
+        color: #005ACA;
+    }
+
+    .tableFiltroUsuario td {
+        text-align: center;
+        font-size: 13px !important;
+        color: #005ACA !important;
+        padding: 2.5px 10px;
+        border-top: 1px solid #005ACA;
+        border-right: 1px solid #005ACA;
+        border-bottom: 1px solid #005ACA;
+    }
+
+    .tableFiltroUsuario td b {
+        color: #005ACA;
+        font-size: 13px !important;
+    }
+
+    .tableFiltroUsuario td div {
+        color: #005ACA;
+        font-weight: 500;
+        font-size: 13px !important;
+    }
+
+    .tableFiltroUsuario td:first-child {
+        border-left: 1px solid #005ACA;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .tableFiltroUsuario td:last-child {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .tableUsuarios th,
+    .tableUsuarios td {
+        font-size: 13px;
+    }
+
+    table.tableUsuarios thead th:last-child {
+        border-top-right-radius: 20px !important;
+    }
+
+    table.tableFormUsuarios tr td {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        color: #005ACA;
+        font-size: 14px;
+    }
+
+    table.tableFormUsuarios tr td:first-child {
+        padding-left: 35px;
+    }
+
+    table.tableFormUsuarios tr td:last-child {
+        padding-right: 35px;
+    }
+
+    input,
+    select {
+        border: 1px #005ACA solid;
+        padding: 3px 10px;
+        width: 100%;
+        color: #005ACA;
+    }
+
+    input:not(.noRadius),
+    select:not(.noRadius) {
+        border-radius: 5px;
+    }
+
+    .cssForm {
+        font-size: 12px;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    .tableFiltroUsuario i {
+        font-size: 25px;
+    }
+
+    .btn.btn-middle {
+        background-color: aliceblue;
+        border: 1px solid aliceblue;
+    }
+
+    .btn.btn-high {
+        background-color: #005ACA !important;
+        border: 1px solid #005ACA !important;
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    .disabledWithoutOpacity {
+        pointer-events: none;
+    }
+
+    .mt-2 {
+        margin-top: 20px;
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="tab-control-items d-flex">
+            <div class="tab-item" *ngFor="let item of dataPestanas">
+                <h3>{{ item.descripcion }}</h3>
+            </div>
+            <div class="flex-grow-1 tab-item-blank"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2" *ngIf="viewActiva == 0">
+    <div class="col-12">
+        <form class="form-default-inline" (ngSubmit)="onSubmit()" #contratoForm="ngForm" autocomplete="off">
+
+            <ng-container>
+                <div class="panel panel-blue">
+                    <div class="panel-header no-border-bottom text-center">
+                        <h4 class="panel-title">
+                            Registro &uacute;nico de Contratos - Servicios
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-item">
+                            <label for="exampleFormControlInput1" class="form-label">
+                                1. N&uacute;mero del contrato:
+                            </label>
+                            <input type="text" class="input-text" name="numeroContrato"
+                                [ngModel]="contrato.numeroContrato | uppercase"
+                                (ngModelChange)="changeItemContrato('numeroContrato', $event)" maxlength="10"
+                                #numeroContrato="ngModel" required /><br>
+                            <label class="label" [hidden]="numeroContrato.valid || numeroContrato.pristine"
+                                style="color: red">
+                                El número de contrato es requerido
+                            </label>
+                        </div>
+                        <div class="form-item">
+                            <label class="form-label">
+                                2. Operador estoy aqui:
+                            </label>
+
+                            <select style="width: 250px;" name="iD_Operador" class="input-text"
+                                [(ngModel)]="contrato.iD_Operador" #iD_Operador="ngModel" required>
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let i of listOperadores" [ngValue]="i.id">{{ i.nombreRazonSocial }}
+                                </option>
+                            </select>
+                            <select style="width: 250px;" class="input-text" [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="contrato.iD_Operador">
+                                <option value="" selected>Elija una opci&oacute;n</option>
+                                <option *ngFor="let item of listOperadores" [ngValue]="item.id">N-{{item.nit}}</option>
+                            </select><br>
+                            <label class="label" style="color: red"
+                                [hidden]="iD_Operador.valid || iD_Operador.pristine">
+                                El campo operador es requerido
+                            </label>
+                        </div>
+                        <div class="form-item">
+                            <div class="row">
+                                <div clas="col-2" style="padding-left: 18px">
+                                    <label class="form-label float-left">
+                                        3. Objeto del contrato:
+                                        <br />
+                                        (Tal y como aparece
+                                        <br />
+                                        en la versión firmada)
+                                    </label>
+                                </div>
+
+                                <div class="col-10">
+                                    <textarea name="txtObjetoContrato" class="input-textarea" rows="2"
+                                        [ngModel]="contrato.objetoContrato | uppercase"
+                                        (ngModelChange)="changeItemContrato('objetoContrato', $event)"
+                                        #objetoContrato="ngModel" required>
+                                    </textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="label" style="color: red"
+                                        [hidden]="objetoContrato.valid || objetoContrato.pristine">
+                                        El campo objeto de contrato es requerido
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <label class="form-label">
+                                4. Tipo de contrato CHIP:
+                                <select name="iD_TipoContratoCHIP" class="input-text"
+                                    [(ngModel)]="contrato.iD_TipoContratoCHIP" #iD_TipoContratoCHIP="ngModel" required>
+                                    <option value="" selected>Elija una opci&oacute;n</option>
+                                    <option *ngFor="let i of listContratoChip" [ngValue]="i.id">{{ i.nombre }}</option>
+                                </select><br>
+                                <label class="label" style="color: red"
+                                    [hidden]="iD_TipoContratoCHIP.valid || iD_TipoContratoCHIP.pristine">
+                                    El campo contrato chip es requerido
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <button class="btn btn-blue" routerLink="/registroUnicoContratos">
+                            Anterior
+                        </button> &nbsp;&nbsp;
+                        <button class="btn btn-blue" type="submit" [disabled]="contratoForm.invalid">
+                            Siguiente
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+
+        </form>
+    </div>
+</div>
+
+<!-- ITEM 1 -->
+
+<div class="row" *ngIf="viewActiva == 1">
+    <div class="col-12 mb-3">
+        <form class="form-default-inline" (ngSubmit)="onSubmit()" #procesoContractual="ngForm" autocomplete="off">
+            <div class="panel panel-blue">
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">
+                        Registro &uacute;nico de Contratos - Servicios
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="1" [titleChapter]="'Detalles del proceso contractual'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img src="../assets/images/Iconos/dotacion-equipos/item1activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item" style="padding-left: 15px">
+
+
+                        <label class="form-label" style="margin-left: 6px">
+                            1. Modalidad de contrataci&oacute;n CHIP:
+                        </label>
+                        <select class="input-text" name="cboTipo"
+                            [(ngModel)]="itemDetalleProcesoContrato.iD_TipoContratacion" #iD_TipoContratacion="ngModel"
+                            required>
+                            <option value="">Elija una opci&oacute;n</option>
+                            <option *ngFor="let i of listModalidaContratacionChip" [ngValue]="i.id">{{ i.nombre }}
+                            </option>
+                        </select>
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="iD_TipoContratacion.valid || iD_TipoContratacion.pristine">
+                            El campo modalidad de contratación es requerido
+                        </label>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label mr-2">
+                            2. Contrato publicado en el SECOP o la TVEC:
+                        </label>
+                        <div class="inline-block form-checkbox ml-xs">
+                            <label id="ckContratoPublicadoSi" class="check-si"
+                                [class]="itemDetalleProcesoContrato.publicadorSECOP ? 'active' : ''"
+                                (click)="changeItemDetalleProcesoContrato('publicadorSECOP', true)">
+                                Si
+                            </label>
+                            <label id="ckContratoPublicadoNo" class="check-no"
+                                [class]="!itemDetalleProcesoContrato.publicadorSECOP ? 'active' : ''"
+                                (click)="changeItemDetalleProcesoContrato('publicadorSECOP', false)">
+                                No
+                            </label>
+                        </div>
+                    </div>
+
+                    <div [ngClass]="{ disabled: !itemDetalleProcesoContrato.publicadorSECOP }">
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">2.1. Plataforma:</label>
+
+                                <div class="d-flex mx-4">
+                                    <table class="table tableFiltroUsuario col-7">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="radio" id="secopI" name="plataforma" [value]="1"
+                                                        [ngModel]="itemDetalleProcesoContrato.iD_PlataformaContrato"
+                                                        (ngModelChange)="itemDetalleProcesoContrato.iD_PlataformaContrato=$event"
+                                                        #plataformaSecI="ngModel"
+                                                        [required]="itemDetalleProcesoContrato.publicadorSECOP" /> SECOP
+                                                    I
+                                                </td>
+                                                <td>
+                                                    <input type="radio" id="secopII" name="plataforma" [value]="2"
+                                                        [ngModel]="itemDetalleProcesoContrato.iD_PlataformaContrato"
+                                                        (ngModelChange)="itemDetalleProcesoContrato.iD_PlataformaContrato=$event"
+                                                        #plataformaSecII="ngModel" /> SECOP II
+                                                </td>
+                                                <td>
+                                                    <input type="radio" id="TVEC" name="plataforma" [value]="3"
+                                                        [ngModel]="itemDetalleProcesoContrato.iD_PlataformaContrato"
+                                                        (ngModelChange)="itemDetalleProcesoContrato.iD_PlataformaContrato=$event"
+                                                        #plataformaTVEC="ngModel" /> TVEC
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <label class="form-label" style="color: red !important;"
+                                    [hidden]="plataformaTVEC.valid || plataformaSecII.valid || plataformaSecI.valid">
+                                    El campo plataforma es requerido
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                                    2.2. N° del proceso registrado en SECOP:
+                                </label>
+                                <input type="text" class="input-text" name="txtNumeroRegistroSecop"
+                                    [(ngModel)]="itemDetalleProcesoContrato.numeroProcesoRegistradoSECOP"
+                                    #numeroProcesoRegistradoSECOP="ngModel"
+                                    [required]="itemDetalleProcesoContrato.publicadorSECOP" />
+                            </div>
+                            <label class="form-label" style="color: red !important;"
+                                [hidden]="numeroProcesoRegistradoSECOP.valid || numeroProcesoRegistradoSECOP.pristine">
+                                El campo numero de registro secop es requerido
+                            </label>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">2.3. Link del contrato en SECOP:</label>
+                                <input type="text" class="input-text" name="txtLinkContratoSecop"
+                                    [(ngModel)]="itemDetalleProcesoContrato.linkContratoSECOP"
+                                    #linkContratoSECOP="ngModel"
+                                    [required]="itemDetalleProcesoContrato.publicadorSECOP" />
+                                <label class="form-label" style="color: red !important;"
+                                    [hidden]="linkContratoSECOP.valid || linkContratoSECOP.pristine">
+                                    El campo link de contrato es requerido
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">3. Fecha de adjudicaci&oacute;n:</label>
+                        <input type="date" class="input-text" name="txtFechaAdjudicacion"
+                            [ngModel]="itemDetalleProcesoContrato.fechaAdjudicacion|date:'yyyy-MM-dd'"
+                            (ngModelChange)="itemDetalleProcesoContrato.fechaAdjudicacion=$event"
+                            #fechaAdjudicacion="ngModel" required /><br>
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="fechaAdjudicacion.valid || fechaAdjudicacion.pristine">
+                            El campo fecha de adjudicación es requerido
+                        </label>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="finalizar()">
+                                Guardar y continuar m&aacute;s tarde
+                            </button>
+                        </div>
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="set_ViewActiva(0)">
+                                Anterior
+                            </button> &nbsp;&nbsp;
+                            <button class="btn btn-blue" type="submit" [disabled]="procesoContractual.invalid">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <!--<pre>{{ itemDetalleProcesoContrato | json }}</pre>-->
+    </div>
+</div>
+
+
+<!-- ITEM 2 -->
+
+<div class="row" *ngIf="viewActiva == 2">
+    <div class="col-12 mb-3">
+        <form class="form-default-inline" (ngSubmit)="onSubmit()" #detalleSuministro="ngForm" autocomplete="off">
+            <div class="panel panel-blue">
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">
+                        Registro &uacute;nico de Contratos - Servicios
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="2" [titleChapter]="'Detalles del suministro'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img src="../assets/images/Iconos/dotacion-equipos/item2activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item" style="padding-left: 15px">
+
+
+                        <label class="form-label" style="margin-left: 6px">
+                            1. Fecha de inicio del contrato:
+                        </label>
+                        <input class="input-text" type="date" name="txtFechaInicioContrato"
+                            [ngModel]="contrato.fechalnicioContrato|date:'yyyy-MM-dd'"
+                            (ngModelChange)="contrato.fechalnicioContrato=$event" #FechaInicioContrato="ngModel"
+                            required />
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="FechaInicioContrato.valid || FechaInicioContrato.pristine">
+                            El campo fecha de inicio del contrato es requerido
+                        </label>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+                            2. Fecha de terminaci&oacute;n del contrato:
+                        </label>
+                        <input class="input-text" type="date" name="txtFechaFinalizacionContrato"
+                            [ngModel]="contrato.fechaFinalContrato|date:'yyyy-MM-dd'"
+                            (ngModelChange)="contrato.fechaFinalContrato=$event" #fechaFinalContrato="ngModel"
+                            required />
+                        <label class="form-label" style="color: red !important;"
+                            [hidden]="fechaFinalContrato.valid || fechaFinalContrato.pristine">
+                            El campo fecha de finalizacion de contrato es requerido
+                        </label>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+
+                            3. Informaci&oacute;n sobre los productos que debe proveer el
+                            operador:
+                        </label>
+                        <app-producto [idContrato]="contrato.id" [active]="2" (producto)="servicio($event)">
+                        </app-producto>
+
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="finalizar()">
+                                Guardar y continuar m&aacute;s tarde
+                            </button>
+                        </div>
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="set_ViewActiva(1)">
+                                Anterior
+                            </button> &nbsp;&nbsp;
+                            <button class="btn btn-blue" type="submit"
+                                [disabled]="detalleSuministro.invalid || btnServiciosDisab">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- ITEM 3 -->
+
+<div class="row" *ngIf="viewActiva == 3">
+    <div class="col-12 mb-3">
+        <form class="form-default-inline" (ngSubmit)="onSubmit()" #caracteristicasFinancieras="ngForm"
+            autocomplete="off">
+            <div class="panel panel-blue">
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">
+                        Registro &uacute;nico de Contratos - Servicios
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="3" [titleChapter]="'Carracter&iacute;sticas financieras'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img src="../assets/images/Iconos/dotacion-equipos/item3activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item" style="padding-left: 15px">
+
+                        <div class="row">
+                            <div class="col-5">
+                                <label class="form-label" style="margin-left: 6px">
+                                    1. Valor total del contrato:
+                                </label>
+                                <input class="col-12 input-text" type="number" name="txtValorTotalContrato"
+                                    [(ngModel)]="contrato.valorTotalContrato" #valorTotalContrato="ngModel"
+                                    (ngModelChange)="changeValorAnticipo($event)" required />
+                                <label class="form-label" style="color: red !important;"
+                                    [hidden]="valorTotalContrato.valid || valorTotalContrato.pristine">
+                                    El campo valor total del contrato es requerido
+                                </label>
+                            </div>
+
+                            <div class="col-4 flex align-items-center">
+                                <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                                    [textColor]="'text-basered'"
+                                    [message]="'Aseg&uacute;rese de que el valor del contrato coincida con el costo total calculado por el sistema.'">
+                                </app-alert-message>
+                            </div>
+
+                            <div class="col-3">
+                                <app-costo-total-tab [Titulo]="'COSTO TOTAL'"
+                                    [TotalGeneral]="dataTotalGeneralContratado.valorTotal">
+                                </app-costo-total-tab>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label">
+                            2. Contrato con anticipo:
+                        </label>
+                        <div class="inline-block form-checkbox ml-xs">
+                            <label id="ContratoAntSi" class="check-si" [class]="contrato.conAnticipo ? 'active' : ''"
+                                (click)="disabledSubPuntos($event, 'conAnticipo', true)">
+                                Si
+                            </label>
+                            <label id="ContratoAntNo" class="check-no" [class]="!contrato.conAnticipo ? 'active' : ''"
+                                (click)="disabledSubPuntos($event, 'conAnticipo', false)">
+                                No
+                            </label>
+                        </div>
+
+                    </div>
+                    <div [ngClass]="{ disabled: !contrato.conAnticipo }">
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                        2.1. Porcentaje de anticipo:
+                      </label>
+                                <input type="number" class="input-text" name="txtPorcentajeAnticipo" [(ngModel)]="anticipoContrato.porcentajeAnticipo" 
+                                    (ngModelChange)="changeValorAnticipo($event); validarActualizarCaracterisiticasFinancieras(caracteristicasFinancieras)" #porcAnticipo="ngModel" maxlength="3" placeholder="0 - 100" [required]="contrato.conAnticipo"
+                                />
+                            </div>
+                            <label class="form-label" style="color: red !important;"
+                                [hidden]="porcAnticipo.valid || porcAnticipo.pristine">
+                                El campo porcentaje de anticipo es requerido
+                            </label>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                        2.2. Valor del anticipo:
+                      </label>
+                                <input type="text" class="input-text" name="txtValorAnticipo" placeholder="Autom&aacute;tico"
+                                    (ngModelChange)="validarActualizarCaracterisiticasFinancieras(caracteristicasFinancieras)"
+                                    [ngModel]="anticipoContrato.valorAnticipo | currency: '$' : 'symbol' : '.2'" style="pointer-events: none;" />
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                        2.3. Periodicidad de amortización:
+                      </label>
+                                <select class="input-text" name="cboPeriodicidadAmortizacion" [(ngModel)]="anticipoContrato.iD_tipoperiodicidad" #perioricidadAmortizacion="ngModel"
+                                (ngModelChange)="validarActualizarCaracterisiticasFinancieras(caracteristicasFinancieras)" [required]="contrato.conAnticipo">
+                        <option value>
+                          Elija una opci&oacute;n
+                        </option>
+                        <option *ngFor="let item of listPerioricidadAmortizacion" 
+                                [ngValue]="item.id">
+                          {{ item.nombre }}
+                        </option>
+                      </select>
+                                <label class="form-label" style="color: red !important;" [hidden]="perioricidadAmortizacion.valid || perioricidadAmortizacion.pristine">
+                        El campo perioricidad de amortizació es requerido
+                      </label>
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                        2.4. N&uacute;mero de pagos de amortizaci&oacute;n:
+                      </label>
+                        <select type="number" class="input-text col-3" id="numeroPagos" name="txtNumeroPagoAmortizacion" maxlength="3"
+                        [(ngModel)]="anticipoContrato.numeroPagos" #numeroPagoAmortizacion="ngModel"
+                        (ngModelChange)="validarActualizarCaracterisiticasFinancieras(caracteristicasFinancieras)" [required]="contrato.conAnticipo">
+                            <option value="" selected>Elija una opción</option>
+                            <option *ngFor="let item of listaNumerosPagoAmortizacion" [ngValue]="item">{{item}}</option>
+                        </select>
+                                <label class="form-label" style="color: red !important;" [hidden]="numeroPagoAmortizacion.valid || numeroPagoAmortizacion.pristine">
+                        El campo perioricidad de amortizació es requerido
+                      </label>
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="ml-md">
+                                <label class="form-label">
+                                    2.5. Plan de pagos del anticipo:
+                                </label>
+                                <table *ngIf="listaContratosPlanAnticipo.length > 0" class="table table-info-llenado text-center" style="max-width: 500px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Per&iacute;odo</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of listaContratosPlanAnticipo">
+                                            <tr>
+                                                <td>{{item.periodo}}</td>
+                                                <td>{{item.valor | currency: '$' : 'symbol' : '1.0-2'}}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="finalizar()">
+                                Guardar y continuar m&aacute;s tarde
+                            </button>
+                        </div>
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="set_ViewActiva(2)">
+                                Anterior
+                            </button> &nbsp;&nbsp;
+                            <button class="btn btn-blue" type="submit" [disabled]="caracteristicasFinancieras.invalid">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ITEM 4 -->
+
+<div class="row" *ngIf="viewActiva == 4">
+    <div class="col-12 mb-3">
+        <div class="panel panel-blue">
+            <div class="panel-header no-border-bottom text-center">
+                <h4 class="panel-title">
+                    Registro &uacute;nico de Contratos - Servicios
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col clearfix" style="padding-left: 3px">
+                        <app-chapterblue [numberChapter]="4" [titleChapter]="'Informaci&oacute;n de p&oacute;lizas'">
+                        </app-chapterblue>
+                        <br />
+                    </div>
+                    <div class="col clearfix text-right" style="padding: 20px">
+                        <div class="msg-alerta">
+                            <div>
+                                <img src="../assets/images/Iconos/dotacion-equipos/item4activo.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="form-default-inline">
+                    <div class="form-item" style="padding-left: 15px">
+
+
+                        <app-poliza [idContrato]="contrato.id" (polizaLength)="poliza($event)"></app-poliza>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col clearfix">
+                        <button class="btn btn-blue" (click)="finalizar()">
+                            Guardar y continuar m&aacute;s tarde
+                        </button>
+                    </div>
+                    <div class="col clearfix">
+                        <button class="btn btn-blue" (click)="set_ViewActiva(3)">
+                            Anterior
+                        </button> &nbsp;&nbsp;
+                        <button class="btn btn-blue" (click)="onSubmit()" [disabled]="btnPolizasDisab">
+                            Siguiente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ITEM 5 -->
+
+<div *ngIf="viewActiva == 5">
+    <div class="row">
+        <div class="col-12 mb-3">
+            <div class="panel panel-blue">
+                <div class="panel-header no-border-bottom text-center">
+                    <h4 class="panel-title">
+                        Registro &uacute;nico de Contratos - Servicios
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col clearfix" style="padding-left: 3px">
+                            <app-chapterblue [numberChapter]="5" [titleChapter]="'Informaci&oacute;n presupuestal'">
+                            </app-chapterblue>
+                            <br />
+                        </div>
+                        <div class="col clearfix text-right" style="padding: 20px">
+                            <div class="msg-alerta">
+                                <div>
+                                    <img src="../assets/images/Iconos/dotacion-equipos/item5activo.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-default-inline">
+                        <div class="form-item" style="padding-left: 15px">
+
+                            <label class="form-label">
+                                1. Fuentes de financiaci&oacute;n presupuestal destinadas a
+                                cubrir el costo del contrato:
+                            </label>
+                            <app-informacion-presupuestal [iD_Contrato]="contrato.id" [TipoFuncionalida]="1"
+                                (data)="actualizarGranTotal($event)"></app-informacion-presupuestal>
+                        </div>
+                        <div class="form-item">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="form-label" style="margin-left: 6px">
+                                        2. Suma total de las fuentes de financiaci&oacute;n
+                                        registradas:
+                                    </label>
+                                    <input type="text" class="col-3 input-text disabledWithoutOpacity"
+                                        name="txtSumaTotalFuentesFinanciacion"
+                                        [ngModel]="dataTotalGeneralContratado.totalFuentesFinanciacion | currency: '$' : 'symbol' : '1.0-2'"
+                                        placeholder="Autom&aacute;tico" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 flex align-items-center">
+                                    <app-alert-message [imgSize]="'sm'" [textSize]="'sm'" [aligment]="'H'"
+                                        [textColor]="'text-basered'"
+                                        [message]="' Aseg&uacute;rese de que el valor total de las fuentes de financiaci&oacute;n coincida con el valor total del contrato.'">
+                                    </app-alert-message>
+                                </div>
+                                <div class="col-3">
+                                    <app-costo-total-tab [Titulo]="'VALOR CONTRATO'"
+                                        [TotalGeneral]="dataTotalGeneralContratado.valorTotal"></app-costo-total-tab>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="form-item">
+                            <label for="exampleFormControlInput1" class="form-label float-left">
+                                3. PDF del contrato: &nbsp;&nbsp;&nbsp;
+                            </label>
+                            <div class="btn-fileUpload"
+                                (click)="uploadPDF('fileRutUpload', contrato, 'nombreArchivo', 'archivo')">
+                                <span>Adjunta el archivo</span>
+                                <mat-icon>check</mat-icon>
+                                <img src="../assets/images/Iconos/input-file.png" />
+                                <input class type="file" id="fileRutUpload" name="fileRutUpload"
+                                    accept="application/pdf" />
+                            </div>
+                            <a class="visorPDF" (click)="abrirPDF(modalPDF, contrato, 'archivo')">
+                                {{ contrato.nombreArchivo }}
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="finalizar()">
+                                Guardar y continuar m&aacute;s tarde
+                            </button>
+                        </div>
+                        <div class="col clearfix">
+                            <button class="btn btn-blue" (click)="set_ViewActiva(4)">
+                                Anterior
+                            </button> &nbsp;&nbsp;
+                            <button (click)="onSubmit()" class="btn btn-blue">
+                                Finalizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalPDF>
+    <div class="col-12 text-right mt-xs mb-xs">
+        <a class="btn-link" (click)="dismissAllModal()">
+            Cerrar
+            <mat-icon>clear</mat-icon>
+        </a>
+    </div>
+    <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+        [showPresentationModeButton]="true" [showDownloadButton]="true">
+    </ngx-extended-pdf-viewer>
+</ng-template>

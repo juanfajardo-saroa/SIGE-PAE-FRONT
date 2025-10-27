@@ -1,0 +1,96 @@
+<form class="form-default-inline" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+            <h4 class="panel-title">
+                Registro &uacute;nico de Contratos - Suministro Rural
+            </h4>
+        </div>
+        <div class="panel-body nb-r">
+            <div class="form-item">
+                <label class="form-label">
+                    1. N&uacute;mero del convenio:
+                </label>
+                <div class="inline-block">
+                    <input type="text" class="input-text" formControlName="numeroContrato"
+                        style="width: 250px !important;">
+                    <div class="color-invalid" *ngIf="!getValid('numeroContrato')">Complete este campo</div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="form-label">
+                    2. Asociación de Padres o juntas de Acción comunal:
+                </label>
+                <div class="inline-block">
+                    <select class="input-text" formControlName="iD_Operador" style="width: 320px !important;"
+                        name="iD_Operador" required
+                        [(ngModel)]="idOperador"
+                        (ngModelChange)="actualizarIdOperador($event); actualizarDigitoVerificacionPorIdOperador($event)">
+                        <option value="0" selected>Buscar por nombre</option>
+                        <option *ngFor="let i of listOperadores" [ngValue]="i.id">{{ i.nombreRazonSocial }}</option>
+                    </select>
+                    <select class="input-text" formControlName="iD_Operador" style="width: 180px !important;"
+                        [(ngModel)]="idOperador"
+                        (ngModelChange)="actualizarIdOperador($event); actualizarDigitoVerificacionPorIdOperador($event)">
+                        <option value="0" selected>
+                            Buscar por NIT
+                        </option>
+                        <option *ngFor="let i of listOperadores" [ngValue]="i.id">{{i.nit}}</option>
+                    </select>
+                    <label> &nbsp;- </label>
+                    <input type="text" class="ml-1 form-control text-center" id="digitoVerificacion"
+                        name="digitoVerificacion" style="width: 30px;" readonly
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="digitoVerificacion">
+                    <div class="color-invalid" *ngIf="!getValid('iD_Operador')">Elija una opci&oacute;n</div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="form-label" style="width: 200px !important;">
+                    3. Objeto del contrato: (Tal y como aparece en la versión firmada)
+                </label>
+                <div class="inline-block" style="width: 600px;">
+                    <textarea name="txtObjetoContrato" formControlName="objetoContrato" class="input-textarea" rows="2"
+                        style="width: 90%;" required>
+                    </textarea>
+                    <div class="color-invalid" *ngIf="!getValid('objetoContrato')">Complete este campo</div>
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="form-label" style="width: 200px !important;">
+                    4. Tipo de contrato CHIP:
+                </label>
+                <div class="inline-block">
+                    <select name="iD_TipoContratoCHIP" formControlName="iD_TipoContratoCHIP" class="input-text"
+                        style="width: 320px !important;" required>
+                        <option value="">Elija una opci&oacute;n</option>
+                        <option *ngFor="let i of listContratoChip" [ngValue]="i.id">{{ i.nombre }}</option>
+                    </select>
+                    <div class="color-invalid" *ngIf="!getValid('iD_TipoContratoCHIP')">Elija una opci&oacute;n</div>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="form-label" style="width: 200px !important;">
+                    5. Concepto de gasto CHIP:
+                </label>
+                <div class="inline-block">
+                    <select class="input-text" formControlName="iD_TipoConceptoGasto" name="iD_TipoConceptoGasto"
+                        style="width: 320px !important;" required>
+                        <option value="">Elija una opción</option>
+                        <option *ngFor="let item of listConceptoGasto" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div class="color-invalid" *ngIf="!getValid('iD_TipoConceptoGasto')">Elija una opci&oacute;n</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <button class="btn btn-blue" routerLink="/registroUnicoContratos">
+                Anterior
+            </button> &nbsp;&nbsp;
+            <button class="btn btn-blue" type="submit">
+                Siguiente
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,271 @@
+
+
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <table class="tablaform2">
+      <div class="bordeAtras">
+        <a class="btn-agregar " (click)="RegresarMatriz()"><img
+            src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png " style="width:50px; height: 50px;">Atrás
+        </a>
+      </div>
+    </table>
+    <table style="width: 87%;">
+      <ng-container>
+        <tr>
+          <div class="Redondeado">
+            <td class="EspacioField">
+              <div class="BordeBottom">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Municipio</mat-card-title>
+                  <div>
+                    <mat-select class="control-md tablaform" id="municipio" placeholder="seleccione" (selectionChange)="onMunicipioClick($event.value)"[(value)]="selMunicipio">
+                      <mat-option [value]="-1">Todos
+                      </mat-option>
+                      <mat-option *ngFor="let item of selectDivipolaList" [value]="item.id">
+                        {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </mat-card>
+              </div>
+            </td>
+            <td class="EspacioField2">
+              <div class="BordeBottom">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Institución</mat-card-title>
+                  <div>
+                    <mat-select class="control-md tablaform" id="institucionEducativa" placeholder="seleccione" [(value)]="selInst" (selectionChange)="onInstitucionClick($event.value)">
+                      <mat-option [value]="-1">Todos
+                      </mat-option>
+                      <mat-option *ngFor="let item of selectInstitucionList" [value]="item.id">
+                        {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </mat-card>
+              </div>
+            </td>
+            <td class="EspacioField ">
+              <div class="BordeBottom">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Sede</mat-card-title>
+                  <div>
+                    <mat-select class="control-md tablaform" id="sede" placeholder="seleccione" [(value)]="selsede" (selectionChange)="onSedeClick($event.value)">
+                      <mat-option [value]="-1">Todos
+                      </mat-option>
+                      <mat-option *ngFor="let item of selectSedesList" [value]="item.id">
+                        {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </mat-card>
+              </div>
+            </td>
+            <td class="EspacioField lineaAzulX  " style="width: 150px;">
+              <div class="BordeBottom">
+                <mat-card>
+                  <mat-card-title style="color: #005ACA; font-size: 16px;">Priorizada PAE</mat-card-title>
+                  <div>
+                    <mat-select disabled class="control-md tablaform" id="sede" placeholder="seleccione" [(value)]="selprioriza">
+                      <mat-option [value]="-1">Todos
+                      </mat-option>
+                      <mat-option *ngFor="let item of priorizaList" [value]="item.id">
+                        {{item.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </mat-card>
+              </div>
+            </td>
+            <td class="alinearIcon lineaAzulX" style="width: 80px;">
+              <div class="bordeAtras2 centerIcon">
+                <a>
+                  <img (click)="buscarInfo(selMunicipio,selInst,selsede)" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " style="width:50px; height: 50px;"><br>
+                  Filtrar
+                </a>
+              </div>
+            </td>
+          </div>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</div>
+<!--titulo año actualizacion-->
+<br><br>
+<div class="container-fluid content-wrapper">
+  <div class="row">
+    <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 banner-breadcrumbs">
+      <div class="flex-wrap flex-md-nowrap mt-3">
+        <app-menadminuautorizado>
+          <ng-container autorizado>
+            <div class="row">
+              <div class="col-md-10">
+                <label class="banner-text">
+                  <strong class="strongheader" style="font-size: 18px !important;">{{nombreUbicacion}} | {{nombreMunicipio}} | {{nombreIntEducativa}} |
+                    {{nombreSede}}</strong>
+                </label>
+              </div>
+              <div class="col-md-2 text-right">
+                <label class="anio-text" style="font-size: 18px !important;"><strong class="strongheader"></strong>{{ currentVigNom }}</label>
+              </div>
+            </div>
+            <!-- <hr style="margin: 0; color: red!important;" /> -->
+            <div class="row LineaAzul">
+              <div class="col-12 text-right">
+                <label class="last-update-text">Ultima actualizaci&oacute;n
+                  <span> {{ dateToday | date: "longDate" }}</span></label>
+              </div>
+            </div>
+          </ng-container>
+        </app-menadminuautorizado>
+      </div>
+      <div class="mt-2">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<!--meat-->
+<app-maem-detalle-formulario></app-maem-detalle-formulario>
+<!--Tab Sede-->
+<app-tabsedesinterno></app-tabsedesinterno>
+<!--Inicio de Nivel 1-->
+
+<mat-card class="overflow-auto">
+  <mat-card-content>
+
+    <mat-accordion class="">
+      <!-- <div style="width: 100%; float: right;">
+        <div class=" titletable LeftUpCorner RightUpCorner">Puntajes de riesgo de prestación de servicio <br>
+          por modalidad de ración</div>
+      </div> -->
+      <div>
+
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" disabled>
+          <mat-expansion-panel-header class="TitulosTablaOculto">
+            <mat-panel-description class="NoneAll">
+              <td colspan="2" class="CenterTitle LineaTabla2 espacioDimension TitulosTablaOculto">Factores de riesgo</td>
+              <td colspan="7" class="espacioColumna TitulosTabla2">
+                <b style="color: #FFF!important;">Puntajes de riesgo de prestación de servicio por modalidad de
+                  complementos</b>
+              </td>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <!-- ---------------------- PRIMERA PARTE TITULO---------------------- -->
+          <mat-expansion-panel-header class="TitulosTabla LeftUpCorner">
+            <mat-panel-description class="LetraAzul NoneAll" style="color: #005ACA;">
+              <td colspan="2" class="CenterTitle LineaTabla2 espacioDimension"><b>Factores de riesgo</b></td>
+              <td class="RightAll espacioColumna itemPorcentaje "><b>P</b> <br> <small>(Preparad </small></td>
+              <td class="LeftAll espacioColumna "><b>S</b> <br> <small>o en sitio)</small></td>
+              <td class="RightAll espacioColumna itemPorcentaje "><b>IN</b> <br><small> (Industri</small></td>
+              <td class="LeftAll espacioColumna itemPorcentaje "><b>D</b> <br><small> alizado)</small></td>
+              <td class="RightAll espacioColumna itemPorcentaje "><b>C</b> <br> <small>(Comida &nbsp; <br>transp</small>
+              </td>
+              <td class="LeftAll espacioColumna itemPorcentaje "><b>CT</b> <br><small>caliente <br>ortada)</small> </td>
+              <td class="LeftAll espacioColumna itemPorcentaje OcultarConEspacio">Algo vacio bien grande </td>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div>
+            <!-- ---------------------------------1 ITEM --------------------------------------------------- -->
+            <mat-expansion-panel *ngFor="let dimension of valorListDetalle; let i = index" [attr.data-index]="i" style="border-left:1px solid #005ACA;border-right:1px solid #005ACA;">
+              <!-- ---------------------- PRIMERA PARTE TITULO---------------------- -->
+              <mat-expansion-panel-header class="Bordes">
+                <mat-panel-description class="centrado LetraAzul">
+                  <!-- TITULOS -->
+                  <td colspan="3" class="LeftAll espacioItem AcomodarAll LineaTabla espacioDimension LetraSize">
+                    <div class="NumeroDimension" *ngIf="i < 5">{{i+1}}
+                    <mat-icon style="position: relative; right: -200px;color: #005ACA;">keyboard_arrow_down</mat-icon>
+                    </div>
+                    {{dimension.nombreDimension}}
+                  </td>
+                  <!-- Desplegables -->
+                  <!-- Porcentaje 1 -->
+                  <td class="espacioColumna   ">
+                    <!-- <mat-icon class="LineaSeparadora">keyboard_arrow_down</mat-icon> -->
+                    <mat-icon [style.background-color]="dimension.colorRacPreparadaSitio"
+                      [style.color]="dimension.colorRacPreparadaSitio" class="alignRight iconLargo">
+                      circle</mat-icon>
+                  </td>
+                  <td class="espacioColumna alignLeft LetraSize ">
+                    &nbsp;{{dimension.racPreparadaSitio == null ? '-' :(dimension.racPreparadaSitio | number:'1.1-2') }}
+                    %
+                  </td>
+                  <!-- Porcentaje 2 -->
+                  <td class="espacioColumna LetraSize">
+                    <mat-icon [style.background-color]="dimension.colorRacIndustrializada"
+                      [style.color]="dimension.colorRacIndustrializada" class="alignRight iconLargo">
+                      circle</mat-icon>
+                  </td>
+                  <td class="espacioColumna alignLeft LetraSize">
+                    &nbsp;{{dimension.racIndustrializada == null ? '-' :(dimension.racIndustrializada | number:'1.1-2')
+                    }} %
+                  </td>
+
+                  <!-- Porcentaje 3 -->
+                  <td class="espacioColumna LetraSize">
+                    <mat-icon [style.background-color]="dimension.colorCatering" [style.color]="dimension.colorCatering"
+                      class="alignRight iconLargo">
+                      circle</mat-icon>
+                  </td>
+                  <td class="espacioColumna alignLeft LetraSize">
+                    &nbsp;{{dimension.catering == null ? '-' :(dimension.catering | number:'1.1-2') }} %
+                  </td>
+                  <td class="espacioColumna alignLeft OcultarConEspacio LetraSize">
+                    <div class="textoCuadro"><span>&nbsp;</span></div>
+                  </td>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <!-- ---------------------- FIN PRIMERA PARTE TITULO---------------------- -->
+              <div *ngFor="let elementArea of areaList(dimension.id_Dimension)">
+                <mat-expansion-panel-header class="panelHeaderEspacio HeaderItems Bordes">
+                  <mat-panel-description class=" LetraAzul">
+                    <td colspan="2" class="paddingArea espacioDimension LeftAll AcomodarAll LineaTablaArea LetraSize">
+                      {{elementArea.nombreArea}}</td>
+                    <!-- Porcentaje 1 -->
+                    <td class="espacioColumna LetraSize">
+                      <mat-icon [style.background-color]="elementArea.colorRacPreparadaSitio"
+                        [style.color]="elementArea.colorRacPreparadaSitio" class="alignRight iconLargo">
+                        circle</mat-icon>
+                    </td>
+                    <td class="espacioColumna LetraSize">
+                      &nbsp;{{elementArea.racPreparadaSitio == null ? '-' :(elementArea.racPreparadaSitio |
+                      number:'1.1-2') }} %
+                    </td>
+                    <!-- Porcentaje 2 -->
+                    <td class="espacioColumna LetraSize">
+                      <mat-icon [style.background-color]="elementArea.colorRacIndustrializada"
+                        [style.color]="elementArea.colorRacIndustrializada" class="alignRight iconLargo">
+                        circle</mat-icon>
+                    </td>
+                    <td class="espacioColumna LetraSize">
+                      &nbsp;{{elementArea.racIndustrializada == null ? '-' :(elementArea.racIndustrializada |
+                      number:'1.1-2') }} %
+                    </td>
+                    <!-- Porcentaje 3 -->
+                    <td class="espacioColumna LetraSize">
+                      <mat-icon [style.background-color]="elementArea.colorCatering"
+                        [style.color]="elementArea.colorCatering" class="iconLargo alignRight">
+                        circle</mat-icon>
+                    </td>
+                    <td class="espacioColumna LetraSize">
+                      &nbsp;{{elementArea.catering == null ? '-' :(elementArea.catering | number:'1.1-2') }} %
+                    </td>
+                    <td class="espacioColumna OcultarConEspacio">
+                      &nbsp;
+                    </td>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+              </div>
+            </mat-expansion-panel>
+
+          </div>
+          <!-- -----------------------RESUMEN FINAL------------------------------------------ -->
+
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+
+  </mat-card-content>
+</mat-card>

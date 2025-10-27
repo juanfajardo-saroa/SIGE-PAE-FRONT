@@ -1,0 +1,148 @@
+
+<!--------------------- inicio Presupuesto General------------------------------>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div style="margin-top: 20px; float: left;">
+        <table class="table-fuentefinanciacion-resumen">
+          <tr>
+            <th class="th-title" width="40%" rowspan="2">Presupuesto General de la Naci&oacute;n</th>
+            <th width="30%">Ingresos asignados</th>
+          </tr>
+          <tr>
+            <td class="td-ingreso">{{ingresoTotal |currency:'$':'symbol':'0.0'}}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="margin-top: 23px; margin-left: 20px; float: left;">
+        <button class="btn-consultar-resoluciones">
+          <div style="float: left; margin-right: 5px;"><img
+              src="../../../../../../assets/images/Iconos/consulta_blue.png"></div>
+          <div><a style="color: #ffffff;" title="Resoluciones Plan Giros" target="_blank"
+              (click)="openInfraesturaDetalle()">Consultar Resoluciones</a></div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <!--------------------- Fin Presupuesto General------------------------------>
+
+  <!--------------------- inicio Filtro por Mes------------------------------>
+  <div class="ubicaciontabla w-down-100 mb-lg-down-15-px" >
+    <table class="tablaform3 bordeizq2" >
+      <ng-container>
+        <td style="border-right: 1px solid #005ACA !important; padding: 5px;">
+          <div class="text-left" style="margin-top: 5px; margin-left: 10px; ">
+            <a> Mes</a>
+          </div>
+          <div class="text-center ">
+            <mat-select id="DropdownOptions" placeholder="Todos"class="tablaform4"[(value)]="selMes">
+              <mat-option [value]=-1> Todos</mat-option>
+              <mat-option *ngFor="let opt of mesesList" [value]="opt.id">{{ opt.nombre }}
+              </mat-option>
+            </mat-select>
+
+          </div>
+
+        </td>
+        <td fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100">
+            <div class="tablaform2">
+              <a class="btn-agregar "><img (click)="onchangeMes(selMes)"
+                src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " style="width:50px; height: 50px; margin-top: 10px;cursor: pointer;">Filtrar
+              </a>
+            </div>
+        </td>
+      </ng-container>
+    </table>
+  </div>
+  <button class="ButtonBlue CenterButton ml-lg-down-0" mat-raised-button (click)="cleanFilters()">
+    <mat-icon class="espaciobutton" style="margin-right: 10px;color:#ffffff;">description</mat-icon>
+    Limpiar
+    filtros</button>
+<br>
+<br>
+<br>
+
+  <!--------------------- Fin Filtro por Mes------------------------------>
+
+  <!--------------------- inicio Tabla------------------------------>
+  <div class="sub">
+
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-87.png ">
+
+    <span style=" color: #005ACA !important;"> PAC - Consolidado vigencia | Todos los meses</span>
+  </div>
+  <hr class="linea">
+
+  <br>
+  <style>
+    .card {
+      border: none;
+    }
+
+    .table-responsive {
+      padding-left: 30px;
+    }
+
+  </style>
+
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+      <mat-card>
+        <mat-card-content>
+          <table mat-table [dataSource]="dataSource " class="left-radius bordeizq " matSort>
+            <!-- etc Column -->
+            <ng-container matColumnDef="etc">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>ETC</b>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                {{element.sID_ETC==null?'-':(element.sID_ETC) }}
+              </td>
+            </ng-container>
+            <!-- solicitado Column -->
+            <ng-container matColumnDef="solicitado">
+              <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Solicitado por ETC</b></th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                {{element.giroProyectado==null?'-':(element.giroProyectado|currency:'$':'symbol':'0.0')}} </td>
+            </ng-container>
+            <!-- transferido Column -->
+            <ng-container matColumnDef="transferido">
+              <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b>Transferido por UAPA</b>
+              </th>
+              <td  mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                {{element.giroConfirmado==0?'-':(element.giroConfirmado|currency:'$':'symbol':'3.0')}} </td>
+            </ng-container>
+
+            <!-- footer  -->
+            <ng-container matColumnDef="h_PRINCIPAL">
+              <th  class="header2"  mat-footer-cell *matFooterCellDef>Total</th>
+            </ng-container>
+            <ng-container matColumnDef="h_SERVICIOS">
+              <th class="header2" mat-footer-cell *matFooterCellDef>{{solicitadoTotal|currency:'$':'symbol':'3.0'}}</th>
+            </ng-container>
+            <ng-container matColumnDef="h_AREA">
+              <th  class="header2" mat-footer-cell *matFooterCellDef>{{transferidoTotal|currency:'$':'symbol':'3.0'}}</th>
+            </ng-container>
+            <tr mat-footer-row
+            *matFooterRowDef="['h_PRINCIPAL', 'h_SERVICIOS', 'h_AREA']"></tr>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+            <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
+
+          </table>
+
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+          </mat-paginator>
+          <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+   <!--------------------- Fin Tabla------------------------------>

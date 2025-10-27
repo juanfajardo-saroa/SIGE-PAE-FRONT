@@ -1,0 +1,170 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>{{ action }} Diagnóstico situacional</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form" [formGroup]="form" (ngSubmit)="doAction()">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+                <br />
+                <div *ngIf="action !='Adicionar'">
+                  <div class="example-full-width">
+                    <br />
+                    <input matInput id="id" formControlName="id" readonly="true" class=" form-control"
+                      style="display: none;" />
+                  </div>
+                </div>
+                <table>
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Nombre del Documento
+                          <span style="color:red;">* </span>
+
+                        </div>
+                      </td>
+                      <td class="BordeSeparador">
+                      
+                        <input matInput id="nombre" formControlName="nombre" required placeholder="Nombre del Documento" 
+                            class="form-control" />
+                          <div
+                            *ngIf="form.get('nombre').invalid && (form.get('nombre').dirty || form.get('nombre').touched)"
+                            class="invalid-feedback">
+                          </div>
+                          
+                          
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Fecha Actualización<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                          <div *ngIf="action =='Adicionar'">
+                            <input class="fechaText" type="date" id="start" name="trip-start" formControlName="fechaActualizacion" required>
+                          </div>
+                          <div *ngIf="action =='Actualizar'">
+                            <input value={{fechaA}}  class="fechaText" type="date" id="start" name="trip-start" (change)="onfecha($any($event).target.value)" required>
+                          </div>
+
+                         
+                       
+                       
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">3. Descripción Diagnóstico<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                       
+                        <input matInput id="descripcionDiagnostico" formControlName="descripcionDiagnostico" required
+                            placeholder="Descripción Diagnóstico" class="form-control" />
+                          <div
+                            *ngIf="form.get('descripcionDiagnostico').invalid && (form.get('descripcionDiagnostico').dirty || form.get('descripcionDiagnostico').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">4. Nombre del Archivo<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                        <input matInput id="Nombre Archivo Storage" formControlName="pathDiasnosticoSituacion"
+                            required placeholder="Nombre Archivo " class="form-control" readonly />
+                          <div
+                            *ngIf="form.get('pathDiasnosticoSituacion').invalid && (form.get('pathDiasnosticoSituacion').dirty || form.get('pathDiasnosticoSituacion').touched)"
+                            class="invalid-feedback">
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container>
+                    <tr>
+                      <td >
+                        <div class="TextosBlueLeft">5. Archivo Adjunto<span style="color:red;">* </span></div>
+                      </td>
+                      <td >
+                        <div class="container">
+                          <div class="button-wrap">
+
+                            <div>
+                              <button class="text-center buttonAr3 btn-file CenterAll">Adjuntar archivo
+                                <img style="transform: rotate(180deg)"
+                                  src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4.png " height="20px"
+                                  width="auto">
+                                <input name="photo" type="file" data-max-size="3064"
+                                  (change)="onFileSelected($any($event).currentTarget.files)" accept="'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/tiff', 'image/gif',
+                    'application/vnd.rar', 'application/zip', 'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/pdf', 'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.ms-powerpoint',
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </td>
+                    </tr>
+                  </ng-container>
+
+
+
+                </table>
+
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <div style="text-align: center;">
+                  ¿Está seguro de eliminar el registro?
+                </div>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div class="AlignRight">
+                        <button  [disabled]="!form.valid && action !='Eliminar'" (click)="doAction()">{{action}}
+                        </button>
+                      </div>
+
+                      <div>
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

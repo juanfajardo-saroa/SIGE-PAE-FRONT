@@ -1,0 +1,463 @@
+/**
+ * Hoja de estilos para aplicar a los archivos de origen del componente usa variable.scss generica
+ *
+ * 
+ */
+
+ 
+@import '/src/assets/styles/variable.scss';
+.ClickCursor{
+  cursor: pointer;
+}
+.linkdisable{
+  pointer-events: none;
+  visibility: hidden;
+}
+.mat-select-value{
+  color: $base-azulPAE;
+}
+.mat-card{
+  box-shadow: none!important;
+}
+.bordeRedondo{
+  border: $base-color 1px solid;
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+.BordeRedondoFiltroAvanzado{
+  border-radius: 20px;
+  border: $base-color solid 1px;
+  padding: 20px 2px;
+  margin: 1%;
+  width: 35%;
+  display: flex;
+}
+.FullSize{
+  width: 100%;
+}
+.BordeRedondoAgregar{
+  border-radius: 20px;
+  border: $base-color solid 1px;
+  padding: 10px 20px;
+  width: 12%;
+}
+.CenterAll{
+  margin: auto;
+  display: block;
+}
+.acomodarAll{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  align-content: center;
+}
+
+.CheckboxCenter {
+  padding-left: 0%;
+  padding: 0%!important;
+  
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  color: $base-color;
+  font-size: 14px;
+  text-align: center!important;
+  padding: 0!important;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+  border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 24px;
+  border-right: 1px solid;
+}
+
+
+
+/* td.mat-cell {
+  padding: 16px 0 16px 0;
+  border-bottom: 1px dotted $base-azulPAE;
+  border-style: dotted;
+
+} */
+
+
+table thead {
+  background-color: #e5eefb !important;
+  color: $base-color;
+  border: 1px solid;
+}
+
+table thead th {
+  border-top: 1px solid $base-azulPAE;
+  border-right: 1px solid $base-azulPAE;
+  padding: 20px;
+}
+
+table thead th:first-child {
+  border-left: 1px solid $base-azulPAE;
+  border-top-left-radius: 20px !important;
+}
+
+
+table td:first-child {
+  border-left: 1px solid $base-azulPAE;
+
+}
+
+
+table.left-radius thead th:first-child {
+  border-top-left-radius: 20px !important;
+  border-left: 1px solid $base-azulPAE;
+
+}
+
+table.right-radius thead th:last-child {
+  border-top-right-radius: 20px;
+  border-left: 1px solid $base-azulPAE;
+}
+
+table tbody {
+  color: $base-color;
+}
+
+table tbody td {
+  border-bottom: 1px dashed $base-color !important;
+}
+
+table tbody tr td:first-child {
+  border-left: 1px solid $base-color;
+}
+
+table tbody tr td:last-child {
+  border-right: 1px solid $base-color;
+}
+
+table tbody tr:last-child td {
+  border-bottom: 1px solid $base-color;
+  border-bottom-style: solid !important;
+}
+
+td.mat-cell:first-of-type {
+  padding-left: 0 px !important
+}
+
+.titletable {
+  float: right;
+  background-color: $base-color !important;
+  color: #fff !important;
+  width: fit-content;
+  padding: 4px 75px !important;
+  margin-bottom: -1px !important;
+  border-radius: 12px 12px 0px 0px !important;
+
+}
+
+// .mat-table::ng-deep {
+//   border: 1px solid $base-azulPAE;
+// }
+th.mat-header-cell {
+  text-align: center !important;
+  background-color: #E2ECFD !important;
+  //color: #fff!important;
+  width: fit-content;
+  padding: 4px 75px !important;
+  margin-bottom: -1px !important;
+
+  border: 1px solid $base-azulPAE;
+  padding: 20px !important;
+}
+
+.red {
+  background-color: red;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.green {
+  background-color: green;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.yellow {
+  background-color: yellow;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.mat-row:hover .mat-cell {
+  background-color: $base-color;
+  color: #ffffff;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+
+
+
+
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.course-header {
+  &.Angular {
+    background-color: #fc4b6c !important;
+  }
+
+  &.Web {
+    background-color: #1e88e5 !important;
+  }
+
+  &.Design {
+    background-color: #26c6da !important;
+  }
+
+  &.Android {
+    background-color: #ffb22b !important;
+  }
+
+  color: #fff;
+
+  .mat-card-title {
+    font-size: 15px !important;
+    display: flex;
+    align-items: center;
+
+    .course-duration {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.mat-card-actions {
+  border-top: 1px solid rgba(120, 130, 140, 0.13);
+  padding: 8px 0 !important;
+}
+
+
+input,
+
+select {
+  border: none;
+  padding: 2px 0px !important;
+  width: 100% !important;
+  color: $base-azulPAE !important;
+}
+
+input:not(.noRadius),
+select:not(.noRadius) {
+  border-radius: none;
+}
+
+.cssForm {
+  font-size: 12px;
+}
+
+i {
+  font-style: normal;
+}
+
+.text-center {
+
+  input,
+  select {
+    border: none;
+    padding: 3px 10px;
+    width: 100%;
+    color: $base-azulPAE;
+  }
+
+  input:not(.noRadius),
+  select:not(.noRadius) {
+    border-radius: 5px;
+  }
+
+  .cssForm {
+    font-size: 12px;
+  }
+
+  i {
+    font-style: normal;
+  }
+
+  .course-header {
+
+    background-color: aliceblue !important;
+    color: #fff;
+
+    .mat-card-title {
+      font-size: 15px !important;
+      display: flex;
+      align-items: center;
+
+      .course-duration {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+}
+
+.tableFiltroUsuario {
+  border-spacing: 0;
+  color: $base-azulPAE;
+}
+
+.tableFiltroUsuario td {
+  text-align: center;
+  font-size: 13px !important;
+  color: $base-azulPAE !important;
+  padding: 2.5px 10px;
+  border-top: 1px solid $base-azulPAE;
+  border-right: 1px solid $base-azulPAE;
+  border-bottom: 1px solid $base-azulPAE;
+}
+
+.tableFiltroUsuario td b {
+  color: $base-azulPAE;
+  font-size: 13px !important;
+}
+
+.tableFiltroUsuario td div {
+  color: $base-azulPAE;
+  font-weight: 500;
+  font-size: 13px !important;
+}
+
+.tableFiltroUsuario td:first-child {
+  border-left: 1px solid $base-azulPAE;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.tableFiltroUsuario td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.tableUsuarios th,
+.tableUsuarios td {
+  font-size: 13px;
+}
+
+table.tableUsuarios thead th:last-child {
+  border-top-right-radius: 20px !important;
+}
+
+
+table.tableFormUsuarios tr td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: $base-azulPAE;
+  font-size: 14px;
+}
+
+table.tableFormUsuarios tr td:first-child {
+  padding-left: 35px;
+}
+
+table.tableFormUsuarios tr td:last-child {
+  padding-right: 35px;
+}
+
+input,
+select {
+  border: none;
+  padding: 3px 10px;
+  width: 100%;
+  color: $base-azulPAE;
+}
+
+input:not(.noRadius),
+select:not(.noRadius) {
+  border-radius: 5px;
+}
+
+.cssForm {
+  font-size: 12px;
+}
+
+i {
+  font-style: normal;
+}
+
+.tableFiltroUsuario i {
+  font-size: 25px;
+}
+
+.btn.btn-middle {
+  background-color: aliceblue;
+  border: 1px solid aliceblue;
+}
+
+.btn.btn-high {
+  background-color: $base-azulPAE !important;
+  border: 1px solid $base-azulPAE !important;
+}
+
+.title-busqueda-usuario {
+  padding: 0;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #f54a62;
+}
+
+.title-busqueda-usuario label {
+  color: #f54a62;
+  margin-bottom: 2px;
+}
+
+.btn-registrar {
+  color: $base-azulPAE;
+  font-size: 13px;
+  font-weight: 500;
+  width: 10%;
+}
+

@@ -1,0 +1,167 @@
+@import '../../../../../../assets/styles/variable.scss';
+
+.BordeSuperior {
+  border-top: 1px solid $base-color;
+}
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+  padding-right: 0px;
+}
+button {
+  background-color: $base-color;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+  margin: 10px;
+}
+
+.BordeSeparador {
+  border-bottom: $base-azulPAE 1px dotted;
+}
+
+button:disabled {
+  background-color: gray;
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* .SizeDialog {
+  width: 50vw !important;
+} */
+
+table {
+  width: 100%;
+  padding: 0px 30px;
+  color: #005ACA;
+}
+
+.TextosBlueLeft {
+  text-align: left;
+  color: $base-color;
+}
+
+td {
+  width: 50%;
+}
+
+.CenterButton {
+  margin: auto;
+  display: -webkit-inline-box;
+}
+
+::ng-deep.button {
+  background-color: $base-color  !important;
+  color: #fff !important;
+  border-radius: 20px;
+  border: $base-color 1px solid;
+  margin: auto;
+  display: block;
+}
+
+::ng-deep.mat-dialog-container {
+  padding: 0px !important;
+  border-radius: 30px 30px 30px 30px !important;
+  border: $base-azulPAE 1px solid;
+  box-shadow: none;
+  min-width: 50%;
+}
+
+.mat-cell {
+  font-size: 14px;
+  min-height: 48px;
+  text-align: center;
+  border-right: 1px solid $base-azulPAE;
+}
+
+mat-form-field {
+  border-radius: 20px 20px 20px 20px !important;
+  border: $base-azulPAE solid 1px;
+  background-color: #fff !important;
+  padding: 2% !important;
+}
+
+mat-card-header {
+  padding-bottom: 20px;
+}
+
+.TituloDialog {
+  background-color: #E6EFFD;
+  /* padding: 10px 20px; */
+  text-align: center;
+  color: $base-color;
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+
+.titletable {
+  float: left;
+  background-color: $base-color  !important;
+  color: #fff !important;
+  width: fit-content;
+  padding: 4px 75px !important;
+  margin-bottom: -1px !important;
+  border-radius: 12px 12px 0px 0px !important;
+  font-weight: bold;
+}
+
+.mat-dialog-content {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  max-height: 65vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.BordeSuperior {
+  border-top: 1px solid $base-color;
+}
+
+.tablaform {
+  width: 100%;
+  border-color: #005ACA;
+  color: #005ACA;
+  border: 1px solid;
+  border-radius: 20px!important;
+  font-size: 12px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.form-control{
+  padding: 14px 10px !important;
+  border-color: $base-azulPAE!important;
+  border-radius: 20px!important;
+  margin-bottom: 10px;
+  height: 20px;
+  text-align: center;
+  color: #005ACA;
+  font-size: 12px;
+}
+
+
+
+.BordeSuperior {
+  border-top: 1px solid $base-color;
+}
+
+.tableStyle {
+  padding-left: 0px;
+  width: 18%;
+  align-items: center;
+  text-align: center;
+}
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  .mat-cell {
+    border-right: none;
+  }
+}

@@ -1,0 +1,148 @@
+<div id="sinAutorizar" class="container-fluid" *ngIf="paso == 1">
+  <div class="row mt-xxl">
+    <div class="col-12 col-md-4 offset-md-4">
+      <div class="border-md text-center p-4">
+        <div class="col-12 text-center">
+          <label class="text-basecolor text-base-fontsize">
+            La minuta patrón para nivel de actividad física
+            leve no ha sido autorizada para usar en la ETC.
+          </label>
+        </div>
+        <div class="col-12 mt-3 mb-3">
+          <button class="btn btn-blue" (click)="paso = 2">Solicitar autorización</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="solicitudAutorizacion" class="container-fluid" *ngIf="paso == 2 && permisos.crear">
+  <div class="row mt-xxl">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="panel panel-blue">
+        <div class="panel-header noborder-bottom text-center">
+          <h4 class="panel-title">
+            Solicitud de autorización
+          </h4>
+        </div>
+        <div class="panel-body noBorder-radius">
+          <div class="container-fluid">
+            <label class="text-basecolor text-base-fontsize mt-4">
+              1. Justifique por qué necesita usar la minuta MAEM para nivel de actividad física leve.
+            </label>
+            <label class="text-basecolor text-base-fontsize text-justify p-2">
+              Al solicitar esta autorización usted está pidiendo permiso para usar la minuta leve
+              en todos los niveles educativos, modalidades y tipos de complemento del MAEM.
+            </label>
+            <textarea class="form-control" [class]="newMinutaMaemLeve.justificacion?.trim().length === 0 && submitSolicitud ? 'border-red' : ''" rows="5" style="resize: none;" [(ngModel)]="newMinutaMaemLeve.justificacion"></textarea>
+            <div *ngIf="newMinutaMaemLeve.justificacion?.trim().length === 0 && submitSolicitud" class="invalid-feedback">
+              <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px" width="auto">
+              <span>Complete este campo</span>
+            </div>
+            <div class="text-center mt-3 mb-3">
+              <button class="btn btn-white" (click)="uploadPDF()">
+                Adjuntar archivo (opcional)<img src="../assets/iconos_PAE/SVG/Iconos_PAE-87.svg" style="width: 20px; height: 20px;">
+              </button>
+              <input class="" type="file" id="fileUpload" name="fileUpload" accept="application/pdf">
+              <a class="visorPDF" (click)="abrirPDF(modalPDF)"
+                  *ngIf="newMinutaMaemLeve.adjuntoJustificacion && newMinutaMaemLeve.adjuntoJustificacionPATH != ''">
+                  {{ newMinutaMaemLeve.adjuntoJustificacionPATH }}
+                </a>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer text-center d-xl-block d-flex flex-column-reverse gap-down-10-px">
+          <button class="btn btn-blue w-down-100" (click)="cancelarSolicitud()">Cancelar</button>
+          <button class="btn btn-blue w-down-100 ml-0 ml-xl-3" (click)="solicitarAutorizacion()">Solicitar autorización</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="solicitudAutorizacionForm" class="container-fluid" *ngIf="paso == 3 && permisos.aprobar">
+  <div class="row mt-xxl">
+    <div class="col-12 col-xl-5 mb-3">
+      <div class="row border-md no-margin pt-sm pb-sm">
+        <div class="col-12 col-sm-9">
+          <label class="text-basecolor text-base-fontsize">
+            Estado de la solicitud de autorización para utilizar<br>
+            la minuta patrón de nivel de actividad física leve:
+          </label>
+        </div>
+        <div class="col-12 col-sm-3 border-left vertical-middle">
+          <app-semaforo [bgColor]="item.bgEstadoMinuta" [texto]="item.estadoMinuta"></app-semaforo>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-3">
+      <app-chapter-azul [numberChapter]="1" [titleChapter]="'Solicitud'"></app-chapter-azul>
+      <div class="col-12 pt-3 pb-3 border-bottom-dashed">
+        <div class="form-item">
+          <label class="form-label">
+            1. Fecha de la solicitud:
+          </label>
+          <input type="date" class="text-center input-text w-10 w-down-100" [ngModelOptions]="{standalone: true}"
+            [ngModel]="minutaMaemLeve.fechaSolicitud | date:'yyyy-MM-dd'" disabled="true" />
+        </div>
+      </div>
+      <div class="col-12 pt-3 mb-3">
+        <div class="form-item">
+          <label class="form-label">
+            2. Justificación:
+          </label>
+          <textarea class="form-control mb-3" rows="3" style="resize: none;" [ngModel]="minutaMaemLeve.justificacion" disabled="true"></textarea>
+          <button class="btn btn-white" (click)="downloadPDF()">
+            Archivo adjunto
+            <img src="../assets/iconos_PAE/SVG/Iconos_PAE-12.svg" style="width: 20px; height: 20px;">
+            <img src="../assets/iconos_PAE/SVG/Iconos_PAE-87.svg" style="width: 20px; height: 20px;">
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="permisos.aprobar == true && minutaMaemLeve.iD_TipoEstadoMinuta == 4" class="col-12 mb-3">
+      <app-chapter-azul [numberChapter]="2" [titleChapter]="'Aprobaciones'"></app-chapter-azul>
+      <div class="col-12 pt-3 pb-3 border-bottom-red">
+        <div class="form-item">
+          <label class="text-base-fontsize text-basered">
+            Aprobaciones pendientes
+          </label>
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+        <table class="table-default">
+          <thead>
+            <tr >
+              <th colspan="2" class="text-left pl-4">1. Documento por aprobar: "{{ minutaMaemLeve.adjuntoJustificacionPATH }}"</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="w-15">
+                <button id="btnAprobar" class="btn btn-default w-100 mb-2" (click)="setStatus(true)">Aprobar</button>
+                <button id="btnRechazar" class="btn btn-default w-100" (click)="setStatus(false)">Rechazar</button>
+              </td>
+              <td class="w-85 border-left">
+                Observaciones / Justificaciones:
+                <textarea class="form-control mb-2" rows="2" style="resize: none;" [(ngModel)]="objAprobacion.observacionJustificacion"></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-12 mt-3 text-right">
+        <button class="btn btn-blue" (click)="enviarResultado()">Enviar resultado</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner *ngIf="loadingVisible"></app-spinner>
+<ng-template #modalPDF>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>

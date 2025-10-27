@@ -1,0 +1,812 @@
+@import '/src/assets/styles/variable.scss';
+
+.Redondeado {
+    border: 1px solid $base-azulPAE;
+    border-radius: 20px !important;
+    padding: 0px !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.EspacioField {
+    padding: 3px;
+    width: 50%
+}
+
+/* .EspacioFieldBuscar{
+    padding: 3px;
+    width: 10%
+} */
+
+.alinearIcon {
+    padding: 0 10px;
+}
+
+.BordeRedondoLeft {
+    border-radius: 20px;
+    border: $base-azulPAE solid 1px;
+    padding: 0px 0px !important;
+}
+
+.BordeRedondoRight {
+    border-radius: 0px 20px 20px 1px;
+    border: $base-azulPAE solid 1px;
+    padding: 0px 0px;
+}
+
+.AlignRight {
+    display: flex;
+    justify-content: flex-end;
+    width: 60%;
+}
+
+.lineaAzulX {
+    border-right: 1px solid $base-azulPAE;
+
+}
+
+.LeftUpCorner {
+    border-top-left-radius: 20px;
+
+}
+
+.RightUpCorner {
+    border-top-right-radius: 20px;
+
+}
+
+::ng-deep .mat-select-arrow {
+    color: $base-azulPAE  !important;
+}
+
+.Titulo {
+    border-bottom: 1px solid $base-SiGEPAE;
+    color: $base-SiGEPAE  !important;
+    width: 100%;
+    font-size: 14px !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    /* border: $base-azulPAE 1px solid;
+    border-style: hidden solid solid solid;
+    border-radius: 20px 20px 1px 1px; */
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-azulPAE;
+    font-size: 14px;
+    text-align: center;
+}
+
+// th.mat-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+th.mat-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+    border-top-left-radius: 20px !important;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 24px;
+    border-right: 1px solid;
+}
+
+
+.titletable {
+    float: right;
+    background-color: $base-azulPAE  !important;
+    color: #fff !important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border-radius: 12px 12px 0px 0px !important;
+}
+
+.buttonAr {
+    color: $base-azulPAE;
+    border-color: $base-azulPAE;
+    padding: 14px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 12px 12px 12px 12px !important;
+}
+
+.espaciobutton {
+    margin-left: 5px !important;
+}
+
+// .mat-table::ng-deep {
+//   border: 1px solid $base-azulPAE;
+// }
+th.mat-header-cell {
+    text-align: center !important;
+    background-color: #E2ECFD !important;
+    //color: #fff!important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    /* border: 1px solid $base-azulPAE; */
+    padding: 20px !important;
+}
+
+/* .mat-row:hover .mat-cell {
+    background-color: $base-azulPAE;
+    color: #ffffff;
+} */
+.mat-table:not(.nohover) .mat-row:hover .mat-cell {
+  background-color: #005ACA !important;
+  color: #ffffff !important;
+}
+.mat-column-select {
+    overflow: initial;
+}
+
+.card {
+    border: none;
+}
+
+.btn-registrar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.LetraRegistro {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0 !important;
+}
+
+//busqueda preparacion
+.sub {
+    margin-top: 30px;
+
+}
+
+.sub2 {
+    margin-top: 30px;
+
+}
+
+.linea {
+    background-color: $base-SiGEPAE  !important;
+
+}
+
+//botones
+.BordeRedondoAgregar {
+    border-radius: 20px;
+    border: $base-color solid 1px;
+    background-color: $base-color;
+    color: #fff !important;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    float: left;
+    padding: 2px 15px;
+}
+
+.tablaform5 {
+    width: 70%;
+    border: $base-azulPAE solid 1px;
+    border-radius: 20px !important;
+    font-size: $base-fontSize;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: left;
+    font-weight: 500;
+    color: $base-azulPAE;
+    background-color: #ffff;
+    padding: 1px 10px;
+}
+.tablaform6 {
+    width: 10%;
+    border: $base-azulPAE solid 1px;
+    border-radius: 20px !important;
+    font-size: $base-fontSize;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: left;
+    font-weight: 500;
+    color: $base-azulPAE;
+    background-color: #ffff;
+    padding: 1px 10px;
+}
+.tablaform7{
+    border: $base-SiGEPAE solid 1px;
+    border-radius: 20px !important;
+    font-size: $base-fontSize;
+    color: $base-SiGEPAE;
+} 
+.mat-select-value {
+    display: table-cell;
+  /* max-width: 0; */
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+    color: $base-SiGEPAE !important;
+}
+
+//general
+.BordeSeparador {
+    border-bottom: $base-azulPAE 1px dotted;
+}
+
+.tamaño {
+    width: 35%;
+}
+
+.TextosBlueLeft{
+    margin-left: 30px;
+    color: $base-azulPAE;
+  }
+
+  .p-4 {
+    padding: 1.5rem 1px !important;
+}
+.buttontog {
+    border-color: $base-azulPAE;
+      border-radius: 5px !important;
+      font-size: 16px;
+      text-align: center;
+      /* margin: 5px 10px; */
+      align-items: center;
+      margin-top: 7px;
+      margin-bottom: 7px;
+      margin-left: 5px;
+      float: left;
+  }
+
+  .mat-button-toggle-appearance-standard {
+    color: $base-azulPAE !important;
+    background: transparent !important;
+  }
+  .mat-button-toggle-appearance-standard {
+    &:not(.mat-button-toggle-disabled):hover .mat-button-toggle-focus-overlay {
+      opacity: 0.04;
+    }
+  }
+  
+  .mat-button-toggle-button {
+    border: 0;
+    background: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+    border-left: 1px solid;
+  }
+  
+  .mat-button-toggle-label-content {
+    border: 1px solid;
+  }
+  .mat-button-toggle-disabled {
+    color: $base-color  !important;
+    /* background-color: #eeeeee; */
+  }
+  
+  .mat-ripple .mat-button-toggle-ripple {
+    width: 1px;
+  }
+  
+  .mat-button-toggle .mat-button-toggle-disabled .mat-button-toggle-appearance-standard {
+    margin-inline: 5px;
+  }
+  
+  :host ::ng-deep .mat-button-toggle-checked {
+    color: white !important;
+    font-size: 16px;
+    background-color: $base-color  !important;
+    padding: 100% 0%;
+  
+  }
+  .mat-button-toggle-disabled .mat-button-toggle-button {
+    cursor: default;
+    border-right: 1px solid;
+  }
+
+    ::ng-deep .mat-step-header[aria-selected="true"] {
+    border: solid 1px $base-azulPAE;
+    background-color: $base-azulPAE;
+    border-radius: 20px;
+    height: 30px;
+  } 
+  ::ng-deep .mat-step-header[aria-selected="false"] {
+    border: solid 1px $base-azulPAE;
+    background-color: white;
+    border-radius: 20px;
+    height: 30px;
+}
+::ng-deep .mat-step-header[aria-selected="false"] .mat-step-label.mat-step-label-active {
+    color: $base-azulPAE;
+}
+::ng-deep .mat-step-header[aria-selected="true"] .mat-step-label.mat-step-label-active {
+    color: white;
+}
+::ng-deep .mat-step-header[aria-selected="true"] .mat-step-label.mat-step-label-active:hover {
+    background-color: $base-azulPAE;
+}
+::ng-deep .mat-step-header[aria-selected="true"] .mat-step-icon-content .ng-star-inserted {
+    color: transparent;
+}
+
+
+  .mat-step-header .mat-step-icon-selected{
+    background-color: white;
+    color: $base-azulPAE;
+    border: solid 1px $base-azulPAE;
+    
+}
+
+.solution {
+    display: flex;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  
+  .stepper {
+    flex-grow: 2;
+  }
+
+  .arrow-icons {
+    height: 72px;
+    align-items: center;
+  }
+  
+  .action-buttons {
+    margin-left: 2.5rem;
+  }
+
+ 
+ 
+   //historial aprobaciones 
+table {
+    width: 100%;
+    border-collapse: separate;
+  }
+  
+  th.mat-header-cell,
+  td.mat-cell,
+  td.mat-footer-cell {
+      color: $base-color;
+      font-size: $base-fontSize;
+  }
+  
+  td.mat-cell {
+      padding: 16px 0 16px 0;
+      border-bottom: 1px dotted $base-azulPAE;
+      //border-style: dotted;
+  }
+  table tbody tr td:last-child {
+     border-right: 0px solid !important; 
+  }
+  
+  table tbody tr td:first-child {
+     border-left: 1px solid !important;
+  }
+  
+  
+  
+  
+  td.mat-cell:first-of-type {
+    padding-left: 0 px !important;
+  }
+
+  
+  //aprobaciones detalle
+
+  //botones
+  .BordeRedondoAgregar {
+    border-radius: 20px;
+    border: $base-color solid 1px;
+    background-color: $base-color;
+    color: #fff !important;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    float: left;
+    padding: 2px 15px;
+  }
+
+  .p-4 {
+    padding: 1.5rem 1px !important;
+}
+
+//globo de aprobaciones 
+
+.mat-badge-content{
+  background : #FF0000;
+  color: #fff !important;
+  border: 1px #fff solid
+}
+.sub2 img {
+  height: 30px;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 0%;
+}
+
+.bordeado{
+  border-radius: 20px;
+  border: 1px solid $base-azulPAE;
+  border-spacing: 0px 0px;
+}
+.BordeadoSup{
+  border: 1px solid #E6EFFD;
+  border-left: 1px solid #E6EFFD!important;
+  border-bottom: 1px solid $base-color;
+  border-radius: 20px 20px 1px 1px;
+  background-color: #E6EFFD;
+  color: $base-azulPAE;
+  padding: 2%;
+}
+.BordeadoInf{
+  border: 1px solid #FFF;
+  border-radius: 1px 1px 20px 20px;
+  background-color: #FFF;
+  color: $base-azulPAE;
+  padding: 0%;
+}
+.BordeNone{
+  border-right: $base-azulPAE 1px solid;
+  border-style: hidden solid hidden hidden!important;
+
+}
+.TablaObservacion{
+  display: block;
+}
+.buttonAprobar{
+  background-color: #E6EFFD;
+  border: #E6EFFD;
+  color: $base-color;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 80%;
+}
+.buttonAprobar:active{
+  background-color: $base-color;
+  border: $base-color;
+  color: #fff;
+  
+}
+#accionAprobacion7:hover  {
+  background-color: red;
+  color: #fff;
+  border: red;
+}
+#accionAprobacion1:hover   {
+  background-color: green;
+  color: #fff;
+  border: green;
+}
+.inputFull{
+  width: 100%;
+  font-size: $base-fontSize;
+}
+.TextosBlueLeft{
+  margin: 10px;
+}
+.inputFull2{
+  width: 97%;
+  /* margin: 10px; */
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  font-size: $base-fontSize;
+}
+.textagregar {
+  color: $base-color;
+}
+
+button:disabled{
+  background-color: gray;
+  color: #fff !important;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+}
+
+button:hover {
+  cursor: pointer;
+}
+button{
+  background-color: $base-color;
+  color: #fff ;
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: $base-color 1px solid;
+}
+.textoinformativo{
+  color: $base-color;
+}
+
+//swal2
+
+::ng-deep.swal2-container.swal2-center > .swal2-popup {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: center !important;
+    justify-self: center !important;
+    font-size: 13px !important;
+    border-radius: 20px !important; 
+   background-image: url(../../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+    padding: 2% 0% !important;
+    width: 30% !important;    
+    background-position: top;
+    color:  $base-color !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+  }
+  .swal2-actions{
+    margin: 10px auto !important;
+  }
+  ::ng-deep.swal2-close{
+    color: #fff !important;
+    margin-top: -30px !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    font-size: 2em !important;
+  }
+  
+  .swal2-html-container {
+    text-align: center!important;
+  }
+  .swal2-styled.swal2-confirm {
+    border: 1px solid $base-azulPAE;
+    border-radius: 0px !important; 
+    background: initial;
+    background-color: $base-azulPAE;
+    color: #fff !important;
+    font-size: 1em;
+    box-shadow: none;
+  }
+  .LeftUpCorner2{
+    border-top-right-radius:20px;
+  
+  }
+
+  .butonsemana{
+    background-color: $base-color;
+    color: #fff ;
+    border-radius: 20px;
+    padding: 5px 15px;
+    border: $base-color 1px solid;
+  }
+  .butonsemana .mat-icon {
+    color: #fff !important;
+    font-size: 23px !important;
+}
+.mat-stepper-horizontal-line {
+  border-top-width: 1px;
+  border-top-style: solid;
+  flex: auto;
+  height: 0;
+  margin: 0 -16px;
+  min-width: 32px;
+  border: 1px solid $base-azulPAE;
+}
+
+
+/* --------------------------- TABS de los dias */
+::ng-deep .mat-tab-group.RegistroCiclo .mat-tab-labels {
+  display: flex;
+  justify-content: center;
+}
+
+:host ::ng-deep .mat-tab-label {
+  font-family: "Montserrat", sans-serif;
+  color: $base-azulPAE  !important;
+  font-size: $base-fontSize;
+  background-color: $gov-white  !important;
+  margin: 5px;
+  border: 1px solid $base-azulPAE;
+  border-radius: 12px !important;
+  height: 40px;
+  padding: 0 !important;
+  cursor: pointer;
+  box-sizing: border-box;
+  opacity: 1;
+  min-width: 80px !important;
+  max-width: 80px !important;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  position: relative;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+  font-family: "Montserrat", sans-serif;
+  font-size: $base-fontSize;
+  border: 1px solid $base-azulPAE;
+  color: $gov-white  !important;
+  background-color: $base-azulPAE  !important;
+}
+
+.circulo {
+  color: $gov-white;
+  font-size: 23px !important;
+  border: 1px solid $base-azulPAE  !important;
+  border-radius: 20px;
+}
+
+/* .mat-tab-header {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    border-bottom: $base-azulPAE 1px solid;
+} */
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+}
+
+:host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+  /* background-color: #1e88e5; */
+}
+
+:host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar,
+.blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: none !important;
+  display: none !important;
+  /* background-color: #1e88e5; */
+
+}
+
+::ng-deep.mat-tab-label .mat-tab-label-content {
+  font-weight: 800 !important;
+}
+/* ::ng-deep .mat-tab-group.RegistroCiclo.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  margin: -25px 0 0 0!important;
+} */
+/* --------------------------- FIN TABS */
+.BordeTotal {
+  border: 1px solid $base-azulPAE;
+  border-radius: $base-borderRadius;
+  padding: 0px;
+}
+
+.col2 {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.center-vertically {
+  display: flex;
+  align-items: center;
+}
+.mat-list-base .mat-list-option {
+  color: $base-azulPAE ;
+  font-size: $base-fontSize;
+}
+mat-list-option[aria-selected="true"] {
+  color: $gov-white  !important;
+  background-color: $base-azulPAE  !important;
+}
+
+mat-selection-list .mat-list-option {
+  display: inline-block;
+  height: auto;
+  width: auto;
+  border-top: 1px solid $base-azulPAE;
+  border-bottom: 1px solid $base-azulPAE;
+  border-right: 1px solid $base-azulPAE;
+}
+
+mat-list-option:first-child {
+  border-radius: $base-borderRadius 0 0 $base-borderRadius;
+  border: 1px solid $base-azulPAE;
+}
+
+mat-list-option:last-child {
+  border-radius: 0 $base-borderRadius $base-borderRadius 0;
+  border-top: 1px solid $base-azulPAE;
+  border-bottom: 1px solid $base-azulPAE;
+  border-right: 1px solid $base-azulPAE;
+}
+.Titulo2{
+  font-size: $base-fontSize;
+  color: $base-azulPAE;
+  text-align: left;
+  margin-left: 20px;
+}
+.lineaPre{
+  border: 1px dotted $base-azulPAE;
+  height: 0px;
+}
+.All {
+  display: flex;
+  align-items: flex-end;
+}
+
+.TablaPreparacion {
+  width: 50%;
+  margin-left: 20px;
+}
+
+.UbicaEstado {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  color: $base-azulPAE;
+  font-size: $base-fontSize;
+}
+
+.EstadoItems {
+  display: flex;
+  align-items: center;
+  border: dashed 1px blue;
+  border-radius: 20px;
+  width: fit-content;
+  color: $base-azulPAE;
+  font-size: $base-fontSize;
+  /* padding: 10px; */
+}
+
+.SeparadorItemsUp {
+  padding: 10px 10px 0 10px;
+  text-align: left;
+}
+
+.SeparadorItemsDown {
+  padding: 8px 10px 10px 10px;
+  text-align: left;
+}
+
+.Oculto {
+  display: none;
+}
+
+.NoVer {
+  visibility: hidden;
+}
+.marg{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.ItemsObligatorios {
+  display: flex;
+  border: 1px solid;
+  border-radius: 10px;
+  width: 210px;
+  max-width: 210px;
+  min-width: 210px;
+  height: 60px;
+  max-height: 60px;
+  min-height: 60px;
+  padding-left: 10px;
+  margin: 10px;
+  align-items: center;
+  color: $base-azulPAE;
+  text-align: left;
+}
+:ng-deep.mat-select-value {
+
+  color: #005ACA !important;
+
+  font-size: 13px !important;
+
+}

@@ -1,0 +1,1399 @@
+<div class="row">
+  <div class="col-12">
+    <div class="tab-control-secondary row">
+      <div class="tab-item col-4" [ngClass]="tabSelected == 1 ? 'active' : ''" (click)="tabSelected = 1">
+        <div>Creación de minutas</div>
+      </div>
+      <div class="tab-item col-4 d-flex" [ngClass]="tabSelected == 2 ? 'active' : ''" (click)="tabSelected = 2">
+        <div>Minuta MAEM leve</div>
+      </div>
+      <div class="tab-item col-4 d-flex" [ngClass]="tabSelected == 3 ? 'active' : ''" (click)="tabSelected = 3">
+        <div>Minutas en uso</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="tabSelected == 1">
+  <div class="row mt-xxl mb-xxl" [hidden]="!gridVisible">
+    <div *ngIf="permisos.agregar" class="col-12 pl-xxl pr-xxl text-right">
+      <button class="btn-link text-base-fontsize" (click)="agregarMinutaExcepcional()">
+        <img src="../../../../../../assets/images/Iconos/add_blue.png">
+        Agregar minuta diferencial
+      </button>
+    </div>
+    <div class="col-12 mt-sm pl-xxl pr-xxl px-lg-down-0 responsive-table-pae">
+      <table class="table-default table-hover">
+        <thead>
+          <tr class="text-center">
+            <th>Nombre de la minuta diferencial</th>
+            <th>Modelo de operaci&oacute;n</th>
+            <th>Estado del registro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of dataTabla">
+            <tr (click)="ver_NivelEducativos(item)">
+              <td class="pt-xs pb-xs pl-xxl pr-xxl" data-label="N. M. diferencial">{{item.nombre}}</td>
+              <td class="pt-xs pb-xs pl-xxl pr-xxl text-center" data-label="M. operación">{{item.nombreModeloOperacion}}</td>
+              <td class="pt-xs pb-xs pl-xxl pr-xxl" data-label="Est. registro">
+                <app-semaforo class="d-xl-inline d-flex justify-content-end" [bgColor]="item.bgEstadoMinuta" [texto]="item.estadoMinuta"></app-semaforo>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <tfoot class="table-paginator">
+          <tr>
+            <td colspan="10">
+              <div>
+                <span>Items:</span>
+                <span>
+                  <select [(ngModel)]="itemCant" (ngModelChange)="changeCantItems($event)">
+                    <option *ngFor="let item of itemsPerPages" [ngValue]="item">{{item}}</option>
+                  </select>
+                </span>
+                <span>
+                  {{itemIni}} - {{itemFin}} de {{dataMinutasEx.length}}
+                </span>
+                <span>
+                  <mat-icon class="first-last" [class]="disabledFirstPage ? 'disabled' : ''"
+                    (click)="changePage(1, -1, disabledFirstPage)">first_page</mat-icon>
+                  <mat-icon class="previous-next" [class]="disabledPreviousPage ? 'disabled' : ''"
+                    (click)="changePage(2, -1, disabledPreviousPage)">arrow_back_ios</mat-icon>
+                  <mat-icon class="previous-next" [class]="disabledNextPage ? 'disabled' : ''"
+                    (click)="changePage(2, 1, disabledNextPage)">arrow_forward_ios</mat-icon>
+                  <mat-icon class="first-last" [class]="disabledLastPage ? 'disabled' : ''"
+                    (click)="changePage(1, 1, disabledLastPage)">last_page</mat-icon>
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-xxl" [hidden]="!formVisible1">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="panel panel-blue">
+        <div class="panel-header noborder-bottom text-center">
+          <h4 class="panel-title">Formulario de registro - Minuta diferencial</h4>
+        </div>
+        <div class="panel-body noBorder-radius">
+          <form [formGroup]="formMinutaCreacion" class="form-default-inline">
+            <div class="form-item">
+              <div class="row">
+                <div class="col-12">
+                  <label>1. Escriba un nombre para la minuta diferencial:</label>
+                </div>
+                <div class="col-12">
+                  <input type="text" class="form-control" style="width: inherit;" placeholder="Digite nombre minuta"
+                    formControlName="nombre" [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.nombre.errors }">
+                  <div *ngIf="submittedMinutaCreacion && f.nombre.errors" class="invalid-feedback">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px" width="auto">
+                    <span>Complete este campo</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-item">
+              <div class="row">
+                <div class="col-12">
+                  <label>2. ¿A qué modelo quiere aplicarle esta minuta?:</label>
+                </div>
+                <div class="col-12">
+                  <select class="form-control col-12 w-100" formControlName="iD_TipoModeloOperacion"
+                    [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_TipoModeloOperacion.errors }"
+                    (ngModelChange)="changeModel(itemMinutaExcepcional, 'iD_TipoModeloOperacion', $event)">
+                    <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                    <option *ngFor="let item of listTiposModeloOperacion" [ngValue]="item.id">{{item.nombre}}</option>
+                  </select>
+                  <div *ngIf="submittedMinutaCreacion && f.iD_TipoModeloOperacion.errors" class="invalid-feedback">
+                    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px" width="auto">
+                    <span>Complete este campo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion > 0" class="form-item">
+            <label class="ml-md">2.1. ¿Seleccionar minuta diferencial de vigencia anterior?</label>
+            <div class="inline-block form-checkbox ml-sm">
+              <label id="ckMAEMSi" class="check-si"
+                [class]="itemMinutaExcepcional.vigenciaAnterior == 1 ? 'active' : ''"
+                (click)="changeModel(itemMinutaExcepcional, 'vigenciaAnterior', 1)">
+                Si
+              </label>
+              <label id="ckMAEMNo" class="check-no"
+                [class]="itemMinutaExcepcional.vigenciaAnterior == 0 ? 'active' : ''"
+                (click)="changeModel(itemMinutaExcepcional, 'vigenciaAnterior', 0)">
+                No
+              </label>
+            </div>
+          </div>
+          <div *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion > 0 && itemMinutaExcepcional.vigenciaAnterior == 1"
+            class="form-item">
+            <label class="ml-md">2.2. Vigencia anterior</label>
+            <select class="form-control" [ngModelOptions]="{standalone: true}"
+              [ngModel]="itemMinutaExcepcional.iD_VigenciaReferencia"
+              (ngModelChange)="changeModel(itemMinutaExcepcional, 'iD_VigenciaReferencia', $event)">
+              <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+              <option *ngFor="let item of listVigenciasAnteriores" [ngValue]="item.idResultado">{{item.nomMinuta}}
+              </option>
+            </select>
+          </div> -->
+            <ng-container
+              *ngIf="mostrarTodoCreacionMinuta  && formMinutaCreacion.get('iD_TipoModeloOperacion').value == 2">
+              <div class="form-item">
+                <div class="row">
+                  <div class="col-12">
+                    <label>3. Seleccione el tipo de complemento alimentario para el cual va a crear la
+                      minuta:</label>
+                  </div>
+                  <div class="col-12">
+                    <select class="form-control w-100" formControlName="iD_TiposRacion"
+                      [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_TiposRacion.errors }"
+                      [disabled]="formMinutaCreacion.get('iD_VigenciaReferencia').value > 0"
+                      (ngModelChange)="changeModel(itemMinutaExcepcional, 'iD_TiposRacion', $event)">
+                      <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                      <option *ngFor="let item of listTiposRacion" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div *ngIf="submittedMinutaCreacion && f.iD_TiposRacion.errors" class="invalid-feedback">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                        width="auto">
+                      <span>Complete este campo</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="mostrarTodoCreacionMinuta && itemMinutaExcepcional.iD_TipoModeloOperacion == 1">
+              <div class="form-item">
+                <div class="row">
+                  <div class="col-12">
+                    <label>3. Seleccione el nivel de actividad fis&iacute;ca de referencia:</label>
+                  </div>
+                  <div class="col-12">
+                    <select class="form-control w-100" formControlName="iD_NivelActividadFisica"
+                      [disabled]="formMinutaCreacion.get('iD_VigenciaReferencia').value > 0"
+                      [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_NivelActividadFisica.errors }"
+                      (ngModelChange)="changeModel(itemMinutaExcepcional, 'iD_NivelActividadFisica', $event)">
+                      <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                      <option *ngFor="let item of listTiposActividadFisica" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div *ngIf="submittedMinutaCreacion && f.iD_NivelActividadFisica.errors" class="invalid-feedback">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                        width="auto">
+                      <span>Complete este campo</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="row">
+                  <div class="col-12">
+                    <label>4. Seleccione la modalidad del complemento alimentario para el cual va a
+                      crear la minuta:</label>
+                  </div>
+                  <div class="col-12">
+                    <select class="form-control w-100" formControlName="iD_TiposModalidadComplemento"
+                      [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_TiposModalidadComplemento.errors }"
+                      [disabled]="formMinutaCreacion.get('iD_VigenciaReferencia').value > 0"
+                      (ngModelChange)="changeModel(itemMinutaExcepcional, 'iD_TiposModalidadComplemento', $event)">
+                      <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                      <option *ngFor="let item of listTiposModalidadRacion" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div *ngIf="submittedMinutaCreacion && f.iD_TiposModalidadComplemento.errors" class="invalid-feedback">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                        width="auto">
+                      <span>Complete este campo</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="row">
+                  <div class="col-12">
+                    <label>5. Seleccione el tipo de complemento alimentario para el cual va a crear la
+                      minuta:</label>
+                  </div>
+                  <div class="col-12">
+                    <select class="form-control w-100" formControlName="iD_TiposRacion"
+                      [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_TiposRacion.errors }"
+                      [disabled]="formMinutaCreacion.get('iD_VigenciaReferencia').value > 0">
+                      <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                      <option *ngFor="let item of listTiposRacion" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div *ngIf="submittedMinutaCreacion && f.iD_TiposRacion.errors" class="invalid-feedback">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                        width="auto">
+                      <span>Complete este campo</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="row">
+                  <div class="col-12">
+                    <label>6. Seleccione la zona (rural o urbana) para la cual aplica esta minuta:</label>
+                  </div>
+                  <div class="col-12">
+                    <select class="form-control w-100" style="width: inherit;" formControlName="iD_Zona"
+                      [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_Zona.errors }"
+                      [disabled]="formMinutaCreacion.get('iD_VigenciaReferencia').value > 0">
+                      <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                      <option *ngFor="let item of zonasList" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div *ngIf="submittedMinutaCreacion && f.iD_Zona.errors" class="invalid-feedback">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                        width="auto">
+                      <span>Complete este campo</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container
+              *ngIf="mostrarTodoCreacionMinuta && formMinutaCreacion.get('iD_TipoModeloOperacion').value == 3">
+              <div class="form-item">
+
+                <div class="row">
+                  <div class="col-12">
+                    <label>3. ¿Desea usar alguna de las minutas diferenciales existentes para
+                      el PAEPI como referencia?</label>
+                  </div>
+                  <div class="col-4">
+                    <div class="inline-block form-checkbox ml-xs">
+                      <label id="MinrefSi" class="check-si" [class]="Minref ? 'active' : ''"
+                        (click)="disableMinref($event, 'Minref', true)">
+                        Si
+                      </label>
+                      <label id="MinrefNo" class="check-no" [class]="!Minref ? 'active' : ''"
+                        (click)="disableMinref($event, 'Minref', false)">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-item">
+                <div class="row" *ngIf="!Minref">
+                  <div class="col-12">
+                    <label>4. ¿Qué minuta patrón quiere usar como referencia?:</label>
+                  </div>
+                  <div class="col-12">
+                    <select style="width: inherit;" class="form-control col-12"
+                      formControlName="iD_TipoModeloOperacionRef"
+                      [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_TipoModeloOperacionRef.errors }"
+                      (ngModelChange)="changeModel(itemMinutaExcepcional, 'iD_TipoModeloOperacionRef', $event)">
+                      <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                      <option *ngFor="let item of dataModelosOpe" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div *ngIf="submittedMinutaCreacion && f.iD_TipoModeloOperacionRef.errors" class="invalid-feedback">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                        width="auto">
+                      <span>Complete este campo</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="Minref">
+                  <div class="col-12">
+                    <label>4. Seleccione la minuta de referencia que desea usar:</label>
+                  </div>
+                  <div class="col-12">
+                    <select style="width: inherit;" class="form-control col-12" formControlName="iD_MinutaRefPAEPI"
+                      [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_MinutaRefPAEPI.errors }"
+                      (ngModelChange)="changeModel(itemMinutaExcepcional, 'iD_MinutaRefPAEPI', $event)">
+                      <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                      <option *ngFor="let item of dataMinutasRefPAEPI" [ngValue]="item.iD_MinutaAprobacion">
+                        {{item.nombre}}</option>
+                    </select>
+                    <div *ngIf="submittedMinutaCreacion && f.iD_MinutaRefPAEPI.errors" class="invalid-feedback">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                        width="auto">
+                      <span>Complete este campo</span>
+                    </div>
+                    <div class="mt-sm" *ngIf="dataMinutasRefPAEPI.length == 0">
+                      <app-alert-message [tipoMessage]="'3'"
+                        [message]='"No tiene minutas disponibles para seleccionar. Elija la opción \"no\" en la pregunta 3 y seleccione una minuta patrón como referencia."'></app-alert-message>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-item">
+                <div class="row"
+                  *ngIf="!Minref &&  formMinutaCreacion.get('iD_TipoModeloOperacionRefPAEPI').value != 2">
+                  <div class="col-12">
+                    <label>5. ¿Desea usar diferentes niveles educativos?</label>
+                  </div>
+                  <div class="col-4">
+                    <div class="inline-block form-checkbox ml-xs">
+                      <label id="NivEduSi" class="check-si" [class]="NivEdu ? 'active' : ''"
+                        (click)="disableNivEdu($event, 'NivEdu', true)">
+                        Si
+                      </label>
+                      <label id="NivEduNo" class="check-no" [class]="!NivEdu ? 'active' : ''"
+                        (click)="disableNivEdu($event, 'NivEdu', false)">
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-container *ngIf="!Minref && formMinutaCreacion.get('iD_TipoModeloOperacionRefPAEPI').value != 2">
+                <div class="form-item">
+                  <div class="row">
+                    <div class="col-12">
+                      <label>6. Seleccione el nivel de actividad fis&iacute;ca de referencia:</label>
+                    </div>
+                    <div class="col-12">
+                      <select class="form-control" formControlName="iD_NivelActividadFisica"
+                        [disabled]="formMinutaCreacion.get('iD_VigenciaReferencia').value > 0"
+                        [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_NivelActividadFisica.errors }">
+                        <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                        <option *ngFor="let item of listTiposActividadFisica" [ngValue]="item.id">{{item.nombre}}
+                        </option>
+                      </select>
+                      <div *ngIf="submittedMinutaCreacion && f.iD_NivelActividadFisica.errors" class="invalid-feedback">
+                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                          width="auto">
+                        <span>Complete este campo</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-item">
+                  <div class="row">
+                    <div class="col-12">
+                      <label>7. Seleccione la modalidad del complemento alimentario para el cual va a
+                        crear la minuta:</label>
+                    </div>
+                    <div class="col-12">
+                      <select class="form-control" formControlName="iD_TiposModalidadComplemento"
+                        [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_TiposModalidadComplemento.errors }"
+                        [disabled]="formMinutaCreacion.get('iD_VigenciaReferencia').value > 0"
+                        (ngModelChange)="changeModel(itemMinutaExcepcional, 'iD_TiposModalidadComplemento', $event)">
+                        <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                        <option *ngFor="let item of listTiposModalidadRacion" [ngValue]="item.id">{{item.nombre}}
+                        </option>
+                      </select>
+                      <div *ngIf="submittedMinutaCreacion && f.iD_TiposModalidadComplemento.errors" class="invalid-feedback">
+                        <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                          width="auto">
+                        <span>Complete este campo</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="form-item" *ngIf="!Minref">
+                <div class="row">
+                  <div class="col-12">
+                    <label *ngIf="formMinutaCreacion.get('iD_TipoModeloOperacionRefPAEPI').value != 2">8. Seleccione el
+                      tipo de complemento alimentario para el cual va a crear la minuta:</label>
+                    <label *ngIf="formMinutaCreacion.get('iD_TipoModeloOperacionRefPAEPI').value == 2">5.
+                      Seleccione el tipo de complemento alimentario para el cual va a crear la minuta:</label>
+                  </div>
+                  <div class="col-12">
+                    <select class="form-control" formControlName="iD_TiposRacion"
+                      [ngClass]="{ 'is-invalid': submittedMinutaCreacion && f.iD_TiposRacion.errors }"
+                      [disabled]="formMinutaCreacion.get('iD_VigenciaReferencia').value > 0">
+                      <option [ngValue]="itemSelect.id">{{itemSelect.nombre}}</option>
+                      <option *ngFor="let item of listTiposRacion" [ngValue]="item.id">{{item.nombre}}</option>
+                    </select>
+                    <div *ngIf="submittedMinutaCreacion && f.iD_TiposRacion.errors" class="invalid-feedback">
+                      <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="10px"
+                        width="auto">
+                      <span>Complete este campo</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </ng-container>
+
+
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-blue" (click)="cancelarMinutaExcepcional()">Cancelar</button>
+          <button *ngIf="!mostrarTodoCreacionMinuta" class="btn btn-blue ml-sm" (click)="siguiente()">Siguiente</button>
+          <button *ngIf="mostrarTodoCreacionMinuta" class="btn btn-blue ml-sm" (click)="siguienteCrearMinuta()">Crear
+            minuta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-xxl" [hidden]="!formVisible2">
+    <div class="col-12">
+
+    <!--   <div *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.creado || itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.rechazado" class="col-12 col-sm-5">
+        <ng-container *ngIf="permisos.editarCampo">
+          <div class="">
+            <button class="btn btn-blue text-left" style="width: 164px;" [disabled]="!itemsDisabled"
+              (click)="editarMinuta()">
+              <mat-icon>edit</mat-icon>
+              <span> Editar Minuta </span>
+            </button>
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-blue text-left" style="width: 164px;" [disabled]="!itemsDisabled"
+              (click)="eliminarMinuta()">
+              <img src="../../../../../assets/images/Iconos/delete_blue.png" />
+              <span>Eliminar Minuta</span>
+            </button>
+          </div>
+        </ng-container>
+      </div> -->
+
+      <div class="panel panel-blue">
+        <div class="panel-header noborder-bottom text-center">
+          <h4 class="panel-title">
+            <ng-container
+              *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.creado || itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.rechazado">
+              Formulario de registro - </ng-container> Minuta diferencial “{{itemMinutaExcepcional.nombre}}”
+          </h4>
+        </div>
+        <div class="panel-body">
+          <div class="pb-xxl border-bottom">
+            <div
+              *ngIf="NivEdu && (itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.creado || itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.rechazado) && itemMinutaExcepcional.iD_TipoModeloOperacion != 2"
+              class="flex justify-content-center align-items-center pt-md pb-md">
+              <div class="flex">
+                <img style="width: 35px; height: 35px;" src="../../../../../../assets/images/Iconos/admiracion.png">
+              </div>
+              <div class="flex ml-xs">
+                <span class="text-basecolor text-base-fontsize">
+                  Aseg&uacute;rese de diligenciar la Minuta para cada nivel educativo
+                </span>
+              </div>
+            </div>
+            <div class="tab-control-tertiary flex-md-row flex-column" *ngIf="NivEdu && itemMinutaExcepcional.iD_TipoModeloOperacion != 2">
+              <div *ngFor="let item of listTiposNivelEducativo" class="tab-item text-center w-down-100 flex-column"
+                [class]="item.active ? 'active' : ''" style="width: 20%;" (click)="clickTabNivelEducativo(item, false)">
+                <div *ngIf="NivEdu && itemMinutaExcepcional.iD_TipoModeloOperacion == 3" class="checkbox-red"
+                  [class]="item.estado ? '' : 'disabled'">
+                  <input id="check{{ item.iD_MinutaPatronAlimento }}" [checked]="item.estado"
+                    (change)="changeCheckNiveles($event, item)" type="checkbox" class="form-control" />
+                  <label for="check{{ item.iD_MinutaPatronAlimento }}">{{item.nivelEducativo}}</label>
+                </div>
+                <span *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion != 3">{{item.nivelEducativo}}</span>
+                <div class="tab-item text-center d-md-none py-lg-down-0 w-down-fit-content align-self-center border-down-none" *ngIf="item.estado">
+                  <app-semaforo [bgColor]="item.bgEstadoMinuta" [texto]="item.estadoMinuta"></app-semaforo>
+                  <!-- {{item.estadoMinuta}} -->
+                </div>
+              </div>
+            </div>
+            <div class="tab-control-state d-none d-md-flex " *ngIf="NivEdu && itemMinutaExcepcional.iD_TipoModeloOperacion != 2">
+              <ng-container *ngFor="let item of listTiposNivelEducativo">
+                <div style="width: 20%;">
+                  <div class="tab-item text-center mx-lg-down-0" *ngIf="item.estado">
+                    <app-semaforo [bgColor]="item.bgEstadoMinuta" [texto]="item.estadoMinuta"></app-semaforo>
+                    <!-- {{item.estadoMinuta}} -->
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="pt-xxl pb-xxl border-bottom">
+            <div class="flex flex-column flex-xl-row gap-down-10-px">
+              <app-chapter-azul *ngIf="bgColorChapterBlue" [numberChapter]="1"
+                [titleChapter]="'Composición y reglas'"></app-chapter-azul>
+              <app-chapter *ngIf="bgColorChapterRed" [numberChapter]="1"
+                [titleChapter]="'Composición y reglas'"></app-chapter>
+              <div *ngIf="permisos.editar" class="flex align-items-center ml-md">
+                <div>
+                  <button *ngIf="permisos.editar" class="btn btn-blue" (click)="editarMinuta()">Editar Minuta</button>
+                </div>
+              </div>
+              <div *ngIf="permisos.eliminar" class="flex align-items-center ml-md">
+                <div>
+                  <button class="btn btn-blue" (click)="eliminarMinuta()">Eliminar Minuta</button>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-12 mt-sm"
+              *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion == 2 || itemMinutaExcepcional.iD_TipoModeloOperacionRef==2">
+              <app-composicion-reglas-maer class="responsive-table" *ngIf="iD_MinutaPatronAlimento > 0"
+                [IdMinutaPatronAlimento]="iD_MinutaPatronAlimento" [ItemsDisabled]="!permisos.editarCampo" [TipoComplementoId]="itemMinutaExcepcional.iD_TiposRacion"
+                [itemComponente]="itemComponente" (dataSourceComponentesMod)="dataSourceComponentesMod($event)"
+                (dataComponentInPreparationsMod)="dataSourceComponentesPrepMod($event)" onchange="">>
+              </app-composicion-reglas-maer>
+            </div>
+
+
+            <div class="col-12 mt-md"
+              *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion != 2 && itemMinutaExcepcional.iD_TipoModeloOperacionRef!=2">
+              <ng-container *ngIf="bgColorChapterBlue">
+                <label class="text-basecolor no-margin"><b>MINUTA DIFERENCIAL {{itemTipoComplemento.nombre}}</b></label>
+                <ul class="list-style-default-blue">
+                  <li>Modalidad: {{itemModalidad.nombre}}</li>
+                  <li>Nivel educativo: {{objNivelEducativo.nivelEducativo}}</li>
+                  <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+                </ul>
+              </ng-container>
+              <ng-container *ngIf="bgColorChapterRed">
+                <label class="text-basered no-margin"><b>MINUTA DIFERENCIAL {{itemTipoComplemento.nombre}}</b></label>
+                <ul class="list-style-default">
+                  <li>Modalidad: {{itemModalidad.nombre}}</li>
+                  <li>Nivel educativo: {{objNivelEducativo.nivelEducativo}}</li>
+                  <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+                </ul>
+              </ng-container>
+            </div>
+
+            <div class="col-12 mt-sm responsive-table"
+              *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion != 2 && itemMinutaExcepcional.iD_TipoModeloOperacionRef!=2">
+              <table class="table-default table-border-dashed-vertical">
+                <thead>
+                  <tr class="text-center">
+                    <th width="10%">Componente</th>
+                    <th width="25%">Grupo de <br> alimentos</th>
+                    <th width="25%">Subgrupo de <br> alimentos</th>
+                    <th>Tamaño de la <br> porci&oacute;n (peso neto)</th>
+                    <th>Frecuencia</th>
+                    <th>Agregar o <br>eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                      <!-- Bebida con leche -->
+                      <ng-container *ngIf="itemComponente && itemComponente.listAlimentoComponente?.length > 0">
+                        <tr width="10%" class="text-center">
+                          <td [attr.rowspan]="itemComponente.totalRows" [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}">
+                            <img style="width: 45px; height: 45px;" *ngIf="itemComponente.imagen"
+                              src="../../../../../../assets/images/minutas/{{ itemComponente.imagen }}" />
+                            <br>
+                            {{ itemComponente.nombreComponente }}
+                          </td>
+                          <td [attr.rowspan]="itemComponente.listAlimentoComponente[0].totalRows"
+                            [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}">
+                            - {{ itemComponente.listAlimentoComponente[0].nombre }}
+                          </td>
+                          <td [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}">
+                            - {{ itemComponente.listAlimentoComponente[0].listSubGrupo[0].nombre }}
+                          </td>
+                          <td [attr.rowspan]="itemComponente.listAlimentoComponente[0].totalRows"
+                            [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}">
+                            <ng-container *ngIf="itemComponente.listAlimentoComponente[0].listSubGrupo[0].id == 4 &&
+                              (!permisos.editarCampo || (permisos.editarCampo  && !itemComponente.estado))">
+                              <span>
+                                Si es leche en<br>polvo: {{ itemComponente.listAlimentoComponente[0].min_Gramo }} g
+                                <br>
+                                Si es leche<br>líquida: {{ itemComponente.listAlimentoComponente[0].max_Gramo }} ml
+                              </span>
+                            </ng-container>
+                            <ng-container *ngIf="permisos.editarCampo && itemComponente.estado && itemComponente.listAlimentoComponente[0].listSubGrupo[0].id == 4">
+                              <div class="w-100">
+                                <span>
+                                  Si es leche en polvo: <br>
+                                  <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                                    [(ngModel)]="itemComponente.listAlimentoComponente[0].min_Gramo"> g
+                                </span>
+                              </div>
+                              <div class="w-100 mt-2">
+                                <span>
+                                  Si es leche líquida: <br>
+                                  <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                                    [(ngModel)]="itemComponente.listAlimentoComponente[0].max_Gramo"> ml
+                                </span>
+                              </div>
+                            </ng-container>
+                          </td>
+                          <td [attr.rowspan]="itemComponente.totalRows" [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}">
+                            <label *ngIf="!permisos.editarCampo || (permisos.editarCampo  && !itemComponente.estado)">
+                              {{ itemComponente.nombreFrecuencia }}
+                            </label>
+                            <select class="control-md" id="disabledFrecuencia{{ itemComponente.id }}"
+                              *ngIf="permisos.editarCampo && itemComponente.estado" [(ngModel)]="itemComponente.frecuencia"
+                              (ngModelChange)="changeModelMinuta('frecuencia', $event, itemComponente)">
+                              <option value="0">Elija una opción</option>
+                              <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+                            </select>
+                          </td>
+                          <td [attr.rowspan]="itemComponente.totalRows" class="text-center">
+                            <ng-container *ngIf="!permisos.editarCampo">
+                              <a>
+                                Ver lista de <br>intercambios
+                              </a>
+                            </ng-container>
+                            <ng-container *ngIf="permisos.editarCampo">
+                              <ng-container *ngIf="itemComponente.estado; else componenteEstadoInactivo">
+                                <button class="btn border-0 col-1" disabled>
+                                  <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                                    src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                                </button>
+                                <button class="btn border-0 col-1" (click)="abrirModalEditarComponente(itemComponente)">
+                                  <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                                    src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                                </button>
+                                <button class="btn border-0 col-1"
+                                  (click)="actualizarEstadoComponente(itemComponente.iD_TipoComponente, false)">
+                                  <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                                    src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                                </button>
+                              </ng-container>
+                              <ng-template #componenteEstadoInactivo>
+                                <button class="btn border-0 col-1"
+                                  (click)="actualizarEstadoComponente(itemComponente.iD_TipoComponente, true)">
+                                  <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                                    src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                                </button>
+                                <button class="btn border-0 col-1" disabled>
+                                  <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                                    src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                                </button>
+                                <button class="btn border-0 col-1" disabled>
+                                  <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                                    src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                                </button>
+                              </ng-template>
+                            </ng-container>
+                          </td>
+                        </tr>
+                        <!-- Grupos restantes Bebida con Leche -->
+                        <ng-container *ngFor="let grupo of itemComponente.listAlimentoComponente; index as iGrupoItem">
+                          <tr *ngIf="iGrupoItem != 0" class="text-center">
+                            <td [attr.rowspan]="grupo.totalRows" class="dinamic-table-border-left-dashed"
+                              [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}">
+                              - {{ grupo.nombre }}
+                            </td>
+                            <td [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}">
+                              - {{ grupo.listSubGrupo[0].nombre}}
+                            </td>
+                            <td [attr.rowspan]="grupo.totalRows" [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}"
+                              class="dinamic-table-noborder-right">
+                              <ng-container *ngIf="!permisos.editarCampo || !itemComponente.estado">
+                                <span>{{ grupo.min_Gramo }}</span>
+                                <span>{{ grupo.unidadMedida }}</span>
+                                <span> - </span>
+                                <span>{{ grupo.max_Gramo }}</span>
+                                <span>{{ grupo.unidadMedida }}</span>
+                              </ng-container>
+                              <ng-container *ngIf="permisos.editarCampo && itemComponente.estado">
+                                <span class="mr-xs">
+                                  <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                                    [(ngModel)]="grupo.min_Gramo">
+                                  {{ grupo.unidadMedida }}
+                                </span>
+                                <span> - </span>
+                                <span class="mr-xs">
+                                  <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                                    [(ngModel)]="grupo.max_Gramo">
+                                  {{ grupo.unidadMedida }}
+                                </span>
+                              </ng-container>
+                            </td>
+                          </tr>
+                          <!-- SubGrupos restantes Grupos Bebida con Leche -->
+                          <ng-container *ngFor="let subGrupo of grupo.listSubGrupo; index as ISubGrupoGrupoItem">
+                            <tr *ngIf="ISubGrupoGrupoItem != 0" class="text-center">
+                              <td [ngClass]="{'opacity-50': permisos.editarCampo && !itemComponente.estado}"
+                                class="dinamic-table-noborder-right dinamic-table-border-left-dashed">
+                                - {{ subGrupo.nombre }}
+                              </td>
+                            </tr>
+                          </ng-container>
+                          <!-- Fin SubGrupos restantes Grupos Bebida con Leche -->
+                        </ng-container>
+                        <!-- Fin Grupos restantes Bebida con Leche -->
+                      </ng-container>
+                      <!-- Fin Bebida con leche -->
+                      <!-- Componente Alimento Proteico Complemento Almuerzo  -->
+                       <ng-container *ngIf="itemMinutaExcepcional.iD_TiposRacion == 1">
+                        <ng-container *ngIf="dataSourceAlimentoProteico">
+                          <tr class="text-center">
+                            <td [attr.rowspan]="dataSourceAlimentoProteico.totalRows" [ngClass]="{'opacity-50': permisos.editarCampo && !dataSourceAlimentoProteico.estado}">
+                              <img style="width: 45px; height: 45px;" src="../../../../../../assets/images/minutas/{{ dataSourceAlimentoProteico.imagen }}" /><br />
+                                {{ dataSourceAlimentoProteico.nombreComponente }}
+                            </td>
+                            <td [attr.rowspan]="dataSourceAlimentoProteico.listAlimentoComponente[0].totalRows"
+                              [ngClass]="{'opacity-50': !permisos.editarCampo && !dataSourceAlimentoProteico.estado}">
+                              - {{ dataSourceAlimentoProteico.listAlimentoComponente[0].nombre }}
+                            </td>
+                            <td [ngClass]="{'opacity-50': !permisos.editarCampo && !dataSourceAlimentoProteico.estado}">
+                              - {{ dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].nombre }}
+                            </td>
+                            <td [attr.rowspan]="dataSourceAlimentoProteico.totalRows"
+                            [ngClass]="{'opacity-50': !permisos.editarCampo && !dataSourceAlimentoProteico.estado, 'bgAliceBlue' : !(2 % 2)}">
+                            <ng-container *ngIf="!permisos.editarCampo || (permisos.editarCampo  && !dataSourceAlimentoProteico.estado)">
+                              <ng-container *ngIf="dataSourceAlimentoProteico.minVisible">
+                                <span>{{dataSourceAlimentoProteico.textoMsg + ' ' + dataSourceAlimentoProteico.min_Gramo + ' ' + dataSourceAlimentoProteico.listAlimentoComponente[0]?.unidadMedida}}</span>
+                              </ng-container>
+                              <ng-container *ngIf="dataSourceAlimentoProteico.minVisible && dataSourceAlimentoProteico.maxVisible">
+                                <span class="ml-xs mr-xs">-</span>
+                              </ng-container>
+                              <ng-container *ngIf="dataSourceAlimentoProteico.maxVisible">
+                                <span>{{dataSourceAlimentoProteico.max_Gramo + ' ' + dataSourceAlimentoProteico.listAlimentoComponente[0]?.unidadMedida + ' ' + dataSourceAlimentoProteico.textoMsg}}</span>
+                              </ng-container>
+                            </ng-container>
+
+                            <ng-container *ngIf="permisos.editarCampo && dataSourceAlimentoProteico.estado">
+                              <ng-container *ngIf="dataSourceAlimentoProteico.minVisible">
+                                <div style="display: inline;">
+                                  <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                                    [(ngModel)]="dataSourceAlimentoProteico.min_Gramo">
+                                  <span>{{' ' + dataSourceAlimentoProteico.listAlimentoComponente[0].unidadMedida}}</span>
+                                </div>
+                              </ng-container>
+                              <ng-container *ngIf="dataSourceAlimentoProteico.minVisible && dataSourceAlimentoProteico.maxVisible">
+                                <span class="ml-xs mr-xs">-</span>
+                              </ng-container>
+                              <ng-container *ngIf="dataSourceAlimentoProteico.maxVisible">
+                                <div style="display: inline;">
+                                  <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                                    [(ngModel)]="dataSourceAlimentoProteico.max_Gramo">
+                                  <span>{{' ' + dataSourceAlimentoProteico.listAlimentoComponente[0].unidadMedida}}</span>
+                                </div>
+                              </ng-container>
+                            </ng-container>
+
+                            </td>
+                            <td>
+                              <label *ngIf="!permisos.editarCampo || (permisos.editarCampo  && !dataSourceAlimentoProteico.estado)">
+                                {{ dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].nombreFrecuencia }}
+                                <span *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].id == 1"><br>(Carnes)</span>
+                                <span *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].id == 19"><br>(Huevo)</span>
+                                <span *ngIf="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].id == 7"><br>(Leguminosas)</span>
+                              </label>
+                              <select class="control-md" id="disabledFrecuencia{{ dataSourceAlimentoProteico.id }}"
+                                *ngIf="permisos.editarCampo && dataSourceAlimentoProteico.estado" [(ngModel)]="dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0].frecuencia"
+                                (ngModelChange)="changeModelMinuta('frecuencia', $event, dataSourceAlimentoProteico.listAlimentoComponente[0].listSubGrupo[0])">
+                                <option value="0">Elija una opción</option>
+                                <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+                              </select>
+                            </td>
+                            <ng-container *ngIf="AlimentoProteicoSubGrupoIA && AlimentoProteicoSubGrupoII">
+                              <td [attr.rowspan]="2">
+
+                              </td>
+                            </ng-container>
+                            <td [attr.rowspan]="dataSourceAlimentoProteico.totalRows">
+                              <ng-container *ngIf="!permisos.editarCampo">
+                                <a>
+                                  Ver lista de <br>intercambios
+                                </a>
+                              </ng-container>
+                              <ng-container *ngIf="permisos.editarCampo">
+                                <ng-container *ngIf="dataSourceAlimentoProteico.estado; else componenteEstadoInactivo">
+                                  <button class="btn border-0 col-1" disabled>
+                                    <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                                      src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                                  </button>
+                                  <button class="btn border-0 col-1" (click)="abrirModalEditarComponente(dataSourceAlimentoProteico)">
+                                    <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                                      src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                                  </button>
+                                  <button class="btn border-0 col-1"
+                                    (click)="actualizarEstadoComponente(dataSourceAlimentoProteico.iD_TipoComponente, false)">
+                                    <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                                      src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                                  </button>
+                                </ng-container>
+                                <ng-template #componenteEstadoInactivo>
+                                  <button class="btn border-0 col-1"
+                                    (click)="actualizarEstadoComponente(dataSourceAlimentoProteico.iD_TipoComponente, true)">
+                                    <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                                      src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                                  </button>
+                                  <button class="btn border-0 col-1" disabled>
+                                    <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                                      src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                                  </button>
+                                  <button class="btn border-0 col-1" disabled>
+                                    <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                                      src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                                  </button>
+                                </ng-template>
+                              </ng-container>
+                            </td>
+                          </tr>
+                          <ng-container *ngFor="let grupo of dataSourceAlimentoProteico.listAlimentoComponente; index as iGrupoAlimentoProteico">
+                            <tr *ngIf="iGrupoAlimentoProteico != 0" class="text-center"
+                              [ngClass]="{'opacity-50': permisos.editarCampo && !dataSourceAlimentoProteico.estado}">
+                              <td [attr.rowspan]="grupo.totalRows" [ngClass]="{'opacity-50': permisos.editarCampo && !dataSourceAlimentoProteico.estado}"
+                                class="dinamic-table-border-left-dashed">
+                                - {{ grupo.nombre }}
+                              </td>
+                              <td [ngClass]="{'opacity-50': permisos.editarCampo && !dataSourceAlimentoProteico.estado}"
+                                class="dinamic-table-noborder-right">
+                                - {{ grupo.listSubGrupo[0].nombre }}
+                              </td>
+                              <td class="dinamic-table-noborder-right">
+                                <label *ngIf="!permisos.editarCampo || (permisos.editarCampo  && !dataSourceAlimentoProteico.estado)">
+                                  {{ grupo.listSubGrupo[0].nombreFrecuencia }}
+                                  <span *ngIf="grupo.listSubGrupo[0].id == 1"><br>(Carnes)</span>
+                                  <span *ngIf="grupo.listSubGrupo[0].id == 19"><br>(Huevo)</span>
+                                  <span *ngIf="grupo.listSubGrupo[0].id == 7"><br>(Leguminosas)</span>
+                                </label>
+                                <select class="control-md" id="disabledFrecuencia{{ dataSourceAlimentoProteico.id }}"
+                                  *ngIf="permisos.editarCampo && dataSourceAlimentoProteico.estado" [(ngModel)]="grupo.listSubGrupo[0].frecuencia"
+                                  (ngModelChange)="changeModelMinuta('frecuencia', $event, grupo.listSubGrupo[0])">
+                                  <option value="0">Elija una opción</option>
+                                  <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+                                </select>
+                              </td>
+                            </tr>
+                            <ng-container *ngFor="let subGrupo of grupo.listSubGrupo; index as iSubGrupoGrupoComponente">
+                              <ng-container *ngIf="subGrupo">
+                                <tr *ngIf="iSubGrupoGrupoComponente != 0" class="text-center">
+                                  <td [ngClass]="{'opacity-50': permisos.editarCampo && !dataSourceAlimentoProteico.estado}"
+                                    class="dinamic-table-border-left-dashed dinamic-table-noborder-right">
+                                    - {{ subGrupo.nombre }}
+                                  </td>
+                                  <td class="dinamic-table-noborder-right">
+                                    <label *ngIf="!permisos.editarCampo || (permisos.editarCampo  && !dataSourceAlimentoProteico.estado)">
+                                      {{ subGrupo?.nombreFrecuencia }}
+                                      <span *ngIf="subGrupo?.id == 1"><br>(Carnes)</span>
+                                      <span *ngIf="subGrupo?.id == 19"><br>(Huevo)</span>
+                                      <span *ngIf="subGrupo?.id == 7"><br>(Leguminosas)</span>
+                                    </label>
+                                    <select class="control-md" id="disabledFrecuencia{{ dataSourceAlimentoProteico.id }}"
+                                      *ngIf="permisos.editarCampo && dataSourceAlimentoProteico.estado" [(ngModel)]="subGrupo.frecuencia"
+                                      (ngModelChange)="changeModelMinuta('frecuencia', $event, subGrupo)">
+                                      <option value="0">Elija una opción</option>
+                                      <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+                                    </select>
+                                  </td>
+                                </tr>
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- Fin Componente Alimento Proteico Complemento Almuerzo  -->
+                      <!-- Componentes restantes -->
+                       <ng-container *ngIf="dataSourceComponentes">
+                        <ng-container *ngFor="let componente of dataSourceComponentes; index as iComponente">
+                          <ng-container *ngIf="componente.listAlimentoComponente.length > 0">
+                            <tr class="text-center">
+                              <td [attr.rowspan]="componente.totalRows"
+                                [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+                                <img style="width: 45px; height: 45px;" src="../../../../../../assets/images/minutas/{{ componente.imagen }}" /><br />
+                                {{ componente.nombreComponente }}
+                              </td>
+                              <td [attr.rowspan]="componente.listAlimentoComponente[0].totalRows"
+                                [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+                                - {{ componente.listAlimentoComponente[0].nombre }}
+                              </td>
+                              <td [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+                                - {{ componente.listAlimentoComponente[0].listSubGrupo[0].nombre }}
+                              </td>
+                              <td [attr.rowspan]="componente.totalRows"
+                                [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+                                <ng-container *ngIf="!permisos.editarCampo || (!itemsDisabled  && !componente.estado)">
+                                  <ng-container *ngIf="componente.minVisible">
+                                    <span>{{componente.textoMsg + ' ' + componente.min_Gramo + ' ' + componente.listAlimentoComponente[0]?.unidadMedida}}</span>
+                                  </ng-container>
+                                  <ng-container *ngIf="componente.minVisible && componente.maxVisible">
+                                    <span class="ml-xs mr-xs">-</span>
+                                  </ng-container>
+                                  <ng-container *ngIf="componente.maxVisible">
+                                    <span>{{componente.max_Gramo + ' ' + componente.listAlimentoComponente[0]?.unidadMedida + ' ' + componente.textoMsg}}</span>
+                                  </ng-container>
+                                </ng-container>
+
+                                <ng-container *ngIf="permisos.editarCampo && componente.estado">
+                                  <ng-container *ngIf="componente.minVisible">
+                                    <div style="display: inline;">
+                                      <input type="number" style="width: 50px;" class="control-md text-center noUpDown"
+                                        [(ngModel)]="componente.min_Gramo">
+                                      <span>{{' ' + componente.listAlimentoComponente[0].unidadMedida}}</span>
+                                    </div>
+                                  </ng-container>
+                                  <ng-container *ngIf="componente.minVisible && componente.maxVisible">
+                                    <span class="ml-xs mr-xs">-</span>
+                                  </ng-container>
+                                  <ng-container *ngIf="componente.maxVisible">
+                                    <div style="display: inline;">
+                                      <input type="number" style="width: 50px; display: inline-block;" class="control-md text-center noUpDown"
+                                        [(ngModel)]="componente.max_Gramo">
+                                      <span>{{' ' + componente.listAlimentoComponente[0].unidadMedida}}</span>
+                                    </div>
+                                  </ng-container>
+                                </ng-container>
+                              </td>
+                              <td [attr.rowspan]="componente.totalRows" [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+                                <label *ngIf="!permisos.editarCampo || (permisos.editarCampo  && !componente.estado)">
+                                  {{ componente.nombreFrecuencia }}
+                                </label>
+                                <select *ngIf="permisos.editarCampo && componente.estado"
+                                  class="control-md" id="disabledFrecuencia{{ componente.id }}"
+                                  [(ngModel)]="componente.frecuencia" (ngModelChange)="changeModelMinuta('frecuencia', $event, componente)">
+                                  <option value="0">Elija una opción</option>
+                                  <option *ngFor="let item of listFrecuencias" [ngValue]="item.id">{{ item.nombre }}</option>
+                                </select>
+                              </td>
+                              <td [attr.rowspan]="componente.totalRows" [ngClass]="{'bgAliceBlue' : !(iComponente % 2)}">
+                                <a *ngIf="!permisos.editarCampo">Ver lista de<br>intercambios</a>
+                                <ng-container *ngIf="permisos.editarCampo">
+                                  <ng-container *ngIf="componente.estado; else componenteEstadoInactivo">
+                                    <button class="btn border-0 col-1" disabled>
+                                      <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                                        src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                                    </button>
+                                    <button class="btn border-0 col-1" (click)="abrirModalEditarComponente(componente)">
+                                      <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                                        src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                                    </button>
+                                    <button class="btn border-0 col-1" (click)="actualizarEstadoComponente(componente.iD_TipoComponente, false)">
+                                      <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                                        src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                                    </button>
+                                  </ng-container>
+                                  <ng-template #componenteEstadoInactivo>
+                                    <button class="btn border-0 col-1" (click)="actualizarEstadoComponente(componente.iD_TipoComponente, true)">
+                                      <img alt="agregar" class="ml-n3" style="width: 20px; height: 20px"
+                                        src="../assets/iconos_PAE/PNG/Iconos_PAE-51.png" />
+                                    </button>
+                                    <button class="btn border-0 col-1" disabled>
+                                      <img alt="editar" class="ml-n3" style="width: 20px; height: 20px"
+                                        src="../assets/iconos_PAE/PNG/Iconos_PAE-52.png" />
+                                    </button>
+                                    <button class="btn border-0 col-1" disabled>
+                                      <img alt="eliminar" class="ml-n3" style="width: 20px; height: 20px"
+                                        src="../assets/iconos_PAE/SVG/Iconos_PAE-53.svg" />
+                                    </button>
+                                  </ng-template>
+                                </ng-container>
+                              </td>
+                            </tr>
+                            <ng-container *ngFor="let grupo of componente.listAlimentoComponente; index as iGrupoComponente">
+                              <tr *ngIf="iGrupoComponente != 0" class="text-center"
+                                [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}">
+                                <td [attr.rowspan]="grupo.totalRows" [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}"
+                                  class="dinamic-table-border-left-dashed">
+                                  - {{ grupo.nombre }}
+                                </td>
+                                <td [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}"
+                                  class="dinamic-table-noborder-right">
+                                  - {{ grupo.listSubGrupo[0].nombre }}
+                                </td>
+                              </tr>
+                              <ng-container *ngFor="let subGrupo of grupo.listSubGrupo; index as iSubGrupoGrupoComponente">
+                                <tr *ngIf="iSubGrupoGrupoComponente != 0" class="text-center">
+                                  <td [ngClass]="{'opacity-50': permisos.editarCampo && !componente.estado, 'bgAliceBlue' : !(iComponente % 2)}"
+                                    class="dinamic-table-border-left-dashed dinamic-table-noborder-right">
+                                    - {{ subGrupo.nombre }}
+                                  </td>
+                                </tr>
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="pt-xxl pb-xxl border-bottom">
+            <app-chapter-azul *ngIf="bgColorChapterBlue" [numberChapter]="2"
+              [titleChapter]="'Aporte nutricional'"></app-chapter-azul>
+            <app-chapter *ngIf="bgColorChapterRed" [numberChapter]="2"
+              [titleChapter]="'Aporte nutricional'"></app-chapter>
+
+            <div class="row mt-4"
+              *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion == 2 || itemMinutaExcepcional.iD_TipoModeloOperacionRef==2">
+              <div class="col-12 offset-sm-1 col-sm-10">
+                <app-aporte-nutricional-maer class="responsive-table" *ngIf="iD_MinutaPatronAlimento > 0"
+                  [iD_MinutaPatronAlimento]="iD_MinutaPatronAlimento" [itemsDisabled]="!permisos.editarCampo"
+                  [tipoMinuta]="tipoMinutaMAER" (dataMacroNutrientesMod)="dataMacroNutrientesMod($event)"
+                  (dataMicroNutrientesMod)="dataMicroNutrientesMod($event)">
+                </app-aporte-nutricional-maer>
+              </div>
+            </div>
+
+
+            <div class="col-12 mt-md"
+              *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion != 2 && itemMinutaExcepcional.iD_TipoModeloOperacionRef!=2">
+              <ng-container *ngIf="bgColorChapterBlue">
+                <label class="text-basecolor no-margin"><b>MINUTA DIFERENCIAL {{itemTipoComplemento.nombre}}</b></label>
+                <ul class="list-style-default-blue">
+                  <li>Modalidad: {{itemModalidad.nombre}}</li>
+                  <li>Nivel educativo: {{objNivelEducativo.nivelEducativo}}</li>
+                  <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+                </ul>
+              </ng-container>
+              <ng-container *ngIf="bgColorChapterRed">
+                <label class="text-basered no-margin"><b>MINUTA DIFERENCIAL {{itemTipoComplemento.nombre}}</b></label>
+                <ul class="list-style-default">
+                  <li>Modalidad: {{itemModalidad.nombre}}</li>
+                  <li>Nivel educativo: {{objNivelEducativo.nivelEducativo}}</li>
+                  <li>Nivel de actividad f&iacute;sica: {{itemActividadFisica.nombre}}</li>
+                </ul>
+              </ng-container>
+            </div>
+
+            <div class="col-12 mt-sm"
+              *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion != 2 && itemMinutaExcepcional.iD_TipoModeloOperacionRef!=2">
+              <div class="row">
+                <div class="col-12 offset-sm-1 col-sm-10 fle-xl-row flex-column info-aportes">
+                  <div *ngFor="let item of aportes" class="item-info">
+                    <div>
+                      <p><b>{{item.title}}</b><br>{{item.description}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 mt-xxl responsive-table"
+              *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion != 2 && itemMinutaExcepcional.iD_TipoModeloOperacionRef!=2">
+              <table class="table-default table-border-dashed-vertical">
+                <thead>
+                  <tr class="text-center">
+                    <th class="empty"></th>
+                    <th class="border-top-left-radius-md p-xxs noborder-bottom" colspan="100">Macronutrientes</th>
+                  </tr>
+                  <tr class="text-center">
+                    <th class="empty border-bottom"></th>
+                    <th class="noBorder-radius" [class]="i === 0 ? 'border-left' : ''"
+                      *ngFor="let item of dataMacroNutrientes; index as i">
+                      {{item.nomNutriente}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td width="150px">
+                      Aporte m&iacute;nimo
+                    </td>
+                    <td width="150px" class="text-center" *ngFor="let item of dataMacroNutrientes">
+                      <label *ngIf="!permisos.editarCampo">
+                        {{item.aporteMinimo | number : '1.0-2'}}
+                      </label>
+                      <input type="text" class="control-md text-center" id="disabledAporteMinimo{{item.id}}"
+                        *ngIf="permisos.editarCampo" [(ngModel)]="item.aporteMinimo"
+                        [ngModelOptions]="{standalone: true}"
+                        (focusout)="validateAlert(item, itemModalidad, itemActividadFisica, itemTipoComplemento)"
+                        (ngModelChange)="changeModelMinutaNutriente('aporteMinimo', $event, item)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Recomendado
+                    </td>
+                    <td class="text-center" *ngFor="let item of dataMacroNutrientes">
+                      <label>
+                        {{ item.aporteRecomendadoMin | number : '1.0-2' }}
+                      </label>
+                      <!-- <input type="text"
+                           style="width: 50px; display: inline-block;"
+                           *ngIf="permisos.editarCampo && !item.calculado"
+                           class="form-control text-center"
+                           [(ngModel)]="item.aporteRecomendado"
+                           [ngModelOptions]="{standalone: true}"
+                           (ngModelChange)="changeModelMinutaNutriente('aporteRecomendado', $event, item)"> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Regla de Adecuaci&oacute;n
+                    </td>
+                    <td class="text-center" *ngFor="let item of dataMacroNutrientes">
+                      <label>Mínimo {{item.porcentajeAdecuacionMin | percent}}</label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="col-12 mt-xxl responsive-table"
+              *ngIf="itemMinutaExcepcional.iD_TipoModeloOperacion != 2 && itemMinutaExcepcional.iD_TipoModeloOperacionRef!=2">
+              <table class="table-default table-border-dashed-vertical">
+                <thead>
+                  <tr class="text-center">
+                    <th class="empty"></th>
+                    <th class="border-top-left-radius-md p-xxs noborder-bottom" colspan="100">Micronutrientes</th>
+                  </tr>
+                  <tr class="text-center">
+                    <th class="empty border-bottom"></th>
+                    <th class="noBorder-radius" [class]="i === 0 ? 'border-left' : ''"
+                      *ngFor="let item of dataMicroNutrientes; index as i">
+                      {{item.nomNutriente}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td width="150px">
+                      Aporte m&iacute;nimo
+                    </td>
+                    <td width="150px" class="text-center" *ngFor="let item of dataMicroNutrientes">
+                      <label *ngIf="!permisos.editarCampo">
+                        {{item.aporteMinimo | number : '1.0-2'}}
+                      </label>
+                      <input type="text" class="control-md text-center" id="disabledAporteMinimo{{item.id}}"
+                        *ngIf="permisos.editarCampo" [(ngModel)]="item.aporteMinimo"
+                        [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="changeModelMinutaNutriente('aporteMinimo', $event, item)">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Recomendado
+                    </td>
+                    <td class="text-center" *ngFor="let item of dataMicroNutrientes">
+                      <label>
+                        {{item.aporteRecomendadoMin | number : '1.0-2'}}
+                      </label>
+                      <!-- <input type="text"
+                           style="width: 50px; display: inline-block;"
+                           *ngIf="permisos.editarCampo && !item.calculado"
+                           class="form-control text-center"
+                           [(ngModel)]="item.aporteRecomendado"
+                           [ngModelOptions]="{standalone: true}"
+                           (ngModelChange)="changeModelMinutaNutriente('aporteRecomendado', $event, item)"> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Regla de Adecuaci&oacute;n
+                    </td>
+                    <td class="text-center" *ngFor="let item of dataMicroNutrientes">
+                      <ng-container>
+                        <label *ngIf="item.idNutriente == 4" class="text-nowrap">Máximo {{item.porcentajeAdecuacionMin + 'mg/Kcal'}}</label>
+                        <label *ngIf="item.idNutriente != 4">Mínimo {{item.porcentajeAdecuacionMin | percent}}</label>
+                      </ng-container>
+                      <!-- <ng-container *ngIf="!itemsDisabled">
+                        <input type="text" style="width: 50px; display: inline-block;" *ngIf="!itemsDisabled"
+                        class="control-md text-center" [(ngModel)]="item.porcentajeAdecuacionMin" [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="changeModelMinutaNutriente('porcentajeAdecuacionMin', $event, item)">
+                      </ng-container> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="pt-xxl pb-xxl border-bottom">
+            <app-chapter-azul *ngIf="bgColorChapterBlue" [numberChapter]="3" [titleChapter]="'Justificación'"></app-chapter-azul>
+            <app-chapter *ngIf="bgColorChapterRed" [numberChapter]="3" [titleChapter]="'Justificación'"></app-chapter>
+
+            <div class="col-12 mt-md">
+              <textarea *ngIf="objNivelEducativo" class="form-control" [disabled]="!permisos.editarCampo" rows="3"
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="objNivelEducativo.justificacion"
+                (ngModelChange)="changeModelJustificacion(objNivelEducativo, 'justificacion', $event)">
+            </textarea>
+            </div>
+
+            <div class="col-12 mt-xs">
+              <div style="display: inline-block; overflow: hidden;">
+                <div *ngIf="permisos.editarCampo" class="btn-fileUpload" (click)="uploadPDF()">
+                  <span>Adjunte el archivo</span>
+                  <img class="float-right ml-3" src="../assets/images/Iconos/input-file.png">
+                  <input class="" type="file" id="fileUpload" name="fileUpload" accept="application/pdf">
+                </div>
+                <a class="visorPDF" (click)="abrirPDF(modalPDF)"
+                  *ngIf="itemMinutaExcepcional.nombreArchivoResolucion && itemMinutaExcepcional.nombreArchivoResolucion != ''">
+                  {{itemMinutaExcepcional.nombreArchivoResolucion}}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.creado ||
+                             itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.rechazado">
+            <div class="pt-sm pb-sm">
+              <div class="row no-margin flex-xl-row flex-column gap-down-10-px">
+                <div class="col-12 col-xl-6">
+                  <button class="btn btn-blue w-down-100" (click)="guardarContinuar(false, null)">Guardar y continuar m&aacute;s
+                    tarde</button>
+                </div>
+                <div class="col-12 col-xl-6 text-right d-flex d-xl-block flex-column-reverse gap-down-10-px">
+                  <button class="btn btn-blue w-down-100" (click)="anterior()">Anterior</button>
+                  <button *ngIf="permisos.agregar" class="btn btn-blue w-down-100 ml-sm ml-lg-down-0"
+                    (click)="NivEdu ? crearMinuta() : crearMinutaSinNivel()">Crear minuta y
+                    notificar al Coordinador PAE</button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta != estadoMinuta.creado &&
+                             itemMinutaExcepcional.iD_TipoEstadoMinuta != estadoMinuta.rechazado">
+            <!--    <div class="pt-xxl pb-xxl border-bottom">
+              <app-chapter-azul [numberChapter]="4" [titleChapter]="'Observaciones'"></app-chapter-azul>
+
+              <div class="col-12 mt-md">
+                <textarea *ngIf="objNivelEducativo" class="form-control"
+                  [disabled]="itemMinutaExcepcional.iD_TipoEstadoMinuta != estadoMinuta.porAprobarUAPA " rows="3"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="objNivelEducativo.recomendaciones"
+                  (ngModelChange)="changeModelJustificacion(objNivelEducativo, 'recomendaciones', $event)">
+              </textarea>
+              </div>
+            </div> -->
+
+            <div class="d-flex mt-3">
+              <app-chapter-azul *ngIf="bgColorChapterBlue" [numberChapter]="4" [titleChapter]="'Aprobaciones'"
+                [numberBadge]="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.PoraprobarETC || itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarUAPA ||
+                             itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobar ? numberBadge : ''"></app-chapter-azul>
+              <app-chapter *ngIf="bgColorChapterRed" [numberChapter]="4" [titleChapter]="'Aprobaciones'"
+                [numberBadge]="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.PoraprobarETC || itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarUAPA ||
+                             itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobar ? numberBadge : ''"></app-chapter>
+            </div>
+            <div *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.PoraprobarETC ||
+              itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarUAPA ||
+              itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobar " class="pt-sm pb-sm px-3">
+              <div class="encabezado-text-underline">
+                <label>
+                  <img src="../assets/images/Iconos/solicitud-aprobacion.png" />
+                  Aprobaciones pendientes
+                </label>
+              </div>
+            </div>
+            <div *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.PoraprobarETC ||
+              itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarUAPA ||
+              itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobar ||
+              itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarConObs" class="pt-sm pb-sm">
+              <table class="table-aprovaciones">
+                <tr>
+                  <th colspan="2">1. Decisi&oacute;n de aprobaci&oacute;n</th>
+                </tr>
+                <tr>
+                  <td width="15%" class="text-center">
+                    <div>
+                      <button class="btn" [class]="
+                        itemAprobacion.iD_TipoEstadoMinuta == estadoMinuta.aprobado
+                              ? 'btn-green'
+                              : 'btn-default'
+                          " (click)="
+                             changeItemAprobacion('iD_TipoEstadoMinuta', estadoMinuta.aprobado)
+                          ">
+                        Aprobar
+                      </button>
+                    </div>
+                    <div>
+                      <button class="btn mt-sm" [class]="
+                            itemAprobacion.iD_TipoEstadoMinuta == estadoMinuta.rechazado
+                              ? 'btn-red'
+                              : 'btn-default'
+                          " (click)="
+                             changeItemAprobacion('iD_TipoEstadoMinuta', estadoMinuta.rechazado)
+                          ">
+                        Rechazar
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <label>Observaciones / Justificaciones</label>
+                      <input type="text" class="form-control input-aprobacion" [ngModelOptions]="{ standalone: true }"
+                        [ngModel]="objNivelEducativo.recomendaciones"
+                        (ngModelChange)="changeModelJustificacion(objNivelEducativo, 'recomendaciones', $event)">
+
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div *ngIf="
+                  (itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.PoraprobarETC ||
+                  itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarUAPA ||
+                  itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobar ||
+                  itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarConObs) &&
+                  permisos.aprobar
+                " class="col-12 mt-sm text-right pr-xxl">
+              <button class="btn btn-blue"
+                (click)="actualizarEstadoMinutaExcepcional(itemAprobacion.iD_TipoEstadoMinuta)">
+                Enviar resultado
+              </button>
+            </div>
+
+
+
+            <div class="pt-xxl pb-xxl border-bottom">
+              <app-chapter-azul *ngIf="bgColorChapterBlue" [numberChapter]="5" [titleChapter]="'Historico aprobaciones'"></app-chapter-azul>
+              <app-chapter *ngIf="bgColorChapterRed" [numberChapter]="5" [titleChapter]="'Historico aprobaciones'"></app-chapter>
+
+              <div class="col-12 mt-md responsive-table-pae">
+                <table class="table-default table-hover-disabled">
+                  <thead>
+                    <tr class="text-center">
+                      <th>Fecha Aprobaci&oacute;n</th>
+                      <th>Responsable</th>
+                      <th>Rol Responsable</th>
+                      <th>Acci&oacute;n</th>
+                      <th>Observaciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="text-center" *ngFor="let item of listMinutasAprobaciones">
+                      <td data-label="Fecha aprobación">{{item.fechaAprobacionString}}</td>
+                      <td data-label="Responsable">{{item.responsable}}</td>
+                      <td data-label="Rol Responsable">{{item.rolResponsable}}</td>
+                      <td data-label="Acción">{{item.accion}}</td>
+                      <td data-label="Observaciones">{{item.observaciones}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!--     <div *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.PoraprobarETC ||
+                      itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarUAPA ||
+                      itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobar ||
+                      itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarConObs" class="pt-sm pb-sm">
+              <div class="row no-margin">
+                <div class="col-12 col-sm-6">
+                  <ng-container *ngIf="permisos.aprobar">
+                    <button *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta != estadoMinuta.porAprobarUAPA"
+                      class="btn btn-default" (click)="actualizarEstadoMinutaExcepcional(true)">Rechazar</button>
+                    <button *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta != estadoMinuta.porAprobar
+                               || itemMinutaExcepcional.iD_TipoEstadoMinuta != estadoMinuta.porAprobar"
+                      class="btn btn-default" (click)="devolverEstadoMinutaExcepcional()">ENVIAR PARA OBSERVACIONES DE
+                      UAPA</button>
+                  </ng-container>
+                </div>
+                <div class="col-12 col-sm-6 text-right">
+                  <button class="btn btn-blue" (click)="anterior()">Anterior</button>
+                  <button class="btn btn-blue ml-sm"
+                    *ngIf="(permisos.aprobar && textButtonAprobar == 'Aprobar') || (permisos.editar && textButtonAprobar == 'Por Aprobar' && itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.porAprobarUAPA)"
+                    (click)="actualizarEstadoMinutaExcepcional(false)">{{textButtonAprobar}}</button>
+                </div>
+              </div>
+            </div> -->
+
+            <div *ngIf="itemMinutaExcepcional.iD_TipoEstadoMinuta == estadoMinuta.aprobado" class="pt-sm pb-sm">
+              <div class="row no-margin">
+                <div class="col-12 text-right">
+                  <button class="btn btn-blue" (click)="anterior()">Anterior</button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="tabSelected == 2">
+  <app-minuta-maem-leve></app-minuta-maem-leve>
+</div>
+<div *ngIf="tabSelected == 3">
+  <app-minutas-en-uso></app-minutas-en-uso>
+</div>
+ <app-spinner *ngIf="loadingVisible"></app-spinner>
+
+<ng-template #modalPDF>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>

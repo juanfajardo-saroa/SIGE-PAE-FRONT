@@ -1,0 +1,509 @@
+@import '/src/assets/styles/variable.scss';
+
+mat-card,
+mat-card-title,
+mat-card-content,
+div,
+input {
+    color: #005ACA;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+.col-12 {
+    padding: 0px 0px 0px 0px !important;
+}
+
+mat-select {
+    padding: 0px !important;
+}
+
+::ng-deep.mat-select-value,
+::ng-deep.mat-option-text {
+    color: #005ACA !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-panel {
+    max-width: 100% !important;
+    font-size: 13px !important;
+}
+
+::ng-deep.mat-select-placeholder {
+    font-size: 13px !important;
+}
+
+div.col {
+    margin: 1% !important;
+}
+
+.TituloDialog {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #E6EFFD;
+    text-align: center;
+    padding: 10px 0px;
+    width: 100%;
+}
+
+.maxWidth {
+    max-width: 100% !important;
+}
+
+.tablaForm3 {
+    width: 100%;
+    border-color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 20px !important;
+    margin: 0% 5% 0% 5%;
+}
+
+.tablaForm2 {
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 69.8%;
+    height: 30%;
+    margin: 2% 0% 2% 0% !important;
+    padding: 3px;
+}
+
+.bordeIzq {
+    border-left: 1px solid #005ACA !important;
+    border-radius: 20px !important;
+}
+
+.lineSolid {
+    border-top: 1px solid #005ACA;
+}
+
+.lineDashed {
+    border-bottom: 1px dashed #005ACA;
+}
+
+.lineDashed2 {
+    border-top: 1px dashed #005ACA;
+}
+
+.positionTable {
+    width: 90%;
+    margin-top: 2%;
+}
+
+.tablaForm {
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 70%;
+    height: 30%;
+    margin: 2% 0% 2% 0% !important;
+    padding: 3px;
+}
+
+.alignTd {
+    width: 40%;
+}
+
+.TextosBlueLeft {
+    margin-left: 5%;
+    text-align: left;
+    float: left;
+}
+
+.TextosBlueLeft2 {
+    margin-left: 8%;
+    text-align: left;
+    float: left;
+}
+
+.buttonImg {
+    background-color: #ffff;
+    color: #005ACA;
+    border: 1px solid #005ACA;
+    border-radius: 8px !important;
+    width: 30%;
+    height: 30%;
+    margin: 2% 0% 2% 0% !important;
+}
+
+button.buttonImg {
+    padding: 0% !important;
+}
+
+.buttonRadiusI {
+    width: 20%;
+    border-bottom-left-radius: 8px !important;
+    border-top-left-radius: 8px !important;
+    border-bottom-right-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+}
+
+.buttonRadiusD {
+    width: 20% !important;
+    border-bottom-right-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+}
+
+.BordeRedondoAgregar {
+    border-radius: 20px;
+    border: solid 1px #005ACA;
+    background-color: #005ACA;
+    color: #ffff;
+    padding: 2px 20px;
+    margin: 0px 2px 0px 0px;
+}
+
+.BordeRedondoAgregar:disabled {
+    opacity: 0.2 !important;
+}
+
+.marginIzq {
+    margin: 0px 0px 0px 2px !important;
+}
+
+.alignCenter {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.titleTableBlue {
+    background-color: #005ACA;
+    color: #ffff;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 1%;
+    text-align: center;
+    width: 100%;
+    float: left;
+}
+
+.container {
+    width: 100%;
+    padding: 0%;
+}
+
+::ng-deep.mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 30px 30px 30px 30px !important;
+    border: $base-azulPAE 1px solid;
+    box-shadow: none;
+    margin: 0%;
+}
+
+.container,
+.container-fluid,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.row2 {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col3 {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    margin-left: 10px;
+}
+
+.row {
+    margin: 0 -10px;
+    width: 100%;
+}
+
+.col4 {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    position: relative;
+}
+
+.margen1 {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.TituloDialog4 {
+    background-color: #E6EFFD;
+    text-align: center;
+    color: $base-azulPAE;
+    display: block;
+    margin: auto;
+    width: 100%;
+    border-bottom: $base-azulPAE 1px solid;
+    font-size: 13px !important;
+    border-top: 1px solid $base-azulPAE;
+    border-left: 1px solid $base-azulPAE;
+    border-right: 1px solid $base-azulPAE;
+}
+
+.tituloneto {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-sizing: content-box;
+    margin-bottom: -24px;
+    min-height: 0px;
+    padding: 5px;
+}
+
+.CenterButton {
+    margin: auto;
+    display: -webkit-inline-box;
+    font-size: $base-fontSize !important;
+}
+
+.TituloDialog5 {
+    text-align: center;
+    color: $base-azulPAE;
+    display: block;
+    margin: auto;
+    width: 100%;
+    font-size: 13px !important;
+}
+
+mat-card-header {
+    padding-bottom: 20px;
+}
+
+.margenbox {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.listOption {
+    background-color: #ffff;
+    border: 1px solid #005ACA;
+    color: #005ACA !important;
+    width: 25%;
+    margin: 2% 0% 2% 0% !important;
+    justify-content: center;
+}
+
+.listOption2 {
+    background-color: #ffff;
+    border: 1px solid #005ACA;
+    color: #005ACA !important;
+    width: 12%;
+    margin: 2% 0% 2% 0% !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content-reverse,
+.mat-list-base .mat-list-option .mat-list-item-content-reverse {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    cursor: pointer;
+}
+
+mat-selection-list {
+    padding: 0% !important;
+
+    .mat-list-option {
+        display: inline-block;
+        height: auto;
+        width: auto;
+        cursor: pointer;
+        text-align: center !important;
+    }
+}
+
+mat-list-option[aria-selected="true"] {
+    color: $gov-white !important;
+    background-color: $base-azulPAE !important;
+}
+
+mat-list-option:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+mat-list-option:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.colorTextTable {
+    color: #005ACA;
+    width: 60% !important;
+    padding-left: 10px !important;
+    text-align: left;
+}
+
+.inputTable {
+    background-color: #ffff;
+    width: 50% !important;
+    text-align: center;
+    margin-right: 1rem !important;
+    float: right;
+}
+
+.alignElement {
+    padding-top: 1.2rem !important;
+    padding-bottom: 1.2rem !important;
+}
+
+.alignElementMacronutriente {
+    padding-top: 0.3rem !important;
+    padding-bottom: 0.3rem !important;
+}
+
+td.mat-cell:first-of-type,
+td.mat-cell:last-of-type {
+    padding: 0%;
+}
+
+.textButtonImg {
+    float: center !important;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 0% !important;
+}
+
+.pestanaGrado {
+    border: 1px solid #005ACA !important;
+    background-color: #ffff !important;
+    padding: 1% 0% !important;
+    float: left !important;
+    width: 20%;
+    text-align: center !important;
+    cursor: pointer !important;
+}
+
+.borderTable {
+    padding: 3% !important;
+    margin: 2.5% -3% 0% -3% !important;
+    border: 1px solid #005ACA !important;
+    border-radius: 10px !important;
+}
+
+.pestanaGrado.active div,
+.pestanaGrado.active {
+    color: $gov-white !important;
+    background-color: $base-azulPAE !important;
+}
+
+.yellowCircle {
+    color: #ffd400;
+}
+
+.greenCircle {
+    color: #009922;
+}
+
+.grayCircle {
+    color: #E2ECFD;
+}
+
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: center !important;
+    justify-self: center !important;
+    font-size: 12px !important;
+    border-radius: 20px !important;
+    background-image: url(../../../../../../assets/iconos_PAE/PNG/FondoMatrizDialog.png);
+    background-size: contain !important;
+    padding: 2% 0% !important;
+    width: 30%;
+    color: $base-color !important;
+    background-position: top !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
+    display: inline-block;
+    object-fit: contain !important;
+}
+
+::ng-deep.swal2-close {
+    color: #ffff;
+    margin-top: -15px !important;
+    box-shadow: none !important;
+    background-color: transparent;
+    font-size: 2em !important;
+}
+
+.TextWarning {
+    float: left;
+    margin:-10px -1% 2% 1.8%;
+    line-height: 15px;
+    font-size: 13px !important;
+    color: red;
+    text-align: justify;
+}
+
+.alignImg{
+    margin-left: 72%;
+    margin-top: -75px;
+}
+
+
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .spinner {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+@import "~bootstrap/scss/bootstrap-grid";
+
+@include media-breakpoint-down(lg) {
+  ::ng-deep.swal2-container.swal2-center>.swal2-popup {
+    width: 100%;
+  }
+
+  .alignImg{
+    margin: 0%;
+  }
+}

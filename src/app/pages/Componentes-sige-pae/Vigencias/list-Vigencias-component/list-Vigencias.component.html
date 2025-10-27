@@ -1,0 +1,149 @@
+<div class="row" style="margin: 0!important;">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #E23465;">Vigencias </div>
+    </div>
+    <div class="tab-item nothing" style="width: 70%;">
+      <div>-</div>
+    </div>
+  </div>
+</div>
+<br>
+<div fxLayout="row wrap">
+  <div>
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row wrap" class="align-items-center acomodarAll">
+          <div class="BordeRedondoFiltroAvanzado w-down-100">
+            <div class="FullSize">
+              <div>
+                <input matInput (keyup)="applyFilter($any($event).target.value)"
+                  placeholder="Buscar Vigencias por nombre" class="form-control buscar">
+              </div>
+            </div>
+            <div>
+              <div class="text-center">
+                <a class="TextBlue" style="margin-right:10px ;">
+                  <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " height="50px" width="auto">
+                </a>
+              </div>
+            </div>
+
+          </div>
+         <!--  <div fxFlex.gt-md="15" fxFlex.gt-lg="15" class="BordeRedondoAgregar" [ngClass]="{'linkdisable':!getModulePermission(59,'crear')}">
+            <div class="text-center">
+              <a class="btn-registrar"
+                (click)="openDialog('Adicionar',{})">
+                <img src="../.././../assets/images//Iconos/add_blue.png">
+                <p class="LetraRegistro">Registrar Vigencias</p>
+              </a>
+            </div>
+          </div> -->
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="table-responsive responsive-table-pae">
+          <!-- <div style="width: 100%; float: right;">
+            <div class="titletable">Vigencias</div>
+          </div> -->
+          <table mat-table [dataSource]="dataSource" class="left-radius" matSort>
+
+            <div fxLayout="row wrap">
+
+              <!-- <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef class="CheckboxCenter">
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox class="CheckboxCenter" (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                  </mat-checkbox>
+                </td>
+              </ng-container> -->
+
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "> <b>N°</b> </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="N°">
+                  {{element.id == null ? '-' :(element.id)}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b> Nombre</b></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Nombre">
+                  {{element.nombre == null ? '-' :(element.nombre)}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="ano">
+                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; "><b> Año</b></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Año">
+                  {{element.ano == null ? '-' :(element.ano)}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="fechaInicial">
+                <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "> <b>Fecha Inicial</b>
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Fecha Inicial">
+                  {{element.fechaInicial == null ? '-' :(element.fechaInicial)}} </td>
+              </ng-container>
+              <ng-container matColumnDef="union">
+                <th class="NoVer" mat-header-cell *matHeaderCellDef [attr.colspan]="4"><b>Jornada</b></th>
+              </ng-container>
+              <ng-container matColumnDef="titulo">
+                <th class="titletable" mat-header-cell *matHeaderCellDef [attr.colspan]="2" style="background-color:#005ACA!important;"><b>Vigencias</b></th>
+              </ng-container>
+              <ng-container matColumnDef="vigenciaActual">
+                <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "> <b>Vigencia Actual</b>
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Vigencia Actual">
+                  {{element.vigenciaActual == null ? '-' :(element.vigenciaActual ? 'Sí':'No')}} </td>
+              </ng-container>
+
+              <!-- <ng-container matColumnDef="auditoria">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 0px; "> Auditoria</th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                  {{element.auditoria == null ? '-' :(element.auditoria)}} </td>
+              </ng-container> -->
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><b> Acciones</b> </th>
+                <td mat-cell *matCellDef="let element" class="action-link">
+                  <a [ngClass]="{'linkdisable':!getModulePermission(59,'editar')}"
+                    (click)="openDialog('Actualizar',element)" class="m-r-10 cursor-pointer">
+                    <img src="../../../../../../assets/images/Iconos/edit_blue.png">
+                  </a>
+                  <a [ngClass]="{'linkdisable':!getModulePermission(59,'eliminar')}"
+                    (click)="openDialog('Eliminar',element)" class="m-r-10 cursor-pointer">
+                    <img src="../../../../../../assets/images/Iconos/delete_blue.png">
+                  </a>
+                </td>
+              </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['union', 'titulo']"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let myRowData; columns: displayedColumns;"></tr>
+            </div>
+          </table>
+          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
+          </mat-paginator>
+          <div *ngIf="isLoading"
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+

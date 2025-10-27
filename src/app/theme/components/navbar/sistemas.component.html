@@ -1,0 +1,105 @@
+<body *ngIf="validaInicio == 'false'">
+  <div class="navbar-logo float-left navbar-container">
+    <a class="navbar-brand" href="http://190.60.233.154/">
+      <img src="../../../../assets/images/logogov.png" width="auto" height="30" alt="Logo Gov.co" />
+    </a>
+  </div>
+  <div class="navbar-container2 px-sm-down-0 d-flex justify-content-center d-md-block">
+    <a class="navbar-brand text-size-down-1 mx-sm-down-0">
+      Unidad Administrativa Especial de Alimentación Escolar
+    </a>
+  </div>
+  <div class="navbar-container3">
+    <a class="navbar-brand Oculto">
+      ...
+    </a>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-6 col-lg-12 imagensubsistemas TitleBlue">
+      <!-- <br>
+            Unidad Administrativa Especial de Alimentación Escolar
+            <br>
+            <br>-->
+      <img src="../../../../../../assets/images/FotosPAE-03.png" alt="systemspage"
+        style="background-position: center;width: 100%;height: 100%;" class="imagensubsistemas">
+      <!-- <img src="../../../../../../assets/images/subsistemas.jpg" alt="systemspage"
+        style="width:-webkit-fill-available !important;background-size: 60% 100%; background-position: unset;"
+        class="imagensubsistemas"> -->
+    </div>
+    <div class="col-xl-6 col-12">
+      <div class="ImageMapa">
+        <img class="mapa" src="../../../../assets/iconos_PAE/PNG/Iconos_PAE-1.png" alt="systemspage" height="10%"
+          width="15%" style="margin-top: 5%;">
+      </div>
+      <div class="TextCenterBlue text-size-lg-down-1_2">
+        Bienvenido(a) al ECOSISTEMA de información SiPAE, <br> seleccione el sistema al que desea ingresar:
+        <br>
+      </div>
+
+      <div class="row">
+        <div class="col-sm col-12">
+          <mat-card (click)="onMiPAEClick()">
+            <div class="centrado">
+              <img class="imagen width-md-down-30-porc ml-md-down-35-porc" src="../../../../assets/iconos_PAE/PNG/Íconos_PAE-3.png" alt="systemspage"
+                height="30%" width="50%">
+            </div>
+            <mat-card-header class="TitleDialogMiPAE">
+              <div class="TextCenter">
+                MiPAE
+              </div>
+            </mat-card-header>
+            <mat-card-content class="TextCenterPAE BorderCardPAE">
+              Sistema de Gestión y Seguimiento de Beneficiarios.
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="col-sm col-12">
+          <mat-card (click)="onSiGEPAEClick()">
+            <div class="centrado">
+              <img class="imagen width-md-down-30-porc ml-md-down-35-porc" src="../../../../assets/iconos_PAE/PNG/Iconos_PAE-242.png" alt="systemspage"
+                height="30%" width="50%">
+            </div>
+            <mat-card-header class="TitleDialogSIGEPAE ">
+              <div class="TextCenter">
+                SiGE-PAE
+              </div>
+            </mat-card-header>
+            <mat-card-content class="TextCenterSIGEPAE BorderCardSIGEPAE">
+              Sistema Integral de Gestión y Evaluación del PAE.
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="col-sm col-12">
+          <mat-card (click)="onPAEstarClick()">
+            <!-- <mat-card class="SizeDialog CardDisabled" (click)="onPAEstarClick()"> -->
+            <a href="https://www.paestaraldia.gov.co/Home" target=“_blank”>
+              <div class="centrado">
+                <img class="imagen width-md-down-30-porc ml-md-down-35-porc" src="../../../../assets/iconos_PAE/PNG/Iconos_PAE-245.png" alt="systemspage"
+                  height="30%" width="50%">
+              </div>
+              <mat-card-header class="TitleDialogPAEstarAlDia">
+                <div class="TextCenter">
+                  PAEstar al día
+                </div>
+              </mat-card-header>
+              <mat-card-content class="TextCenterPAEstarAlDia BorderCardPAEstarAlDia">
+                Herramienta de control social y participación ciudadana.
+              </mat-card-content>
+            </a>
+          </mat-card>
+        </div>
+
+      </div>
+    </div>
+    <hr>
+  </div>
+  <footer class="footer">
+    <div class="container-fluid Texto TitleBlue text-size-down-1"
+      style="text-align: center; padding: 20px 0px; font-size: 1.5em; font-weight: 600;border-top: 1px solid gray;">
+      Unidad Administrativa Especial de Alimentación Escolar
+    </div>
+  </footer>
+</body>

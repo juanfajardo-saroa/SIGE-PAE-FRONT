@@ -1,0 +1,85 @@
+<div>
+    <br>
+    <div class="tablaForm3 bordeIzq">
+        <div class="row" [formGroup]="filterForm">
+            <div class="col-12 col-xl">
+                <mat-card class="spaceCol mx-lg-down-0" style="padding-left: 5px;">
+                    <mat-card-title>Grupo de alimentos</mat-card-title>
+                    <mat-select class="tablaForm control-md" id="grupo" required formControlName="grupo"
+                        (selectionChange)="onGrupoClick($event.value)" placeholder="Todos">
+                        <mat-option *ngFor="let item of grupoAlimentosList" [value]="item.id">{{item.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-card>
+            </div>
+            <div class="col-12 col-xl">
+                <mat-card class="spaceCol mx-lg-down-0">
+                    <mat-card-title>Subgrupo de alimentos</mat-card-title>
+                    <mat-select class="tablaForm control-md" id="subgrupo" required formControlName="subgrupo"
+                        placeholder="Todos">
+                        <mat-option *ngFor="let item of selectSubGrupoAlimentosList" [value]="item.iD_SubGrupoAlimento">
+                            {{item.subGrupoAlimento}}</mat-option>
+                    </mat-select>
+                </mat-card>
+            </div>
+            <div class="col-12 col-xl bordeDer border-right-down-none">
+                <mat-card class="mx-lg-down-0">
+                    <mat-card-title>Tipo</mat-card-title>
+                    <mat-select class="tablaForm control-md" id="tipo" required formControlName="tipo"
+                        placeholder="Todos">
+                        <mat-option *ngFor="let item of tiposAlimentosList" [value]="item.id">{{item.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-card>
+            </div>
+            <div class="d-flex flex-column d-xl-block w-down-100 justify-content-center">
+                <mat-card (click)="fillTable()">
+                    <div class="bordetd text-center" fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100">
+                        <a class="btn-agregar">
+                            <img class="imgFilter" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png"
+                                height="30px" width="auto">
+                        </a>
+                        <div class="textF">Buscar</div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="col iconR">
+        <img class="sizeImgR" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-284.png" width="auto" height="30px">
+        Resultados de la búsqueda de Productos
+        <hr class="lineR">
+    </div>
+    <br>
+    <div class="responsive-table-pae">
+        <table [dataSource]="dataSource" class="table-default" mat-table matSort>
+            <ng-container matColumnDef="NombreProducto">
+                <th mat-header-cell *matHeaderCellDef>Nombre del <br> producto</th>
+                <td class="px-lg-down-0" mat-cell *matCellDef="let element" data-label="Nombre producto">{{ element.nombre }}</td>
+            </ng-container>
+            <ng-container matColumnDef="FechaRegistroProducto">
+                <th mat-header-cell *matHeaderCellDef>Fecha de regístro<br> del producto</th>
+                <td class="px-lg-down-0" mat-cell *matCellDef="let element" data-label="Fecha reg. producto">{{ element.fechaRegistro | date:'dd-MMM-yyyy' | uppercase | withoutDots }}</td>
+            </ng-container>
+            <ng-container matColumnDef="TipoProducto">
+                <th mat-header-cell *matHeaderCellDef>Tipo de<br> producto</th>
+                <td class="px-lg-down-0" mat-cell *matCellDef="let element" data-label="Tipo producto">{{ element.sID_TipoAlimento }}</td>
+            </ng-container>
+            <ng-container matColumnDef="EstadoProducto">
+                <th mat-header-cell *matHeaderCellDef>Estado del<br>regístro</th>
+                <td class="px-lg-down-0" mat-cell *matCellDef="let element" data-label="Estado regístro">
+                    <mat-icon [ngClass]="getStateColor(element.iD_EstadoRegistro)">
+                        circle
+                    </mat-icon>
+                    {{ element.sID_EstadoRegistro }}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToDetail(row)" ></tr>
+        </table>
+        <mat-paginator style="color:#005ACA ;" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
+            showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</div>

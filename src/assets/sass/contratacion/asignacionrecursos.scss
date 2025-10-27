@@ -1,0 +1,53 @@
+@import '/src/assets/styles/variable.scss';
+.search-container-asignacion{
+  margin-bottom: 30px;
+
+  .btn-atras,
+  .nombre-resolucion,
+  .btn-filtrar{
+    display: table;
+    height: 80px;
+    float: left;
+    padding: 10px;
+    border: 1.5px solid $base-azulPAE;
+  }
+
+  .btn-atras{
+    text-align: center;
+    width: 60px;
+    border-radius: 15px;
+  }
+
+  .nombre-resolucion{
+    width: 300px;
+    margin-left: 30px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+  .nombre-resolucion select{
+    height: 30px;
+    font-size: 15px;
+    width: 100%;
+    color: $base-azulPAE;
+  }
+
+  .btn-filtrar{
+    text-align: center;
+    width: 66px;
+
+    border-left: none;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+
+  .nombre-resolucion label{
+    margin-bottom: 0;
+  }
+
+  .nombre-resolucion label,
+  .btn-atras a div,
+  .btn-filtrar a div{
+    color: $base-azulPAE;
+    font-size: 15px;
+  }
+}

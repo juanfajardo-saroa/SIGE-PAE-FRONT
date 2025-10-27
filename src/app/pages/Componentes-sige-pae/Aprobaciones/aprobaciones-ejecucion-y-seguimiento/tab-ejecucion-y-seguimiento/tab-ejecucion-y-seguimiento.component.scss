@@ -1,0 +1,48 @@
+@import '/src/assets/styles/variable.scss';
+
+*{
+  font-size: 13px;
+}
+/* --------------------------- TABS */
+
+:host ::ng-deep .mat-tab-label{
+    font-family: "Montserrat",sans-serif;
+    border-radius: 20px 20px 0px 0px !important;
+    color: $base-color !important;
+    font-size: 15px;
+    background-color: #E2ECFD !important;
+    width: 30%;
+  }
+  
+  :host ::ng-deep .mat-tab-label-active{
+    font-family: "Montserrat",sans-serif;
+    font-size: 15px;
+    border-width: 2px;
+    border-color: $base-color;
+    border-bottom-color:white;
+    border-style: solid solid hidden solid;
+    border-radius: 20px 20px 0px 0px !important;
+    color: $base-colorred !important;
+    background-color: white !important;
+    //width: 25%;
+  }
+  :host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none!important;
+    display: none!important;
+  }
+  :host ::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none!important;
+    display: none!important;
+    /* background-color: #1e88e5; */
+  }
+  :host ::ng-deep.blue .mat-tab-group.mat-primary .mat-ink-bar, .blue .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: none!important;
+    display: none!important;
+    /* background-color: #1e88e5; */
+  
+  }
+  /* --------------------------- FIN TABS */
+
+  .tab-control-secondary {
+    margin-left: 10px !important;
+}

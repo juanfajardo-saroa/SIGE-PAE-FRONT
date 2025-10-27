@@ -1,0 +1,407 @@
+<!-- <div fxLayout="row wrap">
+  <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row wrap" class="align-items-center">
+          <div class="text-right">
+            <table fxFlex.gt-md="100" fxFlex.gt-lg="100" class="align-items-center Acomodar">
+              <div fxLayout="row wrap" class="align-items-center">
+                <div fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100">
+                  <table class="tablaform2">
+                    <div class="bordeAtras ClickCursor">
+                      <a class="btn-agregar " (click)="RegresarBeneficiariosRaciones()"><img
+                          src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png "
+                          style="width:50px; height: 50px;"><br> Atrás
+                      </a>
+                    </div>
+                  </table>
+                </div>
+              </div>
+              <ng-container>
+                <div class="BordeRedondoLeft SizeFilter MarginSepara Acomodar" fxFlex.gt-md="100" fxFlex.gt-lg="100"
+                  fxFlex="100">
+                  <div style=" padding-left: 10px; width: 150px; padding-right: 10px;padding-bottom: 10px;
+                  padding-top: 10px" class="BordeBottom">
+                    <mat-card>
+                      <mat-card-title class="contratos">Contrato</mat-card-title>
+                      <div style="text-align: left; color:#005ACA">
+
+                        <mat-select class="tablaformc" name="idContrato" [(ngModel)]="idContrato2"
+                          [(value)]="selContrato" #idContrato="ngModel">
+                          <mat-option *ngFor="let i of TablaContratos" [value]="i.id">{{ i.numeroContrato }}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </mat-card>
+                  </div>
+
+                  <td class="MarginSepara separaIcon" fxFlex.gt-md="20" fxFlex.gt-lg="20" fxFlex="100">
+                    <div class="text-center">
+                      <a class="TextBlue">
+                        <img (click)="buscarContrato(selContrato)" style="cursor: pointer;"
+                          src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " height="50px"
+                          width="auto">Filtrar
+                      </a>
+                    </div>
+                  </td>
+                </div>
+              </ng-container>
+
+              <ng-container>
+                <div class="SizeBotones MarginSepara Acomodar" fxFlex.gt-md="50" fxFlex.gt-lg="50"
+                  (click)="IrATablaBenficiarios()">
+                  <td class="BotonLeft" style="display: flex;">
+                    <div class="Acomodar">
+                      <tr fxFlex.gt-md="30" fxFlex.gt-lg="30">
+                        <td class="CenterAll">
+                          <img style="cursor: pointer; float: left;"
+                            src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-259.png" height="50px" width="auto">
+                        </td>
+                      </tr>
+                      <tr fxFlex.gt-md="70" fxFlex.gt-lg="70">
+                        <td class="CenterAll">
+                          <div class="TextBlue" style="float: right; margin-left: 10px;">
+                            Ver información <br>
+                            de beneficiarios
+                          </div>
+                        </td>
+                      </tr>
+                    </div>
+                  </td>
+                </div>
+              </ng-container>
+              <ng-container>
+                <div class="SizeBotones Acomodar" fxFlex.gt-md="50" fxFlex.gt-lg="50">
+                  <td class="BotonRight" style="display: flex;">
+                    <div class="Acomodar">
+                      <tr fxFlex.gt-md="30" fxFlex.gt-lg="30">
+                        <td class="CenterAll">
+                          <img style="float: left;" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-257.png"
+                            height="50px" width="auto">
+                        </td>
+                      </tr>
+                      <tr fxFlex.gt-md="70" fxFlex.gt-lg="70">
+                        <td class="CenterAll">
+                          <div class="TextBlue" style="float: right;">
+                            Ver listado <br>
+                            de complementos
+                          </div>
+                        </td>
+                      </tr>
+                    </div>
+                  </td>
+                </div>
+              </ng-container>
+
+            </table>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<br><br>
+<div class="container-fluid content-wrapper">
+  <div class="row">
+    <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 banner-breadcrumbs" style="padding: 0!important;">
+      <div class="flex-wrap flex-md-nowrap mt-3">
+        <app-menadminuautorizado>
+          <ng-container autorizado>
+            <div class="row">
+              <div class="col-md-10">
+                <label class="banner-text">
+                  <strong class="strongheader"> Contrato No. {{nombreContrato}}</strong>
+                </label>
+              </div>
+              <div class="col-md-2 text-right">
+                <label class="anio-text">Año | <strong class="strongheader"></strong>{{ currentYear }}</label>
+              </div>
+            </div>
+
+            <div class="row LineaAzul">
+              <div class="col-12 text-right">
+                <label class="last-update-text">Ultima actualizaci&oacute;n
+                  <span> {{ dateToday | date: "longDate" }}</span></label>
+              </div>
+            </div>
+          </ng-container>
+        </app-menadminuautorizado>
+      </div>
+      <div class="mt-2">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="tab-control-secondary">
+    <div class="tab-item active" style="width: 30%;">
+      <div style="color: #00A9AB;">Listado de Complementos</div>
+    </div>
+    <div class="tab-item nothing" style="width: 70%;">
+      <div>-</div>
+    </div>
+  </div>
+</div> -->
+<br>
+<div *ngIf="operador" class="AlignRight flex-column">
+
+  <div class="d-flex flex-lg-row flex-column gap-10-px align-items-center">
+
+    <div class="d-flex flex-column flex-lg-row Redondeado gap-10-px py-4">
+
+      <!-- <div> -->
+
+      <div class="w-100" style="color: #005ACA; font-size: 13px; ">
+        <mat-card>
+          <mat-card-title style="color: #005ACA; font-size: 13px;">Municipio</mat-card-title>
+
+          <mat-select class="tablaformT" name="idContrato" placeholder="seleccione" [(value)]="selMunicipio"
+            (selectionChange)="onMunicipioClick($event.value)">
+            <mat-option [value]="-1">Todos
+            </mat-option>
+            <mat-option *ngFor="let i of selectDivipolaList" [value]="i.id_Municipio ">{{ i.municipio}}
+            </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+
+      <!-- </div> -->
+
+      <!-- <div> -->
+
+      <div class="w-100" style="color: #005ACA; font-size: 13px;">
+        <mat-card>
+          <mat-card-title style="color: #005ACA; font-size: 13px;">Institución educativa</mat-card-title>
+
+          <mat-select class="tablaformT" name="idContrato" placeholder="seleccione" [(value)]="selInst"
+            (selectionChange)="onInstClick($event.value)">
+            <mat-option [value]="-1">Todos
+            </mat-option>
+            <mat-option *ngFor="let i of selectInstitucionList" [value]="i.insid ">{{ i.institucionEdu }}
+            </mat-option>
+          </mat-select>
+
+        </mat-card>
+      </div>
+
+      <!-- </div> -->
+
+      <!-- <div> -->
+
+      <div class="w-100">
+        <mat-card>
+          <mat-card-title style="color: #005ACA; font-size: 13px;">Sede</mat-card-title>
+
+          <mat-select class="tablaformT" name="idContrato" placeholder="seleccione" [(value)]="selsede"
+            (selectionChange)="onSedeClick($event.value)">
+            <mat-option [value]="-1">Todos
+            </mat-option>
+            <mat-option *ngFor="let i of selectSedesList" [value]="i.id_Sede">{{ i.sedeEducativa}}
+            </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+
+      <!-- </div> -->
+
+      <div class="text-center centerIcon p-down-0 border-down-none" style=" padding: 10px;
+        border-left: 1px solid #005ACA; margin-top:0px;">
+        <a class="TextBlue">
+          <img (click)="buscarInfo(selMunicipio,selInst,selsede)" style="cursor: pointer;"
+            src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " height="50px" width="auto"> Filtrar
+        </a>
+      </div>
+
+    </div>
+
+    <div class="d-flex h-fit-content w-25 w-down-100">
+      <button class="BotonAzul w-down-100 justify-content-center" mat-raised-button
+        (click)="exporter.exportTable('xlsx', {fileName:'Resultados Beneficiarios'})">
+        <img style="cursor: pointer;" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4.png " height="18px"
+          width="auto" style="float: left; margin-right: 10px;">
+        <label>Descargar <span class="d-lg-block d-inline-block">Excel completo</span></label>
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<!---------rector --------------->
+<div *ngIf="!operador" style="padding: 15px;">
+
+  <div class="d-flex flex-lg-row flex-column gap-10-px align-items-center">
+    <div class="d-flex flex-column flex-lg-row Redondeado gap-10-px py-4 w-down-md-100" style="width: 30%;">
+
+      <div class="w-100">
+        <mat-card>
+          <mat-card-title style="color: #005ACA; font-size: 13px;">Sede</mat-card-title>
+
+          <mat-select class="tablaformT" name="idContrato" placeholder="seleccione" [(value)]="selsede"
+            (selectionChange)="onSedeClick($event.value)">
+            <mat-option [value]="-1">Todos
+            </mat-option>
+            <mat-option *ngFor="let i of selectSedesList" [value]="i.id_Sede">{{ i.sedeEducativa}}
+            </mat-option>
+          </mat-select>
+        </mat-card>
+      </div>
+
+      <div class="text-center centerIcon p-down-0 border-down-none" style=" padding: 10px;
+        border-left: 1px solid #005ACA; margin-top:0px;">
+        <a class="TextBlue">
+          <img (click)="buscarInfo(selMunicipio,selInst,selsede)" style="cursor: pointer;"
+            src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-49.png " height="50px" width="auto"> Filtrar
+        </a>
+      </div>
+
+    </div>
+
+    <div class="d-flex h-fit-content w-fit-content w-down-md-100 ml-auto">
+      <button class="BotonAzul w-down-100 justify-content-center" mat-raised-button
+        (click)="exporter.exportTable('xlsx', {fileName:'Resultados Beneficiarios'})">
+        <img style="cursor: pointer;" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-4.png " height="18px"
+          width="auto" style="float: left; margin-right: 10px;">
+        <label>Descargar <span class="d-lg-block d-inline-block">Excel completo</span></label>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<br>
+<br>
+
+<br>
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div class="table-responsive">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matTableExporter
+            #exporter="matTableExporter">
+
+            <ng-container matColumnDef="municipio">
+              <th mat-header-cell *matHeaderCellDef class="Invisible"> Municipio </th>
+              <td mat-cell *matCellDef="let element"> {{element.municipio == null ? '-' :(element.municipio)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="h_Muni">
+              <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Municipio</th>
+            </ng-container>
+
+            <ng-container matColumnDef="institucionEdu">
+              <th mat-header-cell *matHeaderCellDef class="Invisible"> Institución <br> Educativa </th>
+              <td mat-cell *matCellDef="let element"> {{element.institucionEdu == null ? '-' :(element.institucionEdu)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="h_SedeEducat">
+              <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> Institución <br> Educativa </th>
+            </ng-container>
+            <div *ngIf="operador">
+              <ng-container matColumnDef="sedeEducativa">
+                <th mat-header-cell *matHeaderCellDef class="Invisible"> Sede </th>
+                <td mat-cell *matCellDef="let element"> {{element.sedeEducativa == null ? '-' :(element.sedeEducativa)}}
+                </td>
+              </ng-container>
+            </div>
+            <div *ngIf="!operador">
+              <ng-container matColumnDef="sedeEducativa">
+                <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef class="Invisible"> Sede </th>
+                <td mat-cell *matCellDef="let element"> {{element.sedeEducativa == null ? '-' :(element.sedeEducativa)}}
+                </td>
+              </ng-container>
+            </div>
+
+            <div *ngIf="operador">
+              <ng-container matColumnDef="h_Sede">
+                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Sede</th>
+              </ng-container>
+            </div>
+            <div *ngIf="!operador">
+              <ng-container matColumnDef="h_Sede">
+                <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Sede</th>
+              </ng-container>
+            </div>
+
+            <ng-container matColumnDef="jornada">
+              <th mat-header-cell *matHeaderCellDef class="Invisible"> Jornada </th>
+              <td mat-cell *matCellDef="let element"> {{element.jornada == null ? '-' :(element.jornada)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="h_Jornada">
+              <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Jornada</th>
+            </ng-container>
+            <!-- ------------------MAEM----------------------------------------------------- -->
+            <ng-container matColumnDef="h_MAEM">
+              <th mat-header-cell *matHeaderCellDef [attr.colspan]="5">MAEM</th>
+            </ng-container>
+
+            <ng-container matColumnDef="almuerzoRPS">
+              <th mat-header-cell *matHeaderCellDef> Complemento <br> Almuerzo <br>PS </th>
+              <td mat-cell *matCellDef="let element"> {{element.almuerzoRPS == null ? '-' :(element.almuerzoRPS)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="compleRPS">
+              <th mat-header-cell *matHeaderCellDef> Complemento <br>AM/PM <br>PS </th>
+              <td mat-cell *matCellDef="let element"> {{element.compleRPS == null ? '-' :(element.compleRPS)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="compleRI">
+              <th mat-header-cell *matHeaderCellDef> Complemento <br> AM/PM <br> Ind </th>
+              <td mat-cell *matCellDef="let element"> {{element.compleRI == null ? '-' :(element.compleRI)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="almuerzoCatering">
+              <th mat-header-cell *matHeaderCellDef> Complemento <br> Almuerzo <br> CCT </th>
+              <td mat-cell *matCellDef="let element"> {{element.almuerzoCatering == null ? '-'
+                :(element.almuerzoCatering)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="compCatering">
+              <th mat-header-cell *matHeaderCellDef> Complemento <br>AM/PM <br> CCT </th>
+              <td mat-cell *matCellDef="let element"> {{element.compCatering == null ? '-' :(element.compCatering)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalRacionesDia">
+              <th mat-header-cell *matHeaderCellDef class="Invisible"> Total <br> Complementos <br> Diarios </th>
+              <td mat-cell *matCellDef="let element"> {{element.totalRacionesDia == null ? '-'
+                :(element.totalRacionesDia)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="h_Tota">
+              <th class="RightUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="5"> Total <br> complementos
+                <br> diarios
+              </th>
+            </ng-container>
+            <div *ngIf="operador">
+              <tr mat-header-row
+                *matHeaderRowDef="['h_Muni', 'h_SedeEducat', 'h_Sede', 'h_Jornada', 'h_MAEM', 'h_Tota']"></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </div>
+            <div *ngIf="!operador">
+              <tr mat-header-row *matHeaderRowDef="['h_Sede', 'h_Jornada', 'h_MAEM', 'h_Tota']"></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsrec"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsrec;"
+                (click)="IrADetalle(row.municipio, row.institucionEdu, row.sedeEducativa)"></tr>
+            </div>
+          </table>
+          <mat-paginator style="color: #005ACA;" #paginator [pageSize]="10 " [pageSizeOptions]="[5, 10, 50, 100] "
+            showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<br>
+<div *ngIf="operador">
+  <app-tabla-novedades></app-tabla-novedades>
+</div>

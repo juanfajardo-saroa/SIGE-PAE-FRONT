@@ -1,0 +1,746 @@
+
+<div class="row mt-xl mb-xl">
+
+  <table *ngIf="!displaySearch" class="tableFiltroUsuario ml-3" style="max-width: 100px">
+    <tr class="text-center">
+      <td width="10%">
+        <a (click)="noVerContrato()">
+          <img src="../../../../../../assets/iconos_PAE/PNG/Iconos_PAE-50.png" alt="atras" style="width: 30px;" />
+          <div>Atrás</div>
+        </a>
+      </td>
+    </tr>
+  </table>
+ 
+  
+  <div class="d-flex flex-column flex-xl-row mx-2 table-filter table-filter-border w-down-100" style="width: 80%;">
+
+    <div class="table-filter-border-right px-3 py-2 w-down-100" style="width: 38%;">
+      <span>Tipo de contrato</span>
+      <select id="tipoContrato" [(ngModel)]="idTipoContrato">
+        <option selected value="0">Todos</option>
+        <option *ngFor="let i of dsTipoContrato" [ngValue]="i.id">{{i.nombre}}</option>
+      </select>
+    </div>
+    <div class="table-filter-border-right px-3 py-2 w-down-100" style="width: 24%;">
+      <span>No. de Contrato</span>
+      <input [ngModelOptions]="{standalone: true}" class="form-control input-aprobacion" type="text" name="buscarOperador"
+        [ngModel]="numeroContrato" (ngModelChange)="changeSearch('contrato', $event)" maxlength="50" />
+    </div>
+    <div class="table-filter-border-right px-3 py-2 w-down-100" style="width: 33%;">
+      <span>Operador</span>
+      <select id="tipoContrato" [(ngModel)]="idOperador" disabled="{{ sinoperador }}">
+        <option selected value="0">Todos</option>
+        <option *ngFor="let i of operadoresList" [ngValue]="i.id">{{i.nombreRazonSocial}}</option>
+      </select>
+    </div>
+    <div class="d-flex justify-content-center w-down-100" style="width: 5%;">
+      <a (click)="consultaContratos()">
+        <img src="../assets/images/Iconos/search_blue.png" />
+        <div>Filtrar</div>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="col-12">
+  <div *ngIf="displayMCP || displayMCPAR || displaySearch!=true" class="encabezado-text-underline">
+    <label *ngFor="let item of listSedesContratosHojaContrato">
+      <img src="../assets/images/Iconos/Resultado_contrato.png">
+      Contrato No. {{item.numeroContrato}}
+    </label>
+  </div>
+</div>
+<div class="row my-3" *ngIf="displayMCP || displayMCPAR || displaySearch!=true">
+  <div class="col-12 col-xl-10 responsive-table-pae">
+    <table class="table-default table-red">
+      <thead>
+        <tr class="text-center">
+          <th><img width="45" height="45" class="mr-2" src="../assets/iconos_PAE/SVG/Iconos_PAE-109.svg">Operador:</th>
+          <th><img width="30" height="30" class="mr-2" src="../assets/iconos_PAE/SVG/Iconos_PAE-128.svg">Fecha de
+            inicio:</th>
+          <th><img width="30" height="30" class="mr-2" src="../assets/iconos_PAE/SVG/Iconos_PAE-129.svg">Fecha estimada
+            de finalización:</th>
+          <th><img width="30" height="30" class="mr-2" src="../assets/iconos_PAE/SVG/Iconos_PAE-130.svg">Valor del
+            contrato:</th>
+          <th><img width="30" height="30" class="mr-2" src="../assets/iconos_PAE/SVG/Iconos_PAE-127.svg">Ficha de
+            contrato:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contratoHoja of listSedesContratosHojaContrato" class="text-center">
+          <td data-label="Operador" style="border-right: dotted;border-right-width: 1px !important;">
+            {{contratoHoja.nomOperador}}</td>
+          <td data-label="F. inicio" style="border-right: dotted;border-right-width: 1px !important;">
+            {{dateUtil.formatearFecha(contratoHoja.fechalnicioContrato)}}</td>
+          <td data-label="F. E. finalización" style="border-right: dotted;border-right-width: 1px !important;">
+            {{dateUtil.formatearFecha(contratoHoja.fechaFinalContrato)}}</td>
+          <td data-label="V. contrato" style="border-right: dotted;border-right-width: 1px !important;">
+            {{contratoHoja.valorTotalContrato|currency:'$':'symbol':'1.0-2'}}</td>
+          <td data-label="Fic. contrato">
+            <div [outerHTML]="contratoHoja.estadoContrato | semaforo"></div> {{contratoHoja.estadoContrato}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-12 col-xl-2 d-flex align-items-center"
+    *ngIf="(listSedesContratosHojaContrato.length > 0 && listSedesContratosHojaContrato[0].estadoContrato=='Aprobada') && getModulePermission(13, 'aprobar')"
+    (click)="editModificaciones(listSedesContratosHojaContrato[0])">
+    <img width="40" height="40" class="mr-2" src="../assets/iconos_PAE/SVG/Iconos_PAE-52.svg" />
+    <label class="form-label mt-2">Modificar<br>contrato</label>
+  </div>
+</div>
+
+<div *ngIf="displaySearch" class="row">
+  <div class="col-12">
+    <div class="tab-control-items d-flex">
+      <div class="tab-item">
+        <h3>Contratos</h3>
+      </div>
+      <div class="flex-grow-1 tab-item-blank"></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="displaySearch" class="rsow">
+  <div class="col-12">
+    <div *ngIf="displaySearch" class="encabezado-text-underline">
+      <label>
+        <img src="../assets/images/Iconos/Resultado_contrato.png">
+        Resultados de la b&uacute;squeda de Contratos
+      </label>
+    </div>
+  </div>
+
+  <app-registro-contratos-detalle class="mt-1" *ngIf="displaySearch != true" [hojaContrato]="hojaContrato"
+    [idOperacion]="idOperador" [idContrato]="idContrato" [tipoContratoId]="tipoContratoId"
+    [subTipoContratoId]="subTipoContratoId" [itemDeContrato]="itemContrato" [idRowAprobacion]="idRowAprobacion"
+    (cancelar)="activarGridViewDetalleAndSearch($event)"></app-registro-contratos-detalle>
+
+
+  <!-- LIST BUSQUEDA CONTRATOS -->
+  <div *ngIf="displaySearch" class="col-12 mt-sm responsive-table-pae">
+    <table class="table-default table-hover">
+      <thead>
+        <tr class="text-center">
+          <th *ngFor="let item of displayedColumnsContratos">{{item.descripcion}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center" *ngFor="let item of dataTabla">
+          <td data-label="Núm. contrato" (click)="verContrato(item)">{{item.numeroContrato}}</td>
+          <td data-label="Operador" (click)="verContrato(item)">{{item.nombreRazonSocial ?? '-'}}</td>
+          <td data-label="T. contrato" (click)="verContrato(item)">{{item.tipoContrato}}</td>
+          <td data-label="Mo. operación" (click)="verContrato(item)">{{item.modeloOperacion ?? '-'}}</td>
+          <td class="w-down-100" data-label="F. inicio" width="115px" (click)="verContrato(item)">
+            {{item.fechalnicioContratoString}}</td>
+          <td class="w-down-100" data-label="F. finalización" width="115px" (click)="verContrato(item)">
+            {{item.fechaFinalContratoString}}</td>
+          <td data-label="Valor" (click)="verContrato(item)">{{item.valor|currency:'$':'symbol':'1.0-2'}}</td>
+          <td data-label="Fich. contrato" (click)="verContrato(item)">
+            <div [outerHTML]="item.fichaEstado | semaforo"></div> {{item.fichaEstado}}
+          </td>
+        </tr>
+      </tbody>
+
+      <tfoot class="table-paginator">
+        <tr>
+          <td colspan="10">
+            <div>
+              <span>Items:</span>
+              <span>
+                <select [(ngModel)]="itemCant" (ngModelChange)="changeCantItems($event)">
+                  <option *ngFor="let item of itemsPerPages" [ngValue]="item">{{item}}</option>
+                </select>
+              </span>
+              <span>
+                {{itemIni}} - {{itemFin}} de {{dataContratos.length}}
+              </span>
+              <span>
+                <mat-icon class="first-last" [class]="disabledFirstPage ? 'disabled' : ''"
+                  (click)="changePage(1, -1, disabledFirstPage)">first_page</mat-icon>
+                <mat-icon class="previous-next" [class]="disabledPreviousPage ? 'disabled' : ''"
+                  (click)="changePage(2, -1, disabledPreviousPage)">arrow_back_ios</mat-icon>
+                <mat-icon class="previous-next" [class]="disabledNextPage ? 'disabled' : ''"
+                  (click)="changePage(2, 1, disabledNextPage)">arrow_forward_ios</mat-icon>
+                <mat-icon class="first-last" [class]="disabledLastPage ? 'disabled' : ''"
+                  (click)="changePage(1, 1, disabledLastPage)">last_page</mat-icon>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div *ngIf="displayDD!=true" class="col-12 mt-sm">
+    <div class="container-sin-registros">
+      <div class="container-body">
+        <div class="container-icon">
+          <img style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+        </div>
+        <div class="container-text">
+          No hay resultados disponibles. Si el Operador que busca no aparece, dé click en “Registrar Operador” e
+          inscríbalo llenando el “Registro Único de Operadores”.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="displaySearch" class="row">
+  <div class="col-auto col-xl-5 text-right mt-3">
+    <div class="container-mensaje" style="padding:5px;">
+      <img style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+    </div>
+  </div>
+  <div class="col col-xl-5 text-left mt-3">
+    <div class="container-mensaje">
+      <b>Antes de agregar un contrato, </b> asegúrese de que el Operador de dicho <br /> contrato ya <b> est&eacute;
+        registrado </b> en el sistema.
+    </div>
+  </div>
+  <div *ngIf="getModulePermission(13,'crear')"
+    class="col-12 col-xl-2 text-left mt-3">
+    <button class="msg-alerta" (click)="goToPage()">
+      <div style="float: left; margin-right: 5px;">
+        <img src="../assets/images/Iconos/agregar.png">
+      </div>
+      <div>
+        Agregar <br /> contrato
+      </div>
+    </button>
+  </div>
+</div>
+
+<app-registro-contratos-detalle class="mt-5" *ngIf="gridViewDetalle && hojaContrato" [hojaContrato]="hojaContrato"
+  [idOperacion]="idOperador" [idContrato]="idContrato" [tipoContratoId]="tipoContratoId"
+  [subTipoContratoId]="subTipoContratoId" (cancelar)="activarGridViewDetalleAndSearch($event)"
+  [itemFichaContrato]="fichaContratoOperadores.visible"
+  [itemDeContrato]="itemContrato"></app-registro-contratos-detalle>
+
+<!-- BRYAN PRORROGAS-->
+<div *ngIf="displayM" class="col-12 mt-sm">
+  <div class="row mb-xxl">
+
+    <div class="col-12">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+          <h4 *ngIf="displayMC" class="panel-title">Modificaciones contractuales</h4>
+          <h4 *ngIf="displayMCP" class="panel-title">Modificaciones contractuales - Prórroga</h4>
+          <h4 *ngIf="displayMCPAR" class="panel-title">Modificaciones contractuales - {{typeModificacion}}</h4>
+          <h4 *ngIf="displayOtrasCondiciones" class="panel-title">Modificaciones contractuales - Otras condiciones</h4>
+        </div>
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div *ngIf="displayMC" class="form-item">
+              <label for="exampleFormControlInput1" class="col-12 text-center form-label">
+                1. Seleccione el tipo de modificación que desea realizar:
+              </label>
+              <div class="col-12 mt-4">
+                <div class="button-group col-4 offset-md-4">
+                  <div class="col-12 my-2 form-check border-bottom">
+                    <label class="form-check-label my-1" for="prorroga">
+                      <input id="prorroga" type="radio" name="modificacion" class="form-check-input"
+                        (change)="selectModificacion('Prorroga')" />
+                      Prórroga
+                    </label>
+                  </div>
+                  <div class="col-12 my-2 form-check border-bottom">
+                    <label class="form-check-label my-1" for="adicion">
+                      <input id="adicion" type="radio" name="modificacion" class="form-check-input"
+                        (change)="selectModificacion('Adición')" />
+                      Adición
+                    </label>
+                  </div>
+                  <div class="col-12 my-2 form-check border-bottom">
+                    <label class="form-check-label my-1" for="reduccion">
+                      <input id="reduccion" type="radio" name="modificacion" class="form-check-input"
+                        (change)="selectModificacion('Reducción')" />
+                      Reducción
+                    </label>
+                  </div>
+                  <div class="col-12 my-2 form-check">
+                    <label class="form-check-label my-1" for="otras">
+                      <input id="otras" type="radio" name="modificacion" class="form-check-input"
+                        (change)="selectModificacion('Otras condiciones')" />
+                      Otras condiciones contractuales
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="displayOtrasCondiciones" class="row pt-5">
+              <div *ngIf="agregarModificacionOtrasCondiciones"
+                class="col-lg-9 col-md-10 ml-5 panel panel-blue w-75 mb-5 container">
+                <div class="panel-header row text-center" id="panel-secundario">
+                  <div class="col-9 col-xs-7 border-right py-2">
+                    <h5 class="panel-title">Descripción</h5>
+                  </div>
+                  <div class="col-3 py-2">
+                    <h5 class="panel-title">Soporte</h5>
+                  </div>
+                </div>
+                <div class="panel-body" id="panel-body-secundario">
+                  <div class="row px-3 align-items-center">
+                    <div class="col-9 col-xs-7 texto-condiciones">
+                      <input type="text" class="form-control py-4" placeholder="ingrese texto" required
+                        pattern="[A-Za-z0-9]{1,20}" [ngModelOptions]="{ standalone: true }"
+                        [(ngModel)]="paramsDataVariable.descripcion" />
+                    </div>
+                    <div class="col-3 pr-4">
+                      <div *ngIf="!disabled" class="adjuntar-pdf d-flex mx-3" (click)="uploadPDF()">
+                        <span>Adjuntar</span>
+                        <img class="float-right" src="../assets/images/Iconos/input-file.png" alt="icono documento" />
+                        <input type="file" id="fileUpload" name="fileUpload" accept="application/pdf" />
+                      </div>
+                      <a class="visorPDF" (click)="abrirPDF(modalPDF)">
+                        {{ paramsDataVariable.soporteModificacionPath }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-1 col-md-12 ml-5 mb-2 justify-content-center align-self-center d-flex"
+                (click)="habilitarAgregarModificacionOtrasCondiciones()">
+                <img src="../../../../../../assets/images/Iconos/agregar.png" alt="agregar modificacion" class="mr-2" />
+                <div class="align-self-center text-wrap">
+                  <span>Agregar modificación</span>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="displayMCP" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                1. Número de días calendario de prorrogas:
+
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="paramsProrroga.numeroDiasProrroga"
+                (ngModelChange)="changeItemModificaciones('valorTotalContrato', $event)" type="number"
+                class="form-control" id="txtNombreRazon">
+            </div>
+            <div *ngIf="displayMCP" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                2. Nueva fecha estimada de finalización del contrato:
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="paramsProrroga.fechaTerminacionProrroga"
+                (ngModelChange)="changeItemModificaciones('fechaTerminacionProrroga', $event)" type="date"
+                class="form-control" id="txtNombreRazon">
+            </div>
+            <div *ngIf="displayMCP" class="form-item d-flex">
+              <label class="form-label">
+                3. Soporte de la modificación:
+              </label>
+              <div class="ml-2" style=" display: inline-block; overflow: hidden;">
+                <div *ngIf="!disabled" class="btn-fileUpload" (click)="uploadPDF()">
+                  <span>Adjunte el archivo</span>
+                  <img class="float-right ml-3" src="../assets/images/Iconos/input-file.png">
+                  <input class="" type="file" id="fileUpload" name="fileUpload" accept="application/pdf">
+                </div>
+                <a class="visorPDF" (click)="abrirPDF(modalPDF)">
+                  {{paramsProrroga.soporteModificacionPath}}
+                </a>
+              </div>
+            </div>
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                1. Valor de la {{ typeModificacion }} :
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="paramsProrroga.valorAdicionReduccion"
+                (ngModelChange)="changeItemModificaciones('valorAdicionReduccion', $event)" type="number"
+                class="form-control" id="txtNombreRazon">
+            </div>
+
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label" ngif="typeModificacion=2">
+                2. Número de días de suministro que se {{ typeModificacion == 'Adición' ? 'adicionaron' : 'redujeron' }}
+                :
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="paramsDataVariable.numeroDiasSuministro"
+                (ngModelChange)="changeItemModificacionesAR('numeroDiasSuministro', $event)" type="number"
+                class="form-control" id="txtNombreRazon">
+            </div>
+
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="form-label mr-3" style="min-width: 300px;">
+                3. Nuevo valor del contrato:
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="nuevoValorContrato"
+                (ngModelChange)="changeItemModificacionesAR('nuevoValorContrato', $event)" type="number"
+                class="form-control width-input-contrato" id="txtNombreRazon">
+              <div class="col-12 mt-4">
+                <div class="row align-items-center">
+                  <div class="container-icon">
+                    <img style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+                  </div>
+                  <label for="exampleFormControlInput1" class="text-center text-danger form-label warning-color mr-3"
+                    style="max-width: 260px;">
+                    Asegúrese de que el valor del contrato coincida con el costo total calculado por el sistema.
+                  </label>
+                  <div style="width: 200px;
+                                  border-bottom: 1px solid rgb(228, 52, 102);
+                                  border-left: 1px solid rgb(228, 52, 102);
+                                  border-right: 1px solid rgb(228, 52, 102);
+                                  border-radius: 10px 10px 0px 0px;">
+                    <div class="text-center" style="border-radius: 10px 10px 0px 0px;
+                                                        background-color: rgb(228, 52, 102);">
+                      <h6 class="panel-title" style="color: white">
+                        COSTO TOTAL
+                      </h6>
+                    </div>
+                    <div class="text-center">
+                      <h6 class="panel-title" id="lblCostoTotal" style="color: rgb(228, 52, 102)">
+                        {{(TotalGeneralContratadosModificacion.length>0?(TotalGeneralContratadosModificacion[0].valorTotalContrato
+                        | currency: '$' : 'symbol' : '1.0-2'):"AUTOMÁTICO")}}
+
+                      </h6>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="form-label mr-3" style="min-width: 300px;">
+                4. Nueva cantidad de días del contrato:
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="nuevoNumeroDiascontrato"
+                (ngModelChange)="changeItemModificacionesAR('nuevoNumeroDiascontrato', $event)" type="number"
+                class="form-control width-input-contrato" id="txtNombreRazon">
+              <div class="col-12 mt-4">
+                <div class="row align-items-center">
+                  <div class="container-icon">
+                    <img style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+                  </div>
+                  <label for="exampleFormControlInput1" class="text-center text-danger form-label warning-color mr-3"
+                    style="max-width: 260px;">
+                    Asegúrese de que los días de suministro coincida con el número de días calculado por el sistema.
+                  </label>
+                  <div style="width: 200px;
+                                      border-bottom: 1px solid rgb(228, 52, 102);
+                                      border-left: 1px solid rgb(228, 52, 102);
+                                      border-right: 1px solid rgb(228, 52, 102);
+                                      border-radius: 10px 10px 0px 0px;">
+                    <div class="text-center" style="border-radius: 10px 10px 0px 0px;
+                                                    background-color: rgb(228, 52, 102);">
+                      <h6 class="panel-title" style="color: white">
+                        DÍAS SUMINISTRO
+                      </h6>
+                    </div>
+                    <div class="text-center">
+                      <h6 class="panel-title" id="lblCostoTotal" style="color: rgb(228, 52, 102)">
+                        {{(TotalGeneralContratadosModificacion.length>0?(TotalGeneralContratadosModificacion[0].diasSuministroContrato):"AUTOMÁTICO")}}
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="displayMCPAR && paramsDataVariable.iD_Modificacion!=0" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                5. Fuentes de financiación que soportan el nuevo valor del contrato:
+              </label>
+              <app-informacion-presupuestal [iD_Contrato]="paramsDataVariable.iD_Contrato"
+                [iD_Modificacion]="paramsDataVariable.iD_Modificacion" [TipoFuncionalida]="2"
+                (data)="habilitarSig($event)"></app-informacion-presupuestal>
+            </div>
+
+            <div *ngIf="displayMCPAR && paramsDataVariable.iD_Modificacion != 0" class="form-item d-flex">
+              <label class="form-label">
+                6. Soporte de la modificación:
+              </label>
+              <div class="ml-2" style=" display: inline-block; overflow: hidden;">
+                <div *ngIf="!disabled" class="btn-fileUpload" (click)="uploadPDF()">
+                  <span>Adjunta el archivo</span>
+                  <img class="float-right ml-3" src="../assets/images/Iconos/input-file.png">
+                  <input class="" type="file" id="fileUpload" name="fileUpload" accept="application/pdf">
+                </div>
+                <a class="visorPDF" (click)="abrirPDF(modalPDF)">
+                  {{displayMCPAR ? paramsDataVariable.soporteModificacionPath : paramsProrroga.soporteModificacionPath}}
+                </a>
+              </div>
+            </div>
+
+            <div *ngIf="displayMCPAR && paramsDataVariable.iD_Modificacion==0" class="form-item">
+              <div class="col-12 text-center mt-4">
+                <button (click)="nextModificacion('Atrás')" class="btn btn-blue ml-sm">Cancelar</button>
+                <button (click)="SaveDataVariable()" class="btn btn-blue ml-sm">Siguiente</button>
+              </div>
+            </div>
+
+            <div *ngIf="(displayMC || displayMCP || paramsDataVariable.iD_Modificacion!=0) && !displayOtrasCondiciones"
+              class="form-item">
+              <div class="col-12 text-center mt-4">
+                <button (click)="nextModificacion('Atrás')"
+                  class="btn btn-blue ml-sm">{{displayMC?"Anterior":"Cancelar"}}</button>
+                <button (click)="nextModificacion('')"
+                  class="btn btn-blue ml-sm">{{displayMC?"Siguiente":displayMCPAR?"Finalizar":"Guardar"}}</button>
+              </div>
+            </div>
+
+            <div *ngIf="displayOtrasCondiciones" class="form-item">
+              <div class="col-12 text-center mt-4">
+                <button (click)="nextModificacion('Atrás')" class="btn btn-blue ml-sm">Cancelar</button>
+                <button (click)="SaveOtrasCondiciones()" class="btn btn-blue ml-sm">Finalizar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- END BRYAN -->
+<!--<div *ngIf="false" class="col-12 mt-sm">
+  <div class="row mb-xxl">
+
+    <div class="col-12">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+          <h4 *ngIf="displayMC" class="panel-title">Modificaciones contractuales</h4>
+          <h4 *ngIf="displayMCP" class="panel-title">Modificaciones contractuales - Prorroga</h4>
+          <h4 *ngIf="displayMCPAR" class="panel-title">Modificaciones contractuales - Adicción/Reducción</h4>
+        </div>
+
+        <div class="panel-body">
+          <form class="form-default-inline">
+            <div *ngIf="displayMC" class="form-item">
+              <label for="exampleFormControlInput1" class="col-12 text-center form-label">
+                1. Seleccione el tipo de modificación que desea realizar:
+              </label>
+              <div class="col-12 text-center mt-4">
+                <button (click)="selectModificacion('Prorroga')" class="btn btn-default ml-sm">Prorroga</button>
+                <button (click)="selectModificacion('Adición')" class="btn btn-default ml-sm">Adición o
+                  reducción</button>
+              </div>
+            </div>
+            <div *ngIf="displayMCP" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                1. Número de días calendario de prorrogas:
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="paramsProrroga.numeroDiasProrroga"
+                (ngModelChange)="changeItemModificaciones('valorTotalContrato', $event)" type="number"
+                class="form-control" id="txtNombreRazon">
+            </div>
+            <div *ngIf="displayMCP" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                2. Nueva fecha estimada de finalización del contrato:
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="paramsProrroga.fechaTerminacionProrroga"
+                (ngModelChange)="changeItemModificaciones('fechaTerminacionProrroga', $event)" type="date"
+                class="form-control" id="txtNombreRazon">
+            </div>
+            <div *ngIf="displayMCP" class="form-item">
+              <label class="form-label">
+                3. Soporte de la modificación:
+              </label>
+              <div style=" display: inline-block; overflow: hidden;">
+                <div *ngIf="!disabled" class="btn-fileUpload" (click)="uploadPDF()">
+                  <span>Adjunte el archivo</span>
+                  <img class="float-right ml-3" src="../assets/images/Iconos/input-file.png">
+                  <input class="" type="file" id="fileUpload" name="fileUpload" accept="application/pdf">
+                </div>
+                <a class="visorPDF"
+                    (click)="abrirPDF(modalPDF)">
+                   {{fileName}}
+                </a>
+              </div>
+              <div class="col file">
+
+              </div>
+            </div>
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                1. Valor de la adición (en positivo) o reducción (en negativo):
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="paramsProrroga.valorAdicionReduccion"
+                (ngModelChange)="changeItemModificaciones('valorAdicionReduccion', $event)" type="number"
+                class="form-control" id="txtNombreRazon">
+            </div>
+
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                2. Días de suministro (des)cubiertos con la adicción reducción:
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="paramsDataVariable.numeroDiasSuministro"
+                (ngModelChange)="changeItemModificacionesAR('numeroDiasSuministro', $event)" type="number"
+                class="form-control" id="txtNombreRazon">
+              <a class="card-link ml-3" (click)="SaveDataVariable()">
+                <img style="width: 20px; height: 20px;" src="../assets/images/Iconos/save_mini.png">
+              </a>
+            </div>
+
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                3. Nuevo valor del contrato:
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="nuevoValorContrato"
+                (ngModelChange)="changeItemModificacionesAR('nuevoValorContrato', $event)" type="number"
+                class="form-control" id="txtNombreRazon">
+              <div class="col-12 mt-4">
+                <div class="row">
+                  <div class="container-icon">
+                    <img style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+                  </div>
+                  <label for="exampleFormControlInput1" class="text-center text-danger form-label">
+                    Asegúrese de que el valor del contrato coinsida con el costo total calculado por el sistema.
+                  </label>
+                  <div class="col-3">
+                    <div style="width: 80%;
+                                border-bottom: 1px solid rgb(228, 52, 102);
+                                border-left: 1px solid rgb(228, 52, 102);
+                                border-right: 1px solid rgb(228, 52, 102);
+                                border-radius: 10px 10px 0px 0px;">
+                      <div class="text-center" style="border-radius: 10px 10px 0px 0px;
+                                                      background-color: rgb(228, 52, 102);">
+                        <h6 class="panel-title" style="color: white">
+                          COSTO TOTAL
+                        </h6>
+                      </div>
+                      <div class="text-center">
+                        <h6 class="panel-title" id="lblCostoTotal" style="color: rgb(228, 52, 102)">
+                          {{(TotalGeneralContratadosModificacion.length>0?(TotalGeneralContratadosModificacion[0].valorTotalContrato
+                          | currency: '$' : 'symbol' : '1.0-2'):"AUTOMÁTICO")}}
+
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                4. Nueva cantidad de días del contrato:
+              </label>
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="nuevoNumeroDiascontrato"
+                (ngModelChange)="changeItemModificacionesAR('nuevoNumeroDiascontrato', $event)" type="number"
+                class="form-control" id="txtNombreRazon">
+              <div class="col-12 mt-4">
+                <div class="row">
+                  <div class="container-icon">
+                    <img style="width: 41px; height: 41px;" src="../assets/images/Iconos/alert.png">
+                  </div>
+                  <label for="example">Asegúrese que los días de suministro coinsida con el número de días calculado por el sistema.</label>
+                  <div class="col-3">
+                    <div  class="text-center text-danger form-label" style="width: 80%;
+                                border-bottom: 1px solid rgb(228, 52, 102);
+                                border-left: 1px solid rgb(228, 52, 102);
+                                border-right: 1px solid rgb(228, 52, 102);
+                                border-radius: 10px 10px 0px 0px;">
+                      <div class="text-center" style="border-radius: 10px 10px 0px 0px;
+                                                      background-color: rgb(228, 52, 102);">
+                        <h6 class="panel-title" style="color: white">
+                          DÍAS SUMINISTRO
+                        </h6>
+                      </div>
+                      <div class="text-center">
+                        <h6 class="panel-title" id="lblCostoTotal" style="color: rgb(228, 52, 102)">
+                          {{(TotalGeneralContratadosModificacion.length>0?(TotalGeneralContratadosModificacion[0].diasSuministroContrato):"AUTOMÁTICO")}}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+            <div *ngIf="displayMCPAR" class="form-item">
+              <label for="exampleFormControlInput1" class="text-center form-label">
+                5. Fuentes de financiación que soportan el nuevo valor del contrato:
+              </label>
+               <app-informacion-presupuestal [iD_Contrato]="paramsDataVariable.iD_Contrato" [iD_Modificacion]="paramsDataVariable.iD_Modificacion" [TipoFuncionalida]="2" ></app-informacion-presupuestal>
+            </div>
+
+            <div class="form-item">
+              <div class="col-12 text-center mt-4">
+                <button (click)="nextModificacion('Atrás')" class="btn btn-blue ml-sm">{{displayMC?"Anterior":"Cancelar"}}</button>
+                <button (click)="nextModificacion('')"
+                  class="btn btn-blue ml-sm">{{displayMC?"Siguiente":"Guardar"}}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+<ng-template #modalPDF>
+  <div class="col-12 mt-4 mb-4 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPDF" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>
+
+
+<!--
+
+  <div *ngIf="formVisible" class="row mt-md">
+    <div class="col-12">
+      <div class="container-tab-enum">
+        <div class="text-enum">2</div>
+      </div>
+      <div class="container-tab-text">
+        Contratos como Operador directo
+      </div>
+    </div>
+    <div class="col-12 mt-md pl-xxl pr-xxl">
+      <table mat-table [dataSource]="dataContratosOperadorDirecto" class="left-radius right-radius">
+
+        <ng-container matColumnDef="numeroContrato">
+            <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;">N&uacute;mero de <br> contrato</th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{ element.fuente }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operador">
+            <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;">Operador <br> (Tipo de contrato)</th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{ element.tipo }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ET/ETC">
+            <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;">ET/ETC</th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{ element.nombre }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modeloOperacion">
+            <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;">Modelo de <br> operaci&oacute;n</th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{ element.valor | currency }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaInicio">
+            <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;">Fecha de <br> inicio</th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{ element.estado }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaFinalizacion">
+          <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;">Fecha de <br> finalizacion</th>
+          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{ element.fecha }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fichaContrato">
+          <th mat-header-cell *matHeaderCellDef style="padding-left: 0px;">Ficha de <br> contrato</th>
+          <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;"> {{ element.ficha }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsContratos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsContratos;"></tr>
+
+      </table>
+    </div>
+  </div>    -->

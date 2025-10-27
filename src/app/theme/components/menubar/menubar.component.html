@@ -1,0 +1,34 @@
+
+<app-menuautorizado>
+
+  <ng-container autorizado>
+
+  <div class="d-flex flex-column align-items-center align-items-sm-start" *ngIf="CargueMenuInicial">
+    <div *ngFor="let item of menuChild" style="width: 100%;" class="item">
+      <a class="d-flex align-items-center mb-md-0 me-md-auto text-white text-decoration-none ml-1  "  (click)="routerMenu1(item)" >
+        <img mat-list-icon src="../../../../assets/iconos_PAE/PNG/{{item.image}}" style="width: 35px; height: 35px;" class="mr-2">
+        <div *ngIf="sidenavWidth > 9" class="sidenav-item">
+          <span class="fs-5" style="line-height: 15px; font-weight: 600; width: 69%;">{{item.nombre}}</span>
+        </div>
+        </a>
+      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+        <li *ngFor="let itemDet of item.menuDetalle; let i = index" class="nav-item {{itemDet.activeclass}} {{item.activeclass}}" >
+          <a *ngIf="sidenavWidth > 9" id="{{'menubarlateral'+i}}"  class="nav-link align-middle px-0" (click)="routerSubMenu(itemDet.router)">
+            <i class="fs-4 bi-house"></i>
+            <div class="sidenav-item"> <span class="ms-1">{{itemDet.nombre}}</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</ng-container>
+
+</app-menuautorizado>
+
+
+
+
+
+

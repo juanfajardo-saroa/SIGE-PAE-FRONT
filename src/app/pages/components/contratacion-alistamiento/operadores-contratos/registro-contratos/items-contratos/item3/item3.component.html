@@ -1,0 +1,125 @@
+
+  
+  
+  <div class="container row">
+    <div class="col-12">
+      <div class="panel panel-blue">
+        <div class="panel-header no-border-bottom text-center">
+            <h4 class="panel-title">Registro &uacute;nico de Contratos - Supervisi&oacute;n</h4>
+        </div>
+        <div class="panel-body">
+          <form class="form-default-inline">  
+            <div class="form-item">
+                <div class="row">
+                    <div class="col clearfix">
+                        <app-chapterblue [numberChapter]="2" [titleChapter]="'Carateristicas financieras'"></app-chapterblue><br/>       
+                    </div>
+                    <div class="col clearfix text-right" style="padding: 20px;">                        
+                        <button class="msg-alerta" >
+                            <div>
+                              <img src="../../../../../../assets/images/Iconos/item2Supervision.png">
+                            </div>                    
+                        </button>
+                    </div>
+                </div>     
+                  
+
+              <label for="exampleFormControlInput1" class="form-label">
+                1. Valor total del contrato:
+              </label>
+              <input type="text" class="form-control" id="txtNombreRazon">
+            </div>
+  
+            <div class="form-item">
+              <label for="exampleFormControlInput1" class="form-label">
+                2. Contrato con anticipo:
+              </label>
+              <input type="text" class="form-control" id="txtNit">              
+            </div>
+  
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label">
+                  2.1. Porcentaje de anticipo:
+                </label>                
+                <input type="text" class="form-control" id="txtNit">                                      
+              </div>
+            </div>
+  
+            <div class="form-item">
+              <div class="ml-md">
+                <label class="form-label">
+                  2.2. Valor del anticipo:
+                </label>
+                <input type="text" class="form-control" id="txtNit">    
+              </div>
+            </div>
+            <div class="form-item">
+                <div class="ml-md">
+                  <label class="form-label">
+                    2.3. Periodicidad de amortizaci&oacute;n:
+                  </label>
+                  <select id="cboTipo" class="form-control">
+                    <option value="0">Elija una opci&oacute;n</option>                  
+                  </select>  
+                </div>
+              </div>
+
+              <div class="form-item">
+                <div class="ml-md">
+                  <label class="form-label">
+                    2.4. N&uacute;mero de pagos de amortizaci&oacute;n:
+                  </label>
+                  <select id="cboTipo" class="form-control">
+                    <option value="0">Elija una opci&oacute;n</option>                  
+                  </select>  
+                </div>
+              </div>
+  
+              <div class="form-item">
+                <div class="ml-md">
+                  <label class="form-label">
+                    2.5. Plan de pagos del anticipo:
+                  </label>
+                    <div class="col-2">
+                        <table class="table-etc">
+                            <thead>
+                            <tr>
+                                <th>Periodo</th>
+                                <th>Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control text-center">
+                                </td>
+                                <td>
+                                <input type="text" class="form-control text-center">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              </div>         
+          </form>
+        </div>
+  
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col clearfix">
+                    <button class="btn btn-blue">Guardar y continuar m&aacute;s tarde</button>        
+                </div>
+                <div class="col clearfix">
+                    <button class="btn btn-blue" (click)="Anterior()">Anterior</button>&nbsp;&nbsp;
+                    <button class="btn btn-blue" (click)="Siguiente()">Siguiente</button>
+                </div>
+            </div>     
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <br/>
+  <br/>

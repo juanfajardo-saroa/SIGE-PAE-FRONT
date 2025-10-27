@@ -1,0 +1,609 @@
+import { Component, OnInit } from '@angular/core';
+import { ContratosApiService } from '../../../../../shared/services/contratos-api.service';
+import { MasterDataApiService } from '../../../../../shared/services/master-data-api.service';
+import { Router } from '@angular/router';
+import { AsignacionRecursosApiService } from 'src/app/shared/services/asignacion-recursos-api.service';
+import * as moment from 'moment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
+const ID_TIPOCONTRATO: number = 3;
+const ID_VIGENCIA: number = 1;
+
+@Component({
+  selector: 'app-registro-contratos',
+  providers: [
+    ContratosApiService,
+    MasterDataApiService,
+    AsignacionRecursosApiService
+  ],
+  templateUrl: './registro-contratos.component.html',
+  styleUrls: ['./registro-contratos.component.sass']
+})
+export class RegistroContratosComponent implements OnInit {
+
+  public srcPDF: any;
+  public dsTipoContrato : any[] = [
+    {id: 1, nombre: 'Suministro'},
+    {id: 2, nombre: 'Materia Prima y Logistica'},
+    {id: 3, nombre: 'Dotacion y Equipos'},
+    {id: 4, nombre: 'Convenio'},
+    {id: 5, nombre: 'Supervision'},
+    {id: 6, nombre: 'Servicios'}
+  ];
+
+  public typeModificacion: string = "";
+
+  public paramsProrroga: any ={
+    iD_Contrato:2,
+    iD_TipoModificacion:1,
+    numeroDiasProrroga:0,
+    fechaTerminacionProrroga: new Date(),
+    soporteModificacionArchivo: '',
+    soporteModificacionPath: '',
+    valorAdicionReduccion:1,
+    estado: true,
+    auditoria: "string"
+  }
+
+  public paramsDataVariable: any ={
+    id: 0,
+    iD_Contrato: 0,
+    iD_Modificacion: 0,
+    actual: 0,
+    fechaTerminacionContrato: new Date(),
+    valorTotalContrato: 0,
+    numeroDiasSuministro: 0,
+    estado: true,
+    auditoria: "string"
+  }
+
+  public TotalGeneralContratadosModificacion: any =[];
+  public listSedesContratosHojaContrato: any =[];
+  public dsModeloOperacion : any;
+  public idContrato: number = 0 ;
+  public idTipoContrato: number = 0 ;
+  public idMOperacion: number = 0;
+  public tipoContratoId: number = 0;
+  public subTipoContratoId: number = 0;
+  public opcionSeleccionado: number = 0;
+  public nuevoValorContrato: number = 0;
+  public nuevoNumeroDiascontrato: number = 0;
+  public fileName: string = '';
+  public disabled: boolean = false;
+  public entity : any;
+  gridViewDetalle: boolean = false;
+  dataContratos: any = [];
+  public dataTabla: any[] = [];
+  public listFuentePresupuestal: any = [];
+  public displayedColumnsContratos: string[] = [
+    'Número de contrato',
+    'Operador',
+    'Tipo de contrato',
+    'Modelo de operación',
+    'Fecha de inicio',
+    'Fecha de finalización',
+    'Valor',
+    'Ficha de contrato'
+  ];
+
+  public itemsPerPages: number[] = [5, 10, 20];
+  public itemCant: number = 5;
+  public itemIni: number = 0;
+  public itemFin: number = 0;
+  public pages: number = 0;
+  public page: number = 0;
+  
+  public displayDD: boolean = true;
+  public displayM: boolean = false;
+  public displayMC: boolean = false;
+  public displayMCP: boolean = false;
+  public displayMCPAR: boolean = false;
+  public displayHeader: boolean = false;
+  public displaySearch: boolean = true;
+  public displayDetalleContrato: boolean = false;
+
+  public displayDetalle: boolean=false;
+  public disabledFirstPage: boolean = true;
+  public disabledNextPage: boolean = true;
+  public disabledLastPage: boolean = true;
+  public disabledPreviousPage: boolean = true;
+
+
+  public contrato: any = {
+    id: 0,
+    TipoContratoId: ID_TIPOCONTRATO,
+    iD_TipoContratoCHIP: '',
+    iD_TipoConceptoGasto: 0,
+    iD_ETC: 0,
+    iD_ET: 0,
+    iD_MinutaPatronAlimento: 0,
+    iD_Operador: '',
+    iD_TipoCategoriaContrato: 0,
+    iD_EstadoContrato: 0,
+    iD_UTConsorcio: 0,
+    iD_PlanAlistamiento: 0,
+    iD_Vigencia: ID_VIGENCIA,
+    numeroContrato: '',
+    objetoContrato: '',
+    conAnticipo: false,
+    fechalnicioContrato: null,
+    fechaFinalContrato: null,
+    estado:	false,
+    auditoria: '',
+    valorTotalContrato: null,
+    manejaPAEC:	false,
+    iD_TipoModeloOperacion: 0
+  }
+
+  constructor(
+    private _contratosService : ContratosApiService,
+    private _masterDataService : MasterDataApiService,
+    private _contratosApiService: ContratosApiService,
+    private _asignacionRecursosApi: AsignacionRecursosApiService,
+    public router: Router,
+    public _modalService: NgbModal
+  ) {   }
+
+  habilitarSig(num: any) {
+    this.TotalGeneralContratadosModificacion[0].valorCRPAdicion = num;
+  }
+
+  goToPage(){
+    this.router.navigate(['registroUnicoContratos']);
+  }
+
+
+  ngOnInit(): void {
+    this.inicializarControl();
+  }
+
+  ngOnChanges(): void{
+    this.inicializarControl();
+  }
+
+  changeCantItems(value: any){
+    this.itemCant = value;
+    this.pages = Math.ceil(this.dataContratos.length / value);
+    this.page = this.dataContratos.length > 0 ? 1 : 0;
+
+    this.changePageInfo();
+  }
+
+  changePageInfo(){
+    this.dataTabla = [];
+    this.disabledFirstPage = true;
+    this.disabledPreviousPage = true;
+    this.disabledNextPage = true;
+    this.disabledLastPage = true;
+
+    if(this.page > 0){
+      this.itemIni = ((this.page - 1) * this.itemCant) + 1;
+      this.itemFin = this.page * this.itemCant;
+      if(this.itemFin > this.dataContratos.length){
+        this.itemFin = this.dataContratos.length;
+      }
+
+      for(let i = this.itemIni - 1; i < this.itemFin; i++){
+        this.dataTabla.push(this.dataContratos[i]);
+      }
+
+      if(this.page > 1){
+        this.disabledFirstPage = false;
+        this.disabledPreviousPage = false;
+      }
+
+      if(this.page < this.pages){
+        this.disabledNextPage = false;
+        this.disabledLastPage = false;
+      }
+
+    }
+    else{
+      this.itemIni = 0;
+      this.itemFin = 0;
+    }
+  }
+
+  changePage(tipo: number, page: number, disabled: boolean){
+    if(!disabled){
+      if(tipo == 1){
+        this.page = page > 0 ? Math.ceil(this.dataContratos.length / this.itemCant) : 1;
+        this.changePageInfo();
+      }
+      else if(tipo == 2){
+        this.page += page > 0 ? 1 : -1;
+        this.changePageInfo();
+      }
+    }
+  }
+
+  getTipoContrato(){
+    this._contratosService.GetTiposContrato()
+    .subscribe(response => {
+      if(response.success){
+        this.dsTipoContrato = response.result;
+      }
+    });
+  }
+
+  getModeloOperacion(){
+    this._masterDataService.get_ModeloOperacion()
+    .subscribe(response => {
+      if(response.success){
+        this.dsModeloOperacion = response.result;
+      }
+    });
+  }
+
+  get_ContratosGetAll(idMunicipio: number, idOperador: number, idContrato: any ){
+    this._contratosService.get_ContratosGetAll(idMunicipio, idOperador, idContrato)
+    .subscribe(response => {
+      if(response.success){
+        this.dataContratos = response.result;
+        this.changeCantItems(this.itemsPerPages[0]);
+      }
+    });
+  }
+
+  public inicializarControl(){
+    this.getTipoContrato();
+    this.getModeloOperacion();
+    this.get_ContratosGetAll(0, this.idMOperacion, this.idTipoContrato);
+  }
+
+  consultaContratos(){
+    this.getTipoContrato();
+    this.get_ContratosGetAll(0,this.idMOperacion, this.idTipoContrato, );
+    this.gridViewDetalle=false;
+  }
+
+  verContrato(item: any){
+    if(item.tipoContratoId == 1 && (item.fichaColor == 0 || item.fichaColor == 3)){
+      this.router.navigate(['/suministro-dia-vigencia', item.contratoId, item.tipoContratoId, 0, 0]);
+    }
+    else if(item.tipoContratoId == 2 && (item.fichaColor == 0 || item.fichaColor == 3))
+    {
+      this.router.navigate(['/logistica', item.contratoId]);
+    }
+    else{
+      this.loadContratoHoja(item.contratoId);
+      this.displaySearch=false;
+      this.displayDetalle=true;
+      this.tipoContratoId=item.tipoContratoId;
+      this.subTipoContratoId=item.subTipoContratoId;
+      this.idContrato = item.contratoId;
+      if(this.dataContratos.length>0)
+      this.gridViewDetalle=true;
+    }
+  }
+
+  uploadPDF(){
+    
+    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
+    const MAXIMO_BYTES = 100000000;
+
+    fileUpload.onchange = () => {
+      if(fileUpload.files?.length && fileUpload.files.length > 0){
+
+        const file = fileUpload.files[0];
+        //this.fileName = file.name;
+        //this.entity.archivoResolucion = '';
+
+        if(file.type == 'application/pdf'){
+          if(file.size <= MAXIMO_BYTES){
+
+            this.fileName = file.name;
+            this.paramsProrroga.soporteModificacionPath = file.name;
+            //this.entity.nombreArchivoResolucion = file.name;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              //this.paramsProrroga.soporteModificacionArchivo = reader.result?.toString().replace('data:application/pdf;base64,', '');
+            };
+          }
+          else{
+            fileUpload.value = '';
+            alert("El tamaño del archivo supera los 100MB");
+          }
+        }
+        else{
+          fileUpload.value = '';
+          alert("El formato del archivo no es un PDF");
+        }
+
+      }
+    }
+
+    fileUpload.click();
+  }
+
+  abrirPDF(contenido: any){
+    if(this.paramsProrroga.soporteModificacionPath != null){
+      this.srcPDF = "data:application/pdf;base64," + this.paramsProrroga.soporteModificacionPath;
+      this._modalService.open(contenido, {size: 'xl'});
+      console.log('srcPDF', this.srcPDF);
+    }
+  }
+
+  dismissAllModal(){
+    this._modalService.dismissAll();
+  }
+
+  GetTotalGeneralContratadosModificacion(itemOne:any, itemTwo:any, itemThree:any, itemFour:any) {
+    this._contratosApiService.GetTotalGeneralContratadosModificacion(itemOne,itemTwo,itemThree,itemFour)
+    .subscribe(response => {
+      if(response.success) {
+        this.TotalGeneralContratadosModificacion = response.result;
+      } else {
+        alert('ERROR: ' + response.error);
+      }
+    });
+  }
+
+  PostContratosModificacion() {
+    
+    this._contratosApiService.PostContratosModificacion(this.paramsProrroga)
+    .subscribe(response => {
+      if(response.success){
+        this.paramsDataVariable.iD_Modificacion= response.result;
+        if(this.displayMCP) {
+          this.resetData();
+          alert(`PRORROGA CREADA`);
+        }
+      }
+      else{ alert("ERROR: " + response.error); }
+    });
+  }
+
+  PostContratosDataVariable() {
+    
+    this._contratosApiService.PostContratosDataVariable(this.paramsDataVariable)
+    .subscribe(response => {
+      if(response.success){
+        alert(`ADICIÓN/REDUCCIÓN CREADA ${new Date()}`);
+      }
+      else{ alert("ERROR: " + response.error); }
+    });
+  }
+
+  editModificaciones(item: any){
+    this.loadContratoHoja(item.contratoId);
+    this.displaySearch=false;
+    this.displayDetalle=false;
+    this.displayM= true;
+    this.displayMC= true;
+    this.displayDD= false;
+    
+    this.paramsProrroga.iD_Contrato=item.contratoId;
+    this.paramsDataVariable.iD_Contrato=item.contratoId;
+    this.contrato.id = item.contratoId;
+  }
+
+/**
+ * 
+ *  verContrato(item: any){
+    if(item.tipoContratoId == 1 && (item.fichaColor == 0 || item.fichaColor == 3)){
+      this.router.navigate(['/suministro-dia-vigencia', item.contratoId, item.tipoContratoId, 0, 0]);
+    }
+    else if(item.tipoContratoId == 2 && (item.fichaColor == 0 || item.fichaColor == 3))
+    {
+      this.router.navigate(['/logistica', item.contratoId]);
+    }
+    else{
+      this.loadContratoHoja(item.contratoId);
+      this.tipoContratoId=item.tipoContratoId;
+      this.subTipoContratoId=item.subTipoContratoId;
+      this.idContrato = item.contratoId;
+      if(this.dataContratos.length>0)
+      this.gridViewDetalle=true;
+    }
+  }
+ */
+
+  selectModificacion(item: string){
+  this.typeModificacion = item;
+  }
+
+  SaveDataVariable(){
+    if(this.nuevoValorContrato <= 0){
+      alert('El nuevo valor del contrato debe ser superior a cero(0).');
+      return;
+    }
+
+    if(this.nuevoNumeroDiascontrato <= 0){
+      alert('La cantidad de días suministro debe ser superior a cero(0).');
+      return;
+    }
+
+    if(this.nuevoValorContrato != this.TotalGeneralContratadosModificacion[0].valorTotalContrato){
+      alert('El nuevo valor del contrato difiere del costo total.');
+      return;
+    }
+    
+    if(this.nuevoNumeroDiascontrato != this.TotalGeneralContratadosModificacion[0].diasSuministroContrato) {
+      alert('Nueva cantidad de días difiere del total de loa días de suminstro.');
+      return;
+    }
+
+    this.PostContratosModificacion();
+    setTimeout(() => {
+      this.PostContratosDataVariable();
+    }, 1000);
+  }
+
+  nextModificacion(evento:string){
+  if (evento=="Atrás") {
+    if(this.displayMCP==true){
+      this.displaySearch=false;
+      this.displayDetalle=false;
+      this.displayM= true;
+      this.displayMC= true;
+      this.displayMCP=false;
+      this.displayMCPAR=false;
+      this.displayDD= false;
+      return;
+    }
+    if(this.displayMCPAR==true){
+      this.displaySearch=false;
+      this.displayDetalle=false;
+      this.displayMCPAR=false;
+      this.displayM= true;
+      this.displayMCP=false;
+      this.displayMC= true;
+      this.displayDD= false;
+      return;
+    }
+    if(this.displayMC==true){
+      this.displaySearch=true;
+      this.displayDetalle=false;
+      this.displayMCP=false;
+      this.displayMCPAR=false;
+      this.displayMC= false;
+      this.displayM=false;
+    }
+ }
+
+    if(this.displayMCP==true){
+      if(this.paramsProrroga.numeroDiasProrroga <= 0) {
+        alert("El número de días calendario de prorroga debe ser superior a cero(0).");
+        return;
+      }
+
+      if(this.paramsProrroga.fechaTerminacionProrroga==null || this.paramsProrroga.fechaTerminacionProrroga=='') {
+        alert("La fecha estimada de finalización del contrato es requerida.");
+        return;
+      }
+
+      /* this.displayHeader= false;
+      this.displayMCP= false;
+      this.displayMC= true;
+      this.displayM= false;
+      this.displayDD= true; */
+      this.PostContratosModificacion();
+      return;
+    }
+
+    if(this.displayMCPAR==true){
+      if(this.TotalGeneralContratadosModificacion[0].valorCRPAdicion!=this.paramsProrroga.valorAdicionReduccion) {
+        alert("El valor de la adicion o reduccion es difiere del valor total de las fuentes de financiacion.");
+        return;
+      }
+
+      this.displayHeader= false;
+      //this.displayMCP= false;
+      //this.displayMC= true;
+      //this.displayM= false;
+      this.displayDD= true;
+      this.resetData();
+      return;
+    }
+    if (evento!="Atrás") {
+      switch (this.typeModificacion) {
+        case 'Prorroga':
+          this.displayMCP= true;
+          this.displayMC= false;
+          break;
+        default:
+          this.displayMCPAR= true;
+          this.displayMC= false;
+          this.get_FuentePresupuestal();
+          break;
+      }
+    }
+  }
+
+  resetData() {
+    this.paramsDataVariable.iD_Modificacion = 0;
+
+    /**
+     * prorroga
+     */
+     this.paramsProrroga.numeroDiasProrroga = 0;
+     this.paramsProrroga.fechaTerminacionProrroga ='';
+     this.paramsProrroga.soporteModificacionPath = '';
+     this.paramsProrroga.soporteModificacionArchivo = '';
+
+     /**
+      * adicion
+      */
+     this.paramsProrroga.valorAdicionReduccion = 0;
+     this.paramsDataVariable.numeroDiasSuministro = 0;
+     this.nuevoValorContrato = 0;
+     this.nuevoNumeroDiascontrato = 0;
+     this.TotalGeneralContratadosModificacion[0].diasSuministroContrato = 0;
+     this.TotalGeneralContratadosModificacion[0].valorTotalContrato = 0;
+
+     this.retornaViewPrincipal();
+  }
+
+  retornaViewPrincipal() {
+    this.displaySearch=true;
+    this.displayDetalle=false;
+    this.displayMCP=false;
+    this.displayMCPAR=false;
+    this.displayMC= false;
+    this.displayM=false;
+  }
+
+  changeItemModificaciones(name: string, value: any){
+    this.paramsProrroga[name] = value;
+  }
+
+  loadContratoHoja(idContrato: number){
+    this.displayHeader= true;
+    this.consultaContratos();
+    this.get_SedesContratosHojaContrato(idContrato);
+  }
+
+  changeItemModificacionesAR(name: string, value: any){
+    
+    switch (name) { 
+      case "numeroDiasSuministro":
+        this.GetTotalGeneralContratadosModificacion(
+          this.paramsProrroga.iD_Contrato,
+          this.paramsDataVariable.iD_Modificacion,
+          this.paramsProrroga.valorAdicionReduccion,
+          this.paramsDataVariable.numeroDiasSuministro
+        );
+      break;
+      default:
+        this.paramsDataVariable[name] = value;
+        break;
+    }
+  }
+
+ 
+  get_SedesContratosHojaContrato(iD_Contrato: number) {
+    this._contratosApiService.get_SedesContratosHojaContrato(iD_Contrato)
+    .subscribe(response => {
+      if(response.success) {
+        this.listSedesContratosHojaContrato = response.result;
+      } else {
+        alert('ERROR: ' + response.error);
+      }
+    });
+  }
+
+  get_FuentePresupuestal() {
+    this._asignacionRecursosApi.get_FuentesFinanciacion()
+    .subscribe(response => {
+      if(response.success) {
+        this.listFuentePresupuestal = response.result;
+      } else {
+        alert('ERROR: ' + response.error);
+      }
+    });
+  }
+
+  activarGridViewDetalleAndSearch(iD_TipoContrato: number) {
+    this.idContrato=iD_TipoContrato;
+    this.displaySearch=true;
+    this.displayHeader= true;
+    this.displayMCPAR=false;
+    this.displayMCP=false;
+    this.consultaContratos()
+  }
+
+}

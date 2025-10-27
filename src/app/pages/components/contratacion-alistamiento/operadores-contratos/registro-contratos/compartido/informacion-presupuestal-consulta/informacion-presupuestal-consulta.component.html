@@ -1,0 +1,151 @@
+<ng-container *ngFor="let fuenteFinanciacion of fuentesFinanciacionJson; index as i_ff">
+  <div class="row mt-4">
+    <div class="col-6">
+      <table class="fuente-presupuestal">
+        <tr>
+          <td rowspan="3" class="border-right text-center justify-content-center">
+            <label class="font-weight text-basecolor">
+              Fuente<br>N° {{ i_ff + 1 }}
+            </label>
+          </td>
+          <td style="width: 20px !important">
+            <label class="text-basecolor">Fuente:</label>
+          </td>
+          <td style="width: auto !important">
+            <label class="info">
+              {{ fuenteFinanciacion.fuenteFinanciacion }}
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20px !important">
+            <label class="text-basecolor">Tipo:</label>
+          </td>
+          <td>
+            <label class="info">
+              {{ fuenteFinanciacion.fuenteIngreso }}
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20px !important">
+            <label class="text-basecolor">Valor:</label>
+          </td>
+          <td>
+            <label class="info">
+              {{ fuenteFinanciacion.valor | currency: "$":"symbol":"1.0-2" }}
+            </label>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-4 mb-2">
+    <div class="col-12">
+      <label class="form-label" *ngIf="fuenteFinanciacion.id != 0">
+        &nbsp;&nbsp;&nbsp; Certificados de Disponibilidad Presupuestal (CDP) y
+        Certificados de Registro Presupuestal (CRP) asociados a la Fuente N°
+        {{ i_ff + 1 }}:
+      </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-10 my-3">
+      <div class="col-12 my-3">
+        <div class="table-resposive">
+          <div *ngIf="fuenteFinanciacion.id != 0 && fuenteFinanciacion.cdps.length != 0">
+            <table class="table table-sm table-info-llenado">
+              <thead>
+                <tr class="text-center">
+                  <th>CDP Nº </th>
+                  <th *ngFor="let item of cdpTableDescription">
+                    {{ item }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="fuenteFinanciacion.cdps.length != 0">
+                  <ng-container *ngFor="let cdp of fuenteFinanciacion.cdps; index as i_cdpFfJson">
+                    <!-- CDPs -->
+                    <tr>
+                      <td [rowSpan]="cdp.crpsAsociados" class="text-center align-middle">
+                        <label>{{ cdp.numero }}</label>
+                      </td>
+                      <td [rowSpan]="cdp.crpsAsociados" class="text-center align-middle">
+                        <label>{{ cdp.fecha | date: "dd/MM/yyyy" }}</label>
+                      </td>
+                      <td [rowSpan]="cdp.crpsAsociados" class="text-center align-middle">
+                        <label>{{ cdp.valor | currency: "$":"symbol":"1.0-2" }}</label>
+                      </td>
+                      <td [rowSpan]="cdp.crpsAsociados" class="text-center align-middle">
+                        <a class="visorPDF" (click)="downloadFile(cdp.rutaArchivo, cdp.pathArchivo)">
+                          {{ cdp.pathArchivo }}
+                        </a>
+                      </td>
+                      <td [rowSpan]="cdp.crpsAsociados" class="text-center align-middle">
+                        <label>{{ cdp.crpsAsociados }}</label>
+                      </td>
+                      <!-- Primer CRP -->
+                      <ng-container *ngIf="cdp.crps?.length != 0">
+                        <td class="text-center border-left-dashed align-middle">
+                          <label>{{ cdp.crps[0].numero }}</label>
+                        </td>
+                        <td class="text-center align-middle">
+                          <label>{{ cdp.crps[0].fecha | date: "dd/MM/yyyy" }}</label>
+                        </td>
+                        <td class="text-center align-middle">
+                          <label>{{ cdp.crps[0].valor | currency: "$":"symbol":"1.0-2" }}</label>
+                        </td>
+                        <td class="text-center align-middle">
+                          <a class="visorPDF" (click)="downloadFile(cdp.crps[0].rutaArchivo, cdp.crps[0].pathArchivo)">
+                            {{ cdp.crps[0].pathArchivo }}
+                          </a>
+                        </td>
+                      </ng-container>
+                    </tr>
+                    <!-- CRPs restantes -->
+                    <ng-container *ngFor="let crp of cdp.crps; index as i_crpCdp">
+                      <ng-container *ngIf="i_crpCdp != 0">
+                        <tr>
+                          <td class="text-center border-left-dashed align-middle">
+                            <label>{{ crp.numero }}</label>
+                          </td>
+                          <td class="text-center align-middle">
+                            <label>{{ crp.fecha | date: "dd/MM/yyyy" }}</label>
+                          </td>
+                          <td class="text-center align-middle">
+                            <label>{{ crp.valor | currency: "$":"symbol":"1.0-2" }}</label>
+                          </td>
+                          <td class="text-center align-middle">
+                            <a class="visorPDF" (click)="downloadFile(crp.rutaArchivo, crp.pathArchivo)">
+                              {{ crp.pathArchivo }}
+                            </a>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+
+<ng-template #modalPdfFuente>
+  <div class="col-12 text-right mt-xs mb-xs">
+    <a class="btn-link" (click)="dismissAllModal()">
+      Cerrar
+      <mat-icon>clear</mat-icon>
+    </a>
+  </div>
+  <ngx-extended-pdf-viewer [src]="srcPdfFuente" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+    [showPresentationModeButton]="true" [showDownloadButton]="true">
+  </ngx-extended-pdf-viewer>
+</ng-template>

@@ -1,0 +1,162 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong>{{ action }} Priorizaciones</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div>
+      <div class="SizeDialog">
+        <div>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography" *ngIf="action != 'Eliminar'; else elseTemplate">
+              <br />
+              <div [formGroup]="form" (ngSubmit)="doAction()">
+                <div *ngIf="action !='Agregar'" style="display: none;">
+                  <div>
+                    <br />
+                    <input id="id" formControlName="id" readonly="true" class=" form-control" />
+                  </div>
+                </div>
+                <table>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">1. Seleccione una jornada<span style="color:red;">* </span></div>
+                      </td>
+
+                      <td class="BordeSeparador">
+                        <mat-select class="tablaform control-md" id="jornada"
+                        (selectionChange)="onJornadaClick($event.value)"
+                          formControlName="jornada" required placeholder="Jornada">
+                          <mat-option *ngFor="let item of SedesJornadasListBySede" [value]="item.iD_Jornada">
+                            {{item.sID_Jornada}}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <br>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">2. Seleccione un grado<span style="color:red;">* </span></div>
+                      </td>
+
+                      <td class="BordeSeparador">
+                        <mat-select class="tablaform control-md" id="iD_GradoSedeJornada"
+                          formControlName="iD_GradoSedeJornada" required placeholder="Grado">
+                          <mat-option *ngFor="let item of selectGradosSedesJornadasListBySede" [value]="item.id">
+                            {{item.sID_Grado}}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <br>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">3. Seleccione el tipo modelo operación<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                        <mat-select class="tablaform control-md" id="iD_TipoModeloOperacion"
+                          formControlName="iD_TipoModeloOperacion" required
+                          (selectionChange)="onTipoModeloOperacionClick($event.value)"
+                          placeholder="Tipo modelo operación">
+                          <mat-option *ngFor="let item of TiposModeloOperacionListBySede" [value]="item.id">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <br>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">4. Seleccione el tipo modalidad ración<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                        <mat-select class="tablaform control-md" id="iD_TipoModalidadComplemento"
+                          formControlName="iD_TipoModalidadComplemento"
+                          (selectionChange)="onTipoModalidadRacionClick($event.value)" required
+                          placeholder="Tipo modalidad ración">
+                          <mat-option *ngFor="let item of TiposModalidadRacionList" [value]="item.id">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <br>
+
+                  <ng-container>
+                    <tr>
+                      <td class="BordeSeparador">
+                        <div class="TextosBlueLeft">5. Seleccione el tipo ración<span style="color:red;">* </span></div>
+                      </td>
+                      <td class="BordeSeparador">
+                        <mat-select class="tablaform control-md" id="iD_TipoComplemento" formControlName="iD_TipoComplemento" required
+                          placeholder="Tipo ración">
+                          <mat-option *ngFor="let item of TiposRacionList" [value]="item.id">{{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <br>
+
+                  <ng-container>
+                    <tr>
+                      <td>
+                        <div class="TextosBlueLeft">6. Seleccione número raciones<span style="color:red;">* </span> </div>
+                      </td>
+                      <td>
+                        <input id="numeroComplementos" formControlName="numeroComplementos" required type="number"
+                          class="tablaform" />
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <br>
+
+                </table>
+              </div>
+            </mat-dialog-content>
+            <ng-template #elseTemplate>
+              <div style="text-align: center; color: #005ACA;padding: 10px;">
+                ¿Está seguro de eliminar el registro?
+              </div>
+            </ng-template>
+
+            <table class="BordeSuperior">
+              <ng-container>
+                <div>
+                  <div class="CenterButton text-center">
+                    <div class="AlignRight">
+                      <button [disabled]="!form.valid && action !='Eliminar'" (click)="doAction()">{{action}}
+                      </button>
+                    </div>
+                    <div>
+                      <button (click)="closeDialog()">Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </table>
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</div>

@@ -1,0 +1,139 @@
+<div class="SizeDialog">
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+               <span class="course-name">     Acción <strong>{{ action }}</strong></span>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+  <div class="container">
+    <mat-card-content class="text-center">
+      <mat-dialog-content *ngIf="action != 'Eliminar'; else elseTemplate">
+        <div class="dialog-form" [formGroup]="form" (ngSubmit)="doAction()">
+          <table class="tableFormUsuarios">
+
+                <div *ngIf = "action !='Adicionar'">
+ <tr class="d-flex">
+     <td class="col-6" style ="text-align:start">Id</td>
+     <td class="col-6">     <input  matInput  id="id" formControlName="id"  readonly="true" class=" cssForm"/>      </td>
+ </tr>
+</div>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Seleccione E T C"...</td>
+     <td class="col-6" >
+         <select id = "iD_ETC" formControlName = "iD_ETC">
+             <option *ngFor= "let item of ETCList"[value]="item.id">{{item.nombre}}
+             </option>
+         </select>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Seleccione Mes"...</td>
+     <td class="col-6" >
+         <select id = "mes" formControlName = "mes">
+             <option *ngFor= "let item of MesesList"[value]="item.id">{{item.nombre}}
+             </option>
+         </select>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Giro Proyectado"</td>
+     <td class="col-6" >
+        <input matInput id="giroProyectado" formControlName="giroProyectado"  required placeholder="Giro Proyectado" class="cssForm"/>
+        <div *ngIf = "form.get('giroProyectado')?.invalid && (form.get('giroProyectado')?.dirty || form.get('giroProyectado')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Giro Confirmado"</td>
+     <td class="col-6" >
+        <input matInput id="giroConfirmado" formControlName="giroConfirmado"  required placeholder="Giro Confirmado" class="cssForm"/>
+        <div *ngIf = "form.get('giroConfirmado')?.invalid && (form.get('giroConfirmado')?.dirty || form.get('giroConfirmado')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"P A T H Soporte Giro"</td>
+     <td class="col-6" >
+        <input matInput id="pATHSoporteGiro" formControlName="pATHSoporteGiro"  required placeholder="P A T H Soporte Giro" class="cssForm"/>
+        <div *ngIf = "form.get('pATHSoporteGiro')?.invalid && (form.get('pATHSoporteGiro')?.dirty || form.get('pATHSoporteGiro')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Seleccione id Vigencia"...</td>
+     <td class="col-6" >
+         <select id = "idVigencia" formControlName = "idVigencia">
+             <option *ngFor= "let item of VigenciasList"[value]="item.id">{{item.nombre}}
+             </option>
+         </select>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Fecha Transferencia"</td>
+     <td class="col-6" >
+        <input matInput [matDatepicker] = "fechaTransferencia"  formControlName="fechaTransferencia" id="fechaTransferencia">
+        <mat-datepicker-toggle matSuffix [for]="fechaTransferencia">
+            <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+            </mat-datepicker-toggle>
+        <mat-datepicker #fechaTransferencia></mat-datepicker>
+    </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<tr class="d-flex">
+     <td class="col-6" style ="text-align:start">"Numero Orden"</td>
+     <td class="col-6" >
+        <input matInput id="numeroOrden" formControlName="numeroOrden"  required placeholder="Numero Orden" class="cssForm"/>
+        <div *ngIf = "form.get('numeroOrden')?.invalid && (form.get('numeroOrden')?.dirty || form.get('numeroOrden')?.touched)" class="invalid-feedback">
+        </div>
+     </td>
+</tr>
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+<hr style="margin-top: 0rem; border: none;border-top: 1px dotted blue;" colspan ="12" />
+  
+           
+          </table>
+        </div>
+      </mat-dialog-content>
+      <ng-template #elseTemplate>
+        Esta Seguro de Eliminar el Registro <b>{{ local_data.id }}</b
+        >?
+      </ng-template>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      <div mat-dialog-actions align="center">
+        <button
+          class="btn btn-round btn-middle"
+          [disabled]="form.invalid && action != 'Eliminar'"
+          mat-raised-button
+          color="primary"
+          mat-button
+          (click)="doAction()"
+        >
+          {{ action }}
+        </button>
+        <button
+          class="btn btn-round btn-high"
+          mat-raised-button
+          color="warn"
+          mat-button
+          (click)="closeDialog()"
+          mat-flat-button
+        >
+          Cancelar
+        </button>
+      </div>
+    </mat-card-actions>
+  </div>
+</div>

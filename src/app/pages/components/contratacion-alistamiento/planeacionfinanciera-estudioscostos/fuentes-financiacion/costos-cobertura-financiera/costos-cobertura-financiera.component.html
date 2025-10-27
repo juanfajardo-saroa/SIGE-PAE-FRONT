@@ -1,0 +1,181 @@
+<style>
+  table.table-fuentefinanciacion-resumen {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .table-fuentefinanciacion-resumen th {
+    background-color: #e2e6fe;
+    color: #005ACA;
+    font-size: 13px;
+    padding: 5px 15px;
+    text-align: center;
+    border-top: 1px solid #005ACA;
+    border-right: 1px solid #005ACA;
+    border-bottom: 1px solid #005ACA;
+  }
+
+  .table-fuentefinanciacion-resumen td {
+    color: #005ACA;
+    font-size: 13px;
+    padding: 5px 15px;
+    text-align: center;
+    border-right: 1px solid #005ACA;
+    border-bottom: 1px solid #005ACA;
+  }
+
+  .table-fuentefinanciacion-resumen th:last-child {
+    padding: 0;
+  }
+
+  .table-fuentefinanciacion-resumen th:last-child {
+    margin: 0;
+    border-top-right-radius: 13px;
+  }
+
+  .table-fuentefinanciacion-resumen th.th-title {
+    background-color: #005ACA;
+    color: #ffffff;
+    border-top-left-radius: 13px;
+    text-align: left;
+  }
+
+  .btn-consultar-resoluciones {
+    font-size: 15px;
+    background-color: #005ACA;
+    border: none;
+    color: #ffffff;
+    border-radius: 30px;
+    padding: 5px 15px;
+    text-align: left;
+    width: 170px;
+  }
+
+  .btn-consultar-resoluciones div:last-child {
+    color: #ffffff;
+    font-size: 13px;
+  }
+</style>
+
+
+<ng-template #asignacion>
+  <app-asignacion-recursos class="p-lg"></app-asignacion-recursos>
+</ng-template>
+
+
+<app-titulo-tab [titulo]="'Fuentes de financiaci&oacute;n'"></app-titulo-tab>
+
+<div class="row mt-lg">
+  <div class="col-12 col-sm-9">
+    <table class="table-fuentefinanciacion-resumen">
+      <tr>
+        <th style="font-weight: bold;" class="th-title" width="60%" rowspan="2">
+          Presupuesto General de la Naci&oacute;n<br>
+          (Para todos los modelos de operaci&oacute;n del PAE)
+        </th>
+        <th style="font-weight: bold;">Ingresos asignados</th>
+        <th style="font-weight: bold;">Ingresos disponibles</th>
+        <th style="font-weight: bold;">Vigencia actual</th>
+        <th style="font-weight: bold;">Inejecuciones</th>
+      </tr>
+      <tr>
+        <td>{{ ingresosAsignados | currency: '$' : 'symbol' : '1.0-2' }}</td>
+        <td>{{ ingresosDisponibles | currency: '$' : 'symbol' : '1.0-2' }}</td>
+        <td>{{ vigenciaActual | currency: '$' : 'symbol' : '1.0-2' }}</td>
+        <td>{{ inejecuciones | currency: '$' : 'symbol' : '1.0-2' }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-12 col-sm-3 pt-md">
+    <button class="btn-consultar-resoluciones" (click)="consultarResoluciones(asignacion)">
+      <div style="float: left; margin-right: 5px;"><img src="../assets/images/Iconos/consulta_blue.png"></div>
+      <div>Consultar<br> Resoluciones</div>
+    </button>
+  </div>
+</div>
+
+<div class="row mt-xl">
+  <div class="col-12">
+    <div class="tab-control-secondary">
+      <div [ngStyle]="{'width': (100 / dataPestanas.length) + '%'}" class="tab-item" *ngFor="let item of dataPestanas"
+        (click)="cargarFuentesFinanciera(item)" [class]="item.active ? 'active' : ''">
+        <div>{{ item.descripcion }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 mt-lg">
+    <table class="table-row-expand right-radius">
+      <thead>
+        <ng-container>
+          <tr>
+            <th width="40%">Fuente Financiacion del PAE-{{tipoSeleccionadoFuenteTexto}}</th>
+            <th width="20%">Ingresos Recaudados</th>
+            <th width="20%">Ingresos Reconocidos</th>
+            <th width="20%">Total</th>
+          </tr>
+        </ng-container>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of dataSource">
+          <tr>
+            <td class="td-fuente" (click)="toggleOnOff(item)">
+              <a class="td-fuente-enum">{{item.num}}</a>
+              <p class="td-fuente-text">{{item.fuenteFinanciacion}}</p>
+              <mat-icon class="td-fuente-i-down" *ngIf="!item.toggle">arrow_drop_down</mat-icon>
+              <mat-icon class="td-fuente-i-up" *ngIf="item.toggle">arrow_drop_up</mat-icon>
+            </td>
+            <td class="text-center">{{item.ingresosRecaudados | currency: '$' : 'symbol' : '1.0-2'}}</td>
+            <td class="text-center">{{item.ingresosReconocidos | currency: '$' : 'symbol' : '1.0-2'}}</td>
+            <td class="text-center">{{item.total | currency: '$' : 'symbol' : '1.0-2'}}</td>
+          </tr>
+          <ng-container *ngIf="item.toggle">
+            <tr class="row-expanded" *ngFor="let det of item.listDetalle">
+              <td class="row-expanded-enum">{{det.fuenteFinanciacion}}</td>
+              <td class="nopadding">
+                <label *ngIf="!det.isDisabledRecaudado"
+                  (click)="changeDisabledETC('isDisabledRecaudado', det, true, 'inputRecaudado')"
+                  class="width-100 no-margin text-basecolor text-center">
+                  {{det.ingresosRecaudados | currency: '$' : 'symbol' : '1.0-2'}}
+                </label>
+                <input type="number" class="form-control" id="inputRecaudado{{det.idFuenteIngreso}}"
+                  ngModel="{{det.ingresosRecaudados}}" hidden="hidden"
+                  (ngModelChange)="changeInputModel('ingresosRecaudados', $event, det, 'inputRecaudado')"
+                  (blur)="changeDisabledETC('isDisabledRecaudado', det, false, 'inputRecaudado')">
+              </td>
+              <td class="nopadding">
+                <label *ngIf="!det.isDisabledReconocido"
+                  (click)="changeDisabledETC('isDisabledReconocido', det, true, 'inputReconocido')"
+                  class="width-100 no-margin text-basecolor text-center">
+                  {{det.ingresosReconocidos | currency: '$' : 'symbol' : '1.0-2'}}
+                </label>
+                <input type="number" class="form-control" id="inputReconocido{{det.idFuenteIngreso}}"
+                  ngModel="{{ det.ingresosReconocidos }}" hidden="hidden"
+                  (ngModelChange)="changeInputModel('ingresosReconocidos', $event, det, 'inputReconocido')"
+                  (blur)="changeDisabledETC('isDisabledReconocido', det, false, 'inputReconocido')">
+              </td>
+              <td class="nopadding text-center">
+                {{det.total | currency: '$' : 'symbol' : '1.0-2'}}
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Total</td>
+          <td>{{totalIngresosRecaudados | currency: '$' : 'symbol' : '1.0-2'}}</td>
+          <td>{{totalIngresosReconocidos | currency: '$' : 'symbol' : '1.0-2'}}</td>
+          <td>{{totalIngresos | currency: '$' : 'symbol' : '1.0-2'}}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="col-12 text-center mt-md">
+    <button *ngIf="permisos.editar" class="btn btn-blue" (click)="guardarValoresFuentes()">Guardar</button>
+  </div>
+</div>
+
+<app-spinner *ngIf="loadingVisible"></app-spinner>

@@ -1,0 +1,131 @@
+<div class="SizeDialog">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            <strong style="font-size: 15px;"> {{NombreETC}} - Sedes sin Área para almacenamiento</strong>
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+</div>
+<div class="course-app">
+  <div class="example-form">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="course-app">
+        <div fxFlex.gt-md="100" fxFlex.gt-lg="100" fxFlex="100">
+          <div>
+            <mat-card-content class="text-center">
+              <mat-dialog-content class="mat-typography">
+                <br />
+
+                <table id="charthigi" class="px-lg-down-0">
+                  <div fxLayout="row wrap">
+                    <div fxFlex="100">
+                      <mat-card>
+                        <mat-card-content>
+                          <!-- <div *ngIf="isLoading"
+                            style="display: flex; justify-content: center; align-items: center; background: white;">
+                            <mat-progress-spinner color="primary" mode="indeterminate">
+                            </mat-progress-spinner>
+
+                          </div> -->
+
+
+                            <div class="botondeim d-xl-block d-flex flex-row align-items-center justify-content-center mr-lg-down-0">
+                              <a class="btn-agregar d-xl-inline d-flex flex-column ml-lg-down-0 "
+                                (click)="exporter.exportTable('xlsx', {fileName:'Resultados de sedes beneficiarias'})"
+                                style="color: #005ACA;  font-size: 20px; margin-left: 50px;">
+                                <img class="imgroter" src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-50.png ">
+                                Descargar
+                              </a>
+                              <button class="d-xl-inline-block d-flex flex-column" [ngClass]="{'linkdisable':!getModulePermission(18,'imprimir')}"
+                                 printSectionId="charthigi"
+                                printTitle="Caracterización sede están cerca de potenciales fuentes de contaminación (basureros, mataderos, pantanos, etc) - Formulario"
+                                [useExistingCss]="true"
+                                [printStyle]="{h1 : {'color': 'red'}, h2 : {'border': 'solid 2px'}}"
+                                styleSheetFile="assets/styles/pages.css" ngxPrint
+                                aria-label="Example icon button with a vertical three dot icon">
+                                <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-48.png ">
+                                <a class="btn-agregar " style="color: #005ACA;  font-size: 20px;">
+                                  Imprimir
+                                </a>
+                              </button>
+
+
+                            </div>
+                            <br>
+                            <div class="responsive-table-pae px-lg-down-1">
+                              <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="dataSource "
+                                class="left-radius px-lg-down-0" matSort>
+                                <!-- Nombre del documento Column -->
+                                <ng-container matColumnDef="municipio">
+                                  <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef style="padding-left: 0px;min-width: 150px; ">
+                                    Municipio
+                                  </th>
+                                  <td class="w-down-100" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Municipio">
+                                    {{element.municipio==null?'-':element.municipio}}
+                                  </td>
+                                </ng-container>
+                                <!-- Fecha de actualización Column -->
+                                <ng-container matColumnDef="institucion">
+                                  <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; min-width: 300px; ">Institución Educativa
+                                  </th>
+                                  <td class="w-down-100" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="I. Educativa">
+                                    {{element.instEducativa==null?'-':element.instEducativa}} </td>
+                                </ng-container>
+                                <!-- Descripción Column -->
+                                <ng-container matColumnDef="sede">
+                                  <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; min-width: 350px; ">
+                                    Sede </th>
+                                  <td class="w-down-100 px-lg-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Sede">
+                                    {{element.sede==null?'-': element.sede}} </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+                                <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
+                              </table>
+                              <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
+                                showFirstLastButtons>
+                              </mat-paginator>
+                            </div>
+
+                            <div *ngIf="isLoading"
+                            style="display: flex; justify-content: center; align-items: center; background: white;">
+                            <mat-progress-spinner color="primary" mode="indeterminate">
+                            </mat-progress-spinner>
+                          </div>
+
+                        </mat-card-content>
+                      </mat-card>
+                    </div>
+                  </div>
+                </table>
+
+              </mat-dialog-content>
+              <ng-template #elseTemplate>
+                <div style="text-align: center;">
+                  ¿Está seguro de eliminar el registro?
+                </div>
+              </ng-template>
+              <table class="BordeSuperior">
+                <ng-container>
+                  <div>
+                    <div class="CenterButton text-center">
+                      <div>
+                        <button class="CancelButton" matDialogClose (click)="closeDialog()">Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </table>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+</div>

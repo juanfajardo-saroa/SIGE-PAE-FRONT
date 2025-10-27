@@ -1,0 +1,301 @@
+@import '/src/assets/styles/variable.scss';
+::ng-deep .swal2-popup {
+    display: none;
+    position: relative;
+    box-sizing: border-box;
+    grid-template-columns: minmax(0,100%);
+    max-width: 800px!important;
+    padding: 0 0 1.25em;
+    border: none;
+    border-radius: 5px;
+    background: #fff;
+    color: #545454;
+    font-family: inherit;
+    font-size: 1rem;
+    overflow: hidden;
+}
+::ng-deep.swal2-container.swal2-center>.swal2-popup {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+    border-radius: $base-borderRadius;
+    font-size: 18px;
+
+}
+
+::ng-deep.swal2-styled.swal2-confirm {
+    border: 0;
+    border-radius: 0.25em;
+    background: initial;
+    background-color: $base-azulPAE;
+    color: $gov-white;
+    font-size: 1em;
+    border-radius: 50px;
+    width: 100%;
+}
+
+::ng-deep.swal2-close {
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0;
+    margin-right: 0;
+    position: absolute;
+    margin-bottom: -1.2em;
+    padding: 0;
+    overflow: hidden;
+    transition: none!important;
+    border: none;
+    border-radius: 5px;
+    background: 0 0;
+    color: $gov-gray;
+    font-size: 2.5em;
+    cursor: pointer;
+    justify-self: end;
+    transition: box-shadow none!important;
+    box-shadow: none!important;
+}
+mat-card {
+    box-shadow: none !important;
+}
+
+mat-icon {
+    color: $base-azulClaroPAE;
+}
+
+.Invisible {
+    display: none;
+}
+
+.iconLargo {
+    border-radius: 10px;
+}
+
+.NoVer {
+    visibility: hidden !important;
+}
+
+.titletable {
+    background-color: $base-azulPAE  !important;
+    color: $gov-white !important;
+    border-radius: 5px 10px $base-azulPAE;
+    -webkit-border-radius: 5px 10px;
+}
+
+/* .itemPorcentaje{
+    margin-right: auto;
+    display: block;
+} */
+.rectangle {
+    background-color: blue;
+    width: 60px;
+    height: 15px;
+    border-radius: 40%;
+}
+
+.circulo {
+    background-color: $base-azulClaroPAE !important;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /*     margin: auto;
+    display: block; */
+}
+
+.smallLetter {
+    font-size: 10px;
+    margin: 0px;
+    letter-spacing: 0px;
+}
+.LeftUpCorner{
+    border-top-left-radius:$base-borderRadius;
+
+}
+
+
+table {
+    width: 100%;
+    border-collapse: separate;
+}
+
+Completo-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    color: $base-azulPAE;
+    font-size: 12px;
+}
+
+// Completo-header-cell:first-child, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+// border-top-left-radius: 20px !important;
+// }
+Completo-header-cell.cdk-header-cell.cdk-column-select.mat-column-select.ng-star-inserted {
+    border-top-left-radius: $base-borderRadius !important;
+}
+
+Completo-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 24px;
+    border-right: 1px $base-borderStyle;
+}
+
+td.mat-cell {
+    padding: auto;
+    border-bottom: 1px dotted $base-azulPAE;
+    //border-style: dotted;
+}
+
+table thead {
+    background-color: $header_table  !important;
+    color: $base-azulPAE;
+    border: 1px $base-borderStyle;
+}
+
+table thead th {
+    border-top: 1px $base-borderStyle $base-azulPAE;
+    border-right: 1px $base-borderStyle $base-azulPAE;
+    padding: 20px;
+}
+
+table thead th:first-child {
+    border-left: 1px $base-borderStyle $base-azulPAE;
+    border-top-left-radius: $base-borderRadius !important;
+}
+
+table td:first-child {
+    border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+.left-radius {
+    border-collapse: separate;
+    border-spacing: 10;
+    border-radius: 15px;
+    -moz-border-radius: $base-borderRadius;
+    padding: 2px;
+    -webkit-border-radius: 5px;
+}
+
+table.left-radius thead th:first-child {
+    border-top-left-radius: $base-borderRadius !important;
+    border-left: 10px $base-borderStyle $base-azulPAE;
+}
+
+table.right-radius thead th:last-child {
+    border-top-right-radius: $base-borderRadius;
+    border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+.textagregar {
+    color: $base-azulPAE;
+}
+
+table tbody {
+    color: $base-azulPAE;
+}
+
+table tbody td {
+    border-bottom: 1px dashed $base-azulPAE  !important;
+}
+
+table tbody tr td:first-child {
+    border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+table tbody tr td:last-child {
+    border-right: 1px $base-borderStyle $base-azulPAE;
+}
+
+table tbody tr:last-child td {
+    border-bottom: 1px $base-borderStyle $base-azulPAE;
+    border-bottom-style: $base-borderStyle !important;
+}
+
+td.mat-cell:first-of-type {
+    padding-left: 0 px !important;
+}
+
+.titletable {
+    float: none !important;
+    background-color: $base-azulPAE  !important;
+    color: $gov-white !important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border-radius: $base-borderRadius $base-borderRadius 0px 0px !important;
+    border: $base-azulPAE 1px $base-borderStyle;
+}
+
+.buttonAr {
+    color: $base-azulPAE;
+    border-color: $base-azulPAE;
+    padding: 14px 18px;
+    font-size: $base-fontSize;
+    cursor: pointer;
+    border-radius: $base-borderRadius !important;
+}
+
+.espaciobutton {
+    margin-left: 5px !important;
+}
+
+.bordeCompleto {
+    border-left: 1px $base-borderStyle $base-azulPAE;
+}
+
+th.mat-header-cell {
+    text-align: center !important;
+    background-color: $base-azulClaroPAE !important;
+    color: $base-azulPAE!important;
+    width: fit-content;
+    padding: 4px 75px !important;
+    margin-bottom: -1px !important;
+    border: 1px $base-borderStyle $base-azulPAE;
+    padding: 20px !important;
+    font-weight: 600;
+    border-bottom: 1px solid $base-azulPAE
+
+}
+
+/* .red {
+    background-color: red;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.green {
+    background-color: green;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.yellow {
+    background-color: yellow;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+} */
+
+.mat-row:hover .mat-cell {
+    background-color: $base-azulPAE;
+    color: $gov-white;
+}
+
+.mat-column-select {
+    overflow: initial;
+}
+
+.card {
+    border: none;
+}
+
+.table-responsive {
+    padding-left: 30px;
+  }

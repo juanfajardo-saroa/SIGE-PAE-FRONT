@@ -1,0 +1,20 @@
+@import '/src/assets/styles/variable.scss';
+
+:host ::ng-deep .mat-tab-label{
+   
+    border-radius: 12px 12px 0px 0px !important;
+     color: $base-azulPAE !important;
+     font-size: 20px;
+     background-color: #E2ECFD !important;
+     
+     margin: 1px;
+ }
+:host ::ng-deep .mat-tab-label-active{
+   border-width:2px ;
+    border-color: $base-color;
+    border-style: solid;
+    border-radius: 12px 12px 0px 0px !important;
+    color: $base-colorred !important;
+    font-size: 20px;
+    background-color: white !important;
+}

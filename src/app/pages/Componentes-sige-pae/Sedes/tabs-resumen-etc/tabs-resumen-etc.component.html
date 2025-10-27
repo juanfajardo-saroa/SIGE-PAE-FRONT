@@ -1,0 +1,25 @@
+<mat-tab-group style="width: 100%; display: flex; background-color: white; font-size:13px;">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <span ><b>Diagnósticos <br> (Infraestructura y situacional)</b></span>
+        </ng-template>
+
+        <app-resumen-etc-diagnosticos-infraestructura></app-resumen-etc-diagnosticos-infraestructura>
+    </mat-tab>
+
+
+    <mat-tab label="Acceso">
+
+
+        <app-resumen-sedes></app-resumen-sedes>
+    </mat-tab>
+    <mat-tab label="Matriz de riesgos" onchange="">
+
+        <app-resumen-etc-matriz-riesgo></app-resumen-etc-matriz-riesgo>
+    </mat-tab>
+    <mat-tab label="Priorización">
+
+        <app-priorizacion></app-priorizacion>
+
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,23 @@
+<mat-tab-group [selectedIndex]="selectedTabIndex" style="width: 100%; display: flex;" (selectedIndexChange)="myTabFocusChange($event)">
+    <mat-tab>
+        <ng-template mat-tab-label [ngClass]="{'linkdisable':!getModulePermission(32,'ver')}">
+            <span><b>Diagnósticos <br> (Infraestructura y situacional)</b></span>
+        </ng-template>
+        <br>
+        <app-diagnostico-infraestructura-situacional></app-diagnostico-infraestructura-situacional>
+    </mat-tab>
+    <br>
+    <mat-tab label="Acceso" [ngClass]="{'linkdisable':!getModulePermission(36,'ver')}">
+        <br>
+        <!-- Es necesario validar la carga de datos por demora  -->
+        <app-detalle-sedes></app-detalle-sedes>
+    </mat-tab>
+    <mat-tab label="Matriz de riesgos" onchange="" [ngClass]="{'linkdisable':!getModulePermission(37,'ver')}" >
+        <br>
+        <app-matriz-riesgo></app-matriz-riesgo>
+    </mat-tab>
+    <mat-tab label="Priorización" [ngClass]="{'linkdisable':!getModulePermission(38,'ver')}">
+        <br>
+        <app-tab-priorizacion></app-tab-priorizacion>
+    </mat-tab>
+</mat-tab-group>

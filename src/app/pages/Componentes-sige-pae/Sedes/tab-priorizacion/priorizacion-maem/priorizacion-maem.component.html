@@ -1,0 +1,416 @@
+<div fxLayout="row wrap">
+  <div class="row">
+    <div class="col" style="max-width: 10% !important; margin-left: 3% !important">
+      <table class="tablaform2">
+        <div class="bordeAtras">
+          <a class="btn-agregar" (click)="RegresarPriorizacion()"><img
+              src="../.././../../../../assets/iconos_PAE/PNG/Iconos_PAE-50.png" width="40px" height="auto">Atrás
+          </a>
+        </div>
+      </table>
+    </div>
+    <div class="col"
+      style="max-width: 85% !important; border: 1px solid #005ACA; padding: 0% 2%; border-radius: 20px; margin-right: 2%;">
+      <table [formGroup]="filterForm" class="tablaForm">
+        <div class="row">
+          <div class="col">
+            <mat-card class="spaceCol2">
+              <mat-card-title>Municipio</mat-card-title>
+              <mat-select class="tablaForm3 control-md" id="municipio" [(value)]="selMunicipio"
+                (selectionChange)="onMunicipioClick($event.value)" placeholder="Seleccione">
+                <mat-option [value]="-1">Todos
+                </mat-option>
+                <mat-option *ngFor="let item of selectDivipolaList" [value]="item.id">
+                  {{item.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="col">
+            <mat-card class="spaceCol3">
+              <mat-card-title>Institución</mat-card-title>
+              <mat-select class="tablaForm3 control-md" id="institucionEducativa" [(value)]="selInst"
+                (selectionChange)="onInstitucionClick($event.value)" placeholder="Seleccione">
+                <mat-option [value]="-1">Todos
+                </mat-option>
+                <mat-option *ngFor="let item of selectInstitucionList" [value]="item.id"> {{item.nombre}} </mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="col">
+            <mat-card class="spaceCol3">
+              <mat-card-title>Sede</mat-card-title>
+              <mat-select (selectionChange)="onSedeClick($event.value)" class="tablaForm3 control-md" id="sede"  placeholder="Seleccione" [(value)]="selsede">
+                <mat-option [value]="-1">Todos
+                </mat-option>
+                <mat-option *ngFor="let item of selectSedesList" [value]="item.id"> {{item.nombre}} </mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="col bordeizq">
+            <mat-card class="spaceCol">
+              <mat-card-title>Priorizada PAE</mat-card-title>
+              <mat-select class="tablaForm3 control-md" id="PriorizadaPae" placeholder="Seleccione"  [(value)]="selprioriza">
+                <mat-option *ngFor="let item of PriorizadaPAEList" [value]="item.id"> {{item.nombre}} </mat-option>
+              </mat-select>
+            </mat-card>
+          </div>
+          <div class="bordetd bordeizq">
+            <mat-card>
+              <div fxFlex.gt-md="5" fxFlex.gt-lg="5" fxFlex="100" (click)="onFilterClick(selMunicipio,selInst,selsede)">
+                <a class="btn-agregar">
+                  <img class="imgFilter" src="../.././../../../../assets/iconos_PAE/PNG/Iconos_PAE-49.png" height="35px"
+                    width="auto">
+                </a>
+                <div class="textF">Filtrar</div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </table>
+    </div>
+  </div>
+</div>
+<br>
+<!--titulo año actualizacion-->
+
+<div class="container-fluid content-wrapper">
+    <div class="row">
+      <div class="ms-sm-auto col-md-12 col-lg-12 col-xl-12 px-md-5 banner-breadcrumbs">
+        <div class="flex-wrap flex-md-nowrap mt-3">
+          <app-menadminuautorizado>
+            <ng-container autorizado>
+              <div class="row">
+                <div class="col-md-10">
+                  <label class="banner-text">
+                    <strong class="strongheader">{{nombreUbicacion}} | {{nombreMunicipio}} | {{nombreIntEducativa}} |
+                      {{nombreSede}}</strong>
+                  </label>
+                </div>
+                <div class="col-md-2 text-right">
+                  <label class="anio-text"><strong class="strongheader"></strong>{{ currentVigNom }}</label>
+                </div>
+              </div>
+               <hr style="margin: 0; color: red!important;" />
+              <div class="row LineaAzul">
+                <div class="col-12 text-right">
+                  <label class="last-update-text">Ultima actualizaci&oacute;n
+                    <span> {{ dateToday | date: "longDate" }}</span></label>
+                </div>
+              </div>
+            </ng-container>
+          </app-menadminuautorizado>
+        </div>
+        <div class="mt-2">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--meat-->
+
+<!--meat-->
+<app-maem-detalle-formulario></app-maem-detalle-formulario>
+
+<br>
+
+<!--Tab Sede-->
+<app-tabsedesinterno></app-tabsedesinterno>
+<br>
+<mat-expansion-panel expanded="true" disabled>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div style="float: left; display: flex;align-items: center;">
+        <div
+          style="background-color: #E23465; min-height: 44px; color: #ffffff; display: flex;align-items: center; padding: 0 10px 0 10px;">
+          <div>
+            <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-195.png" alt="" height="24px" width="auto">
+          </div>
+        </div>
+        <div
+          style="background-color: #E23465; min-height: 44px; color: #ffffff; border-radius: 0 20px 20px 0; padding-right: 10px; display: flex;align-items: center;">
+          MAEM: Modelo De Alimentación Escolar Mayoritario
+        </div>
+        <!-- <div style="background-color: #E23465; min-height: 44px; color: #ffffff; border-radius: 0% 50% 50% 0; margin-left: -26px;float: right;">
+          </div> -->
+      </div>
+      <mat-panel-description>
+        <button *ngIf="!viewingDetail" class="ButtonBlue" (click)="onVerDetalle()" mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-7.png" alt="" height="18px" width="auto">
+          Ver detalle
+        </button>
+        <button *ngIf="viewingDetail" class="ButtonBlue" (click)="onVerGeneral()" mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-7.png" alt="" height="18px" width="auto">
+          Ocultar detalle
+        </button>
+      </mat-panel-description>
+    </mat-panel-title>
+    <!-- <mat-panel-description>
+        <button *ngIf="!viewingDetail" class="ButtonBlue" (click)="onVerDetalle()" mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-7.png" alt="" height="18px" width="auto">
+          Ver detalle
+        </button>
+        <button *ngIf="viewingDetail" class="ButtonBlue" (click)="onVerGeneral()" mat-raised-button>
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-7.png" alt="" height="18px" width="auto">
+          Ocultar detalle
+        </button>
+      </mat-panel-description> -->
+  </mat-expansion-panel-header>
+  <br>
+
+  <div style="display: flex; align-items: center;color: red;">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="24px" width="auto"
+      style="margin-right: 5px;">
+    <b>
+      La cantidad de complementos asignados es menor a la <br>
+      necesaria para cubrir a los estudiantes matriculados.
+    </b>
+  </div>
+  <br>
+  <div style="display: flex; align-items: center;color: #069169;">
+    <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-19.png" alt="" height="24px" width="auto"
+      style="margin-right: 5px;">
+    <b>
+      La cantidad de complementos asignados es mayor a la <br>
+      necesaria para cubrir a los estudiantes matriculados.
+    </b>
+  </div>
+  <br>
+
+  <table class="table-responsive" mat-table [dataSource]="dataSourceSedeGeneral">
+
+    <ng-container class="LeftUpCorner" matColumnDef="jornada">
+      <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"
+        style=" min-width: 290px; ">
+        <b>Jornada</b>
+      </th>
+      <td mat-cell *matCellDef="let element; let i = index" [attr.rowspan]="getRowSpan('Jornada', i)"
+        [style.display]="getRowSpan('Jornada', i) ? '' : 'none'">
+        <div *ngIf="element.Jornada == 'Tarde'">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-43.png" alt="" height="14px" width="auto"
+            style="border-right: 10px;"> {{element.Jornada}}
+        </div>
+        <div *ngIf="element.Jornada == 'Mañana'">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-42.png" alt="" height="20px" width="auto"
+            style="border-right: 10px;"> {{element.Jornada}}
+        </div>
+        <div *ngIf="element.Jornada == 'Noche'">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px" width="auto"
+            style="border-right: 10px;"> {{element.Jornada}}
+        </div>
+        <div *ngIf="element.Jornada == 'Única'">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px" width="auto"
+            style="border-right: 10px;"> {{element.Jornada}}
+        </div>
+        <div *ngIf="element.Jornada == 'Completa'">
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-44.png" alt="" height="20px" width="auto"
+            style="border-right: 10px;"> {{element.Jornada}}
+        </div>
+        <div
+          *ngIf=" element.Jornada =='TOTAL diario' || element.Jornada =='Media' || element.Jornada =='Nocturna' || element.Jornada =='Fin de semana'">
+          {{element.Jornada}}
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="grados">
+      <th mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"> <b>Grados</b> </th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.Grado == 'Todos'?'#E2ECFD':''} ">
+        {{element.Grado==null?'-':element.Grado}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="matriculaSimat">
+      <th mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"> <b>Matrícula SIMAT</b> </th>
+      <td mat-cell *matCellDef="let element" class="bordeDerecho"
+        [ngStyle]="{'background-color': element.Grado == 'Todos'?'#E2ECFD':''} ">
+        <div *ngIf="element.TotalRaciones < element.Matricula" style="color:red;">
+          {{element.Matricula==null?'-':element.Matricula}}
+        </div>
+        <div *ngIf="element.TotalRaciones >= element.Matricula && element.TotalRaciones <= element.Matricula*2-1 ">
+          {{element.Matricula==null?'-':element.Matricula}}
+        </div>
+        <div *ngIf="element.TotalRaciones >= element.Matricula*2" style="color:green;">
+          {{element.Matricula==null?'-':element.Matricula}}
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="almuerzoRps">
+      <th mat-header-cell *matHeaderCellDef
+        style="border-bottom: 1px solid #36c; border-right: 1px dotted #36c !important;  "> <b>Complemento <br>
+          Almuerzo</b> </th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.Grado == 'Todos'?'#E2ECFD':''} ">
+
+        {{element.m1_ComplementoAlmuerzo ==null?'-':element.m1_ComplementoAlmuerzo }}
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="complementoRps">
+      <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid #36c;"> <b>Complemento <br> AM/PM</b> </th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.Grado == 'Todos'?'#E2ECFD':''} ">
+
+        {{element.m1_ComplementoAMPM==null?'-':element.m1_ComplementoAMPM}}
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="complementoRi">
+      <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid #36c;"><b> Complemento <br> AM/PM</b> </th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.Grado == 'Todos'?'#E2ECFD':''} ">
+
+        {{element.m2_ComplementoAMPM==null?'-':element.m2_ComplementoAMPM}}
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="almuerzoCatering">
+      <th mat-header-cell *matHeaderCellDef
+        style="border-bottom: 1px solid #36c; border-right: 1px dotted #36c !important; "><b>Complemento <br> Almuerzo
+        </b></th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.Grado == 'Todos'?'#E2ECFD':''} ">
+
+        {{element.m3_ComplementoAlmuerzo ==null?'-':element.m3_ComplementoAlmuerzo }}
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="complementoCatering">
+      <th mat-header-cell *matHeaderCellDef style="border-bottom: 1px solid #36c;"> <b>Complemento <br> AM/PM</b> </th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.Grado == 'Todos'?'#E2ECFD':''} ">
+
+        {{element.m3_ComplementoAMPM==null?'-':element.m3_ComplementoAMPM}}
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="racionesDiarias">
+      <th mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"
+        style="width:50px;border-bottom: 1px solid #36c;"><b>
+          Total complementos diarios</b> </th>
+      <td mat-cell *matCellDef="let element" class="bordeizq"
+        [ngStyle]="{'background-color': element.Grado == 'Todos'?'#E2ECFD':''} ">
+
+        <div *ngIf="element.TotalRaciones < element.Matricula" style="color:red;">
+          {{element.TotalRaciones==null?'-':element.TotalRaciones}}
+
+        </div>
+
+        <div *ngIf="element.TotalRaciones >= element.Matricula && element.TotalRaciones <= element.Matricula*2-1 ">
+          {{element.TotalRaciones==null?'-':element.TotalRaciones}}
+        </div>
+        <div *ngIf="element.TotalRaciones >= element.Matricula*2" style="color:green;">
+          {{element.TotalRaciones==null?'-':element.TotalRaciones}}
+        </div>
+
+
+      </td>
+      <br>
+    </ng-container>
+    <ng-container matColumnDef="bandera">
+      <th mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"> Total <br> complementos <br> diarios </th>
+      <td mat-cell *matCellDef="let element" class="bordeizq" style="    border-bottom: 0px !important;
+      border-right: 0px !important; padding-left: 5px!important;">
+        <div *ngIf="element.TotalRaciones < element.Matricula" style="color:red;" >
+
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png" alt="" height="14px" width="auto">
+        </div>
+        <div *ngIf="element.TotalRaciones >= element.Matricula && element.TotalRaciones <= element.Matricula*2-1 ">
+
+        </div>
+        <div *ngIf="element.TotalRaciones >= element.Matricula*2" style="color:green;" >
+
+          <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-19.png" alt="" height="14px" width="auto">
+        </div>
+
+
+      </td>
+    </ng-container>
+    <br>
+    <!-- Header row second group -->
+
+    <ng-container matColumnDef="h_jornada">
+      <th class="LeftUpCorner" mat-header-cell *matHeaderCellDef [attr.rowspan]="2" style=" min-width: 180px; ">
+        <b>Jornada</b>
+      </th>
+    </ng-container>
+
+    <ng-container matColumnDef="h_grados">
+      <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+        style="border-bottom: 1px solid #36c;  border-right: 1px solid #36c;min-width: 200px!important;"><b>Grados</b>
+      </th>
+    </ng-container>
+
+    <ng-container matColumnDef="h_matricula">
+      <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" style="border-bottom: 1px solid #36c;"><b>Matrícula
+          SIMAT</b></th>
+    </ng-container>
+
+    <ng-container matColumnDef="rps">
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> <b>PS <br> (Preparado en sitio)</b> </th>
+    </ng-container>
+
+    <ng-container matColumnDef="ri">
+      <th mat-header-cell *matHeaderCellDef> <b>IND <br> (Industrializado)</b> </th>
+      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="catering">
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> <b>CCT <br> (Comida caliente transportada)</b>
+      </th>
+    </ng-container>
+
+    <ng-container matColumnDef="h_raciones">
+      <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef [attr.rowspan]="2"
+        style="border-bottom: 1px solid #36c;"><b>Total complementos diarios</b></th>
+    </ng-container>
+    <br>
+    <!-- Footer row second group -->
+    <ng-container matColumnDef="h_PRINCIPAL">
+      <td class="header2" mat-footer-cell *matFooterCellDef>TOTAL diario</td>
+    </ng-container>
+    <ng-container matColumnDef="h_SERVICIOS">
+      <th class="header2" mat-footer-cell *matFooterCellDef>Todos los <br> grados
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="h_AREA">
+      <th class="header2" mat-footer-cell *matFooterCellDef>{{Matricula}}
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="h_FINAL">
+      <th class="header4" mat-footer-cell *matFooterCellDef>{{almRPS}}</th>
+    </ng-container>
+    <ng-container matColumnDef="h_FINAL1">
+      <th class="header2" mat-footer-cell *matFooterCellDef>{{comRPS}}
+      </th>
+    </ng-container>
+    <ng-container matColumnDef="h_FINAL2">
+      <th class="header2" mat-footer-cell *matFooterCellDef>{{comRI}}</th>
+    </ng-container>
+    <ng-container matColumnDef="h_FINAL3">
+      <th class="header4" mat-footer-cell *matFooterCellDef>{{almCCT}}</th>
+    </ng-container>
+    <ng-container matColumnDef="h_FINAL4">
+      <th class="header2" mat-footer-cell *matFooterCellDef>{{comCCT}}</th>
+    </ng-container>
+    <ng-container matColumnDef="h_FINAL5">
+      <td mat-footer-cell *matFooterCellDef>{{raciones}}</td>
+    </ng-container>
+    <ng-container matColumnDef="h_PRINCIPAL2">
+      <th class="header3" mat-footer-cell *matFooterCellDef [attr.colspan]="10"></th>
+    </ng-container>
+    <tr mat-footer-row *matFooterRowDef="['h_PRINCIPAL2']" style="height: 20px;"></tr>
+
+    <tr mat-footer-row
+      *matFooterRowDef="['h_PRINCIPAL', 'h_SERVICIOS', 'h_AREA', 'h_FINAL','h_FINAL1','h_FINAL2','h_FINAL3','h_FINAL4','h_FINAL5']">
+    </tr>
+    <tr mat-footer-row *matFooterRowDef="['h_PRINCIPAL2']" style="height: 20px;"></tr>
+
+    <tr mat-header-row
+      *matHeaderRowDef="['h_jornada', 'h_grados', 'h_matricula', 'rps', 'ri', 'catering', 'h_raciones']">
+    </tr>
+    <tr mat-header-row *matHeaderRowDef="columnAsignacionNames"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnAsignacionNames;"></tr>
+  </table>
+</mat-expansion-panel>

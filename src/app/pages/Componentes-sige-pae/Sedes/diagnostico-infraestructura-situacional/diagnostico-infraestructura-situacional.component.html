@@ -1,0 +1,64 @@
+<style>
+    .card {
+        border: none;
+    }
+
+    .table-responsive {
+        padding-left: 30px;
+    }
+</style>
+
+
+<!-- <div class="col-md-9 ms-sm-auto col-lg-10 px-md-5" style="color: #004884;font-size: 1em !important;box-sizing: border-box;">
+    <div class="flex-wrap flex-md-nowrap mt-3">
+        <div class="col-xs-12">
+            <label class="anio-text" style="float: right;">Año | <strong class="strongheader"> {{currentYear}} </strong></label>
+            <label class="banner-text">ETC | <strong class="strongheader">{{nombreETC}}</strong></label>
+        </div>
+        <hr style="margin: 0;">
+        <div class="col-xs-12 text-right">
+            <label class="last-update-text">Ultima actualizaci&oacute;n <span> {{  dateToday | date: "longDate"  }}</span></label>
+        </div>
+    </div>
+    <div class="mt-2">
+        <router-outlet></router-outlet>
+    </div>
+</div> -->
+<!--Diagnostico numeracion -->
+<div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2">
+    <div class="d-flex">
+        <div class="d-flex align-items-center" style="float: left; background-color: #E43466; padding: 10px;">
+            <div style="height: 24px; width: 24px; background-color: #ffffff;
+                border-radius: 50%; text-align: center; color: #E43466; font-weight: 500; padding-top: 3px;
+                ">1
+            </div>
+        </div>
+        <div class="ml-minus-1-px" style="display: inline-block; background-color: #E43466; padding: 12px 0px 12px 0px; color: #ffffff; z-index: 1000;">
+            Diagnóstico de condiciones operativas
+        </div>
+        <div class="h-down-auto" style="background-color: #E43466; height: 44px; width: 44px; border-radius: 0% 50% 50% 0;
+                  margin-left: -1px;float: right;">
+        </div>
+    </div>
+    <br>
+</div>
+
+<!--tabla Diagnóstico de condiciones operativas-->
+<app-diagnostico-operativas></app-diagnostico-operativas>
+<!--situacional-->
+<div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2 ">
+    <div class="d-flex">
+        <div class="d-flex align-items-center" style="float: left; background-color: #E43466; padding: 9.8px; ">
+            <div style="height: 24px; width: 24px; background-color: #ffffff; border-radius: 50%; text-align: center; color: #E43466; font-weight: 500; padding-top: 3px; ">2
+            </div>
+        </div>
+        <div class="ml-minus-1-px" style="display: inline-block; background-color: #E43466; padding: 12px 0px 12px 0px; color: #ffffff; z-index: 1000;">
+            Diagnóstico situacional
+        </div>
+        <div class="h-down-auto" style="background-color: #E43466; height: 44.4px; width: 44px; border-radius: 0% 50% 50% 0; margin-left: -1px;float: right; ">
+        </div>
+    </div>
+</div>
+<br>
+<!--tabla diagnostico situcional-->
+<app-diagnostico-situacional></app-diagnostico-situacional>

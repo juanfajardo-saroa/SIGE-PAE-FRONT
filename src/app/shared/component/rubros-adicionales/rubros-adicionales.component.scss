@@ -1,0 +1,15 @@
+@import '/src/assets/styles/variable.scss';
+
+.input-text {
+    width: 100% !important;
+}
+
+.border-rigth-primary {
+    border-right: 1px solid $base-color;
+}
+
+.div-label{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

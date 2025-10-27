@@ -1,0 +1,48 @@
+.panel.panel-blue {
+    .panel-header {
+        padding: 1rem;
+        background-color: rgb(226, 236, 253);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border: 1px solid $base-color;
+        border-bottom: none !important;
+        padding: 0.5rem !important;
+        margin: 0px !important;
+        h4.panel-title {
+            margin: 0;
+            font-size: 16px !important;
+            color: $base-color !important;
+            font-weight: 450 !important; //normal
+            font-family: 'Montserrat', sans-serif !important;
+        }
+        h5.panel-title {
+            margin: 0;
+            font-size: 14px !important;
+            color: $base-color !important;
+            font-weight: 450 !important; //normal
+            font-family: 'Montserrat', sans-serif !important;
+        }
+    }
+    .panel-body {
+        border: 1px solid $base-color;
+        border-radius: 0 0 12px 12px;
+        border-top: none;
+    }
+    .panel-body.noborder {
+        border: none;
+    }
+    .panel-body.nb-r {
+        border-radius: 0;
+    }
+    .panel-footer {
+        padding: 13px 10px;
+        text-align: center;
+        border-top: 1px solid $base-color;
+    }
+    .panel-footer:not(.noborder) {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: 1px solid $base-color;
+        border-top: none;
+    }
+}

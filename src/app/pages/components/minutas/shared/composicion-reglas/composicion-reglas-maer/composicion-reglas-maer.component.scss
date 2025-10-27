@@ -1,0 +1,22 @@
+@import '/src/assets/styles/variable.scss';
+
+.border-none {
+    border: none !important;
+}
+
+.columna-total-intercambios {
+    background-color: aliceblue;
+    border: 1px solid $base-color !important;
+}
+
+.border-rigth-none {
+    border-right: none !important;
+}
+
+td:last-child.dinamic-table-noborder-right{
+    border-right: none !important;
+}
+
+.dinamic-table-border-left-dashed{
+    border-left: 1px dashed $base-color !important;
+}

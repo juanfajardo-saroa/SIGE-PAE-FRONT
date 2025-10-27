@@ -1,0 +1,204 @@
+<div class="SizeDialog w-down-sm-100">
+
+  <mat-card-header class="TituloDialog">
+    <ng-container>
+      <div mat-dialog-actions>
+        <tr class="CenterButton">
+          <td>
+            Priorización automatizada
+          </td>
+        </tr>
+      </div>
+    </ng-container>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div>
+      <div class="SizeDialog w-down-sm-100">
+        <div>
+          <mat-card-content class="text-center">
+            <mat-dialog-content class="mat-typography">
+              <br />
+
+              <div [formGroup]="form" (ngSubmit)="doAction()">
+
+                <ng-container>
+
+                  <div class="d-flex flex-column px-5">
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center">1. Tipo de municipio:  </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0" id="tipoMunicipio"
+                          formControlName="tipoMunicipio" (selectionChange)="onTipoMunicipioClick($event.value)"
+                          placeholder="Elija una opción">
+                          <mat-option *ngFor="let item of tipoMunicipioList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pt-3">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center">
+                        2. Municipio:
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0" id="municipio" formControlName="municipio" (selectionChange)="onFieldClick()"
+
+                          placeholder="Elija una opción" (selectionChange)="onDivipolaClick($event.value)">
+                          <mat-option *ngFor="let item of divipolaList" [value]="item.id">
+                            {{item.nombre}}
+
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pt-3">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center">
+                        3. Jornada:
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0" id="jornada"  formControlName="jornada" (selectionChange)="onFieldClick()"
+                          placeholder="Elija una opción">
+                          <mat-option *ngFor="let item of sedesJornadaList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pt-3">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center">
+                        4. Nivel educativo:
+                      </div>
+
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0" id="nivelEducativo" (selectionChange)="onFieldClick()"
+                            formControlName="nivelEducativo" placeholder="Elija una opción">
+                            <mat-option *ngFor="let item of nivelEducativoList" [value]="item.id">
+                              {{item.nombre}}
+                            </mat-option>
+                          </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pt-3">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center">
+                        5. Zona:
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0" id="zona"  formControlName="zona" (selectionChange)="onFieldClick()"
+                          placeholder="Elija una opción">
+                          <mat-option *ngFor="let item of zonasList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pt-3">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center">
+                        6. Criterios de vulnerabilidad:
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0"  id="criteriosVulnerabilidad" (selectionChange)="onFieldClick()"
+                          formControlName="criteriosVulnerabilidad" placeholder="Elija una opción">
+                          <mat-option *ngFor="let item of criterioVulnerabilidadList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pt-3">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center">
+                        7. Modelo de operación:
+                      </div>
+                      <div class="w-100">
+                        <mat-select  class="tablaform control-md mt-0" id="modeloOperacion" (selectionChange)="onTipoOpe($event.value,'modalidad','tipoRacion')"
+                          formControlName="modeloOperacion" placeholder="Elija una opción">
+                          <mat-option *ngFor="let item of tiposModeloOperacionList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pt-3" [ngClass]="{ disabled: !itemModelo.modalidad}">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center margenleft">
+                        7.1. Modalidad:
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0" id="modalidad"
+                            (selectionChange)="onTipoModalidadRacionClick($event.value)"
+                            formControlName="modalidad" placeholder="Elija una opción">
+                            <mat-option *ngFor="let item of modalidadList" [value]="item.iD_TipoModalidadComplemento">
+                              {{item.sID_TipoModalidadComplemento }}
+                            </mat-option>
+                          </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between BordeSeparador m-0 pt-3" [ngClass]="{ disabled: !itemModelo.tipoRacion}">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center margenleft">
+                        7.2. Tipo de ración:
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0" id="tipoRacion"  formControlName="tipoRacion"
+                            placeholder="Elija una opción">
+                            <mat-option *ngFor="let item of tipoRacionList" [value]="item.iD_TipoComplemento">
+                              {{item.sID_TipoComplemento}}
+                            </mat-option>
+                          </mat-select>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between m-0 pt-3">
+                      <div class="TextosBlueLeft w-75 w-down-sm-100 align-self-center">
+                        8. Completar campos con:<span style="color:red;">* </span>
+                      </div>
+                      <div class="w-100">
+                        <mat-select class="tablaform control-md mt-0" id="completar" formControlName="completar" required
+                          placeholder="Elija una opción">
+                          <mat-option *ngFor="let item of completarList" [value]="item.id">
+                            {{item.nombre}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </ng-container>
+
+              </div>
+            </mat-dialog-content>
+            <br>
+            <table class="BordeSuperior" >
+              <ng-container>
+                <div style="margin-top: 10px;">
+                  <div class="CenterButton text-center">
+                    <div class="AlignRight">
+                        <button (click)="closeDialog()">Cancelar
+                        </button>
+                    </div>
+                    <div>
+
+                      <button [disabled]="form.invalid || !this.atLeastOneField" (click)="doAction()">Finalizar
+                    </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </table>
+
+
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+
+</div>
