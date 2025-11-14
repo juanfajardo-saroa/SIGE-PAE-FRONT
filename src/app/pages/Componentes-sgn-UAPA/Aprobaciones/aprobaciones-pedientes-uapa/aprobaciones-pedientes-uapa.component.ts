@@ -15,6 +15,7 @@ import { AprobacionesService } from 'src/app/shared/services/Aprobaciones.servic
 import { VigenciasService } from 'src/app/shared/services/Vigencias.services';
 import { SedesService } from 'src/app/shared/services/Sedes.services';
 import { DecimalPipe } from '@angular/common';
+import { construirDescripcionAprobacion } from 'src/app/shared/utils/aprobaciones-utils';
 
 @Component({
   selector: 'app-aprobaciones-pedientes-uapa',
@@ -22,7 +23,7 @@ import { DecimalPipe } from '@angular/common';
   styleUrls: ['./aprobaciones-pedientes-uapa.component.scss']
 })
 export class AprobacionesPedientesUapaComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['modulo', 'seccion', 'documento', 'enviado'];
+  displayedColumns: string[] = ['modulo', 'seccion', 'documento', 'enviado', 'descripcion'];
   dataSource = new MatTableDataSource<GetAprobacionesGetAllWithRelModel>();
   @ViewChild(MatTable, { static: true }) table: MatTable<any> = Object.create(null);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
@@ -334,4 +335,7 @@ export class AprobacionesPedientesUapaComponent implements OnInit, AfterViewInit
     else { }
   }
 
+  getDescripcion(element: GetAprobacionesGetAllWithRelModel): string {
+    return construirDescripcionAprobacion(element, { forzarEtc: true });
+  }
 }

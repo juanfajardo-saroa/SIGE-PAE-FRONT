@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs';
 import { GetAprobacionesGetAllWithRelModel } from 'src/app/shared/model/PA_AprobacionesGetAllWithRel.Model';
 import { AprobacionesGetAllWithRelService } from 'src/app/shared/services/AprobacionesGetAllWithRel.services';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
+import { construirDescripcionAprobacion } from 'src/app/shared/utils/aprobaciones-utils';
 
 
 @Component({
@@ -17,7 +19,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./aprobaciones-pendientes-ejecucion-y-seguimiento.component.scss']
 })
 export class AprobacionesPendientesEjecucionYSeguimientoComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['modulo', 'seccion', 'documento', 'enviado','accion'];
+  displayedColumns: string[] = ['modulo', 'seccion', 'documento', 'enviado', 'descripcion', 'accion'];
 
 
   dataSource = new MatTableDataSource<GetAprobacionesGetAllWithRelModel>();
@@ -130,5 +132,9 @@ export class AprobacionesPendientesEjecucionYSeguimientoComponent implements OnI
 
     } else { }
 
+  }
+
+  getDescripcion(element: GetAprobacionesGetAllWithRelModel): string {
+    return construirDescripcionAprobacion(element);
   }
 }

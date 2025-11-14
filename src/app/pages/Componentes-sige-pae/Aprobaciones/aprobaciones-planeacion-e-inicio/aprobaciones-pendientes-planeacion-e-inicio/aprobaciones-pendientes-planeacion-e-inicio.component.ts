@@ -16,6 +16,7 @@ import { Moment } from 'moment';
 import { environment } from 'src/environments/environment';
 import { PA_DiagnosticoInfraEstRequest, PA_DiagnosticoInfraEstService } from 'src/app/shared/services/PA_DiagnosticoInfraEst.services';
 import { leadingComment } from '@angular/compiler';
+import { construirDescripcionAprobacion } from 'src/app/shared/utils/aprobaciones-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ import { leadingComment } from '@angular/compiler';
   styleUrls: ['./aprobaciones-pendientes-planeacion-e-inicio.component.scss']
 })
 export class AprobacionesPendientesPlaneacionEInicioComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['modulo', 'seccion', 'documento', 'enviado','accion'];
+  displayedColumns: string[] = ['modulo', 'seccion', 'documento', 'enviado', 'descripcion', 'accion'];
 
 
   dataSource = new MatTableDataSource<GetAprobacionesGetAllWithRelModel>();
@@ -184,5 +185,9 @@ export class AprobacionesPendientesPlaneacionEInicioComponent implements OnInit,
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  getDescripcion(element: GetAprobacionesGetAllWithRelModel): string {
+    return construirDescripcionAprobacion(element);
   }
 }

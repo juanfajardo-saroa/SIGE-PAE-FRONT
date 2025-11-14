@@ -63,6 +63,11 @@
             <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Env. aprobación">
               {{element.fecha==null?'-':( element.fecha | date:'dd-MMM-yyyy' | uppercase | withoutDots)}} </td>
           </ng-container>
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Descripción</b></th>
+            <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Descripción">
+              {{getDescripcion(element)}} </td>
+          </ng-container>
            <!-- fecha Column -->
            <ng-container matColumnDef="aprobado">
             <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>Fue aprobada/rechazada</b></th>

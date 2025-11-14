@@ -8,6 +8,8 @@ import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 import { GetAprobacionesGetAllWithRelModel } from 'src/app/shared/model/PA_AprobacionesGetAllWithRel.Model';
 import { AprobacionesGetAllWithRelService } from 'src/app/shared/services/AprobacionesGetAllWithRel.services';
+import { environment } from 'src/environments/environment';
+import { construirDescripcionAprobacion } from 'src/app/shared/utils/aprobaciones-utils';
 
 @Component({
   selector: 'app-aprobaciones-pendientes-cierre-y-evaluacion',
@@ -15,7 +17,7 @@ import { AprobacionesGetAllWithRelService } from 'src/app/shared/services/Aproba
   styleUrls: ['./aprobaciones-pendientes-cierre-y-evaluacion.component.scss']
 })
 export class AprobacionesPendientesCierreYEvaluacionComponent implements  OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['modulo', 'seccion', 'documento', 'enviado','accion'];
+  displayedColumns: string[] = ['modulo', 'seccion', 'documento', 'enviado', 'descripcion', 'accion'];
 
 
   dataSource = new MatTableDataSource<GetAprobacionesGetAllWithRelModel>();
@@ -111,5 +113,9 @@ export class AprobacionesPendientesCierreYEvaluacionComponent implements  OnInit
   
 
 
+  }
+
+  getDescripcion(element: GetAprobacionesGetAllWithRelModel): string {
+    return construirDescripcionAprobacion(element);
   }
 }

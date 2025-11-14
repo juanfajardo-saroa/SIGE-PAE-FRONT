@@ -32,10 +32,16 @@
                     {{element.sID_Subsistemas==null?'-':(element.sID_Subsistemas)}} </td>
               </ng-container>
               <ng-container matColumnDef="enviado">
-                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "> <b>Por aprobar</b>
+                <th mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "> <b>Por aprobar</b>
                 </th>
                 <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
                   {{element.sPorAprobar==null?'-':( element.sPorAprobar)}} </td>
+              </ng-container>
+              <ng-container matColumnDef="descripcion">
+                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "> <b>Descripción</b>
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;">
+                  {{getDescripcion(element)}} </td>
               </ng-container>
               <ng-container matColumnDef="aprobado">
                 <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef  style="padding-left: 0px; "><b>plazo para aprobar</b>
