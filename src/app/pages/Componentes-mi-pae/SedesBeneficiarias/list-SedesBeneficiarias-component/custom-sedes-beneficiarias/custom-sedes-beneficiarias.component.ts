@@ -76,7 +76,7 @@ export class CustomSedesBeneficiariasComponent implements OnInit, AfterViewInit 
   nombreETC = environment.nameETC;
   currentYear = new Date().getFullYear();
   columnNames = ['nombre', 'valor'];
-  resultadosColumnNames = ['municipio', 'institucionEducativa', 'sede', 'matriculaSimat', 'estudiantesSisben', 'priorizada', 'modeloTradicional'];
+  resultadosColumnNames = ['municipio', 'institucionEducativa', 'sede', 'codigoDane', 'matriculaSimat', 'estudiantesSisben', 'priorizada', 'modeloTradicional'];
 
   dataSourceMunicipios: DetalleResumenModel[] = [];
   dataSourceSedes: DetalleResumenModel[] = [];

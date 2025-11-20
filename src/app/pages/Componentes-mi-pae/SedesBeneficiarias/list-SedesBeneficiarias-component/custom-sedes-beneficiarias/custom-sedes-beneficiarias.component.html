@@ -404,6 +404,14 @@
                 <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Sede">
                   {{element.sede}} </td>
               </ng-container>
+              <ng-container matColumnDef="codigoDane">
+                <th mat-header-cell *matHeaderCellDef
+                  style="padding-left: 0px; min-width: 200px!important;" class="centerText">
+                  Código Dane
+                </th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center;" data-label="Código Dane">
+                  {{element.codigoDane}} </td>
+              </ng-container>
               <ng-container matColumnDef="matriculaSimat">
                 <th mat-header-cell *matHeaderCellDef
                   style="padding: 20px 10px !important; max-width: 110px;"> Matrícula <br> SIMAT </th>
