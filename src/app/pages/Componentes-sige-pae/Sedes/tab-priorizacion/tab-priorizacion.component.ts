@@ -161,6 +161,7 @@ export class TabPriorizacionComponent implements OnInit, AfterViewInit, OnDestro
               municipio: element.municipio,
               institucionEducativa: element.instEducativa,
               sede: element.sede,
+              codigoDane: element.codigoDane,
               idSede: element.id_sede,
               matriculaSIMAT: element.matriculaSIMAT,
               modeloOperacionTradicional: element.modeloOperacion,

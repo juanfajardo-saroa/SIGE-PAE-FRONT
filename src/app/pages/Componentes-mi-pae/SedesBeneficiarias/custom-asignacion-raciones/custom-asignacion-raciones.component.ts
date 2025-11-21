@@ -81,7 +81,7 @@ export class CustomAsignacionRacionesComponent implements OnInit, AfterViewInit 
   nombreETC = environment.nameETC;
   currentYear = new Date().getFullYear();
   columnNames = ['nombre', 'valor'];
-  resultadosColumnNames = ['municipio', 'institucionEducativa', 'sede', 'matriculaSimat', 'modeloTradicional', 'modalidadSugerida', 'racionesDiarias'];
+  resultadosColumnNames = ['municipio', 'institucionEducativa', 'sede', 'codigoDane', 'matriculaSimat', 'modeloTradicional', 'modalidadSugerida', 'racionesDiarias'];
   cantAprobaciones = 0;
   dataSourceMunicipios: DetalleResumenModel[] = [];
   dataSourceSedes: DetalleResumenModel[] = [];
@@ -200,6 +200,7 @@ export class CustomAsignacionRacionesComponent implements OnInit, AfterViewInit 
     InstEducativa: '',
     id_sede: 0,
     Sede: '',
+    CodigoDane: '',
     MatriculaSIMAT: 0,
     ModeloOperacion: '',
     ModeloOperacionER: '',
@@ -621,6 +622,7 @@ export class CustomAsignacionRacionesComponent implements OnInit, AfterViewInit 
               municipio: element.municipio,
               institucionEducativa: element.instEducativa,
               sede: element.sede,
+              codigoDane: element.codigoDane,
               idSede: element.id_sede,
               matriculaSIMAT: element.matriculaSIMAT,
               modeloOperacionTradicional: element.modeloOperacion,

@@ -16,6 +16,7 @@ export interface PA_PrioSedeAsignaRacionInterface {
     InstEducativa:string;
     id_sede:number;
     Sede:string;
+    CodigoDane:string;
     MatriculaSIMAT:number;
     ModeloOperacion:string;
     ModeloOperacionER:string;
@@ -47,6 +48,7 @@ export class PA_PrioSedeAsignaRacionModel implements PA_PrioSedeAsignaRacionInte
     public InstEducativa:string,
     public id_sede:number,
     public Sede:string,
+    public CodigoDane:string,
     public MatriculaSIMAT:number,
     public ModeloOperacion:string,
     public ModeloOperacionER:string,

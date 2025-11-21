@@ -3,6 +3,7 @@ export interface ResultadosRacionesModel {
     institucionEducativa:string;
     idSede: number;
     sede:string;
+    codigoDane:string;
     matriculaSIMAT: number;
     modeloOperacionTradicional:string;
     modeloOperacionEmergencia:string;
