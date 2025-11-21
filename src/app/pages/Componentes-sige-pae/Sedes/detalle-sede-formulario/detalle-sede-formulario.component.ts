@@ -93,6 +93,7 @@ export class DetalleSedeFormularioComponent implements OnInit, OnDestroy, DoChec
   idsede: number;
   tipoE: number;
   nombreSede: string;
+  codigoDane: string;
   nombreInstitucion: string;
   nombreMunicipio: string;
   selecionmodelo: number;
@@ -469,6 +470,7 @@ export class DetalleSedeFormularioComponent implements OnInit, OnDestroy, DoChec
                             let h = response.filter(item => item.nombre == this.nombreSede)
                             this.selsede = h[0].id;
                             this.nombreSede = h[0].nombre;
+                            this.codigoDane = h[0].codigoDane || '';
 
                           },
                           (err) => {
@@ -582,6 +584,7 @@ export class DetalleSedeFormularioComponent implements OnInit, OnDestroy, DoChec
                             let h = response.filter(item => item.id == this.priorizaListT[0].id_sede)
                             this.selsede = h[0].id;
                             this.nombreSede = h[0].nombre;
+                            this.codigoDane = h[0].codigoDane || '';
 
                           },
                           (err) => {
@@ -9954,7 +9957,7 @@ Metodo  // obtener las preguntas del nivel 2
       (err) => {
       }
     );
-   
+
   }
 }
 export class NgbdDatepickerPopup {

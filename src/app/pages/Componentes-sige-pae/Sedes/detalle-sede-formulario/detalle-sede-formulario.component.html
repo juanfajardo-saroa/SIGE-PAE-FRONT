@@ -160,6 +160,21 @@
 
 <form [formGroup]="form" (ngSubmit)="onGuardar('definitiva')">
   <div class="container" id="componentID">
+    <!-- Información de la Sede -->
+    <div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2">
+      <div class="info-sede-container">
+        <div class="info-sede-item">
+          <span class="info-label">Sede:</span>
+          <span class="info-value">{{ nombreSede || '-' }}</span>
+        </div>
+
+        <div class="info-sede-item" *ngIf="codigoDane">
+          <span class="info-label">Código DANE:</span>
+          <span class="info-value">{{ codigoDane }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Información de la Sede -->
     <div *ngFor=" let car of caracterizacionNivelList;let i = index" [attr.data-index]="i">
       <div class="d-flex flex-auto w-full min-w-80 p-4 lt-xl:w-1/2">
         <div style="float: left;">
