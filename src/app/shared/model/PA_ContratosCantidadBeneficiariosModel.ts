@@ -17,6 +17,7 @@ export interface PA_ContratosCantidadBeneficiariosInterface {
   municipio?: string;
   institucionEdu?: string;
   sedeEducativa?: string;
+  codigoDane?: string;
   matricula?: number;
   racionesDiaria?: number;
   totalBeneficiarios?: number;
@@ -41,6 +42,7 @@ export class PA_ContratosCantidadBeneficiariosModel implements PA_ContratosCanti
       public municipio ?: string,
       public institucionEdu ?: string,
       public sedeEducativa ?: string,
+      public codigoDane ?: string,
       public matricula ?: number,
       public racionesDiaria ?: number,
       public totalBeneficiarios ?: number,

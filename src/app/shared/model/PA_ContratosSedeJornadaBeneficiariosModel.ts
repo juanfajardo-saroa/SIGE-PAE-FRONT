@@ -17,6 +17,7 @@ export interface PA_ContratosSedeJornadaBeneficiariosInterface {
   municipio?: string;
   institucionEdu?: string;
   sedeEducativa?: string;
+  codigoDane?: string;
   jornada?: string;
   almuerzoRPS?: number;
   compleRPS?: number;
@@ -44,6 +45,7 @@ export class PA_ContratosSedeJornadaBeneficiariosModel implements PA_ContratosSe
     public municipio?: string,
     public institucionEdu?: string,
     public sedeEducativa?: string,
+    public codigoDane?: string,
     public jornada?: string,
     public almuerzoRPS?: number,
     public compleRPS?: number,

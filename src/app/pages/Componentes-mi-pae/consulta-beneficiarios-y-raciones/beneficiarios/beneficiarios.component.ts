@@ -56,8 +56,8 @@ export class BeneficiariosComponent implements OnInit, AfterViewInit, OnDestroy 
   selMunicipio = 0;
   selInst = 0;
   selsede = 0;
-  displayedColumns: string[] = ['municipio', 'institucionEdu', 'sedeEducativa', 'matricula', 'racionesDiaria', 'totalBeneficiarios'];
-  displayedColumnsrec: string[] = ['sedeEducativa', 'matricula', 'racionesDiaria', 'totalBeneficiarios'];
+  displayedColumns: string[] = ['municipio', 'institucionEdu', 'sedeEducativa', 'codigoDane', 'matricula', 'racionesDiaria', 'totalBeneficiarios'];
+  displayedColumnsrec: string[] = ['sedeEducativa', 'codigoDane', 'matricula', 'racionesDiaria', 'totalBeneficiarios'];
   public tipoSeleccionado: number = 1;
   idtab = 0;
   apr: boolean = false;

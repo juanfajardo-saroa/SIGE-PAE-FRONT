@@ -57,9 +57,9 @@ export class ListadoRacionesComponent implements OnInit, AfterViewInit, OnDestro
   /* Se envian al servicio */
 
 
-  displayedColumns: string[] = ['municipio', 'institucionEdu', 'sedeEducativa', 'jornada', 'almuerzoRPS', 'compleRPS', 'compleRI', 'almuerzoCatering', 'compCatering', 'totalRacionesDia',];
+  displayedColumns: string[] = ['municipio', 'institucionEdu', 'sedeEducativa', 'codigoDane', 'jornada', 'almuerzoRPS', 'compleRPS', 'compleRI', 'almuerzoCatering', 'compCatering', 'totalRacionesDia',];
   displayedColumns2: string[] = ['Fecha', 'Descripcion', 'Archivo',];
-  displayedColumnsrec: string[] = ['sedeEducativa', 'jornada', 'almuerzoRPS', 'compleRPS', 'compleRI', 'almuerzoCatering', 'compCatering', 'totalRacionesDia',];
+  displayedColumnsrec: string[] = ['sedeEducativa', 'codigoDane', 'jornada', 'almuerzoRPS', 'compleRPS', 'compleRI', 'almuerzoCatering', 'compCatering', 'totalRacionesDia',];
 
   /* Parte fecha y titulo */
   currentYear = new Date().getFullYear();
