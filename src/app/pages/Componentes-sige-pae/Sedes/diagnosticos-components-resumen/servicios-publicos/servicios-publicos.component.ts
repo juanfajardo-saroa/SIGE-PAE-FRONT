@@ -1060,7 +1060,7 @@ export class ServiciosPublicosComponent implements OnInit, OnDestroy {
 })
 export class DialogLuzSiContent implements OnDestroy {
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -1174,7 +1174,7 @@ export class DialogLuzSiContent implements OnDestroy {
 })
 export class DialogLuzNoContent implements OnDestroy {
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -1264,7 +1264,7 @@ export class DialogLuzNoContent implements OnDestroy {
 export class DialogAguaSiContent implements OnDestroy {
 
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -1377,7 +1377,7 @@ export class DialogAguaSiContent implements OnDestroy {
 export class DialogAguaNoContent implements OnDestroy {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -1453,7 +1453,7 @@ export class DialogAguaNoContent implements OnDestroy {
     this.ngZone.run(() => {
       this.dialogRef.close({ value: 'cerrar' });
     });
-    window.location.reload();
+    // window.location.reload();
   }
 }
 @Component({
@@ -1464,7 +1464,7 @@ export class DialogAguaNoContent implements OnDestroy {
 })
 export class DialogAlcantarilladoSiContent implements OnDestroy {
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -1579,7 +1579,7 @@ export class DialogAlcantarilladoSiContent implements OnDestroy {
 export class DialogAlcantarilladoNoContent implements OnDestroy {
 
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -1694,7 +1694,7 @@ export class DialogAlcantarilladoNoContent implements OnDestroy {
 export class DialogGasSiContent implements OnDestroy {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -1782,7 +1782,7 @@ export class DialogGasSiContent implements OnDestroy {
 })
 export class DialogGasNoContent implements OnDestroy {
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -1934,7 +1934,7 @@ export class DialogGasNoContent implements OnDestroy {
 export class DialogBasuraSiContent implements OnDestroy {
 
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -2070,7 +2070,7 @@ export class DialogBasuraSiContent implements OnDestroy {
 export class DialogBasuraNoContent implements OnDestroy {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";

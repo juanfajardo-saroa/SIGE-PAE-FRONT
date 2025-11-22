@@ -14,6 +14,7 @@ export interface PA_SedePregRespuestaInterface {
   municipio: string;
   instEducativa: string;
   sede: string;
+  codigoDane?: string;
   filtro: string;
 
 
@@ -34,6 +35,7 @@ export class PA_SedePregRespuestaModel implements PA_SedePregRespuestaInterface 
     public instEducativa: string,
     public sede: string,
     public filtro: string,
+    public codigoDane?: string,
 
     // atributos adicionales genericos para gestión del objeto
     public isValid: boolean = true,

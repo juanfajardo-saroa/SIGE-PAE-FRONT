@@ -63,7 +63,7 @@ export class ConceptoHigenicoSaniComponent implements OnInit, OnDestroy{
   private subs = new Subscription()
   GetCaracterizacionNivel4Params:GetCaracterizacionNivel4Request={}
   private dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   public dataSource!: MatTableDataSource<PA_ETCSedesCHSFavorableModel>;
   selection = new SelectionModel<PA_ETCSedesCHSFavorableModel>(true, []);
   @ViewChild(MatTable, { static: true }) table: MatTable<any> = Object.create(null);
@@ -363,7 +363,7 @@ export class ConceptoHigenicoSaniComponent implements OnInit, OnDestroy{
 })
 export class DialogHigienicoSiFavorableContent implements OnDestroy{
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -451,7 +451,7 @@ export class DialogHigienicoSiFavorableContent implements OnDestroy{
 })
 export class DialogHigienicoSiConRequerimientosContent implements OnDestroy {
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -551,7 +551,7 @@ export class DialogHigienicoSiConRequerimientosContent implements OnDestroy {
 export class DialogHigienicoSiDesfavorableContent implements OnDestroy {
 
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -640,7 +640,7 @@ export class DialogHigienicoSiDesfavorableContent implements OnDestroy {
 export class DialogHigienicoNoContent  implements OnDestroy {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";

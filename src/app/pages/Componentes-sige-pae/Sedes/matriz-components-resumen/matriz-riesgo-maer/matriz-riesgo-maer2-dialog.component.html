@@ -80,10 +80,17 @@
                               </ng-container>
                               <!-- Descripción Column -->
                               <ng-container matColumnDef="sede">
-                                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                                <th mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
                                   Sede </th>
                                 <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
                                   {{element.sede==null?'-': element.sede}} </td>
+                              </ng-container>
+                              <!-- Código DANE Column -->
+                              <ng-container matColumnDef="codigoDane">
+                                <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; ">
+                                  Código DANE </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; ">
+                                  {{element.codigoDane==null?'-': element.codigoDane}} </td>
                               </ng-container>
                               <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
                               <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>

@@ -170,7 +170,7 @@
 
         <div class="info-sede-item" *ngIf="codigoDane">
           <span class="info-label">Código DANE:</span>
-          <span class="info-value">{{ codigoDane }}</span>
+          <span class="info-value">{{ codigoDane == null ? '-' : codigoDane }}</span>
         </div>
       </div>
     </div>

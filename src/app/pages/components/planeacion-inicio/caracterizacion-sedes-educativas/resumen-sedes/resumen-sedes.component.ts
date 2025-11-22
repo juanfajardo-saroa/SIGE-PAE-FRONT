@@ -120,7 +120,7 @@ export class ResumenSedesComponent implements OnInit  ,OnDestroy{
 export class DialogDistribucionAccesoContent implements  OnDestroy {
 
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<AccesoSedesModel>();
   isLoading = true;
   idETC = 0;
@@ -189,4 +189,5 @@ interface AccesoSedesInterface {
   sede: string;
   municipioNombre: string;
   instiEducativa: string;
+  codigoDane?: string;
 }

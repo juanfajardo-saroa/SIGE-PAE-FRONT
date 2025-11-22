@@ -30,7 +30,7 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.resetPasswordForm = new FormGroup({
-      password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!#$%&()=,.;:*])[A-Za-z0-9!#$%&()=,.;:*]{8,}$')]),
+      password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!#$%&()=,.;:*@])[A-Za-z0-9!#$%&()=,.;:*@]{8,}$')]),
       confirm: new FormControl('')
     });
     this.resetPasswordForm.get('confirm').setValidators([Validators.required,

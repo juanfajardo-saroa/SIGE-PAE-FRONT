@@ -15,6 +15,7 @@ export interface PA_RiesgoETCSedesModeloOperInterface {
   instEducativa: string;
   cantidadSede: string;
   sede: string;
+  codigoDane?: string;
  
 
 
@@ -35,6 +36,7 @@ export class PA_RiesgoETCSedesModeloOperModel implements PA_RiesgoETCSedesModelo
     public instEducativa: string,
     public cantidadSede: string,
     public sede: string,
+    public codigoDane?: string,
 
 
     // atributos adicionales genericos para gestión del objeto

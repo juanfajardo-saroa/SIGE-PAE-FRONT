@@ -102,7 +102,7 @@ import { PA_RiesgoETCSedesModeloOperService } from 'src/app/shared/services/PA_R
 export class DialogContentPaec implements OnInit, AfterViewInit, OnDestroy  {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_RiesgoETCSedesModeloOperModel>();
   diagnosticoResumen: GetCaracterizacionNivel4Model[] = [];
   isLoading = true;
@@ -175,7 +175,7 @@ export class DialogContentPaec implements OnInit, AfterViewInit, OnDestroy  {
 export class DialogContentPaec2 implements OnInit, AfterViewInit, OnDestroy  {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   diagnosticoResumen: GetCaracterizacionNivel4Model[] = [];
   isLoading = true;
@@ -266,7 +266,7 @@ export class DialogContentPaec2 implements OnInit, AfterViewInit, OnDestroy  {
 export class DialogContentPaec3 implements OnInit, AfterViewInit, OnDestroy  {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   diagnosticoResumen: GetCaracterizacionNivel4Model[] = [];
   isLoading = true;

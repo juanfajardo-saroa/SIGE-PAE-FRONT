@@ -510,7 +510,7 @@ export class CaracterizacionSedeComponent implements OnInit, OnDestroy {
 })
 export class DialogContaminacionSiContent implements OnDestroy {
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = "";
@@ -616,7 +616,7 @@ export class DialogContaminacionSiContent implements OnDestroy {
 })
 export class DialogContaminacionNoContent implements OnDestroy {
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   idETC = 0
@@ -717,7 +717,7 @@ export class DialogContaminacionNoContent implements OnDestroy {
 export class DialogConflictoSiContent implements OnDestroy {
 
   dataArray: any;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = ""
@@ -818,7 +818,7 @@ export class DialogConflictoSiContent implements OnDestroy {
 export class DialogConflictoNoContent implements OnDestroy {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   isLoading = true;
   NombreETC = localStorage.getItem('Ubicacion')

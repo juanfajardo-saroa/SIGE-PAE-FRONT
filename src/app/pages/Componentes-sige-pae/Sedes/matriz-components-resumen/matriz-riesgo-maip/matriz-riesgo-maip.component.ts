@@ -118,7 +118,7 @@ import { DecimalPipe } from '@angular/common';
 export class DialogContentMaip implements OnInit, AfterViewInit, OnDestroy {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_RiesgoETCSedesModeloOperModel>();
   diagnosticoResumen: GetCaracterizacionNivel4Model[] = [];
   isLoading = true;
@@ -198,7 +198,7 @@ export class DialogContentMaip implements OnInit, AfterViewInit, OnDestroy {
 export class DialogContentMaip2 implements OnInit, AfterViewInit, OnDestroy {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   diagnosticoResumen: GetCaracterizacionNivel4Model[] = [];
   isLoading = true;
@@ -296,7 +296,7 @@ export class DialogContentMaip2 implements OnInit, AfterViewInit, OnDestroy {
 export class DialogContentMaip3 implements OnInit, AfterViewInit, OnDestroy {
   dataArray: any;
   action: string;
-  displayedColumns: string[] = ['municipio', 'institucion', 'sede'];
+  displayedColumns: string[] = ['municipio', 'institucion', 'sede', 'codigoDane'];
   dataSource = new MatTableDataSource<PA_SedePregRespuestaModel>();
   diagnosticoResumen: GetCaracterizacionNivel4Model[] = [];
   isLoading = true;
