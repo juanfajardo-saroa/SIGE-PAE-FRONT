@@ -89,7 +89,7 @@
                                     <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef style="padding-left: 0px; min-width: 350px; ">
                                       Código DANE </th>
                                     <td class="w-down-100 px-lg-down-0" mat-cell *matCellDef="let element" style="padding-left: 0px; text-align: center; " data-label="Código DANE">
-                                      {{element.codigoDane==null?'-': element.codigoDane}} </td>
+                                      {{element.codigoDane==null?'No disponible': element.codigoDane}} </td>
                                   </ng-container>
                                   <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
                                   <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
