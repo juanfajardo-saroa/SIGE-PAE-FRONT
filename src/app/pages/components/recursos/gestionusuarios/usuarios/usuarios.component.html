@@ -160,6 +160,15 @@
         Usuarios</label>
     </div>
 
+    <div class="col-auto d-flex justify-content-end">
+      <app-creation-action-button 
+        label="Registrar Usuario"
+        [disabled]="!getModulePermission(19,'crear')"
+        (onClick)="openDialog('Adicionar',{})">
+      </app-creation-action-button>
+    </div>
+    <br>
+
     <div class="col-12 responsive-table-pae" style=" padding: 0%;">
       <table mat-table [dataSource]="dataSource" class="tableUsuarios left-radius right-radius">
 
@@ -260,13 +269,5 @@
       <mat-paginator style="color:#005ACA ;" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]"
         showFirstLastButtons>
       </mat-paginator>
-    </div>
-
-    <div style="width: 100%; float: right;" class="align-items-center textagregar "
-      [ngClass]="{'linkdisable':!getModulePermission(19,'crear')}">
-      <div class="text-right ">
-        <a class="btn-registrar" (click)="openDialog('Adicionar',{})"><img
-            src="../../../../../../assets/images/Iconos/add_blue.png"> Registrar Usuario</a>
-      </div>
     </div>
   </div>

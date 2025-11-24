@@ -18,6 +18,10 @@ import { ChapterImgComponent } from './component/chapter-img/chapter-img.compone
 import { InfoMessageComponent } from './component/info-message/info-message.component';
 import { TableJornadaPsCctCualificadoComponent } from './component/tables/table-jornada-ps-cct-cualificado/table-jornada-ps-cct-cualificado.component';
 import { TableJornadaCostoComponent } from './component/tables/table-jornada-costo/table-jornada-costo.component';
+import { CreationActionButtonComponent } from './component/creation-action-button/creation-action-button.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -25,7 +29,9 @@ import { TableJornadaCostoComponent } from './component/tables/table-jornada-cos
       LibrariesModule,
       MatProgressSpinnerModule,
       CommonModule,
-      FormsModule
+      FormsModule,
+      MatButtonModule,
+      MatIconModule,
     ],
     exports: [
       LibrariesModule,
@@ -40,11 +46,12 @@ import { TableJornadaCostoComponent } from './component/tables/table-jornada-cos
       CostoTotalTabComponent,
       ChapterImgComponent,
       TableJornadaPsCctCualificadoComponent,
-      TableJornadaCostoComponent
+      TableJornadaCostoComponent,
+      CreationActionButtonComponent
     ],
     declarations: [
       ChapterComponent, SpinnerComponent, ChapterAzulComponent,ChapterblueComponent,
-      AlertMessageComponent,ChapterAzulBgComponent,SemaforoComponent, TituloTabComponent, CostoTotalTabComponent, ChapterImgComponent, InfoMessageComponent, TableJornadaPsCctCualificadoComponent, TableJornadaCostoComponent
+      AlertMessageComponent,ChapterAzulBgComponent,SemaforoComponent, TituloTabComponent, CostoTotalTabComponent, ChapterImgComponent, InfoMessageComponent, TableJornadaPsCctCualificadoComponent, TableJornadaCostoComponent, CreationActionButtonComponent 
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
     providers: [],

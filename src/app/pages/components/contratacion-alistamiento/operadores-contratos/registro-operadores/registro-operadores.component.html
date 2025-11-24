@@ -171,6 +171,14 @@
     </div>
   </div>
 
+  <div class="col-12 text-right mt-3">
+    <app-creation-action-button 
+      label="Registrar Operador/Proveedor"
+      [disabled]="!getModulePermission(14, 'crear')"
+      (onClick)="nuevoOperador()">
+    </app-creation-action-button>
+  </div>
+
   <div *ngIf="dataOperadores._data._value.length == 0" class="col-12 mt-sm">
     <div class="border-top-radius-sm flex pl-xxl pr-xxl pt-md pb-md">
       <app-alert-message
@@ -353,15 +361,6 @@
     </div>
   </div>
 
-  <div class="col-12 text-right mt-3">
-    <a
-      class="btn-link"
-      (click)="nuevoOperador()"
-      *ngIf="getModulePermission(14, 'crear')"
-      ><img src="../assets/images/Iconos/add_blue.png" /> Registrar
-      Operador/Proveedor</a
-    >
-  </div>
 </div>
 
 <div *ngIf="formVisible" class="row mb-xxl">

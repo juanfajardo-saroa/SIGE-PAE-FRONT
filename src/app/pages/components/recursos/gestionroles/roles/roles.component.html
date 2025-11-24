@@ -162,6 +162,15 @@
       Roles</label>
   </div>
 
+  <div class="col-auto d-flex justify-content-end">
+    <app-creation-action-button 
+      label="Registrar Rol"
+      [disabled]="!getModulePermission(20,'crear')"
+      (onClick)="openDialog('Adicionar',{})">
+    </app-creation-action-button>
+  </div>
+  <br>
+
   <div class="col-12 responsive-table-pae" style=" padding: 0%;">
     <table mat-table [dataSource]="dataSource" class="tableRoles left-radius right-radius">
       <ng-container matColumnDef="name">
@@ -202,14 +211,5 @@
     </table>
     <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 50, 100]" showFirstLastButtons>
     </mat-paginator>
-  </div>
-
-  <div style="width: 100%; float: right;" class="align-items-center textagregar ">
-    <div class="text-right ">
-      <a class="btn-registrar" [ngClass]="{'linkdisable':!getModulePermission(20,'crear')}"
-        (click)="openDialog('Adicionar',{})"><img src="../../../../../../assets/images/Iconos/add_blue.png">
-        Registrar
-        Rol</a>
-    </div>
   </div>
 </div>

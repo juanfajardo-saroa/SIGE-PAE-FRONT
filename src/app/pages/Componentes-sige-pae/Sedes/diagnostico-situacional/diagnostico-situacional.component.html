@@ -8,6 +8,18 @@
   }
 
 </style>
+<div fxLayout="row wrap" *ngIf="EsETC==true">
+  <div style="width: 100%; float: right;" class="align-items-center textagregar">
+    <div class="text-right">
+      <app-creation-action-button 
+        label="Agregar diagnóstico"
+        [disabled]="!getModulePermission(32,'crear')"
+        (onClick)="openDialog('Adicionar',{})">
+      </app-creation-action-button>
+    </div>
+  </div>
+</div>
+<br><br><br>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
   integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -86,16 +98,4 @@
       </mat-card-content>
     </mat-card>
   </div>
-</div>
-
-<div fxLayout="row wrap " *ngIf="EsETC==true">
-
-  <div style="width: 100%; float: right; color: #005ACA;" class="align-items-center textagregar ">
-    <div class="text-right ">
-      <a [ngClass]="{'linkdisable':!getModulePermission(32,'crear')}" class="btn-agregar "
-        (click)="openDialog('Adicionar',{})"><img src="../.././../assets/images//Iconos/add_blue.png "/> Agregar
-        diagnóstico</a>
-    </div>
-  </div>
-
 </div>

@@ -50,11 +50,12 @@
   </div>
 
   <br>
-  <div class="text-center" [ngClass]="{'linkdisable':!getModulePermission(109,'crear')}">
-    <a class="btn-registrar" (click)="openDialog('Adicionar',{})">
-      <img src="../.././../assets/images//Iconos/add_blue.png" style="margin-right: 5px;">
-      <p class="LetraRegistro">Registrar ciclo de menú</p>
-    </a>
+  <div class="col-auto d-flex justify-content-end">
+    <app-creation-action-button 
+      label="Registrar ciclo de menú"
+      [disabled]="!getModulePermission(109,'crear')"
+      (onClick)="openDialog('Adicionar',{})">
+    </app-creation-action-button>
   </div>
   <br>
   <div class="responsive-table-pae">

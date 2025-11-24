@@ -180,12 +180,12 @@
                                 </mat-error>
                             </div>
                         </div>
-                        <div class="mr-lg-down-0"
-                            style="float: right; cursor: pointer; margin-right: 18%; margin-bottom: 10px; text-align: end;"
-                            (click)="addVariedad()">
-                            <img src="../../../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" width="30px"
-                                height="30px" />
-                            Agregar variedad
+                        <div class="mr-lg-down-0" style="float: right; cursor: pointer; margin-right: 18%; margin-bottom: 10px; text-align: end;">
+                            <app-creation-action-button 
+                                label="Agregar variedad"
+                                [disabled]=""
+                                (onClick)="addVariedad()">
+                            </app-creation-action-button>
                         </div>
                     </div>
 

@@ -1,0 +1,17 @@
+<div class="creation-action-button-container">
+  <button 
+    mat-raised-button 
+    class="creation-action-btn"
+    [disabled]="disabled"
+    [title]="title || label"
+    (click)="handleClick()">
+    
+    <mat-icon aria-hidden="true" class="creation-action-icon">
+      {{icon}}
+    </mat-icon>
+    
+    <span class="creation-action-label">
+      {{label}}
+    </span>
+  </button>
+</div>

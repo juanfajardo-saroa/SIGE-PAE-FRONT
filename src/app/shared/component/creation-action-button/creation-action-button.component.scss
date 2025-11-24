@@ -1,0 +1,53 @@
+.creation-action-button-container {
+  position: relative;
+  float: right; 
+  align-items: center;
+}
+
+.creation-action-btn {
+  border-radius: 20px;
+  border: #005ACA solid 1px;
+  background-color: #005ACA;
+  color: #fff !important;
+  margin: 0px 0px 0px 2px;
+  padding: 0px 10px;
+  float: right;
+  margin-right: 10px;
+  position: relative;
+  z-index: auto;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.creation-action-icon {
+  margin-right: 8px;
+  font-size: 20px;
+  width: 20px;
+  color: #fff !important;
+}
+
+.creation-action-label {
+  color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  .creation-action-button-container {
+    width: 100%;
+    margin-top: 10px;
+    float: none;
+  }
+  
+  .creation-action-btn {
+    width: 100%;
+    justify-content: center;
+    float: none;
+    margin-right: 0;
+  }
+}

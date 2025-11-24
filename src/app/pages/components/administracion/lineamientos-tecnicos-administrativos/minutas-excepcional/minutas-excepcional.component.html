@@ -17,10 +17,11 @@
 <div *ngIf="tabSelected == 1">
   <div class="row mt-xxl mb-xxl" [hidden]="!gridVisible">
     <div *ngIf="permisos.agregar" class="col-12 pl-xxl pr-xxl text-right">
-      <button class="btn-link text-base-fontsize" (click)="agregarMinutaExcepcional()">
-        <img src="../../../../../../assets/images/Iconos/add_blue.png">
-        Agregar minuta diferencial
-      </button>
+      <app-creation-action-button 
+        label="Agregar minuta diferencial"
+        [disabled]="!permisos.agregar"
+        (onClick)="agregarMinutaExcepcional()">
+      </app-creation-action-button>
     </div>
     <div class="col-12 mt-sm pl-xxl pr-xxl px-lg-down-0 responsive-table-pae">
       <table class="table-default table-hover">

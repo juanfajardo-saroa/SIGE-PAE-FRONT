@@ -1834,15 +1834,13 @@
                                                                     padding-right: 0px;
                                                                     border: 0px;
                                                                     background: white !important;">
-                                                                  <div (click)="openDialogIngredientes('Adicionar',{})"
-                                                                    class="align-items-center" style="    float: left;
+                                                                  <div class="align-items-center" style="    float: left;
                                                                     margin-left: 20px;">
-                                                                    <div class="text-right ">
-                                                                      <a class="btn-agregar "><img
-                                                                          src="../.././../assets/images//Iconos/add_blue.png " />
-                                                                        Agregar
-                                                                        preparación</a>
-                                                                    </div>
+                                                                    <app-creation-action-button 
+                                                                      label="Agregar preparación"
+                                                                      [disabled]=""
+                                                                      (onClick)="openDialogIngredientes('Adicionar',{})">
+                                                                    </app-creation-action-button>
                                                                   </div>
                                                                 </th>
                                                                 <td mat-cell *matCellDef="let element"
@@ -2785,15 +2783,12 @@
                                                                     padding-right: 0px;
                                                                     border: 0px;
                                                                     background: white !important;">
-                                                                  <div (click)="openDialogIngredientesP('Adicionar',{})"
-                                                                    class="align-items-center" style="    float: left;
-                                                                    margin-left: 20px;">
-                                                                    <div class="text-right ">
-                                                                      <a class="btn-agregar "><img
-                                                                          src="../.././../assets/images//Iconos/add_blue.png " />
-                                                                        Agregar
-                                                                        producto</a>
-                                                                    </div>
+                                                                  <div class="align-items-center" style="float: left; margin-left: 20px;">
+                                                                    <app-creation-action-button 
+                                                                      label="Agregar Producto"
+                                                                      [disabled]=""
+                                                                      (click)="openDialogIngredientesP('Adicionar',{})">
+                                                                    </app-creation-action-button>
                                                                   </div>
                                                                 </th>
                                                                 <td mat-cell *matCellDef="let element"
@@ -3781,15 +3776,13 @@
                                                                       padding-right: 0px;
                                                                       border: 0px;
                                                                       background: white !important;">
-                                                                  <div (click)="openDialogIngredientes('Adicionar',{})"
-                                                                    class="align-items-center" style="    float: left;
-                                                                      margin-left: 20px;">
-                                                                    <div class="text-right ">
-                                                                      <a class="btn-agregar "><img
-                                                                          src="../.././../assets/images//Iconos/add_blue.png " />
-                                                                        Agregar
-                                                                        preparación</a>
-                                                                    </div>
+                                                                  <div class="align-items-center" style="    float: left;
+                                                                    margin-left: 20px;">
+                                                                    <app-creation-action-button 
+                                                                      label="Agregar preparación"
+                                                                      [disabled]=""
+                                                                      (onClick)="openDialogIngredientes('Adicionar',{})">
+                                                                    </app-creation-action-button>
                                                                   </div>
                                                                 </th>
                                                                 <td mat-cell *matCellDef="let element"

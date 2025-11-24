@@ -3377,18 +3377,24 @@ export class PtnRegPreComponent implements OnInit {
     this.resultQuery2 = false;
   }
 
-  addComponentes() {
-    this.mesajesalert7 = false;
-    this.dataComponentesMas.push({
-      id: 0,
-      iD_Preparacion: this.PreparacionObject.id,
-      iD_TipoComponente: 0,
-      sID_TipoComponente: '',
-      ModificacionEstado: null,
-
-    })
-
+  addComponentes(event?: Event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
   }
+  
+  this.mesajesalert7 = false;
+  this.dataComponentesMas.push({
+    id: 0,
+    iD_Preparacion: this.PreparacionObject.id,
+    iD_TipoComponente: 0,
+    sID_TipoComponente: '',
+    ModificacionEstado: null,
+  });
+
+  return false;
+}
   cancelComponentes(id: any, item: any) {
 
     let h = this.dataComponentesMas[item].id

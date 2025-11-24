@@ -74,13 +74,11 @@
   </div>
 
   <div class="text-right d-flex align-items-center justify-content-end">
-    <button class="white-button d-flex align-items-center border-0" (click)="goToPage()"
-      [ngClass]="{'linkdisable':!getModulePermission(112,'crear')}">
-      <span>
-        <img src="../assets/images/Iconos/agregar.png" />
-      </span>
-      <span class="pl-1"> Agregar mecanismo de Bolsa Común </span>
-    </button>
+    <app-creation-action-button 
+      label="Agregar mecanismo de Bolsa Común"
+      [disabled]="!getModulePermission(112,'crear')"
+      (onClick)="goToPage()">
+    </app-creation-action-button>
   </div>
 
   <div *ngIf="displaySearch" class="rsow">

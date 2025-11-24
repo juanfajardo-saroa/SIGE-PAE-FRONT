@@ -1,19 +1,24 @@
   <!-- Novedades -->
 
-  <div style="float: left;">
-    <div style="float: left; background-color: #00A9AB ; padding: 12px 0px 12px 0px;">
-
-    </div>
-    <div style="display: inline-block; background-color: #00A9AB ; padding: 12px 0px 12px 0px; color: #ffffff;">
-      <div style="display: flex; margin-left: 10px;">Novedades</div>
-
-    </div>
-    <div
-      style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0; margin-left: -26px;float: right;">
+<div class="row flex-column flex-xl-row">
+  <div class="col">
+    <div style="float: left;">
+      <div style="float: left; background-color: #00A9AB ; padding: 12px 0px 12px 0px;"></div>
+      <div style="display: inline-block; background-color: #00A9AB ; padding: 12px 0px 12px 0px; color: #ffffff;">
+        <div style="display: flex; margin-left: 10px;">Novedades</div>
+      </div>
+      <div style="background-color: #00A9AB ; height: 44px; width: 44px; border-radius: 0% 50% 50% 0; margin-left: -26px;float: right;"></div>
     </div>
   </div>
-  <br>
-  <br>
+  <div class="col-auto d-flex justify-content-end">
+    <app-creation-action-button 
+        label="Nuevo reporte de novedades"
+        [disabled]="!getModulePermission(89,'crear')"
+        (onClick)="openDialogNovedades('Adicionar',{})">
+    </app-creation-action-button>
+  </div>
+</div>
+
   <br>
   <div *ngIf="!yaCargoNovedades">
     <div style="display: flex;">
@@ -67,13 +72,6 @@
     </div>
   </div>
   <br>
-  <div fxLayout="row wrap " style=" float: right; align-items: center;"
-    [ngClass]="{'linkdisable':!getModulePermission(89,'crear')}">
-    <button class="BordeRedondoAgregar2" mat-raised-button (click)="openDialogNovedades('Adicionar',{})">
-      <img src="../.././../assets/images//Iconos/add_blue.png" alt="" height="18px" width="auto">
-      Nuevo reporte de novedades
-    </button>
-  </div>
   <br>
   <br>
 

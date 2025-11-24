@@ -246,12 +246,12 @@
                                 style="height: 13px; margin-right: 2px;">
                               Complete este campo
                             </label>
-                            <div style="width: 100%; float: right; color: #005ACA; margin-right: 20px;"
-                              class="align-items-center textagregar ">
-                              <div class="text-right " (click)="addComponentes()">
-                                <img src="../.././../assets/images//Iconos/add_blue.png " /> Agregar
-                                componente
-                              </div>
+                            <div class="col-auto d-flex justify-content-end">
+                              <app-creation-action-button 
+                                label="Agregar componente"
+                                [disabled]="!getModulePermission(107,'crear')"
+                                (click)="addComponentes($event)">
+                              </app-creation-action-button>
                             </div>
                           </td>
                         </tr>
@@ -585,12 +585,12 @@
                                 style="height: 13px; margin-right: 2px;">
                               Complete este campo
                             </label>
-                            <div style="width: 100%; float: right; color: #005ACA; margin-right: 20px;"
-                              class="align-items-center textagregar ">
-                              <div class="text-right " (click)="addComponentes()">
-                                <img src="../.././../assets/images//Iconos/add_blue.png " /> Agregar
-                                componente
-                              </div>
+                            <div class="col-auto d-flex justify-content-end">
+                              <app-creation-action-button 
+                                label="Agregar componente"
+                                [disabled]="!getModulePermission(107,'crear')"
+                                (click)="addComponentes($event)">
+                              </app-creation-action-button>
                             </div>
                           </td>
                         </tr>
@@ -713,13 +713,12 @@
                               </mat-card-content>
                             </mat-card>
 
-                            <div (click)="openDialogIngredientes('Adicionar',{})" style="    float: left;
-                                    margin-top: 40px;" class="align-items-center textagregar ">
-                              <div class="text-right ">
-                                <a class="btn-agregar "><img src="../.././../assets/images//Iconos/add_blue.png " />
-                                  Agregar
-                                  Ingrediente</a>
-                              </div>
+                            <div style="float: left; margin-top: 40px;" class="align-items-center textagregar ">
+                              <app-creation-action-button 
+                                label="Agregar Ingrediente"
+                                [disabled]=""
+                                (click)="openDialogIngredientes('Adicionar',{})">
+                              </app-creation-action-button>
                             </div>
 
                           </div>
@@ -807,13 +806,12 @@
                                       padding-right: 0px;
                                       border: 0px;
                                       background: white !important;">
-                                      <div (click)="openDialogIngredientes('Adicionar',{})" class="align-items-center" style="    float: left;
-                                      margin-left: 20px;">
-                                        <div class="text-right ">
-                                          <a class="btn-agregar "><img src="../.././../assets/images//Iconos/add_blue.png " />
-                                            Agregar
-                                            Ingrediente</a>
-                                        </div>
+                                      <div class="align-items-center" style="float: left; margin-left: 20px;">
+                                        <app-creation-action-button 
+                                          label="Agregar Ingrediente"
+                                          [disabled]=""
+                                          (click)="openDialogIngredientes('Adicionar',{})">
+                                        </app-creation-action-button>
                                       </div>
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="hoverbutton"

@@ -23,6 +23,14 @@
     </div>
 </div>
 <app-titulo-tab [titulo]="'Asignación de recursos'"></app-titulo-tab>
+<br>
+<div *ngIf="permisos.agregar && !formVisible" class="d-flex justify-content-end align-items-center textagregar" style="width: 100%;">
+            <app-creation-action-button 
+                label="Agregar nueva resolución"
+                [disabled]="!getModulePermission(98,'crear')"
+                (onClick)="agregar()">
+            </app-creation-action-button>
+        </div>
 <div class="row mt-3 justify-content-center">
     <div [hidden]="!gridVisible" class="row ">
         <div class="col-12 responsive-table-pae">
@@ -79,12 +87,6 @@
             [limit]="10"
             (activate)="verResolucion($event)">
         </ngx-datatable> -->
-        </div>
-        <div *ngIf="permisos.agregar" class="col-12 justify-content-end mt-sm" [ngClass]="{'linkdisable':!getModulePermission(98,'crear')}">
-            <a (click)="agregar()">
-                <span class="fontSize15 float-right text-basecolor mt-xs ml-1">Agregar nueva resolución</span>
-                <img class="float-right widthImg35" src="../assets/images/Iconos/add_blue.png">
-            </a>
         </div>
     </div>
 
@@ -201,11 +203,12 @@
                                     </div>
                                     <div class="col-12 col-lg-6 mt-4">
                                         <div class="row">
-                                            <div class="col-12 px-sm-down-0">
-                                                <a (click)="agregarETC()" *ngIf="!disabled" [class]="disabled ? 'disabled' : ''">
-                                                    <img class="float-left widthImg35" src="../assets/images/Iconos/add_blue.png">
-                                                    <span class="fontSize15 float-left text-basecolor mt-1 ml-1">Agregar ETC</span>
-                                                </a>
+                                            <div class="mr-lg-down-0" style="float: right; cursor: pointer; margin-left: 10px; margin-bottom: 10px; text-align: end;">
+                                                <app-creation-action-button 
+                                                    label="Agregar ETC"
+                                                    [disabled]=""
+                                                    (onClick)="agregarETC()">
+                                                </app-creation-action-button>
                                             </div>
                                             <div class="col-12 mt-sm px-sm-down-0">
                                                 <a class="cursor-none">

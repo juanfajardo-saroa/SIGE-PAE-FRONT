@@ -238,9 +238,27 @@
                 <div class="BordeSeparador d-flex flex-column flex-xl-row">
                   <div class="alignTd w-down-100 d-flex align-items-center">
                     <div class="TextosBlueLeft margenadentro subtitulo">5.1. ¿A qué componentes contribuye la
-                      preparación?<br>Agregue todos los que apliquen<span style="color:red;">*</span></div>
+                      preparación?<br>Agregue todos los que apliquen<span style="color:red;">*</span>
+                    </div>
                   </div>
                   <div class="flex-grow-1">
+                    <br>
+                    <div class="d-flex justify-content-end mb-3">
+                      <div class="col-auto" *ngIf="!mesajesalert7">
+                        <app-creation-action-button 
+                          label="Agregar componente"
+                          [disabled]="!getModulePermission(107,'crear')"
+                          (click)="addComponentes($event)">
+                        </app-creation-action-button>
+                      </div>
+                      <div class="col-auto" *ngIf="mesajesalert7">
+                        <app-creation-action-button 
+                          label="Agregar componente"
+                          [disabled]="!getModulePermission(107,'crear')"
+                          (click)="addComponentes($event)">
+                        </app-creation-action-button>
+                      </div>
+                    </div>
                     <div *ngFor="let item of dataComponentesMas; let indice=index" class="flex-grow-1 margenadentro2">
                       <mat-select class="tablaform" name="iD_TipoComponente_{{ indice }}" *ngIf="!mesajesalert7"
                         [ngModel]="item.iD_TipoComponente"
@@ -270,22 +288,7 @@
                         style="height: 13px; margin-right: 2px;">
                       Complete este campo
                     </label>
-                    <div style="width: 100%; float: right; color: #005ACA; margin: 20px;"
-                      [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}" *ngIf="!mesajesalert7"
-                      class="align-items-center textagregar flex-grow-1">
-                      <div class="text-right " (click)="addComponentes()">
-                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"> Agregar
-                        componente
-                      </div>
-                    </div>
-                    <div style="width: 100%; float: right; color: #005ACA; margin: 20px;"
-                      [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}" *ngIf="mesajesalert7"
-                      class="align-items-center textagregar aletainput flex-grow-1">
-                      <div class="text-right " (click)="addComponentes()">
-                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"><span
-                          class=" aletainput2"> Agregar componente</span>
-                      </div>
-                    </div>
+                    <br>
                   </div>
                 </div>
               </div>
@@ -373,6 +376,23 @@
                     </div>
                   </div>
                   <div class="flex-grow-1">
+                    <br>
+                    <div class="d-flex justify-content-end mb-3">
+                      <div class="col-auto" *ngIf="!mesajesalert7">
+                        <app-creation-action-button 
+                          label="Agregar componente"
+                          [disabled]="!getModulePermission(107,'crear')"
+                          (click)="addComponentes($event)">
+                        </app-creation-action-button>
+                      </div>
+                      <div class="col-auto" *ngIf="mesajesalert7">
+                        <app-creation-action-button 
+                          label="Agregar componente"
+                          [disabled]="!getModulePermission(107,'crear')"
+                          (click)="addComponentes($event)">
+                        </app-creation-action-button>
+                      </div>
+                    </div>
                     <div *ngFor="let item of dataComponentesMas; let indice=index" class="flex-grow-1 margenadentro2">
                       <mat-select class="tablaform" name="iD_TipoComponente_{{ indice }}" *ngIf="!mesajesalert7"
                         [ngModel]="item.iD_TipoComponente"
@@ -402,24 +422,8 @@
                         style="height: 13px; margin-right: 2px;">
                       Complete este campo
                     </label>
-                    <div style="width: 100%; float: right; color: #005ACA; margin: 20px;"
-                      [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}" *ngIf="!mesajesalert7"
-                      class="align-items-center textagregar flex-grow-1">
-                      <div class="text-right" (click)="addComponentes()">
-                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"> Agregar
-                        componente
-                      </div>
-                    </div>
-                    <div style="width: 100%; float: right; color: #005ACA; margin: 20px;"
-                      [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}" *ngIf="mesajesalert7"
-                      class="align-items-center textagregar aletainput flex-grow-1">
-                      <div class="text-right" (click)="addComponentes()">
-                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"> <span
-                          class=" aletainput2">
-                          Agregar componente</span>
-                      </div>
-                    </div>
                   </div>
+                  <br>
                 </div>
               </div>
               <div *ngIf="preg6">
@@ -691,6 +695,23 @@
                     </div>
                   </div>
                   <div class="flex-grow-1">
+                    <br>
+                    <div class="d-flex justify-content-end mb-3">
+                      <div class="col-auto" *ngIf="!mesajesalert7">
+                        <app-creation-action-button 
+                          label="Agregar componente"
+                          [disabled]="!getModulePermission(107,'crear')"
+                          (click)="addComponentes($event)">
+                        </app-creation-action-button>
+                      </div>
+                      <div class="col-auto" *ngIf="mesajesalert7">
+                        <app-creation-action-button 
+                          label="Agregar componente"
+                          [disabled]="!getModulePermission(107,'crear')"
+                          (click)="addComponentes($event)">
+                        </app-creation-action-button>
+                      </div>
+                    </div>
                     <div *ngFor="let item of dataComponentesMas; let indice=index" class="flex-grow-1 margenadentro2">
                       <mat-select class="tablaform" name="iD_TipoComponente_{{ indice }}" *ngIf="!mesajesalert7"
                         [ngModel]="item.iD_TipoComponente"
@@ -720,22 +741,7 @@
                         style="height: 13px; margin-right: 2px;">
                       Complete este campo
                     </label>
-                    <div style="width: 100%; float: right; color: #005ACA; margin: 20px;"
-                      [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}" *ngIf="!mesajesalert7"
-                      class="align-items-center textagregar ">
-                      <div class="text-right " (click)="addComponentes()">
-                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"> Agregar
-                        componente
-                      </div>
-                    </div>
-                    <div style="width: 100%; float: right; color: #005ACA; margin: 20px;"
-                      [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}" *ngIf="mesajesalert7"
-                      class="align-items-center textagregar aletainput ">
-                      <div class="text-right " (click)="addComponentes()">
-                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"><span
-                          class=" aletainput2"> Agregar componente</span>
-                      </div>
-                    </div>
+                    <br>
                   </div>
                 </div>
               </div>
@@ -778,6 +784,23 @@
                     </div>
                   </div>
                   <div class="flex-grow-1">
+                    <br>
+                    <div class="d-flex justify-content-end mb-3">
+                      <div class="col-auto" *ngIf="!mesajesalert7">
+                        <app-creation-action-button 
+                          label="Agregar componente"
+                          [disabled]="!getModulePermission(107,'crear')"
+                          (click)="addComponentes($event)">
+                        </app-creation-action-button>
+                      </div>
+                      <div class="col-auto" *ngIf="mesajesalert7">
+                        <app-creation-action-button 
+                          label="Agregar componente"
+                          [disabled]="!getModulePermission(107,'crear')"
+                          (click)="addComponentes($event)">
+                        </app-creation-action-button>
+                      </div>
+                    </div>
                     <div *ngFor="let item of dataComponentesMas; let indice=index" class="flex-grow-1 margenadentro2">
                       <mat-select class="tablaform" name="iD_TipoComponente_{{ indice }}" *ngIf="!mesajesalert7"
                         [ngModel]="item.iD_TipoComponente"
@@ -807,23 +830,7 @@
                         style="height: 13px; margin-right: 2px;">
                       Complete este campo
                     </label>
-                    <div style="width: 100%; float: right; color: #005ACA; margin-right: 20px;"
-                      [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}" *ngIf="!mesajesalert7"
-                      class="align-items-center textagregar flex-grow-1">
-                      <div class="text-right " (click)="addComponentes()">
-                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"> Agregar
-                        componente
-                      </div>
-                    </div>
-                    <div style="width: 100%; float: right; color: #005ACA; margin-right: 20px;"
-                      [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}" *ngIf="mesajesalert7"
-                      class="align-items-center textagregar aletainput flex-grow-1">
-                      <div class="text-right " (click)="addComponentes()">
-                        <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"><span
-                          class=" aletainput2">
-                          Agregar componente</span>
-                      </div>
-                    </div>
+                    <br>
                   </div>
                 </div>
               </div>
@@ -917,22 +924,22 @@
                         <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
                       </table>
                     </div>
-                    <div *ngIf="!mesajesalertpre" (click)="openDialogIngredientes('Adicionar',{})"
-                      style="margin-top: 40px;"
-                      class="align-items-center textagregar flex-column-reverse flex-xl-row gap-down-10-px mx-lg-down-1">
+                    <div *ngIf="!mesajesalertpre" style="margin-top: 40px;" class="align-items-center textagregar flex-column-reverse flex-xl-row gap-down-10-px mx-lg-down-1">
                       <div class="text-right flex-grow-1 m-down-0">
-                        <a class="btn-agregar m-down-0"> <img
-                            src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px">Agregar
-                          Ingrediente</a>
+                        <app-creation-action-button 
+                          label="Agregar Ingrediente"
+                          [disabled]=""
+                          (click)="openDialogIngredientes('Adicionar',{})">
+                        </app-creation-action-button>
                       </div>
                     </div>
-                    <div *ngIf="mesajesalertpre" (click)="openDialogIngredientes('Adicionar',{})"
-                      style="margin-top: 40px;"
-                      class="align-items-center textagregar flex-column-reverse flex-xl-row gap-down-10-px mx-lg-down-1">
+                    <div *ngIf="mesajesalertpre" style="margin-top: 40px;" class="align-items-center textagregar flex-column-reverse flex-xl-row gap-down-10-px mx-lg-down-1">
                       <div class="text-right flex-grow-1 m-down-0">
-                        <a class="btn-agregar m-down-0" style="color: red"> <img
-                            src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px"> Agregar
-                          Ingrediente</a>
+                        <app-creation-action-button 
+                          label="Agregar Ingrediente"
+                          [disabled]=""
+                          (click)="openDialogIngredientes('Adicionar',{})">
+                        </app-creation-action-button>
                       </div>
                     </div>
                     <label *ngIf="mesajesalertpre" class="label" style="color: red">
@@ -1007,20 +1014,19 @@
                         <tr mat-row *matRowDef="let myRowData; columns: displayedColumns; "></tr>
                       </table>
                     </div>
-                    <div *ngIf="!mesajesalertpre" (click)="openDialogIngredientes('Adicionar',{})"
-                      style="margin-top: 40px;" class="align-items-center textagregar ">
-                      <div class="text-right flex-grow-1">
-                        <a class="btn-agregar "> <img src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png"
-                            height="20px"> Agregar Ingrediente</a>
-                      </div>
+                    <div class="col-auto" *ngIf="!mesajesalertpre">
+                      <app-creation-action-button 
+                        label="Agregar Ingrediente"
+                        [disabled]=""
+                        (click)="openDialogIngredientes('Adicionar',{})">
+                      </app-creation-action-button>
                     </div>
-                    <div *ngIf="mesajesalertpre" (click)="openDialogIngredientes('Adicionar',{})"
-                      style="margin-top: 40px;" class="align-items-center textagregar ">
-                      <div class="text-right flex-grow-1">
-                        <a class="btn-agregar " style="color: red"> <img
-                            src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px">
-                          Agregar Ingrediente</a>
-                      </div>
+                    <div class="col-auto" *ngIf="mesajesalertpre">
+                      <app-creation-action-button 
+                        label="Agregar Ingrediente"
+                        [disabled]=""
+                        (click)="openDialogIngredientes('Adicionar',{})">
+                      </app-creation-action-button>
                     </div>
                     <label *ngIf="mesajesalertpre" class="label" style="color: red">
                       <img src="../.././../../assets/iconos_PAE/PNG/Iconos_PAE-18.png " width="auto"
@@ -1098,13 +1104,12 @@
                         <ng-container matColumnDef="accion">
                           <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
                             style="padding-left: 0px; padding-right: 0px; border: 0px; background: white !important;">
-                            <div (click)="openDialogIngredientes('Adicionar',{})" class="align-items-center"
-                              style="margin-top: 40px;">
-                              <div class="text-right ">
-                                <a class="btn-agregar "> <img
-                                    src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px">
-                                  Agregar Ingrediente</a>
-                              </div>
+                            <div class="align-items-center" style="margin-top: 40px;">
+                              <app-creation-action-button 
+                                label="Agregar Ingrediente"
+                                [disabled]=""
+                                (click)="openDialogIngredientes('Adicionar',{})">
+                              </app-creation-action-button>
                             </div>
                           </th>
                           <td mat-cell *matCellDef="let element" class="hoverbutton"
@@ -1960,13 +1965,12 @@
                         <ng-container matColumnDef="accion">
                           <th class="LeftUpCorner2" mat-header-cell *matHeaderCellDef
                             style="padding-left: 0px; padding-right: 0px; border: 0px; background: white !important;">
-                            <div (click)="openDialogIngredientes('Adicionar',{})" class="align-items-center"
-                              style="margin-top: 40px;">
-                              <div class="text-right ">
-                                <a class="btn-agregar "> <img
-                                    src="../.././../../../assets/iconos_PAE/PNG/Iconos_PAE-51.png" height="20px">
-                                  Agregar Ingrediente</a>
-                              </div>
+                            <div class="align-items-center" style="margin-top: 40px;">
+                              <app-creation-action-button 
+                                label="Agregar Ingrediente"
+                                [disabled]=""
+                                (click)="openDialogIngredientes('Adicionar',{})">
+                              </app-creation-action-button>
                             </div>
                           </th>
                           <td mat-cell *matCellDef="let element" class="hoverbutton"

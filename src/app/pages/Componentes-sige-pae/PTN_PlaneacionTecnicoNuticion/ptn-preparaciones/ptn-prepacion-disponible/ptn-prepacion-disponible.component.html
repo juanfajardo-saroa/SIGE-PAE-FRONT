@@ -19,13 +19,14 @@
             regístrelo en el sistema.</p>
         </div>
       </div>
-      <div class="col-12 col-lg-6 col-xl-3 px-lg-down-0" style="padding-right: 0px !important"
-        [ngClass]="{'linkdisable':!getModulePermission(107,'crear')}">
-        <div (click)="openDialog('Adicionar',{})" style="width: 100%; float: right;"
-          class="align-items-center textagregar ">
+      <div class="col-12 col-lg-6 col-xl-3 px-lg-down-0" style="padding-right: 0px !important">
+        <div style="width: 100%; float: right;" class="align-items-center textagregar ">
           <div class="text-left text-lg-right mt-md-down-0" style="margin-top: 20px;">
-            <a class="btn-agregar "><img src="../.././../assets/images//Iconos/add_blue.png " /> Registrar
-              preparación</a>
+            <app-creation-action-button 
+              label="Registrar preparación"
+              [disabled]="!getModulePermission(107,'crear')"
+              (onClick)="openDialog('Adicionar',{})">
+            </app-creation-action-button>
           </div>
         </div>
       </div>
